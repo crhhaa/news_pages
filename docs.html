@@ -20,7 +20,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
-    <!-- 導覽列 -->
+    <!-- head -->
 <!--     <nav class="bg-blue-900 text-white p-3 shadow-md">
         <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <h1 class="text-xl sm:text-2xl font-bold">金融科技情報站</h1>
@@ -96,12 +96,12 @@
         </div>
     </nav>
 
-    <!-- 頁面頭部 / 搜尋區 -->
+    <!-- tab -->
     <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-8 sm:py-12 shadow-inner">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
             <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">金融科技知識庫</h2>
 
-            <!-- 搜尋框 -->
+            <!-- search box -->
             <div class="max-w-2xl mx-auto relative mb-6">
                 <input type="text" id="searchInput" placeholder="搜尋關鍵字..."
                        class="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg text-sm sm:text-base">
@@ -126,12 +126,12 @@
         </div>
     </header>
 
-    <!-- 主要內容區 -->
+    <!-- main -->
     <main class="max-w-7xl mx-auto p-4 sm:p-6 flex-grow w-full mt-2 sm:mt-4">
 
-        <!-- ===== Tab 1: AI 模型 ===== -->
+        <!-- ===== Tab 1: AI model ===== -->
         <div id="tab-models">
-            <!-- 分類過濾按鈕群組 -->
+            <!-- 分類篩選 -->
             <div class="mb-6 sm:mb-8 space-y-3">
                 <!-- 類型 (單選) -->
                 <div class="overflow-x-auto pb-1">
@@ -155,14 +155,14 @@
                         <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="search">🔍 搜尋</button>
                     </div>
                 </div>
-                <!-- 公司 (單選，動態生成) -->
+                <!-- 公司 (單選) -->
                 <div class="overflow-x-auto pb-1" id="companyFilterRow">
                     <div class="flex items-center gap-2 min-w-max px-1" id="companyFilterBtns">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">公司</span>
                         <button class="company-filter-btn active bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap" data-filter-company="ALL">全部</button>
                     </div>
                 </div>
-                <!-- 輸入模態 (多選) -->
+                <!-- 模態 (多選) -->
                 <div class="overflow-x-auto pb-1">
                     <div class="flex items-center gap-2 min-w-max px-1">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">模態</span>
@@ -173,7 +173,7 @@
                         <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="video">🎞 影片</button>
                     </div>
                 </div>
-                <!-- 排序 -->
+                <!-- sort -->
                 <div class="overflow-x-auto pb-1">
                     <div class="flex items-center gap-2 min-w-max px-1">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">排序</span>
@@ -183,7 +183,7 @@
                 </div>
             </div>
 
-            <!-- 模型卡片網格 -->
+            <!-- modle cards -->
             <div id="modelsContainer" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                 <div class="col-span-full text-center text-gray-500 py-10" id="loadingText">
                     <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
@@ -237,7 +237,7 @@
 
     <script>
         const URL_MODELS      = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRR9-fSj7w0hofgshYNJ7t3O1uGrC4tG0i9bdhzxAAT2sa_-y74V6dEKrsrO7S2Uafwcxz4-GSxORve/pub?output=csv';
-        const URL_WIKI        = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-8i3BkYL-uBDqICAYWNbEiRmxJRztXQmlcN2r4NSZFUb3kmQb6tcdcZRcDRHjUONvlcqNHz1cMFKI/pub?output=csv'; // 待建立知識百科 Google Sheet 後填入 published CSV 網址
+        const URL_WIKI        = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-8i3BkYL-uBDqICAYWNbEiRmxJRztXQmlcN2r4NSZFUb3kmQb6tcdcZRcDRHjUONvlcqNHz1cMFKI/pub?output=csv'; 
         const URL_COMPARISONS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ42IpI7XqI3KkLaprtqIaeK91mj7JvkXrXfyGmDStnNkrCvmDCFoYufGYbBoyoivklC0VhZRfMmU5O/pub?output=csv';
 
         let allModelsData = [];
@@ -282,13 +282,12 @@
 
                 allModelsData = rawModels.filter(r => r['record_type'] === 'model' || !r['record_type']);
 
-                // 移除 loading 提示
                 ['loadingText', 'loadingWiki', 'loadingComparisons'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.remove();
                 });
 
-                // 動態生成公司過濾按鈕
+                // 抓出所有不重複的公司名稱，生成篩選鈕
                 const companies = [...new Set(allModelsData.map(m => m['company']).filter(Boolean))].sort();
                 const companyBtnsContainer = document.getElementById('companyFilterBtns');
                 companies.forEach(company => {
@@ -299,7 +298,7 @@
                     companyBtnsContainer.appendChild(btn);
                 });
 
-                // 綁定公司過濾按鈕 (單選，點已選中時取消篩選)
+                // 公司篩選鈕 (單選，重複點選則取消篩選)
                 document.querySelectorAll('.company-filter-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const isActive = e.target.classList.contains('bg-orange-500');
@@ -318,7 +317,7 @@
                     });
                 });
 
-                // 綁定類型過濾按鈕 (單選，點已選中時取消篩選)
+                // 類型篩選按鈕 (單選，重複點選則取消篩選選)
                 document.querySelectorAll('.type-filter-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const isActive = e.target.classList.contains('bg-orange-500');
@@ -337,7 +336,7 @@
                     });
                 });
 
-                // 綁定分類過濾按鈕 (單選，點已選中時取消篩選)
+                // 分類篩選按鈕 (單選，重複點選則取消篩選)
                 document.querySelectorAll('.cat-filter-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const isActive = e.target.classList.contains('bg-orange-500');
@@ -356,7 +355,7 @@
                     });
                 });
 
-                // 綁定模態過濾按鈕 (多選 toggle)
+                // 模態篩選按鈕 (多選 toggle)
                 document.querySelectorAll('.mod-filter-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const mod = e.target.dataset.filterMod;
@@ -373,7 +372,7 @@
                     });
                 });
 
-                // 綁定排序按鈕
+                // 排序鈕
                 document.querySelectorAll('.sort-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         currentSort = e.target.dataset.sort;
@@ -387,16 +386,15 @@
                     });
                 });
 
-                // 綁定搜尋事件
+                // 搜尋
                 document.getElementById('searchInput').addEventListener('input', (e) => {
                     currentSearchTerm = e.target.value.toLowerCase();
                     renderCurrent();
                 });
 
-                // 初次渲染
                 renderModels();
 
-                // 綁定知識百科分類篩選
+                // 知識百科分類篩選
                 document.querySelectorAll('.wiki-cat-btn').forEach(btn => {
                     btn.addEventListener('click', e => {
                         document.querySelectorAll('.wiki-cat-btn').forEach(b => {
@@ -425,7 +423,6 @@
             currentSearchTerm = '';
             document.getElementById('searchInput').value = '';
 
-            // 更新 Tab 按鈕樣式
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 if (btn.dataset.tab === tab) {
                     btn.classList.add('bg-white', 'text-blue-900', 'shadow');
@@ -436,7 +433,6 @@
                 }
             });
 
-            // 顯示/隱藏各 Tab 內容
             document.getElementById('tab-models').classList.toggle('hidden', tab !== 'models');
             document.getElementById('tab-wiki').classList.toggle('hidden', tab !== 'wiki');
             document.getElementById('tab-comparisons').classList.toggle('hidden', tab !== 'comparisons');
@@ -450,7 +446,6 @@
             else if (currentTab === 'comparisons') renderComparisons();
         }
 
-        // 輔助：文字轉列表
         function formatList(text, iconSVG) {
             if (!text) return '';
             const items = text.split('\n').filter(i => i.trim() !== '');
@@ -462,7 +457,7 @@
             `).join('');
         }
 
-        // ===== Tab 1: 模型 =====
+        // ===== Tab 1: AI model =====
         function renderModels(resetPage = true) {
             if (resetPage) currentModelsPage = 1;
             const container = document.getElementById('modelsContainer');
@@ -488,7 +483,7 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center text-gray-500 py-10 text-lg">找不到符合條件的模型 🥲</div>`;
+                container.innerHTML = `<div class="col-span-full text-center text-gray-500 py-10 text-lg">找不到符合條件的模型</div>`;
                 renderDocsPagination('modelsPagination', 0, 0, 0, MODELS_PER_PAGE, 'goToModelsPage');
                 return;
             }
@@ -630,7 +625,7 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center text-gray-500 py-10 text-lg">找不到符合條件的詞條 🥲</div>`;
+                container.innerHTML = `<div class="col-span-full text-center text-gray-500 py-10 text-lg">找不到符合條件的相關名詞</div>`;
                 renderDocsPagination('wikiPagination', 0, 0, 0, WIKI_PER_PAGE, 'goToWikiPage');
                 return;
             }
@@ -764,7 +759,7 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="text-center text-gray-500 py-10 text-lg">找不到符合條件的比較 🥲</div>`;
+                container.innerHTML = `<div class="text-center text-gray-500 py-10 text-lg">找不到符合條件的比較</div>`;
                 renderDocsPagination('compsPagination', 0, 0, 0, COMPS_PER_PAGE, 'goToCompsPage');
                 return;
             }
@@ -855,12 +850,12 @@
             chevron.style.transform = isHidden ? '' : 'rotate(180deg)';
         }
 
-        // 綁定 Tab 按鈕
+        // Tab 按鈕
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => switchTab(btn.dataset.tab));
         });
 
-        // 綁定手機版漢堡選單開關
+        // 手機版選單開關
         document.getElementById('menuToggle').addEventListener('click', () => {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });

@@ -229,9 +229,9 @@
     <!-- MAIN -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
 
-        <!-- ════════════════════════════════════════
-             WEEKLY PANEL
-             ════════════════════════════════════════ -->
+        <!-- ========================================
+             趨勢週報
+             ======================================== -->
         <div id="weekly-panel">
 
             <!-- Weekly hero -->
@@ -303,9 +303,9 @@
             </div>
         </div>
 
-        <!-- ════════════════════════════════════════
-             MONTHLY PANEL
-             ════════════════════════════════════════ -->
+        <!-- ========================================
+             趨勢月報
+             ======================================== -->
         <div id="monthly-panel" class="hidden">
 
             <!-- Monthly hero -->
@@ -476,7 +476,7 @@
     }
 
     // ======================================================
-    // WEEKLY REPORT
+    // 週報
     // ======================================================
     const URL_SUMMARY  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTr9-gJY0KJtnHhuqaTVasx85VvgjR3eIBBO-BvjD386spMzBGnhoXiuK4KXmm6Ug1XD69I8gnr6eF0/pub?output=csv';
     const URL_NEWS     = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTd_5CX7qteXoHpQGPFnn6n3yJUGurkVNP6LJ38_DaLXYhbrpRqC7Ksi8vSV5GHzHbnKhvC6FqvTYLA/pub?output=csv';
@@ -534,7 +534,7 @@
     async function initData() {
         try {
             if (URL_SUMMARY.includes('YOUR_')) {
-                document.getElementById('summaryText').innerHTML = '<div>請先替換真實的 Google Sheet CSV 網址。</div>';
+                document.getElementById('summaryText').innerHTML = '<div>need to check google sheet URL</div>';
                 return;
             }
             const [summaryData, newsData, articlesData] = await Promise.all([
@@ -563,9 +563,9 @@
             });
             selector.addEventListener('change', e => renderPage(e.target.value));
             if (availableDates.length > 0) renderPage(availableDates[0]);
-            else document.getElementById('summaryText').innerHTML = '<div>找不到資料，請檢查試算表內容。</div>';
+            else document.getElementById('summaryText').innerHTML = '<div>need to check the spreadsheet contents/div>';
         } catch (err) {
-            document.getElementById('summaryText').innerHTML = '<div>讀取資料失敗，請檢查網址與網路連線。</div>';
+            document.getElementById('summaryText').innerHTML = '<div>need to check the URL and your network connection</div>';
         }
     }
 
@@ -823,7 +823,7 @@
     }
 
     // ======================================================
-    // MONTHLY REPORT
+    // 月報
     // ======================================================
     const MONTHLY_SHEET_ID = '1Mb4vVTnxvjQGJyrc8maawGj5Y90SbPfRP0-gMQR9di8';
 
@@ -840,7 +840,7 @@
         monthlyInitialized = true;
         if (MONTHLY_SHEET_ID === 'YOUR_MONTHLY_SHEET_ID') {
             document.getElementById('monthly-content').innerHTML =
-                '<div class="text-center py-20 text-gray-400">請先在程式碼中將 MONTHLY_SHEET_ID 替換為真實的 Google Spreadsheet ID。</div>';
+                '<div class="text-center py-20 text-gray-400">need to check MONTHLY_SHEET_ID</div>';
             return;
         }
         try {
@@ -882,11 +882,11 @@
             renderMonthSelector();
             if (loadedMonths.length > 0) switchMonth(loadedMonths[0]);
             else document.getElementById('monthly-content').innerHTML =
-                '<div class="text-center py-20 text-gray-400">找不到月報資料，請先執行 upload_to_sheets.py 上傳資料。</div>';
+                '<div class="text-center py-20 text-gray-400">need to check monthly report contents</div>';
         } catch (err) {
             console.error('月報讀取失敗:', err);
             document.getElementById('monthly-content').innerHTML =
-                '<div class="text-center py-20 text-gray-400">月報資料讀取失敗，請確認 Google Sheet 已設定為「任何人可檢視」。</div>';
+                '<div class="text-center py-20 text-gray-400">ensure the google sheet is public</div>';
         }
     }
 

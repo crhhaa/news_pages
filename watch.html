@@ -12,7 +12,7 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans">
 
-    <!-- 導覽列 -->
+    <!-- NAVBAR -->
     <nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,0.25);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-14">
@@ -76,10 +76,10 @@
         </div>
     </nav>
 
-    <!-- 主要內容區 -->
+    <!-- main -->
     <main class="max-w-7xl mx-auto px-4 py-6">
 
-        <!-- 控制區 -->
+        <!-- 篩選1：國內/國外 -->
         <div class="mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
             <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-5">
                 <h2 class="text-xl font-semibold text-gray-700">全球金融科技觀測</h2>
@@ -88,7 +88,7 @@
                     <button class="market-tab px-4 py-1.5 rounded-lg text-sm font-semibold transition-all" data-market="GLOBAL">🌐 國際市場</button>
                 </div>
             </div>
-            <!-- 領域篩選 -->
+            <!-- 篩選2：領域篩選 -->
             <div class="flex flex-wrap items-center gap-2 mb-3">
                 <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏷️ 篩選領域：</span>
                 <button class="domain-filter-btn bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-domain="ALL">全部</button>
@@ -103,7 +103,7 @@
                 <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="資訊安全">🔒 資訊安全</button>
                 <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="監理政策">⚖️ 監理政策</button>
             </div>
-            <!-- 集團篩選 -->
+            <!-- 篩選3：集團篩選 -->
             <div id="groupFilterRow" class="flex flex-wrap items-center gap-2 mb-3">
                 <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏢 集團：</span>
                 <button class="group-filter-btn bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-group="ALL">全部</button>
@@ -120,7 +120,7 @@
                 <button class="group-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-indigo-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-group="合庫">合庫</button>
                 <button class="group-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-indigo-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-group="華南">華南</button>
             </div>
-            <!-- 業別篩選 -->
+            <!-- 篩選4：業別篩選 -->
             <div id="typeFilterRow" class="flex flex-wrap items-center gap-2 mb-3">
                 <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏦 業別：</span>
                 <button class="type-filter-btn bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-type="ALL">全部</button>
@@ -154,9 +154,8 @@
             </div>
         </div>
 
-        <!-- 卡片列表 -->
+        <!-- card list -->
         <div id="timelineContainer">
-            <!-- 由 JS 動態生成 -->
         </div>
         <div id="paginationContainer"></div>
 
@@ -214,14 +213,13 @@
             '期貨': ['元大期貨'],
         };
 
-        // Backward compat: map new domain names to old values that may exist in data
         const DOMAIN_ALIASES = {
             '行動App': ['行動App', '行動APP'],
             '資訊安全': ['資訊安全', '資安'],
             '支付工具': ['支付工具', '數位平台'],
         };
 
-        // 單選 toggle helper（市場、業別）
+        // 單選篩選：市場、業別
         function makeToggleHandler(btnClass, activeClasses, inactiveClasses, currentRef, setter) {
             document.querySelectorAll(btnClass).forEach(btn => {
                 btn.addEventListener('click', e => {
@@ -244,7 +242,7 @@
             });
         }
 
-        // 多選 toggle helper（領域、集團）：可同時選多個，ALL 清空選擇
+        // 多選篩選：領域、集團
         function makeMultiToggleHandler(btnClass, activeClasses, inactiveClasses, currentSet) {
             document.querySelectorAll(btnClass).forEach(btn => {
                 btn.addEventListener('click', e => {
@@ -365,7 +363,6 @@
                     </div>
                     <div class="flex-shrink-0 w-0.5 self-stretch rounded-full ${barColor} opacity-50"></div>
                     <div class="flex-1 min-w-0 ${hasInsight ? 'grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 items-start' : ''}">
-                        <!-- 左：新聞本體 -->
                         <div>
                             <h3 class="font-bold text-gray-900 text-base leading-snug mb-2">${news['title']}</h3>
                             <div class="flex flex-wrap gap-1.5 mb-1">
@@ -378,7 +375,6 @@
                                 ${news['url'] ? `<a href="${news['url']}" target="_blank" class="text-orange-500 hover:underline font-medium">閱讀原文 →</a>` : ''}
                             </div>
                         </div>
-                        <!-- 右：PM + 元大視角 -->
                         ${hasInsight ? `
                         <div class="space-y-2 md:border-l md:border-gray-100 md:pl-6">
                             ${insight ? `
@@ -467,7 +463,7 @@
         async function initData() {
             try {
                 if (URL_FINANCE.includes('YOUR_')) {
-                    document.getElementById('timelineContainer').innerHTML = "<p class='text-center text-red-500'>請先替換真實的 Google Sheet CSV 網址！</p>";
+                    document.getElementById('timelineContainer').innerHTML = "<p class='text-center text-red-500'>need to check google sheet URL</p>";
                     return;
                 }
 
@@ -525,7 +521,7 @@
                 renderTimeline();
 
             } catch (error) {
-                document.getElementById('timelineContainer').innerHTML = "<p class='text-center text-red-500'>讀取資料失敗，請檢查網址與網路連線。</p>";
+                document.getElementById('timelineContainer').innerHTML = "<p class='text-center text-red-500'>need to check the URL and your network connection</p>";
             }
         }
 
@@ -563,7 +559,7 @@
                 data = data.filter(row => (row['publish_date'] || '').substring(0, 7) === currentMonthFilter);
             }
 
-            // 集團篩選（單選）
+            // 集團篩選（單選）（與[業別]取交集；無業別選擇時全量比對）
             if (currentGroupFilter !== 'ALL') {
                 data = data.filter(row => {
                     const ents = (row['entities'] || '').split(',').map(s => s.trim());
@@ -572,7 +568,7 @@
                 });
             }
 
-            // 業別篩選（與已選集團取交集；無集團選擇時全量比對）
+            // 業別篩選（單選）（與[集團]取交集；無集團選擇時全量比對）
             if (currentTypeFilter !== 'ALL') {
                 const typeEnts = new Set(TYPE_MAP[currentTypeFilter] || []);
                 data = data.filter(row => {
@@ -595,7 +591,7 @@
             data.sort((a, b) => new Date(b['publish_date']) - new Date(a['publish_date']));
 
             if (data.length === 0) {
-                container.innerHTML = "<p class='text-center text-gray-500 py-12'>這個區間沒有資料哦！</p>";
+                container.innerHTML = "<p class='text-center text-gray-500 py-12'>no data in this session!</p>";
                 renderWatchPagination(0, 0);
                 return;
             }
@@ -604,7 +600,7 @@
             const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
             if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
 
-            // Compute within-month rank before slicing (resets to 1 per month)
+            // 計算單月新聞數
             const monthTotalMap = {};
             data.forEach(news => {
                 const m = (news['publish_date'] || '').substring(0, 7);
@@ -620,7 +616,6 @@
 
             const pageData = data.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
-            // Group by month
             const monthGroups = {};
             const monthOrder  = [];
             pageData.forEach(news => {

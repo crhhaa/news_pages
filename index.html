@@ -26,11 +26,11 @@
         .comp-tab-panel.active { display: block; }
 
         /* Section nav */
-        .section-nav-link {
+        .section-nav-link, .q-section-nav-link {
             position: relative;
             transition: background 0.15s, color 0.15s;
         }
-        .section-nav-link.active {
+        .section-nav-link.active, .q-section-nav-link.active {
             color: #1e3a8a;
             background-color: #eff6ff;
             font-weight: 600;
@@ -95,7 +95,7 @@
         #mobileNavDrawer.open { transform: translateY(0); }
 
         /* Monthly bottom nav */
-        #monthlyBottomNav {
+        #monthlyBottomNav, #quarterlyBottomNav {
             position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
             background: rgba(255,255,255,0.97);
             border-top: 1px solid #e5e7eb;
@@ -122,6 +122,13 @@
         }
         .hero-bg-monthly {
             background: linear-gradient(135deg, #0f2460 0%, #312e81 60%, #4338ca 100%);
+        }
+        .hero-bg-quarterly {
+            background: linear-gradient(135deg, #0f2460 0%, #312e81 60%, #4338ca 100%);
+        }
+        /* Quarterly timeline vertical spine */
+        .q-timeline-spine {
+            background: linear-gradient(to bottom, #4338ca 0%, #4f46e5 50%, #2563eb 100%);
         }
 
         /* Tag pill */
@@ -172,6 +179,10 @@
                             class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-white/70 hover:text-white">
                         月報
                     </button>
+                    <button id="tab-quarterly-btn" onclick="switchMainTab('quarterly')"
+                            class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-white/70 hover:text-white">
+                        季報
+                    </button>
                 </div>
 
                 <!-- Desktop nav links -->
@@ -213,6 +224,8 @@
                             class="flex-1 py-2.5 rounded-xl bg-white text-blue-900 font-semibold text-sm shadow-sm">週報</button>
                     <button onclick="switchMainTab('monthly'); document.getElementById('mobileMenu').classList.add('hidden');"
                             class="flex-1 py-2.5 rounded-xl bg-white/10 text-white font-semibold text-sm">月報</button>
+                    <button onclick="switchMainTab('quarterly'); document.getElementById('mobileMenu').classList.add('hidden');"
+                            class="flex-1 py-2.5 rounded-xl bg-white/10 text-white font-semibold text-sm">季報</button>
                 </div>
                 <a href="watch.html" class="flex items-center gap-2 text-white/70 hover:text-white py-2 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -374,6 +387,79 @@
             </div>
         </div>
 
+        <!-- ========================================
+             趨勢季報
+             ======================================== -->
+        <div id="quarterly-panel" class="hidden">
+
+            <!-- Quarterly hero -->
+            <div class="hero-bg-quarterly text-white p-8 sm:p-10 rounded-2xl mb-6 relative overflow-hidden" style="box-shadow:0 8px 40px rgba(30,20,96,0.3);">
+                <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 pointer-events-none"></div>
+                <div class="absolute -bottom-20 left-1/2 w-56 h-56 rounded-full bg-white/3 pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                    <div>
+                        <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">AI Quarterly Trend Report</p>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wide mb-1">AI 季度趨勢報告</h2>
+                        <p id="quarterly-hero-meta" class="text-white/60 text-sm">載入中...</p>
+                    </div>
+                    <div class="w-full sm:w-auto flex-shrink-0">
+                        <select id="quarterSelector"
+                                class="w-full sm:w-auto border-0 rounded-xl px-4 py-2.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm cursor-pointer [&>option]:text-gray-800"
+                                style="background-color:rgba(255,255,255,0.12);">
+                            <option value="">載入中...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two-column layout: sidebar + content -->
+            <div class="flex gap-6 items-start pb-20 lg:pb-6">
+
+                <!-- Sticky sidebar (desktop only) -->
+                <aside class="w-52 flex-shrink-0 hidden lg:block sticky top-20 self-start">
+                    <div class="bg-white rounded-2xl card p-4">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">本季目錄</p>
+                        <nav class="space-y-0.5" id="quarter-section-nav">
+                            <a href="#q-summary"         class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">📌</span><span>季度綜述</span>
+                            </a>
+                            <a href="#q-timeline"        class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">🕒</span><span>時間軸</span>
+                            </a>
+                            <a href="#q-arcs"            class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">📈</span><span>趨勢弧線</span>
+                            </a>
+                            <a href="#q-inflections"     class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">⚡</span><span>轉折點</span>
+                            </a>
+                            <a href="#q-competitors"     class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">🏢</span><span>競業軌跡</span>
+                            </a>
+                            <a href="#q-recommendations" class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">💡</span><span>策略重點</span>
+                            </a>
+                            <a href="#q-reads"           class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
+                                <span class="text-base leading-none">📎</span><span>深讀推薦</span>
+                            </a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Quarterly content -->
+                <div class="flex-1 min-w-0">
+                    <div id="quarterly-content" class="space-y-6">
+                        <div class="text-center py-20 text-gray-400">
+                            <svg class="w-10 h-10 mx-auto mb-3 text-gray-300 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                            </svg>
+                            <p>載入季報資料中...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div><!-- /max-w-7xl -->
 
     <!-- Footer -->
@@ -432,6 +518,40 @@
         </div>
     </div>
 
+    <!-- Quarterly bottom nav (mobile only) -->
+    <div id="quarterlyBottomNav" class="hidden lg:hidden">
+        <div class="flex items-stretch">
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-summary')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                綜述
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-timeline')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                時間軸
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-arcs')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                弧線
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-inflections')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                轉折
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-competitors')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                競業
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-recommendations')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                建議
+            </button>
+            <button class="q-bnav-btn bnav-btn" onclick="scrollToSection('q-reads')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                深讀
+            </button>
+        </div>
+    </div>
+
     <script>
     // ======================================================
     // SHARED
@@ -441,33 +561,38 @@
     });
 
     function switchMainTab(tab) {
-        const weeklyPanel  = document.getElementById('weekly-panel');
-        const monthlyPanel = document.getElementById('monthly-panel');
-        const wBtn = document.getElementById('tab-weekly-btn');
-        const mBtn = document.getElementById('tab-monthly-btn');
-        const bottomNav = document.getElementById('monthlyBottomNav');
-
+        const panels = {
+            weekly:    document.getElementById('weekly-panel'),
+            monthly:   document.getElementById('monthly-panel'),
+            quarterly: document.getElementById('quarterly-panel'),
+        };
+        const btns = {
+            weekly:    document.getElementById('tab-weekly-btn'),
+            monthly:   document.getElementById('tab-monthly-btn'),
+            quarterly: document.getElementById('tab-quarterly-btn'),
+        };
         const mobileNavBtn = document.getElementById('mobileNavBtn');
+
+        Object.keys(panels).forEach(k => {
+            const active = (k === tab);
+            panels[k].classList.toggle('hidden', !active);
+            btns[k].classList.toggle('bg-white', active);
+            btns[k].classList.toggle('text-blue-900', active);
+            btns[k].classList.toggle('shadow-sm', active);
+            btns[k].classList.toggle('text-white/70', !active);
+        });
+
+        document.getElementById('monthlyBottomNav').classList.toggle('hidden', tab !== 'monthly');
+        document.getElementById('quarterlyBottomNav').classList.toggle('hidden', tab !== 'quarterly');
+
         if (tab === 'weekly') {
-            weeklyPanel.classList.remove('hidden');
-            monthlyPanel.classList.add('hidden');
-            wBtn.classList.add('bg-white','text-blue-900','shadow-sm');
-            wBtn.classList.remove('text-white/70');
-            mBtn.classList.remove('bg-white','text-blue-900','shadow-sm');
-            mBtn.classList.add('text-white/70');
-            bottomNav.classList.add('hidden');
             if (currentWeekArticles.length > 0) mobileNavBtn.classList.add('visible');
         } else {
-            weeklyPanel.classList.add('hidden');
-            monthlyPanel.classList.remove('hidden');
-            mBtn.classList.add('bg-white','text-blue-900','shadow-sm');
-            mBtn.classList.remove('text-white/70');
-            wBtn.classList.remove('bg-white','text-blue-900','shadow-sm');
-            wBtn.classList.add('text-white/70');
-            bottomNav.classList.remove('hidden');
             mobileNavBtn.classList.remove('visible');
-            if (!monthlyInitialized) initMonthly();
         }
+
+        if (tab === 'monthly'   && !monthlyInitialized)   initMonthly();
+        if (tab === 'quarterly' && !quarterlyInitialized) initQuarterly();
     }
 
     function scrollToSection(id) {
@@ -1132,6 +1257,349 @@
                         link.classList.toggle('active', link.getAttribute('href') === `#${id}`)
                     );
                     updateBottomNavActive(id);
+                }
+            });
+        }, { rootMargin: '-15% 0px -65% 0px' });
+        sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    }
+
+    // ======================================================
+    // 季報
+    // ======================================================
+    const QUARTERLY_SHEET_ID = '17_4dhtt9HFBYtW7Bvzwpp9VZkvsasGe1kxx7csCp4ow';  // 季報 Google Spreadsheet ID
+    // 季報發布連結（CSV）：https://docs.google.com/spreadsheets/d/e/2PACX-1vQUhfDoenKfiUbHaphiDAXY1AHmrctm_zyg5SrjQD1KjEOda-FAejHrVbxzRWlBQdZO5VbjDV8bOnGn/pub?output=csv
+
+    function getQuarterlyUrl(sheetName) {
+        return `https://docs.google.com/spreadsheets/d/${QUARTERLY_SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+    }
+
+    let quarterlyDataCache   = {};
+    let loadedQuarters       = [];
+    let currentQuarter       = '';
+    let quarterlyInitialized = false;
+
+    function qMonthLabel(m) { return `${parseInt(m.substring(4,6),10)} 月`; }
+
+    async function initQuarterly() {
+        quarterlyInitialized = true;
+        if (!QUARTERLY_SHEET_ID) {
+            document.getElementById('quarterly-content').innerHTML =
+                '<div class="text-center py-20 text-gray-400">尚未設定 QUARTERLY_SHEET_ID，請於 index.html 填入季報試算表 ID</div>';
+            return;
+        }
+        try {
+            const [summaryData, timelineData, arcsData, inflData, compData, recsData, readsData] = await Promise.all([
+                fetchCSV(getQuarterlyUrl('quarterly_summary')),
+                fetchCSV(getQuarterlyUrl('quarterly_timeline')),
+                fetchCSV(getQuarterlyUrl('quarterly_arcs')),
+                fetchCSV(getQuarterlyUrl('quarterly_inflections')),
+                fetchCSV(getQuarterlyUrl('quarterly_competitors')),
+                fetchCSV(getQuarterlyUrl('quarterly_recommendations')),
+                fetchCSV(getQuarterlyUrl('quarterly_reads')),
+            ]);
+
+            const qSet = new Set(summaryData.map(r => r.quarter).filter(Boolean));
+            loadedQuarters = Array.from(qSet).sort((a, b) => b.localeCompare(a));
+
+            loadedQuarters.forEach(q => {
+                const summary  = summaryData.find(r => r.quarter === q) || {};
+                const timeline = timelineData.filter(r=>r.quarter===q)
+                    .map(r=>({ month:r.month, label:r.label, headline:r.headline, key_events:(r.key_events||'').split('|').filter(Boolean), momentum:r.momentum }))
+                    .sort((a,b)=>a.month.localeCompare(b.month));
+                const arcs     = arcsData.filter(r=>r.quarter===q).map(r=>({ theme:r.theme, trajectory:r.trajectory, q_start_state:r.q_start_state, q_end_state:r.q_end_state, evidence:r.evidence, yuanta_implication:r.yuanta_implication }));
+                const inflections = inflData.filter(r=>r.quarter===q).map(r=>({ date:r.date, event:r.event, why_it_matters:r.why_it_matters }));
+                const twComps   = compData.filter(r=>r.quarter===q&&r.type==='台灣').map(r=>({ institution:r.institution, quarter_moves:(r.quarter_moves||'').split('|').filter(Boolean), trajectory_summary:r.trajectory_summary }));
+                const intlComps = compData.filter(r=>r.quarter===q&&r.type==='國際').map(r=>({ institution:r.institution, quarter_moves:(r.quarter_moves||'').split('|').filter(Boolean), trajectory_summary:r.trajectory_summary }));
+                const recsByUnit = {};
+                recsData.filter(r=>r.quarter===q).forEach(r=>{ if(!recsByUnit[r.business_unit]) recsByUnit[r.business_unit]=[]; recsByUnit[r.business_unit].push({ action:r.action, rationale:r.rationale }); });
+                const reads = readsData.filter(r=>r.quarter===q).sort((a,b)=>parseInt(a.rank)-parseInt(b.rank)).map(r=>({ rank:parseInt(r.rank), title:r.title, date:r.date, source:r.source, reason:r.reason, url:r.url }));
+
+                quarterlyDataCache[q] = {
+                    quarter: q,
+                    date_range: summary.date_range || '',
+                    data_sources: { ai_articles_total: parseInt(summary.ai_articles_total)||0, finance_articles_total: parseInt(summary.finance_articles_total)||0 },
+                    executive_summary:      { summary_text: summary.summary_text || '' },
+                    timeline,
+                    trend_arcs:             arcs,
+                    inflection_points:      inflections,
+                    competitor_trajectory: { taiwan: twComps, international: intlComps },
+                    yuanta_recommendations: recsByUnit,
+                    recommended_reads:      reads,
+                };
+            });
+
+            renderQuarterSelector();
+            if (loadedQuarters.length > 0) switchQuarter(loadedQuarters[0]);
+            else document.getElementById('quarterly-content').innerHTML =
+                '<div class="text-center py-20 text-gray-400">尚無季報資料</div>';
+        } catch (err) {
+            console.error('季報讀取失敗:', err);
+            document.getElementById('quarterly-content').innerHTML =
+                '<div class="text-center py-20 text-gray-400">季報讀取失敗，請確認 Google Sheet 已公開</div>';
+        }
+    }
+
+    function renderQuarterSelector() {
+        const sel = document.getElementById('quarterSelector');
+        sel.innerHTML = loadedQuarters.map(q => {
+            const y = q.substring(0,4), qn = q.substring(5);
+            return `<option value="${q}">${y} 年 第 ${qn} 季</option>`;
+        }).join('');
+        sel.addEventListener('change', e => switchQuarter(e.target.value));
+    }
+
+    function switchQuarter(q) {
+        currentQuarter = q;
+        const sel = document.getElementById('quarterSelector');
+        if (sel) sel.value = q;
+        const data = quarterlyDataCache[q];
+        if (!data) return;
+        renderQuarterlyHero(data);
+        renderQuarterlyReport(data);
+    }
+
+    function renderQuarterlyHero(data) {
+        const y = data.quarter.substring(0,4), qn = data.quarter.substring(5);
+        const dr = (data.date_range||'').replace('-',' ~ ');
+        const aiCount  = data.data_sources?.ai_articles_total || 0;
+        const finCount = data.data_sources?.finance_articles_total || 0;
+        document.getElementById('quarterly-hero-meta').textContent =
+            `${y} 年 第 ${qn} 季${dr ? ' · ' + dr : ''} · AI 文章 ${aiCount} 篇 / 金融 ${finCount} 篇`;
+    }
+
+    function updateQuarterBottomNavActive(sectionId) {
+        const map = { 'q-summary':0, 'q-timeline':1, 'q-arcs':2, 'q-inflections':3, 'q-competitors':4, 'q-recommendations':5, 'q-reads':6 };
+        document.querySelectorAll('.q-bnav-btn').forEach((b,i) => b.classList.toggle('active', i === (map[sectionId] ?? -1)));
+    }
+
+    function renderQuarterlyReport(data) {
+        const SM = 'scroll-mt-24';
+        const trajStyle = {
+            '上升': { icon:'↑', badge:'text-emerald-700 bg-emerald-50 border-emerald-200', bar:'border-emerald-500' },
+            '持平': { icon:'→', badge:'text-amber-700 bg-amber-50 border-amber-200',       bar:'border-amber-400' },
+            '降溫': { icon:'↓', badge:'text-rose-700 bg-rose-50 border-rose-200',           bar:'border-rose-500' },
+        };
+        const deptColors = [
+            'border-blue-500','border-indigo-500','border-cyan-500','border-teal-500',
+            'border-emerald-500','border-violet-500','border-rose-500','border-amber-500',
+            'border-slate-500','border-lime-500'
+        ];
+        const twData   = data.competitor_trajectory?.taiwan || [];
+        const intlData = data.competitor_trajectory?.international || [];
+        const recData  = data.yuanta_recommendations || {};
+        const depts    = Object.keys(recData);
+
+        const movesHtml = (moves) => (moves||[]).map(m => `
+            <li class="flex items-start gap-2 text-sm text-gray-600">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0"></span><span>${m}</span>
+            </li>`).join('');
+
+        const compTable = (rows) => `
+            <table class="w-full text-sm">
+                <thead><tr class="text-left bg-slate-50/40">
+                    <th class="px-5 py-3.5 font-semibold text-gray-500 text-xs uppercase tracking-wider w-1/5">機構</th>
+                    <th class="px-5 py-3.5 font-semibold text-gray-500 text-xs uppercase tracking-wider w-3/5">整季動作軌跡</th>
+                    <th class="px-5 py-3.5 font-semibold text-gray-500 text-xs uppercase tracking-wider">整季走向</th>
+                </tr></thead>
+                <tbody>${rows.map((c,i)=>`
+                    <tr class="${i%2===0?'':'bg-slate-50/40'} hover:bg-blue-50/30 transition-colors">
+                        <td class="px-5 py-4 font-semibold text-gray-800 align-top text-sm">${c.institution}</td>
+                        <td class="px-5 py-4 align-top"><ul class="space-y-1.5">${movesHtml(c.quarter_moves)}</ul></td>
+                        <td class="px-5 py-4 text-gray-600 align-top leading-relaxed text-sm">${c.trajectory_summary||''}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+
+        const html = `
+            <!-- Summary -->
+            <div id="q-summary" class="${SM} bg-white rounded-2xl card overflow-hidden" style="border-top:4px solid #f97316;">
+                <div class="p-6 sm:p-8">
+                    <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">📌</span>
+                        本季趨勢綜述
+                    </h3>
+                    <div class="text-gray-700 leading-relaxed space-y-2 text-sm">${fmtSummary(data.executive_summary?.summary_text||'')}</div>
+                </div>
+            </div>
+
+            <!-- Timeline (招牌) -->
+            <div id="q-timeline" class="${SM}">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-base flex-shrink-0">🕒</span>
+                    季度時間軸
+                </h3>
+                <div class="relative pl-7">
+                    <div class="q-timeline-spine absolute left-2.5 top-3 bottom-3 w-0.5 rounded-full"></div>
+                    ${(data.timeline||[]).map(t => `
+                        <div class="relative mb-5 last:mb-0">
+                            <div class="absolute -left-[19px] top-2 w-4 h-4 rounded-full bg-white border-[3px] border-indigo-500 shadow-sm"></div>
+                            <div class="bg-white rounded-2xl card p-5">
+                                <div class="flex items-center flex-wrap gap-2 mb-2.5">
+                                    <span class="text-xs font-bold text-blue-700 bg-blue-50 rounded-full px-2.5 py-0.5">${qMonthLabel(t.month)}</span>
+                                    ${t.label?`<span class="text-xs font-semibold text-white bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full px-2.5 py-0.5">${t.label}</span>`:''}
+                                    ${t.momentum?`<span class="text-xs text-gray-400 ml-auto">動能：${t.momentum}</span>`:''}
+                                </div>
+                                <h4 class="font-bold text-gray-800 text-sm mb-3 leading-snug">${t.headline||''}</h4>
+                                <ul class="space-y-1.5">${(t.key_events||[]).map(e=>`
+                                    <li class="flex items-start gap-2 text-sm text-gray-600">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 flex-shrink-0"></span><span>${e}</span>
+                                    </li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>`).join('')}
+                </div>
+            </div>
+
+            <!-- Trend arcs -->
+            <div id="q-arcs" class="${SM}">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-base flex-shrink-0">📈</span>
+                    主題趨勢弧線
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${(data.trend_arcs||[]).map(a => {
+                        const s = trajStyle[a.trajectory] || trajStyle['持平'];
+                        return `<div class="bg-white rounded-2xl card border-l-4 ${s.bar} p-5 flex flex-col gap-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <h4 class="font-bold text-gray-800 text-sm leading-snug">${a.theme}</h4>
+                                <span class="flex-shrink-0 text-xs font-bold border rounded-full px-2.5 py-0.5 ${s.badge}">${s.icon} ${a.trajectory}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="bg-slate-50 rounded-lg px-2 py-1 flex-1">${a.q_start_state||''}</span>
+                                <span class="text-gray-300">→</span>
+                                <span class="bg-slate-50 rounded-lg px-2 py-1 flex-1">${a.q_end_state||''}</span>
+                            </div>
+                            ${a.evidence?`<p class="text-gray-600 text-sm leading-relaxed">${a.evidence}</p>`:''}
+                            ${a.yuanta_implication?`
+                            <div class="bg-blue-50 rounded-xl p-3.5 border-l-4 border-blue-400 mt-auto">
+                                <p class="text-xs font-bold text-blue-600 mb-1 uppercase tracking-wider">對我們的參考意涵</p>
+                                <p class="text-sm text-blue-800 leading-relaxed">${a.yuanta_implication}</p>
+                            </div>`:''}
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>
+
+            <!-- Inflection points -->
+            <div id="q-inflections" class="${SM}">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-base flex-shrink-0">⚡</span>
+                    季度轉折點
+                </h3>
+                <div class="space-y-2.5">
+                    ${(data.inflection_points||[]).map(p => `
+                        <div class="bg-white rounded-2xl card p-5 flex items-start gap-4">
+                            <div class="flex-shrink-0 flex flex-col items-center">
+                                <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg">⚡</span>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-semibold text-amber-700 bg-amber-50 rounded-full px-2.5 py-0.5">${p.date||''}</span>
+                                    <h4 class="font-bold text-gray-800 text-sm">${p.event||''}</h4>
+                                </div>
+                                <p class="text-gray-600 text-sm leading-relaxed">${p.why_it_matters||''}</p>
+                            </div>
+                        </div>`).join('')}
+                </div>
+            </div>
+
+            <!-- Competitor trajectory -->
+            <div id="q-competitors" class="${SM}">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-base flex-shrink-0">🏢</span>
+                    競業季度軌跡
+                </h3>
+                <div class="bg-white rounded-2xl card overflow-hidden">
+                    <div class="flex border-b border-gray-100 bg-slate-50/60 px-2 pt-2 gap-1">
+                        <button onclick="switchQCompTab('tw',this)" id="qcomp-tab-tw"
+                                class="qcomp-tab-btn px-5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 border-blue-600 text-blue-700 bg-white transition-all -mb-px">台灣金融機構</button>
+                        <button onclick="switchQCompTab('intl',this)" id="qcomp-tab-intl"
+                                class="qcomp-tab-btn px-5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-all -mb-px">國際動態</button>
+                    </div>
+                    <div id="qcomp-panel-tw" class="qcomp-tab-panel comp-tab-panel active overflow-x-auto">
+                        ${twData.length ? compTable(twData) : '<p class="px-5 py-8 text-center text-gray-400 text-sm">本季無台灣競業重大軌跡</p>'}
+                    </div>
+                    <div id="qcomp-panel-intl" class="qcomp-tab-panel comp-tab-panel overflow-x-auto">
+                        ${intlData.length ? compTable(intlData) : '<p class="px-5 py-8 text-center text-gray-400 text-sm">本季無國際競業重大軌跡</p>'}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations (10 subsidiaries) -->
+            <div id="q-recommendations" class="${SM}">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">💡</span>
+                    季度策略重點
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${depts.map((dept,i) => {
+                        const actions = recData[dept]||[];
+                        return `<div class="bg-white rounded-2xl card border-t-4 ${deptColors[i%deptColors.length]} p-5">
+                            <h4 class="font-bold text-gray-800 mb-3.5 text-sm">${dept}</h4>
+                            <ul class="space-y-3">${actions.map(a=>`
+                                <li class="flex items-start gap-2.5 text-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 flex-shrink-0"></span>
+                                    <div>
+                                        <span class="font-medium text-gray-700">${a.action}</span>
+                                        ${a.rationale?`<p class="text-gray-500 text-xs mt-1 leading-relaxed">${a.rationale}</p>`:''}
+                                    </div>
+                                </li>`).join('')}
+                            </ul>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>
+
+            <!-- Reads -->
+            <div id="q-reads" class="${SM} pb-4">
+                <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-base flex-shrink-0">📎</span>
+                    深讀推薦
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    ${(data.recommended_reads||[]).map(r=>`
+                        <div class="bg-white rounded-2xl card border border-transparent hover:border-blue-200 p-5 flex flex-col gap-3 transition-all card-hover" style="border-color:#f1f5f9;">
+                            <div class="flex items-center justify-between">
+                                <span class="w-7 h-7 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 shadow-sm">${r.rank}</span>
+                                <span class="text-xs text-gray-400">${r.date} · ${r.source}</span>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 text-sm leading-snug flex-1">${r.title}</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">${r.reason}</p>
+                            ${r.url?`<a href="${r.url}" target="_blank" rel="noopener"
+                                class="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors mt-auto">
+                                閱讀原文
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>`:''}
+                        </div>`).join('')}
+                </div>
+            </div>`;
+
+        document.getElementById('quarterly-content').innerHTML = html;
+        setupQuarterSectionNavObserver();
+        updateQuarterBottomNavActive('q-summary');
+    }
+
+    function switchQCompTab(type, btn) {
+        document.querySelectorAll('.qcomp-tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.qcomp-tab-btn').forEach(b => {
+            b.classList.remove('border-blue-600','text-blue-700','bg-white');
+            b.classList.add('border-transparent','text-gray-500');
+        });
+        document.getElementById(`qcomp-panel-${type}`).classList.add('active');
+        btn.classList.add('border-blue-600','text-blue-700','bg-white');
+        btn.classList.remove('border-transparent','text-gray-500');
+    }
+
+    function setupQuarterSectionNavObserver() {
+        const sections = ['q-summary','q-timeline','q-arcs','q-inflections','q-competitors','q-recommendations','q-reads'];
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    document.querySelectorAll('.q-section-nav-link').forEach(link =>
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`)
+                    );
+                    updateQuarterBottomNavActive(id);
                 }
             });
         }, { rootMargin: '-15% 0px -65% 0px' });

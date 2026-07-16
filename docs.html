@@ -111,8 +111,12 @@
             <!-- Tab 切換列 -->
             <div class="max-w-2xl mx-auto bg-white/20 rounded-xl p-1 flex">
                 <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 bg-white text-blue-900 shadow" data-tab="models">
-                    <span class="hidden sm:inline">AI 模型</span>
-                    <span class="sm:hidden">模型</span>
+                    <span class="hidden sm:inline">模型介紹</span>
+                    <span class="sm:hidden">介紹</span>
+                </button>
+                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="compare">
+                    <span class="hidden sm:inline">模型能力比較</span>
+                    <span class="sm:hidden">比較圖</span>
                 </button>
                 <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="wiki">
                     <span class="hidden sm:inline">知識百科</span>
@@ -226,6 +230,14 @@
                 </div>
             </div>
             <div id="compsPagination" class="pb-10"></div>
+        </div>
+
+        <!-- ===== Tab 4: AI 模型比較（LLM 市場盤點熱力圖） ===== -->
+        <div id="tab-compare" class="hidden">
+            <div class="col-span-full text-center text-gray-500 py-10" id="loadingCompare">
+                <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                正在讀取市場盤點資料...
+            </div>
         </div>
 
 
@@ -436,8 +448,56 @@
             document.getElementById('tab-models').classList.toggle('hidden', tab !== 'models');
             document.getElementById('tab-wiki').classList.toggle('hidden', tab !== 'wiki');
             document.getElementById('tab-comparisons').classList.toggle('hidden', tab !== 'comparisons');
+            document.getElementById('tab-compare').classList.toggle('hidden', tab !== 'compare');
 
+            if (tab === 'compare') loadCompare();
             renderCurrent();
+        }
+
+        // AI 模型比較：載入 build_llm_scan.py 產出的片段並注入（非 iframe，看起來像原生內容）
+        let compareLoaded = false;
+        async function loadCompare() {
+            if (compareLoaded) return;
+            compareLoaded = true;
+            const el = document.getElementById('tab-compare');
+            try {
+                const res = await fetch('llm_market_scan.html');
+                if (!res.ok) throw new Error(res.status);
+                el.innerHTML = await res.text();
+                setupHeatmapTooltips(el);
+            } catch (e) {
+                compareLoaded = false;
+                el.innerHTML = '<div class="text-center text-gray-500 py-10">讀取市場盤點失敗，請以本機伺服器開啟頁面（file:// 無法載入片段）。</div>';
+            }
+        }
+
+        // 熱力圖浮動 tooltip：掛在 body（position:fixed），不會被熱力圖橫向捲軸容器裁切
+        function setupHeatmapTooltips(root) {
+            let tip = document.getElementById('llmHeatTip');
+            if (!tip) {
+                tip = document.createElement('div');
+                tip.id = 'llmHeatTip';
+                tip.className = 'llm-tip';
+                document.body.appendChild(tip);
+            }
+            const place = (cell) => {
+                const r = cell.getBoundingClientRect();
+                const tw = tip.offsetWidth, th = tip.offsetHeight;
+                let top = r.top - th - 8;
+                if (top < 8) top = r.bottom + 8;
+                let left = r.left + r.width / 2 - tw / 2;
+                left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+                tip.style.top = top + 'px';
+                tip.style.left = left + 'px';
+            };
+            root.querySelectorAll('#llm-scan td.cell[data-tip]').forEach(cell => {
+                cell.addEventListener('mouseenter', () => {
+                    tip.textContent = cell.dataset.tip;
+                    tip.style.display = 'block';
+                    place(cell);
+                });
+                cell.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+            });
         }
 
         function renderCurrent() {

@@ -464,7 +464,13 @@
                 const res = await fetch('llm_market_scan.html');
                 if (!res.ok) throw new Error(res.status);
                 el.innerHTML = await res.text();
-                setupHeatmapTooltips(el);
+                // 片段自帶 <script>（IIFE，會自行渲染表格／圖表並綁 tooltip）；
+                // innerHTML 注入的 script 不會執行，逐一重建節點讓它跑起來。
+                el.querySelectorAll('script').forEach(old => {
+                    const s = document.createElement('script');
+                    if (old.src) s.src = old.src; else s.textContent = old.textContent;
+                    old.replaceWith(s);
+                });
             } catch (e) {
                 compareLoaded = false;
                 el.innerHTML = '<div class="text-center text-gray-500 py-10">讀取市場盤點失敗，請以本機伺服器開啟頁面（file:// 無法載入片段）。</div>';

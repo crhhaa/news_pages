@@ -293,7 +293,7 @@
     <ul class="list-disc pl-5 space-y-1.5">
       <li class="text-sm text-amber-900 leading-relaxed"><b>空白不是 0</b>：空白＝這個模型沒有這筆分數，本表未以任何方式推估或補值。表是刻意的稀疏表。</li>
       <li class="text-sm text-amber-900 leading-relaxed"><b>分數多為各站自評／廠商回報</b>：測試設定（是否開 max reasoning、跑幾次取最好）各家不一，跨模型比較有雜訊。刷分是全產業現象，同一模型不同版本分數也可能差很多。</li>
-      <li class="text-sm text-amber-900 leading-relaxed"><b>各榜尺度不同、不可跨表比</b>：每張榜各自算 Elo／TrueSkill，沒有共同尺度；llm-stats 與 AA 的分數彼此也不可比。</li>
+      <li class="text-sm text-amber-900 leading-relaxed"><b>各榜尺度不同、不可跨表比</b>：不同能力有不能的驗測指標、不同驗測尺度，故不建議跨能力比較。</li>
       <li class="text-sm text-amber-900 leading-relaxed"><b>生成／語音榜是人類盲測或字錯率</b>：文生圖／影片幾乎沒有 benchmark，只有 Elo（± 區間常大於名次差，請看區間別只看名次）；語音辨識 WER 越低越好。</li>
       <li class="text-sm text-amber-900 leading-relaxed"><b>新模型分數偏低要小心解讀</b>：μ−3σ 會壓低資料少的模型。剛發布、只測了幾張考卷的模型，低分可能是「還沒測夠」而非「真的弱」。</li>
       <li class="text-sm text-amber-900 leading-relaxed"><b>國別＝公司總部所在地</b>：跨國團隊、在美設點的中國公司、開源模型被他國再訓練等情況，單一國別標籤無法完全反映。</li>

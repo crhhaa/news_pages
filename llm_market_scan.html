@@ -249,8 +249,6 @@
     <p class="text-sm text-gray-500 mb-1">分為四類：AI 進展、國家分析、開源模型、模型架構。</p>
     <div class="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-5 space-y-1 leading-relaxed">
       <p>本區縱軸一律為 <b>Artificial Analysis 智慧指數</b>，<b>與上方熱力圖／排行榜採用的 llm-stats Rating 分屬不同量尺，不可相互比較</b>。AA 以同一套九份測驗（GDPval、τ³-Banking、Terminal-Bench、SciCode、HLE、GPQA Diamond、CritPt、Omniscience、AA 長脈絡推理）自行評測，各模型施測相同題目後取平均，僅本區內部比較具意義。</p>
-      <p><b>統一量尺的原因</b>：本區原先混用兩個來源（優先取 llm-stats Rating，缺漏才回退 AA），導致<b>名次受量尺差異左右</b>，曾出現中國開源模型排名居首、超越 GPT 與 Claude 的結果，實為兩套分數混比所致。改採單一量尺後，前三名為 Anthropic、OpenAI、xAI。選用 AA 的理由為覆蓋率：AA 有 597/610 筆，llm-stats 僅 317/610。</p>
-      <p><b>llm-stats 分數為何出現負值</b>：其公布值為 μ − 3σ，μ 為實力估計、σ 為不確定度，公布前先扣除 3 個 σ 作為保守值。<b>受測測驗越少，σ 越大、扣減越多</b>，僅受測一至兩張者扣減後即低於 0。負值代表<b>受測樣本極少而不予高估，非能力為負</b>。此亦為同一模型於兩套來源分數落差顯著的原因，例如 Muse Spark 1.2 於 AA 為 56.76、於 llm-stats 為 35.16。</p>
     </div>
 
     <p class="text-xs font-bold text-orange-500 uppercase tracking-wider mb-3 mt-2">A · AI 進展（AI Progress）</p>

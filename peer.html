@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>同業導入觀測（測試版：集團 × 能力項）</title>
+<style>
+
+:root{
+  --plane:#f8fafc; --surface:#ffffff;
+  --ink:#0f172a; --ink-2:#475569; --muted:#94a3b8;
+  --rule:#e2e8f0; --rule-soft:#f1f5f9;
+  --nav:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);
+  --navy:#1e3a8a; --accent:#f97316; --accent-soft:#fff7ed;
+  /* 狀態色為輔助，形狀才是主編碼：實心＝已導入、空心環＝宣示中。
+     驗證過 已導入↔宣示中 在紅綠色盲下 ΔE 僅 5.4，顏色單獨不可辨，故一律配形狀。 */
+  --done:#0ca30c; --claim:#d97706; --stop:#d03b3b; --none:#cbd5e1;
+  --ai:#2a78d6; --fin:#7c3aed;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--plane);color:var(--ink);
+  font-family:var(--font);
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+.wrap{max-width:80rem;margin:0 auto;padding:0 1.5rem}
+
+/* nav */
+.navbar{background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);position:sticky;top:0;z-index:50;box-shadow:0 2px 20px rgba(0,0,0,.25)}
+.nav-container{max-width:80rem;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:3.5rem}
+.logo{display:flex;align-items:center;gap:.625rem;text-decoration:none;color:#fff;font-size:.875rem;font-weight:700;letter-spacing:.1em;transition:color .2s}
+.logo:hover{color:#fdba74}
+.logo-icon{width:1.75rem;height:1.75rem;border-radius:.5rem;background:#f97316;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:1rem;height:1rem;color:#fff}
+.nav-links{display:flex;gap:1.5rem;font-size:.875rem;font-weight:500}
+.nav-link{display:flex;align-items:center;gap:.375rem;text-decoration:none;color:rgba(255,255,255,.75);transition:color .2s}
+.nav-link:hover,.nav-link.active{color:#fdba74}
+.nav-link svg{width:.875rem;height:.875rem}
+.menu-toggle{display:none;background:none;border:0;color:#fff;padding:.5rem;border-radius:.5rem;cursor:pointer;transition:background .2s}
+.menu-toggle:hover{background:rgba(255,255,255,.1)}
+.menu-toggle svg{width:1.25rem;height:1.25rem}
+.mobile-menu{display:none;border-top:1px solid rgba(255,255,255,.1)}
+.mobile-menu-inner{max-width:80rem;margin:0 auto;padding:.75rem 1rem;font-size:.875rem}
+.mobile-menu a{display:flex;align-items:center;gap:.625rem;padding:.625rem 0;color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu a.active{color:#fdba74;font-weight:600}
+.mobile-menu a svg{width:1rem;height:1rem;flex-shrink:0}
+@media(max-width:900px){.nav-links{display:none}.menu-toggle{display:block}.mobile-menu.open{display:block}}
+
+.pagehead{padding:1.75rem 0 .25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:2.5rem}
+.pagehead-main{min-width:0}
+.headstats{flex-shrink:0;text-align:right;font-size:.75rem;color:var(--ink-2);line-height:1.7;padding-top:.375rem}
+.headstats b{font-variant-numeric:tabular-nums;color:var(--ink)}
+.headstats .me{color:var(--accent)}
+.headstats .me b{color:var(--accent)}
+.headstats .hint{color:var(--muted)}
+@media(max-width:900px){.pagehead{flex-direction:column;gap:.75rem}.headstats{text-align:left;padding-top:0}}
+.pagehead h1{font-size:1.5rem;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.pagehead p{font-size:.875rem;color:var(--ink-2);margin-top:.25rem;max-width:56rem}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.25rem 0}
+@media(max-width:900px){.tiles{grid-template-columns:repeat(2,1fr)}}
+/* 日期是 10 個字，用 .v 的字級在兩欄手機版會折行 */
+.tile .v .date{white-space:nowrap}
+@media(max-width:620px){.tile .v .date{font-size:1.25rem;letter-spacing:-.01em}}
+.tile{background:var(--surface);border:1px solid var(--rule);border-radius:.75rem;padding:1rem 1.125rem}
+.tile.me{border-color:#fed7aa;background:linear-gradient(180deg,var(--accent-soft),var(--surface))}
+.tile .k{font-size:.6875rem;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.tile .v{font-size:1.875rem;font-weight:700;line-height:1.15;margin-top:.375rem;letter-spacing:-.02em}
+.tile .v small{font-size:.9375rem;font-weight:600;color:var(--muted);margin-left:.125rem}
+.tile .s{font-size:.75rem;color:var(--ink-2);margin-top:.25rem}
+.tile.me .v{color:var(--accent)}
+
+.tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--rule);margin-top:.5rem;flex-wrap:wrap}
+.tab{padding:.625rem 1rem;font-size:.875rem;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
+.tab:hover{color:var(--ink-2)}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+
+.panel{padding:1.5rem 0 3rem}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:.75rem}
+.card-pad{padding:1.25rem}
+.sec-title{font-size:.6875rem;font-weight:700;letter-spacing:.09em;color:var(--muted);text-transform:uppercase;margin-bottom:.75rem}
+.h3{font-size:.9375rem;font-weight:700;color:var(--ink)}
+
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-bottom:1rem}
+.seg{display:inline-flex;background:#e8edf4;border-radius:.5rem;padding:2px;flex-wrap:wrap}
+.seg button{padding:.3125rem .75rem;font-size:.8125rem;font-weight:600;color:var(--ink-2);border-radius:.375rem;transition:.15s}
+.seg button.on{background:var(--surface);color:var(--navy);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.toggle{display:inline-flex;align-items:center;gap:.375rem;padding:.3125rem .75rem;font-size:.8125rem;font-weight:600;
+  color:var(--ink-2);background:var(--surface);border:1px solid var(--rule);border-radius:.5rem;transition:.15s}
+.toggle:hover{border-color:#cbd5e1}
+.toggle.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.row-label .id{font-size:.6875rem;color:var(--muted);margin-right:.3125rem;font-variant-numeric:tabular-nums}
+.swatch.done{background:var(--done)}
+.swatch.claim{background:#fff;box-shadow:inset 0 0 0 3px var(--claim)}
+.swatch.stop{background:var(--stop)}
+.swatch.none{background:#fff;box-shadow:inset 0 0 0 1.5px var(--none)}
+.rank .g{font-size:.875rem;font-weight:700;width:5.5rem;flex-shrink:0}
+.rank.me .g{color:var(--accent)}
+.rank .body{flex:1;min-width:0}
+
+.chip{display:inline-flex;align-items:center;gap:.25rem;font-size:.6875rem;font-weight:700;padding:.0625rem .4375rem;border-radius:999px;white-space:nowrap}
+.chip.done{background:#e7f6e7;color:#0a7a0a}
+.chip.claim{background:#fdf3e3;color:#9a5b06}
+.chip.stop{background:#fdeaea;color:#a82e2e}
+.chip.none{background:var(--rule-soft);color:var(--muted)}
+.chip.stale{background:#fef6e7;color:#8a6516}
+.chip.ai{background:#e8f1fc;color:#1d5ba6}
+.chip.fin{background:#f1ecfd;color:#5b28c4}
+.tag{display:inline-block;font-size:.6875rem;color:var(--ink-2);background:var(--rule-soft);
+  border:1px solid var(--rule);padding:.0625rem .375rem;border-radius:.25rem}
+.tl-col.hit{cursor:pointer}
+.tl-col.hit:hover,.tl-col.on{background:#e8f1fc}
+
+/* ── 誰在做、誰先做：一列一家，右側逐季長條 ───────────────────────── */
+.lad{display:flex;align-items:center;gap:.625rem;padding:.5rem .25rem;border-bottom:1px solid var(--rule-soft)}
+.lad:last-of-type{border-bottom:0}
+.lad:hover{background:var(--rule-soft)}
+.lad-i{width:1.25rem;flex-shrink:0;font-size:.75rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.lad-g{width:5.25rem;flex-shrink:0;font-size:.8125rem;font-weight:700;text-align:left}
+.lad-g:hover{color:var(--navy);text-decoration:underline}
+.lad-g.me{color:var(--accent)}
+.lad-s{width:4.75rem;flex-shrink:0}
+.lad-m{width:8.5rem;flex-shrink:0;font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.lad-more{flex-shrink:0;width:3.75rem;text-align:right;font-size:.75rem;font-weight:600;color:var(--ai);opacity:0;transition:opacity .12s}
+.lad:hover .lad-more{opacity:1}
+.qstrip{flex:1;display:flex;gap:2px;min-width:8rem}
+.qcell{flex:1;height:14px;border-radius:3px;background:var(--rule-soft);min-width:6px}
+.qcell.done{background:var(--done);cursor:pointer}
+.qcell.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--claim);cursor:pointer}
+.qkey{display:inline-block;width:14px;height:10px;border-radius:2px;background:var(--rule-soft);
+  vertical-align:middle;margin:0 .125rem}
+.qcell.stop{background:var(--stop);cursor:pointer}
+.qkey.done{background:var(--done)}
+.qkey.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--claim)}
+.qkey.stop{background:var(--stop)}
+/* 全景圖的段落分隔（AI 面／數金面／防詐與風控面），跟主表的 .focus-side 同一個語彙 */
+.lad-side{display:flex;align-items:center;gap:.5rem;margin:1rem 0 .25rem;
+  font-size:.75rem;font-weight:800;letter-spacing:.04em;color:var(--c)}
+.lad-side:first-child{margin-top:.25rem}
+/* 全景圖的拆解列：縮排、字級小一號、長條矮一點 */
+.lad.lad-sub{border-bottom:0;padding-top:.125rem;padding-bottom:.125rem}
+.lad.lad-sub:hover{background:transparent}
+.lad.lad-sub .lad-g{padding-left:1.375rem;font-size:.75rem;font-weight:600;color:var(--ink-2);cursor:default}
+.lad.lad-sub .lad-g:hover{color:var(--ink-2);text-decoration:none}
+.lad.lad-sub .lad-m{font-size:.6875rem}
+.lad.lad-sub .chip{font-size:.625rem;padding:0 .375rem}
+.lad.lad-sub .qcell{height:9px}
+
+/* 佐證清單＝時間線：一條垂直軸，一季一個節點，卡片掛在軸的右邊 */
+.tline{position:relative;margin-top:.75rem;padding-left:1.75rem}
+.tline::before{content:"";position:absolute;left:.375rem;top:.5rem;bottom:.5rem;width:2px;background:var(--rule)}
+.tline-q{position:relative;margin-top:1.5rem}
+.tline-q:first-child{margin-top:.25rem}
+.tline-mark{position:absolute;left:-1.75rem;top:.0625rem;width:.875rem;height:.875rem;border-radius:50%;
+  background:var(--surface);box-shadow:inset 0 0 0 3px var(--navy)}
+.tline-q:first-child .tline-mark{box-shadow:inset 0 0 0 4px var(--accent)}
+.tline-head{font-size:.875rem;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;margin-bottom:.5rem}
+.tline-head span{margin-left:.5rem;font-size:.75rem;font-weight:600;color:var(--muted)}
+.tline .ev{margin-bottom:.375rem}
+.lad-side i{width:4px;height:13px;border-radius:2px;background:var(--c);flex-shrink:0}
+.lad-side span{font-weight:600;letter-spacing:0;color:var(--muted)}
+/* 左側四欄是固定寬，窄螢幕塞不下會把季度條擠出卡片外，整組一起橫向捲 */
+.lad-wrap{overflow-x:auto}
+.lad-inner{min-width:52rem}
+.qaxis{display:flex;align-items:flex-end;gap:.625rem;padding:.25rem .25rem .5rem;border-bottom:1px solid var(--rule)}
+/* 左欄是欄位名，不是內文——給它跟站上其他表頭一樣的小標處理，否則會比季度還搶眼 */
+.qaxis-spacer{width:21.625rem;flex-shrink:0;font-size:.6875rem;font-weight:700;
+  letter-spacing:.08em;color:var(--muted)}
+.qaxis-track{flex:1;display:flex;gap:2px;min-width:8rem}
+.qaxis-track span{flex:1;min-width:6px;text-align:center;font-size:.75rem;font-weight:600;
+  color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 每年第一季換行成兩截，年份才不會在一排 Q 裡糊掉 */
+.qaxis-track span.yr{color:var(--ink);font-weight:700}
+
+/* 能力與場景合併後的主視圖 */
+.map-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.peer-pill.me{border-color:#fed7aa;color:var(--accent);background:var(--accent-soft)}
+.peer-state.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--claim)}
+.peer-state.stop{background:var(--stop)}
+.cross-cell.on{box-shadow:inset 0 0 0 3px var(--navy);z-index:2}
+.cg-mini.claim{background:#fff;border-color:var(--claim);color:#9a5b06}
+.cg-mini.stop{background:#fdeaea;color:#a82e2e}
+.cg-mini.me{box-shadow:0 0 0 1px var(--accent)}
+.dim-table .super.cap{color:var(--fin)}
+.dim-table .company-head.me{color:var(--accent);background:var(--accent-soft)}
+.dim-cell.on{background:#dbeafe;box-shadow:inset 0 0 0 2px var(--navy)}
+.dim-state.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--claim)}
+.dim-state.stop{background:var(--stop)}
+.dim-state.none{background:#fff;box-shadow:inset 0 0 0 1px var(--none)}
+.lad.focus{background:#eff6ff;box-shadow:inset 3px 0 0 var(--navy)}
+.tri-dot{width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 1px var(--none);transition:transform .12s;position:relative}
+.tri-dot:hover{transform:scale(1.45);z-index:2}
+.tri-dot.done{background:var(--cap-color);box-shadow:none}
+.tri-dot.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--cap-color)}
+.tri-dot.stop{background:var(--stop);box-shadow:none}
+.tri-dot.stop::after{content:"×";position:absolute;inset:-3px 0 0;color:#fff;font-size:9px;font-weight:800;text-align:center}
+.tri-dot.on{outline:2px solid var(--ink);outline-offset:2px}
+.tri-state-note{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.625rem;font-size:.6875rem;color:var(--muted)}
+.tri-state-note span{display:inline-flex;align-items:center;gap:.3125rem}
+@media(max-width:900px){.tri-dot{width:9px;height:9px}}
+.scene-panel.on{border-color:var(--navy);box-shadow:0 0 0 2px rgba(30,58,138,.12)}
+.panel-grid .pg-company.me{color:var(--accent);font-weight:750}
+.panel-grid .tri-dot{display:inline-block}
+/* 策略指紋只用狀態色，避免「資訊安全的能力紅色」被誤讀成暫停。 */
+.fingerprint .tri-dot{--cap-color:var(--done)}
+.fingerprint .tri-dot.claim{--cap-color:var(--claim)}
+.focus-scene.on{border-color:var(--navy);background:#eff6ff;box-shadow:inset 0 -3px 0 var(--navy)}
+.focus-scene.on .focus-scene-name{color:var(--navy)}
+.focus-board{margin-top:1rem;border:1px solid var(--rule);border-radius:.75rem;overflow:hidden;background:#fff}
+.focus-table-wrap{overflow-x:auto}
+.focus-table{width:100%;min-width:58rem;border-collapse:collapse;table-layout:fixed}
+.focus-table th,.focus-table td{border-bottom:1px solid var(--rule-soft);padding:.5rem .25rem;text-align:center}
+.focus-table tr:last-child th,.focus-table tr:last-child td{border-bottom:0}
+.focus-table thead th{height:2.5rem;background:#fff;font-size:.6875rem;color:var(--ink-2);font-weight:700;white-space:nowrap}
+.focus-table .focus-cap-head{width:12.5rem;text-align:left;padding-left:1rem;color:var(--muted)}
+.focus-table .focus-company{cursor:pointer;border-radius:.25rem;padding:.125rem .1875rem;font-size:.6875rem;font-weight:700;color:var(--ink-2)}
+.focus-table .focus-company:hover{color:var(--navy);background:#eff6ff}
+.focus-table .focus-company.me{color:var(--accent);background:var(--accent-soft)}
+.focus-table .focus-cap-head,.focus-table .focus-cap{position:sticky;left:0;z-index:1;background:#fff;box-shadow:1px 0 0 var(--rule-soft)}
+.focus-table .focus-cap-head{z-index:2}
+.focus-table .focus-cap{width:12.5rem;text-align:left;padding-left:1rem;font-size:.75rem;color:var(--ink);font-weight:700}
+.focus-cap-label{display:flex;align-items:center;gap:.5rem}
+.focus-cap-label i{width:8px;height:8px;border-radius:50%;background:var(--cap-color);flex-shrink:0}
+/* 跨面合併的拆解列：縮排、去底線、圓點小一號，一眼看得出是上一列的細分不是同層 */
+.focus-table tbody tr.focus-sub td{border-bottom:0;padding-top:.125rem;padding-bottom:.125rem}
+.focus-table tbody tr.focus-sub th{border-bottom:0;padding-top:.125rem;padding-bottom:.125rem}
+.focus-table tbody tr.focus-sub:hover{background:transparent}
+.focus-table tbody tr.focus-sub .tri-dot{width:9px;height:9px;opacity:.75}
+.focus-table tbody tr.focus-sub .focus-total{font-size:.6875rem;color:var(--muted);font-weight:600}
+.focus-sub-label{display:flex;align-items:center;gap:.4375rem;padding-left:1.375rem;
+  font-size:.6875rem;color:var(--ink-2)}
+.focus-sub-label i{width:5px;height:5px;border-radius:50%;background:var(--cap-color);flex-shrink:0}
+
+/* 全域篩選列：接觸點與目的兩個構面都是多選，總覽與詳頁共吃這組條件 */
+.filters{display:grid;gap:.625rem;margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--rule-soft)}
+.frow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.flabel{font-size:.6875rem;font-weight:800;letter-spacing:.06em;color:var(--muted);min-width:4.25rem}
+.fchip{padding:.3125rem .6875rem;border-radius:999px;font-size:.8125rem;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);display:inline-flex;align-items:center;gap:.375rem;transition:.12s}
+.fchip i{width:.5rem;height:.5rem;border-radius:50%;background:var(--c,var(--muted));display:block}
+.fchip:hover{border-color:#93c5fd}
+.fchip.on{color:#fff;border-color:var(--c);background:var(--c)}
+.fchip.on i{background:rgba(255,255,255,.85)}
+.fchip .n{font-variant-numeric:tabular-nums;opacity:.7;font-size:.75rem}
+.fsum{font-size:.75rem;color:var(--ink-2)}
+.fsum b{font-variant-numeric:tabular-nums}
+
+/* 策略指紋（詳頁）：接觸點 × 目的 4×4 熱度表 */
+.xwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:.5rem;margin-top:.75rem}
+.xtable{width:100%;border-collapse:separate;border-spacing:0;font-size:.8125rem;background:#fff}
+.xtable th,.xtable td{border-right:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft);padding:.5rem;text-align:center;white-space:nowrap}
+.xtable tr:last-child td,.xtable tr:last-child th{border-bottom:0}
+.xtable th:last-child,.xtable td:last-child{border-right:0}
+.xtable thead th{background:var(--rule-soft);color:var(--ink-2);font-weight:700;font-size:.75rem}
+.xtable tbody th{text-align:left;font-weight:700;background:#fff;position:sticky;left:0;z-index:1;border-right:1px solid var(--rule)}
+.xtable tbody th i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:.4375rem;vertical-align:middle}
+.xtable td.x{cursor:pointer;font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy)}
+.xtable td.x:hover{box-shadow:inset 0 0 0 2px #93c5fd}
+.xtable td.x.on{box-shadow:inset 0 0 0 3px var(--navy)}
+.xtable td.x0{color:var(--none);cursor:default}
+.xtable td.x0:hover{box-shadow:none}
+.xtable .tot{background:var(--rule-soft);font-weight:800}
+.focus-cap-button{width:100%;text-align:left;border-radius:.375rem;padding:.25rem .375rem;margin:-.25rem -.375rem;transition:.12s}
+.focus-cap-button:hover,.focus-cap-button.on{background:#eff6ff;color:var(--navy)}
+.focus-table .focus-total{width:5rem;text-align:right;padding-right:1rem;font-size:.6875rem;color:var(--muted);white-space:nowrap}
+.focus-table .focus-total b{font-size:.8125rem;color:var(--ink)}
+.focus-table td.me{background:linear-gradient(90deg,transparent,var(--accent-soft),transparent)}
+.focus-table .tri-dot{display:inline-block;width:14px;height:14px;--cap-color:var(--done)}
+.focus-table .tri-dot.claim{--cap-color:var(--claim)}
+.focus-table tbody tr.focus-side{background:var(--rule-soft)}
+.focus-table tbody tr.focus-side:hover{background:var(--rule-soft)}
+.focus-table tbody tr.focus-side td{border-bottom-color:var(--rule)}
+.focus-table .focus-side-label{font-size:.75rem;font-weight:800;letter-spacing:.04em;
+  background:var(--rule-soft);color:var(--side-color)}
+.focus-table .focus-side-note{font-size:.625rem;color:var(--muted);letter-spacing:.06em}
+.focus-table tbody tr:hover{background:#f8fafc}
+.focus-table tbody tr:hover .focus-cap{color:var(--navy);background:#f8fafc}
+.pm-scene-filter.on .pm-scene-count{background:rgba(255,255,255,.72);color:inherit}
+.pm-scene-filter.on{border-color:var(--sc,var(--navy));background:var(--tint,#eff6ff);color:var(--ink);font-weight:750}
+.pm-mark.claim{background:#fff;box-shadow:inset 0 0 0 2px var(--mk,var(--claim)),0 0 0 2px #fff}
+.pm-mark.stop{background:var(--stop);box-shadow:0 0 0 2px #fff}
+.pm-mark.stop::after{content:"×";position:absolute;inset:-3px 0 0;color:#fff;font-size:8px;font-weight:900;text-align:center}
+.pm-blk.claim{background:#fff}
+.pm-blk.claim .pm-blk-dot{background:#fff;box-shadow:inset 0 0 0 1.5px var(--sc)}
+.pm-blk.stop{background:#fff7f7;border-color:#ef4444;color:#b91c1c}
+.pm-blk.stop .pm-blk-dot{width:8px;height:8px;background:transparent}
+.pm-blk.stop .pm-blk-dot::after{content:"×";position:absolute;inset:-2px 0 0;font-size:10px;font-weight:900;text-align:center}
+.sg-mark.claim{background:#fff;border-color:var(--claim);box-shadow:none}
+.readout .rs{font-size:.6875rem;color:var(--ink-2);margin-top:.125rem}
+/* 手機版：長條圖獨占一列，其餘三個縮成一排小方格 */
+@media(max-width:820px){
+  .strategy-readout{grid-template-columns:repeat(3,1fr)}
+  .strategy-readout .readout:first-child{grid-column:1/-1}
+  .strategy-readout .readout:not(:first-child){padding:.625rem .5rem}
+  .strategy-readout .readout:not(:first-child) .rv{font-size:.75rem;line-height:1.35}
+  .strategy-readout .readout:not(:first-child) .rk{font-size:.5625rem;letter-spacing:.04em}
+  .strategy-readout .readout:not(:first-child) .rs{font-size:.625rem}
+}
+.qitem-dot.done{background:var(--done)}
+.qitem-dot.claim{background:#fff;box-shadow:inset 0 0 0 2.5px var(--claim)}
+.qitem-dot.stop{background:var(--stop)}
+.qitem-g.me{color:var(--accent)}
+.qitem-tags button.tag:hover{border-color:var(--muted)}
+
+/* 單家詳頁 */
+.grouphead{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:flex-start}
+.subtab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.subtab .n{font-size:.625rem;opacity:.7;margin-left:.25rem}
+
+#tip{position:fixed;z-index:200;pointer-events:none;opacity:0;transition:opacity .12s;
+  background:#0f172a;color:#fff;font-size:.75rem;line-height:1.5;padding:.5rem .625rem;
+  border-radius:.5rem;max-width:19rem;box-shadow:0 8px 24px rgba(15,23,42,.3)}
+#tip.on{opacity:1}
+
+.mask{position:fixed;inset:0;background:rgba(15,23,42,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:90}
+.mask.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(32rem,100%);background:var(--surface);
+  transform:translateX(101%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column;
+  box-shadow:-8px 0 32px rgba(15,23,42,.18)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.25rem;border-bottom:1px solid var(--rule)}
+.drawer-body{flex:1;overflow-y:auto;padding:1.25rem}
+.thin::-webkit-scrollbar{width:5px;height:6px}
+.thin::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+.ev{display:block;text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1rem;margin-bottom:1rem}
+.ev:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.linkout{font-size:.75rem;font-weight:600;color:var(--ai)}
+.ev:hover .linkout{text-decoration:underline}
+.empty{font-size:.875rem;color:var(--muted);padding:1rem 0}
+.footnote{font-size:.75rem;color:var(--muted);line-height:1.6}
+
+/* ---- 測試版新增：只有這一段不是從 peer.html 抄來的 ---- */
+.fchip.on{color:#fff;border-color:var(--c);background:var(--c)}
+.fchip.on i{background:rgba(255,255,255,.85)}
+.fchip .n{font-variant-numeric:tabular-nums;opacity:.7;font-size:.75rem}
+.xtable td.x{cursor:pointer;font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy)}
+.xtable td.x:hover{box-shadow:inset 0 0 0 2px #93c5fd}
+.xtable td.x.on{box-shadow:inset 0 0 0 3px var(--navy)}
+
+/* 佐證上的三個軸標籤 */
+.tagrow{display:flex;gap:.25rem;flex-wrap:wrap;align-items:center;margin-top:.4375rem}
+.axtag{display:inline-flex;align-items:center;gap:.3125rem;border-radius:999px;padding:.125rem .5rem;font-size:.6875rem;font-weight:700;color:#fff;background:var(--c)}
+
+/* 通用詳情面板：任何一格點下去都是這一塊 */
+.detail-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.detail-close{font-size:.75rem;color:var(--accent);text-decoration:underline;white-space:nowrap}.loaderr{padding:2rem;text-align:center;color:var(--muted);line-height:1.9}
+</style>
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></span>
+      <span>數金情報站</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a>
+      <a href="watch.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a>
+      <a href="peer.html" class="nav-link active"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a>
+      <a href="news.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a>
+      <a href="docs.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a>
+      <a href="ai_classroom/classroom.html" class="nav-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>AI 小學堂</a>
+    </div>
+    <button id="menuToggle" class="menu-toggle" aria-label="Menu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="index.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a>
+      <a href="watch.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a>
+      <a href="peer.html" class="active"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a>
+      <a href="news.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a>
+      <a href="docs.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a>
+      <a href="ai_classroom/classroom.html"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+
+
+<div class="wrap">
+  <header class="pagehead">
+    <div class="pagehead-main">
+    <h1>同業導入觀測</h1>
+    <p>一格＝一個「集團 × 能力項」。<b>能力項</b>回答做了什麼，<b>接觸點</b>回答客戶在不在場、誰在操作，<b>目的</b>回答為了什麼——後兩者是上方的篩選軸，也是單家詳頁那張指紋圖的兩條軸。任何一格點下去，下方都會展開那一格的逐季歷程與佐證。</p>
+    </div>
+    <div class="headstats" id="tiles"></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab" data-view="main" onclick="go('main')">總覽：集團 × 能力項</button>
+    <button class="tab" data-view="one"  onclick="go('one')">單家策略詳頁</button>
+  </nav>
+
+  <section class="panel" id="panel"></section>
+  <section id="detail"></section>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+<div class="mask" id="mask" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="佐證明細">
+  <div class="drawer-head">
+    <div id="drawerHead"></div>
+    <button onclick="closeDrawer()" aria-label="關閉" style="font-size:1.25rem;color:var(--muted);line-height:1">✕</button>
+  </div>
+  <div class="drawer-body thin" id="drawerBody"></div>
+</aside>
+
+<script>
+/* =========================================================================
+   資料直接讀 Google Sheet 的三個分頁，不再內嵌。Sheet 必須是「知道連結的任何人
+   可以檢視」，下面的 gviz 端點才讀得到；欄位定義見
+   .claude/commands/peer-overview/references/schema.md。
+   改完 CSV 記得 `uv run peer_sheet.py push`，push 完這頁重新整理就是新資料。
+   ========================================================================= */
+const SHEET_ID = '1ZZGOi2hIqZbWcrpyLxYYtdvsiWC_4nVl3UzlIdRF7QE';
+const csvUrl = n => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(n)}`;
+
+const CAP_COLOR = {'AI': '#2a78d6', '數金': '#7c3aed'};
+const GROUP_ORDER = ["元大", "國泰", "富邦", "中信", "玉山", "永豐", "台新新光", "凱基", "兆豐", "第一金", "合庫", "華南"];
+const MY_GROUP = "元大";
+const TOUCH_DEF = [{"id": "T1", "name": "客戶自助", "def": "客戶自己動手完成，全程沒有員工經手：App、網銀、官網、ATM、線上申辦", "color": "#3a67b5", "short": "客戶", "tint": "#eaf0fa"}, {"id": "T2", "name": "員工代客", "def": "客戶當下就在現場或線上（臨櫃、面訪、通話中），由員工代客戶完成的工具：理專平台、業務員輔助、客服人員系統。客戶不在場的員工工具算後台", "color": "#2f6f66", "short": "代客", "tint": "#e9f3f1"}, {"id": "T3", "name": "內部後台", "def": "客戶不在場時跑的內部流程與地基：後勤作業、風控中台、系統平台與算力，以及全員通用的生產力工具", "color": "#55606e", "short": "後台", "tint": "#eff1f4"}, {"id": "T4", "name": "跨機構", "def": "對象不是自家客戶而是外部機構：同業聯防、國家隊、監理往來、生態系夥伴", "color": "#8f7638", "short": "跨機構", "tint": "#f6f1e4"}];
+const GOAL_DEF = [{"id": "G1", "name": "降本增效", "def": "讓內部既有作業更快、更準、更省人力", "color": "#2f6f66", "short": "降本", "tint": "#e9f3f1"}, {"id": "G2", "name": "拓展業務", "def": "帶進客戶、規模、手續費，做大既有生意", "color": "#3a67b5", "short": "拓展", "tint": "#eaf0fa"}, {"id": "G3", "name": "防範損失", "def": "防詐、資安、風控，讓損失不要發生", "color": "#a15750", "short": "防損", "tint": "#f8edec"}, {"id": "G4", "name": "法遵應對", "def": "法規要求、監理核准、國際認證、治理框架", "color": "#6a5aa3", "short": "法遵", "tint": "#f0edf8"}];
+
+/* 逗號與換行都可能出現在「說明」欄裡，所以要照 CSV 引號規則走，不能 split(',') */
+function parseCSV(text) {
+  const rows = [[]]; let f = '', q = false;
+  text = text.replace(/^\uFEFF/, '');
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; }
+      else f += c;
+    } else if (c === '"') q = true;
+    else if (c === ',') { rows[rows.length - 1].push(f); f = ''; }
+    else if (c === '\n') { rows[rows.length - 1].push(f); f = ''; rows.push([]); }
+    else if (c !== '\r') f += c;
+  }
+  rows[rows.length - 1].push(f);
+  const [head, ...body] = rows.filter(r => r.some(x => x !== ''));
+  return body.map(r => Object.fromEntries(head.map((h, k) => [h.trim(), (r[k] ?? '').trim()])));
+}
+
+function buildD(tax, prof, cap) {
+  const caps = tax.map(t => ({id: t['能力項ID'], side: t['側'], name: t['能力項'],
+                              def: t['定義'], color: CAP_COLOR[t['側']]}));
+  const tset = new Set(TOUCH_DEF.map(x => x.id)), gset = new Set(GOAL_DEF.map(x => x.id));
+  const skipped = [];
+  const rows = [];
+  for (const r of cap) {
+    /* 接觸點／目的沒填的列畫不出來（篩選軸會查不到），寧可少一列也不要整頁掛掉 */
+    if (!tset.has(r['接觸點']) || !gset.has(r['目的'])) {
+      skipped.push(`${r['集團']}／${r['子公司']}／${r['能力項ID']}`);
+      continue;
+    }
+    rows.push({g: r['集團'], sub: r['子公司'], sector: r['業別'], cap: r['能力項ID'],
+               st: r['狀態'], note: r['說明'], t: r['接觸點'], p: r['目的'],
+               date: r['最近佐證日期'], url: r['佐證URL'], title: r['佐證標題'],
+               hist: r['歷次佐證日期'] || ''});
+  }
+  if (skipped.length) console.warn('接觸點／目的沒填，已跳過這幾列：', skipped);
+  return {
+    caps, rows,
+    groups: GROUP_ORDER.filter(g => rows.some(r => r.g === g)),
+    profile: Object.fromEntries(prof.map(x => [x['集團'], x])),
+    me: MY_GROUP, touch: TOUCH_DEF, goal: GOAL_DEF,
+  };
+}
+
+let D, GROUPS, ME, CAPS, TOUCH, GOAL, T, P, C, MCAPS, M, CAP2M, ALL_QS, SECTORS;
+
+
+/* =========================================================================
+   顯示層合併：資料源照舊存 13 個細分類，畫面上併成 10 項、分三段。
+   映射只住在這裡——data/peer_taxonomy.csv、data/peer_capability.csv、
+   build_peer_test.py 與 peer-overview skill 一律不動。細的存、粗的看。
+   併不進 AI／數金兩面的是防詐：A6（AI 防詐）與 B7（防詐聯防）本來是同一件事
+   被「有沒有用 AI 做」劈成兩半，加上 B5 共 72 則、佔全站 26%，自成一段。
+   ========================================================================= */
+const SIDES = [
+  ['AI 面', '#2a78d6'],
+  ['數金面', '#7c3aed'],
+  ['防詐與風控面', '#a15750'],
+];
+const SIDE_COLOR = Object.fromEntries(SIDES);
+const MCAP_DEF = [
+  ['M1', 'AI 面', 'AI 基礎建設與全員導入', ['A1', 'A3']],
+  ['M2', 'AI 面', '自建／共建金融語言模型', ['A2']],
+  ['M3', 'AI 面', 'AI 核心作業自動化', ['A4']],
+  ['M4', 'AI 面', 'AI 對客服務與個人化', ['A5']],
+  ['M5', '數金面', '數位入口與支付', ['B1', 'B2']],
+  ['M6', '數金面', '企業金融數位化', ['B3']],
+  ['M7', '數金面', '財富管理數位化', ['B4']],
+  ['M8', '數金面', '區塊鏈／虛擬資產', ['B6']],
+  ['M9', '防詐與風控面', '防詐與 AML', ['A6', 'B7']],
+  ['M10', '防詐與風控面', '資安韌性與數位身分', ['B5']],
+];
+const buildMcaps = () => MCAP_DEF.map(([id, side, name, src]) => ({
+  id, side, name, src,
+  color: SIDE_COLOR[side],
+  def: src.map(x => C[x].def).join('；'),
+  srcLabel: src.map(x => `${x} ${C[x].name}`).join('／'),
+  /* 跨面的合併（目前只有 M9 防詐與 AML＝A6 在 AI 面、B7 在數金面）在主表下方拆兩行，
+     否則「這件事是不是用 AI 做的」這個區分就從畫面上消失了 */
+  split: [...new Set(src.map(x => C[x].side))].length > 1
+    ? src.map(x => ({cap: x, side: C[x].side + ' 面', name: C[x].name})) : null,
+}));
+const mcapOf = r => CAP2M[r.cap];
+/* 12 家佐證筆數的中位數，兩處揭露覆蓋率共用同一個算法 */
+const medianRows = () => {
+  const c = GROUPS.map(g => D.rows.filter(r => r.g === g).length).sort((a, b) => a - b);
+  return Math.round((c[(c.length - 1) >> 1] + c[c.length >> 1]) / 2);
+};
+const RANK = {'已導入':3, '宣示中':2, '暫停':1};
+const STATE = {3:{chip:'done',label:'已導入'}, 2:{chip:'claim',label:'宣示中'},
+               1:{chip:'stop',label:'暫停'},  0:{chip:'',label:'未見佐證'}};
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const jsq = s => String(s ?? '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
+/* ---------- 狀態 ---------- */
+let view = 'main';
+let sel = null;                              // {key,label,rows} 目前展開的那一格
+let who;
+let whoSub = '__all__';                       // 單家詳頁的子公司篩選，換集團時重設
+let fT = new Set(), fP = new Set(), fS = new Set();   // 接觸點／目的／事業別，都是多選
+
+/* ---------- 取值 ---------- */
+const shown = () => D.rows.filter(r =>
+  (!fT.size || fT.has(r.t)) && (!fP.size || fP.has(r.p)) && (!fS.size || fS.has(r.sector)));
+const filtering = () => fT.size > 0 || fP.size > 0 || fS.size > 0 || whoSub !== '__all__';
+/* 單家詳頁鑽下去的四個抽屜共用：只給那一家，且吃子公司篩選 */
+const inOne = (r, g) => r.g === g && (whoSub === '__all__' || r.sub === whoSub);
+const stateOf = rows => rows.length ? Math.max(...rows.map(r => RANK[r.st] || 0)) : 0;
+const datesOf = r => {
+  const ds = String(r.hist || r.date || '').split(/[、,;]/).map(s => s.trim()).filter(Boolean);
+  return ds.length ? ds.sort() : (r.date ? [r.date] : []);
+};
+const qOf = d => { const m = /^(\d{4})-(\d{2})/.exec(d || ''); return m ? `${m[1]} Q${Math.ceil(+m[2]/3)}` : ''; };
+const topOf = arr => {
+  const m = new Map();
+  arr.forEach(x => m.set(x, (m.get(x) || 0) + 1));
+  return [...m.entries()].sort((a, b) => b[1] - a[1])[0] || ['—', 0];
+};
+/* 全站季度軸：所有階梯圖共用同一條尺，不同格子之間才能直接對照先後 */
+
+
+/* 連續季度軸：中間沒佐證的季度也要留欄位，時間感才不會被壓縮 */
+function quarterRange(ds) {
+  const qs = ds.map(qOf).filter(Boolean).sort();
+  if (!qs.length) return [];
+  let [y, q] = qs[0].split(' Q').map(Number);
+  const [ey, eq] = qs[qs.length - 1].split(' Q').map(Number), out = [];
+  while (y < ey || (y === ey && q <= eq)) { out.push(`${y} Q${q}`); if (++q > 4) { q = 1; y++; } }
+  return out;
+}
+
+/* =========================================================================
+   逐季長條：全站唯一的時間畫法。階梯圖（固定一個能力項看 12 家）與
+   全景圖（固定一家看 10 個能力項）是同一份資料的轉置，所以共用這個元件——
+   讀者只需要學一次怎麼讀，也才會發現那兩張圖其實是同一張表橫著看跟豎著看。
+   一格＝一季：該季有已導入佐證→實色，只有宣示中→空心環，只有暫停→紅，沒有→灰底。
+   click 是 q => onclick 屬性字串，由呼叫端決定點下去開什麼。
+   ========================================================================= */
+function qStrip(rows, click) {
+  return `<span class="qstrip">${ALL_QS.map(q => {
+    const hit = rows.filter(r => datesOf(r).some(d => qOf(d) === q));
+    if (!hit.length) return `<span class="qcell" title="${esc(q)}：無"></span>`;
+    const cls = STATE[Math.max(...hit.map(r => RANK[r.st] || 0))].chip;
+    const t = `${q}：${hit.length} 條・${[...new Set(hit.map(r => r.st))].join('／')}`;
+    return `<span class="qcell ${cls}" title="${esc(t)}" ${click(q)}></span>`;
+  }).join('')}</span>`;
+}
+
+/* =========================================================================
+   策略全景（單家詳頁）：縱軸 10 個能力項、橫軸季度，與階梯圖同一套畫法
+   ========================================================================= */
+function panorama(g, rows) {
+  if (!rows.length) return '<p class="empty">這家目前沒有佐證。</p>';
+
+  const capRow = m => {
+    const rs = rows.filter(r => mcapOf(r) === m.id);
+    const first = rs.flatMap(datesOf).sort()[0] || '';
+    const st = STATE[stateOf(rs)];
+    return `<div class="lad">
+      <button class="lad-g" style="width:11rem" onclick="openCapDrawer('${m.id}','${jsq(g)}')"
+        title="${esc(m.name)}：${esc(m.def)}">${esc(m.name)}</button>
+      <span class="lad-s">${rs.length ? `<span class="chip ${st.chip}">${st.label}</span>` : '<span class="chip none">未見</span>'}</span>
+      <span class="lad-m">${rs.length ? `${esc(first)} 起・${rs.length} 條` : '未見公開資訊'}</span>
+      ${qStrip(rs, q => `onclick="openCapQ('${jsq(g)}','${m.id}','${jsq(q)}')"`)}
+    </div>${m.split ? m.split.map(sp => subRow(m, sp)).join('') : ''}`;
+  };
+
+  /* 跟主表同一條規則：跨面的合併在下方拆回 AI 面／數金面，長條細一號表示是拆解 */
+  const subRow = (m, sp) => {
+    const rs = rows.filter(r => r.cap === sp.cap);
+    const first = rs.flatMap(datesOf).sort()[0] || '';
+    const st = STATE[stateOf(rs)];
+    return `<div class="lad lad-sub">
+      <span class="lad-g" style="width:11rem" title="${esc(sp.cap)} ${esc(sp.name)}：${esc(C[sp.cap].def)}">${esc(sp.side)}</span>
+      <span class="lad-s">${rs.length ? `<span class="chip ${st.chip}">${st.label}</span>` : '<span class="chip none">未見</span>'}</span>
+      <span class="lad-m">${rs.length ? `${esc(first)} 起・${rs.length} 條` : '未見公開資訊'}</span>
+      ${qStrip(rs, q => `onclick="openCapSubQ('${jsq(g)}','${sp.cap}','${jsq(q)}')"`)}
+    </div>`;
+  };
+
+  const bands = SIDES.map(([side]) => {
+    const caps = MCAPS.filter(m => m.side === side);
+    const n = rows.filter(r => M[mcapOf(r)].side === side).length;
+    return `<div class="lad-side" style="--c:${SIDE_COLOR[side]}"><i></i>${esc(side)}
+      <span>${caps.length} 個能力項・${n} 條佐證</span></div>${caps.map(capRow).join('')}`;
+  }).join('');
+
+  return `<p class="footnote" style="margin-bottom:.75rem">
+      縱向是 10 個能力項，橫向每格一季（${esc(ALL_QS[0] || '')} ～ ${esc(ALL_QS[ALL_QS.length - 1] || '')}）。
+      <span class="qkey done"></span> 該季有已導入佐證　<span class="qkey claim"></span> 只有宣示中
+      <span class="qkey stop"></span> 暫停　<span class="qkey"></span> 該季無動作。點長條看那一季的佐證，點能力項名看定義。</p>
+    <div class="lad-wrap thin"><div class="lad-inner">
+      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer" style="width:25.5rem">能力項／狀態／首次導入</span><span class="qaxis-track">${ALL_QS.map((q, i) => `<span class="${i === 0 || q.endsWith('Q1') ? 'yr' : ''}">${esc(q)}</span>`).join('')}</span></div>` : ''}
+      ${bands}
+    </div></div>`;
+}
+
+function ladder(sel) {
+  const stats = GROUPS.map(g => {
+    const rs = sel.rows.filter(r => r.g === g);
+    const dates = rs.flatMap(datesOf).sort();
+    return {g, rs, state: stateOf(rs), first: dates[0] || ''};
+  });
+  const doing = stats.filter(x => x.state > 0)
+    .sort((a, b) => b.state - a.state || a.first.localeCompare(b.first));
+  const idle = stats.filter(x => !x.state);
+  const done = stats.filter(x => x.state === 3).length;
+  const claim = stats.filter(x => x.state === 2).length;
+
+  const rows = doing.map((x, i) => {
+    const st = STATE[x.state];
+    return `<div class="lad ${x.g === sel.focus ? 'focus' : ''}">
+      <span class="lad-i">${i + 1}</span>
+      <button class="lad-g ${x.g === ME ? 'me' : ''}" onclick="showOne('${jsq(x.g)}')">${esc(x.g)}${x.g === ME ? ' ★' : ''}</button>
+      <span class="lad-s"><span class="chip ${st.chip}">${st.label}</span></span>
+      <span class="lad-m">${esc(x.first)} 起・${x.rs.length} 條</span>
+      ${qStrip(x.rs, () => `onclick="openLadder('${jsq(sel.key)}','${jsq(x.g)}')"`)}
+      <button class="lad-more" onclick="openLadder('${jsq(sel.key)}','${jsq(x.g)}')" title="看佐證">明細 →</button>
+    </div>`;
+  }).join('');
+
+  return `<div class="grouphead" style="margin-bottom:1rem">
+      <div style="flex:1;min-width:16rem">
+        <div class="sec-title" style="margin-bottom:.25rem">誰在做、誰先做</div>
+        <h2 style="font-size:1.25rem;font-weight:700;color:var(--navy)">${esc(sel.label)}</h2>
+        ${sel.focus ? `<p class="footnote" style="margin-top:.375rem">你點的是 <b>${esc(sel.focus)}</b>${
+          idle.some(x => x.g === sel.focus)
+            ? '，它在這個範圍<b>未見佐證</b>，列在下方「未見佐證」那一行'
+            : '，在下表中以左側藍邊標記'};階梯圖一律橫跨 12 家，才看得出先後。</p>` : ''}
+      </div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        ${[[done, '家已導入'], [claim, '家宣示中'], [idle.length, '家未見佐證'], [sel.rows.length, '條佐證']].map(([n, l]) =>
+          `<div><div style="font-size:1.5rem;font-weight:700">${n}</div>
+           <div style="font-size:.75rem;color:var(--ink-2)">${l}</div></div>`).join('')}
+      </div>
+    </div>
+    <p class="footnote" style="margin-bottom:.75rem">
+      依最早佐證日期排序。右側每格是一季（${esc(ALL_QS[0] || '')} ～ ${esc(ALL_QS[ALL_QS.length - 1] || '')}），
+      <span class="qkey done"></span> 該季有已導入佐證　<span class="qkey claim"></span> 只有宣示中
+      <span class="qkey stop"></span> 暫停　<span class="qkey"></span> 該季無動作。點長條看佐證。</p>
+    <div class="lad-wrap thin"><div class="lad-inner">
+      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer">集團／狀態／首次導入</span><span class="qaxis-track">${ALL_QS.map((q, i) => `<span class="${i === 0 || q.endsWith('Q1') ? 'yr' : ''}">${esc(q)}</span>`).join('')}</span><span style="width:3.75rem;flex-shrink:0"></span></div>` : ''}
+      ${rows || '<p class="empty">尚無佐證</p>'}
+    </div></div>
+    ${idle.length ? `<p class="footnote" style="margin-top:.875rem;padding-top:.75rem;border-top:1px solid var(--rule)">
+      未見佐證：${idle.map(x => `<button class="linkout" onclick="showOne('${jsq(x.g)}')">${esc(x.g)}</button>`).join('、')}</p>` : ''}`;
+}
+
+/* 點階梯圖任一列或長條：只開那一家在此範圍的佐證 */
+function openLadder(key, g) {
+  if (!sel || sel.key !== key) return;
+  const rs = sortEv(sel.rows.filter(r => r.g === g));
+  if (!rs.length) return;
+  openDrawer(`<div><div class="sec-title">${esc(sel.label)}</div>
+    <div style="font-size:1.0625rem;font-weight:700;color:var(--navy);margin-top:.125rem">${esc(g)}</div>
+    <p class="footnote" style="margin-top:.25rem">${rs.length} 條佐證</p></div>`,
+    rs.map(r => evidence(r)).join(''));
+}
+
+/* =========================================================================
+   總覽：10 個能力項（列）× 12 集團（欄），分三段
+   ========================================================================= */
+function renderMain() {
+  const rows = shown();
+  const cellOf = (g, mid) => rows.filter(r => r.g === g && mcapOf(r) === mid);
+  /* 篩選讓某格空掉時，撿回它在不限條件下有幾條，避免「看起來 0、其實有」 */
+  const elsewhereOf = (g, mid) => D.rows.filter(r => r.g === g && mcapOf(r) === mid).length;
+
+  const capRow = m => {
+    const cells = GROUPS.map(g => ({g, rs: cellOf(g, m.id)}));
+    const done = cells.filter(x => stateOf(x.rs) === 3).length;
+    const key = `cap:${m.id}`;
+    return `<tr><th class="focus-cap">
+      <button class="focus-cap-label focus-cap-button ${sel && sel.key === key ? 'on' : ''}" style="--cap-color:${m.color}"
+        onclick="pickCell('${key}')" title="${esc(m.name)}：${esc(m.def)}"><i></i>${esc(m.name)}</button></th>
+      ${cells.map(({g, rs}) => {
+        const st = STATE[stateOf(rs)];
+        const k = `main:${g}|${m.id}`;
+        const el = rs.length ? 0 : elsewhereOf(g, m.id);
+        const label = rs.length ? `${g}｜${m.name}：${st.label}，${rs.length} 條佐證`
+          : (el ? `${g}｜${m.name}：目前篩選下未見佐證，不限條件時有 ${el} 條` : `${g}｜${m.name}：未見公開資訊`);
+        return `<td class="${g === ME ? 'me' : ''}"><button class="tri-dot ${st.chip} ${sel && sel.key === k ? 'on' : ''}"
+          onclick="pickCell('${k}')" aria-label="${esc(label)}" title="${esc(label)}"></button></td>`;
+      }).join('')}
+      <td class="focus-total"><b>${done}</b>/12</td></tr>${m.split ? m.split.map(subRow).join('') : ''}`;
+  };
+
+  /* 跨面合併的子列：一列一個原始細分類，狀態獨立算，圓點小一號表示它是拆解不是同層 */
+  const subRow = sp => {
+    const cells = GROUPS.map(g => rows.filter(r => r.g === g && r.cap === sp.cap));
+    const done = cells.filter(rs => stateOf(rs) === 3).length;
+    return `<tr class="focus-sub"><th class="focus-cap">
+      <span class="focus-sub-label" style="--cap-color:${C[sp.cap].color}"
+        title="${esc(sp.cap)} ${esc(sp.name)}：${esc(C[sp.cap].def)}">
+        <i></i>${esc(sp.side)}</span></th>
+      ${cells.map((rs, i) => {
+        const st = STATE[stateOf(rs)];
+        const g = GROUPS[i];
+        return `<td class="${g === ME ? 'me' : ''}"><i class="tri-dot ${st.chip}"
+          title="${esc(`${g}｜${sp.side}（${sp.name}）：${rs.length ? st.label + '，' + rs.length + ' 條佐證' : '未見公開資訊'}`)}"></i></td>`;
+      }).join('')}
+      <td class="focus-total">${done}/12</td></tr>`;
+  };
+
+  const body = SIDES.map(([side, color]) => {
+    const caps = MCAPS.filter(m => m.side === side);
+    const done = GROUPS.filter(g => caps.some(m => stateOf(cellOf(g, m.id)) === 3)).length;
+    return `<tr class="focus-side" style="--side-color:${color}">
+      <th class="focus-cap focus-side-label">${esc(side)}</th>
+      <td colspan="${GROUPS.length}"><span class="focus-side-note">${caps.length} 個能力項・${
+        rows.filter(r => M[mcapOf(r)].side === side).length} 條佐證</span></td>
+      <td class="focus-total"><b>${done}</b>/12</td></tr>${caps.map(capRow).join('')}`;
+  }).join('');
+
+  return `<div class="card card-pad">
+    <div class="map-intro"><div><div class="sec-title">總覽</div>
+      <h2 style="font-size:1.125rem;color:var(--navy)">橫向比較 12 家集團 × 10 個能力項</h2>
+      <p class="footnote" style="margin-top:.375rem;max-width:54rem">沿著同一列橫向掃描，比較各集團在該能力的導入差異。採全集團聚合口徑，資料源仍是 13 個細分類，這裡在顯示層併成 10 項。</p></div></div>
+    ${filtersHTML()}
+    <section class="focus-board" style="margin-top:1rem">
+      <div class="focus-table-wrap thin"><table class="focus-table">
+        <thead><tr><th class="focus-cap-head"></th>
+          ${GROUPS.map(g => `<th><button class="focus-company ${g === ME ? 'me' : ''}" onclick="showOne('${jsq(g)}')" title="進入 ${esc(g)} 單家詳頁">${g === ME ? '★ ' : ''}${esc(g)}</button></th>`).join('')}
+          <th class="focus-total">導入家數</th></tr></thead>
+        <tbody>${body}</tbody></table></div>
+    </section>
+    <div class="tri-state-note">
+      <span><i class="tri-dot done" style="--cap-color:var(--done)"></i>已導入</span>
+      <span><i class="tri-dot claim" style="--cap-color:var(--claim)"></i>宣示中</span>
+      <span><i class="tri-dot stop"></i>暫停</span>
+      <span><i class="tri-dot"></i>未見公開資訊</span></div>
+    <p class="footnote" style="margin-top:.5rem">空格是「沒有抓到公開佐證」，不等於沒做——各家的新聞曝光量差很多，元大自身的覆蓋率請見上方。點圓點或左側能力項，下方展開該能力「誰在做、誰先做」的 12 家階梯圖；點上方集團名進單家詳頁。</p>
+  </div>`;
+}
+
+/* =========================================================================
+   VIEW 4：單家策略詳頁
+   ========================================================================= */
+function subBuckets(g) {
+  const m = new Map();
+  D.rows.filter(r => r.g === g).forEach(r => {
+    if (!m.has(r.sub)) m.set(r.sub, {key: r.sub, name: r.sub, sector: r.sector, rows: []});
+    m.get(r.sub).rows.push(r);
+  });
+  return [...m.values()].sort((a, b) =>
+    (b.sector === '金控') - (a.sector === '金控') || b.rows.length - a.rows.length);
+}
+
+function renderOne() {
+  const g = who;
+  const p = D.profile[g] || {};
+  const inGroup = shown().filter(r => r.g === g);
+  if (whoSub !== '__all__' && !inGroup.some(r => r.sub === whoSub)) whoSub = '__all__';
+  const groupRows = whoSub === '__all__' ? inGroup : inGroup.filter(r => r.sub === whoSub);
+  const allGroupRows = D.rows.filter(r => r.g === g);   /* 涵蓋度揭露不受篩選影響，那是資料的事實 */
+  const activeCaps = MCAPS.filter(m => allGroupRows.some(r => mcapOf(r) === m.id)).length;
+  const median = medianRows();
+
+  const log = quarterLog(groupRows, '這家目前沒有佐證。');
+
+  /* 策略指紋：兩個構面交會的地方，一眼看出這家把資源壓在哪 */
+  const gc = (t, pid) => groupRows.filter(r => r.t === t && r.p === pid).length;
+  let gmax = 1; TOUCH.forEach(t => GOAL.forEach(x => { gmax = Math.max(gmax, gc(t.id, x.id)); }));
+  const fingerprint = `<div class="xwrap thin"><table class="xtable">
+    <thead><tr><th style="text-align:left">目的＼接觸點</th>${TOUCH.map(t => `<th><span style="color:${t.color}">■</span> ${esc(t.name)}</th>`).join('')}<th>合計</th></tr></thead>
+    <tbody>${GOAL.map(x => `<tr><th style="--c:${x.color}"><i></i>${esc(x.name)}</th>
+      ${TOUCH.map(t => { const n = gc(t.id, x.id);
+        if (!n) return '<td class="x x0">·</td>';
+        return `<td class="x" style="background:rgba(30,58,138,${(0.05 + 0.45 * n / gmax).toFixed(3)})"
+          onclick="openPrintCell('${jsq(g)}','${t.id}','${x.id}')" title="${esc(g)}｜${esc(t.name)}｜${esc(x.name)}：${n} 則">${n}</td>`; }).join('')}
+      <td class="tot">${TOUCH.reduce((s2, t) => s2 + gc(t.id, x.id), 0)}</td></tr>`).join('')}
+      <tr><th>合計</th>${TOUCH.map(t => `<td class="tot">${GOAL.reduce((s2, x) => s2 + gc(t.id, x.id), 0)}</td>`).join('')}<td class="tot">${groupRows.length}</td></tr>
+    </tbody></table></div>`;
+
+  return `
+    <div class="controls">
+      <div class="seg" role="group" aria-label="選擇集團">
+        ${GROUPS.map(x => `<button class="${who === x ? 'on' : ''}" onclick="showOne('${jsq(x)}')">${esc(x)}${x === ME ? ' ★' : ''}</button>`).join('')}
+      </div>
+    </div>
+
+    <div class="card card-pad">
+      <div class="grouphead">
+        <div style="flex:1;min-width:18rem">
+          <h2 style="font-size:1.5rem;font-weight:700;color:${g === ME ? 'var(--accent)' : 'var(--navy)'}">${esc(g)}${g === ME ? ' ★' : ''}</h2>
+          <p style="font-size:.875rem;font-weight:600;color:var(--ink-2);margin-top:.25rem">${esc(p['主事業體'] || '')}</p>
+          <p style="font-size:.75rem;color:var(--muted)">${esc(p['其他事業體'] || '')}</p>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--rule);margin-top:1.125rem;padding-top:1.125rem">
+        <p class="footnote">公開佐證涵蓋度 <b>${allGroupRows.length}</b> 筆・<b>${activeCaps}/10</b> 個能力項・同業中位數約 ${median} 筆。筆數反映的是新聞抓到幾則，不是投入多寡。</p>
+        ${p['AI導入策略總述'] ? `<details style="margin-top:.875rem" open><summary class="linkout" style="cursor:pointer">研究判讀與策略脈絡</summary><p style="font-size:.8125rem;color:var(--ink-2);line-height:1.75;margin-top:.625rem">${esc(p['AI導入策略總述'])}</p></details>` : ''}
+        <p class="footnote" style="margin-top:.5rem">資料最後更新 ${esc(p['最後更新'] || '—')}</p>
+      </div>
+    </div>
+
+    <div class="card card-pad" style="margin-top:1rem">
+      <div class="sec-title">策略全景</div>
+      <div class="h3" style="margin-top:.125rem">${esc(g)} 的 10 個能力項 × 逐季推進</div>
+      ${filtersHTML(g)}
+      <div style="margin-top:.875rem">${panorama(g, groupRows)}</div>
+    </div>
+
+    <div class="card card-pad" style="margin-top:1rem">
+      <div class="sec-title">策略指紋</div>
+      <div class="h3" style="margin-top:.125rem">${esc(g)} 的接觸點 × 目的</div>
+      <p class="footnote" style="margin:.375rem 0 0;max-width:56rem">跟別家同口徑，可以直接對照：重心壓在「客戶自助 × 拓展業務」是把資源投在 App 與線上申辦，壓在「跨機構 × 法遵應對」是走聯防與國家隊，壓在後台作業那一欄則是還在打地基。點任一格看那一格的佐證。</p>
+      ${fingerprint}
+    </div>
+
+    <div class="card card-pad" style="margin-top:1rem">
+      <div class="sec-title">佐證清單</div>
+      <div class="h3" style="margin-top:.125rem">導入事件</div>
+      <p class="footnote" style="margin-top:.25rem">按季度由新到舊，每一條都帶子公司、能力項與接觸點；點卡片開原文。</p>
+      ${log}
+    </div>`;
+}
+
+/* =========================================================================
+   通用詳情面板：任何一格點下去都長這樣（時間線 + 佐證）
+   ========================================================================= */
+/* 選取拆成兩件事：pred 決定階梯圖的範圍（一律橫跨 12 家），
+   focus 只是把你點的那一家標起來。集團不當篩選，否則階梯圖只剩一列。 */
+const SPEC = {
+  main: (g, mid) => ({pred: r => mcapOf(r) === mid, focus: g,  label: M[mid].name}),
+  cap:  (mid)    => ({pred: r => mcapOf(r) === mid, focus: '', label: M[mid].name}),
+};
+
+function pickCell(key) {
+  if (sel && sel.key === key) { sel = null; return render(); }
+  const i = key.indexOf(':');
+  const kind = key.slice(0, i), [a, b] = key.slice(i + 1).split('|');
+  const spec = SPEC[kind](a, b);
+  sel = {key, kind, label: spec.label, focus: spec.focus, rows: shown().filter(spec.pred)};
+  render();
+  document.getElementById('detail').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+/* 「誰在做、誰先做」只掛在總覽：那是橫跨 12 家的比較，
+   單家詳頁的問題是「這一家怎麼推進」，兩者混在一起會讓詳頁失焦 */
+function renderDetail() {
+  const el = document.getElementById('detail');
+  if (!sel || view !== 'main') { el.innerHTML = ''; return; }
+  if (!sel.rows.length) {
+    el.innerHTML = `<div class="card card-pad" style="margin-top:1.5rem">
+      <div class="detail-head"><div><div class="sec-title">誰在做、誰先做</div>
+        <div class="h3" style="margin-top:.125rem">${esc(sel.label)}</div></div>
+        <button class="detail-close" onclick="pickCell('${jsq(sel.key)}')">收合 ✕</button></div>
+      <p class="empty">這一格在目前的篩選下沒有佐證。</p></div>`;
+    return;
+  }
+  const log = quarterLog(sel.rows, '這一格沒有佐證。');
+
+  el.innerHTML = `<div class="card card-pad" style="margin-top:1.5rem">
+      <div style="display:flex;justify-content:flex-end"><button class="detail-close" onclick="pickCell('${jsq(sel.key)}')">收合 ✕</button></div>
+      ${ladder(sel)}
+    </div>
+    <div class="card card-pad" style="margin-top:1rem">
+      <div class="h3">逐季歷程</div>
+      <p class="footnote" style="margin-bottom:.25rem">一則佐證一列，最新的季在最上面；同一件事的歷次推進會各自出現。</p>
+      ${log}</div>`;
+}
+
+/* 佐證清單：一季一個節點，掛在一條垂直軸上。
+   同一則佐證若有多個日期（hist），每個日期各落一次，才看得出歷次推進 */
+function quarterLog(rows, empty) {
+  const items = [];
+  rows.forEach(r => datesOf(r).forEach(d => items.push({r, d, q: qOf(d)})));
+  items.sort((a, b) => b.d.localeCompare(a.d));
+  if (!items.length) return `<p class="empty">${esc(empty)}</p>`;
+  const byQ = new Map();
+  items.forEach(x => { if (!byQ.has(x.q)) byQ.set(x.q, []); byQ.get(x.q).push(x); });
+  return `<div class="tline">${[...byQ.entries()].map(([q, xs]) => `
+    <div class="tline-q"><i class="tline-mark"></i>
+      <div class="tline-head">${esc(q)}<span>${xs.length} 條</span></div>
+      ${xs.map(x => evidence(x.r, x.d)).join('')}</div>`).join('')}</div>`;
+}
+
+/* 佐證卡 */
+function evidence(r, d) {
+  const c = C[r.cap], m = M[mcapOf(r)];
+  const inner = `
+    <div style="display:flex;align-items:center;gap:.375rem;flex-wrap:wrap;margin-bottom:.4375rem">
+      <span style="font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums">${esc(d || r.date || '日期不明')}</span>
+      <span class="tag">${esc(r.g)}</span><span class="tag">${esc(r.sub)}</span><span class="tag">${esc(r.sector)}</span>
+      <span class="chip ${STATE[RANK[r.st] || 0].chip}">${esc(r.st)}</span>
+      ${r.url ? '<span class="linkout" style="margin-left:auto">開新聞 ↗</span>' : ''}
+    </div>
+    <p style="font-size:.875rem;line-height:1.7">${esc(r.note)}</p>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:.375rem">${esc(r.title || '')}</p>
+    <div class="tagrow">
+      <span class="axtag" style="--c:${m.color}" title="細分類：${esc(c.id)} ${esc(c.name)}">${esc(m.name)}</span>
+      <span class="axtag" style="--c:${T[r.t].color}">${esc(T[r.t].name)}</span>
+      <span class="axtag" style="--c:${P[r.p].color}">${esc(P[r.p].name)}</span>
+    </div>`;
+  return r.url ? `<a class="ev" href="${esc(r.url)}" target="_blank" rel="noopener">${inner}</a>`
+               : `<div class="ev">${inner}</div>`;
+}
+const sortEv = rows => rows.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+/* ---------- Drawer（時間線節點與能力項名稱） ---------- */
+function openDrawer(head, body) {
+  document.getElementById('drawerHead').innerHTML = head;
+  document.getElementById('drawerBody').innerHTML = body;
+  document.getElementById('mask').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('mask').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+/* 指紋圖的一格：某家 × 某接觸點 × 某目的。詳頁不做「誰在做、誰先做」，只開佐證 */
+function openPrintCell(g, t, pid) {
+  const rows = shown().filter(r => inOne(r, g) && r.t === t && r.p === pid);
+  if (!rows.length) return;
+  openDrawer(`<div><div class="sec-title">策略指紋</div>
+    <div style="font-size:1.0625rem;font-weight:700;color:var(--navy);margin-top:.125rem">${esc(g)}</div>
+    <div class="tagrow"><span class="axtag" style="--c:${T[t].color}">${esc(T[t].name)}</span><span class="axtag" style="--c:${P[pid].color}">${esc(P[pid].name)}</span></div>
+    <p class="footnote" style="margin-top:.25rem">${rows.length} 則佐證</p></div>`,
+    sortEv(rows).map(r => evidence(r)).join(''));
+}
+
+/* 全景圖拆解列的一格：某家 × 某原始細分類 × 某季 */
+function openCapSubQ(g, cap, q) {
+  const c = C[cap];
+  const rows = shown().filter(r => inOne(r, g) && r.cap === cap && datesOf(r).some(d => qOf(d) === q));
+  if (!rows.length) return;
+  openDrawer(`<div><div class="sec-title">${esc(q)}</div>
+    <div style="font-size:1.0625rem;font-weight:700;color:var(--navy);margin-top:.125rem">${esc(g)}　${esc(c.name)}</div>
+    <p class="footnote" style="margin-top:.25rem">${esc(c.side)} 面・${rows.length} 則佐證</p></div>`,
+    sortEv(rows).map(r => evidence(r)).join(''));
+}
+
+/* 全景圖的一格：某家 × 某合併能力項 × 某季 */
+function openCapQ(g, mid, q) {
+  const m = M[mid];
+  const rows = shown().filter(r => inOne(r, g) && mcapOf(r) === mid && datesOf(r).some(d => qOf(d) === q));
+  if (!rows.length) return;
+  openDrawer(`<div><div class="sec-title">${esc(q)}</div>
+    <div style="font-size:1.0625rem;font-weight:700;color:var(--navy);margin-top:.125rem">${esc(g)}　${esc(m.name)}</div>
+    <p class="footnote" style="margin-top:.25rem">${rows.length} 則佐證</p></div>`,
+    sortEv(rows).map(r => evidence(r)).join(''));
+}
+/* g 有值就只看那一家（單家詳頁鑽下去不該冒出別家的新聞）；沒給就是全站 */
+function openCapDrawer(mid, g) {
+  const m = M[mid], rows = shown().filter(r => mcapOf(r) === mid && (!g || inOne(r, g)));
+  const spread = (list, field) => list.map(x => {
+    const n = rows.filter(r => r[field] === x.id).length;
+    return `<span class="axtag" style="--c:${x.color};opacity:${n ? 1 : .3}">${esc(x.name)} ${n}</span>`;
+  }).join(' ');
+  openDrawer(`<div><div class="sec-title">能力項</div>
+    <div style="font-size:1.0625rem;font-weight:700;color:var(--navy);margin-top:.125rem">${g ? esc(g) + '　' : ''}${esc(m.name)}</div>
+    <p class="footnote" style="margin-top:.25rem">${esc(m.def)}</p>
+    <p class="footnote" style="margin-top:.25rem">資料源細分類：${esc(m.srcLabel)}</p>
+    <div class="tagrow">${spread(TOUCH, 't')}</div>
+    <div class="tagrow">${spread(GOAL, 'p')}</div></div>`,
+    sortEv(rows).map(r => evidence(r)).join(''));
+}
+
+/* ---------- 篩選列 ---------- */
+/* 接觸點與目的兩個構面：能力項回答做了什麼，這兩軸回答落在哪一層、為了什麼。
+   chip 上的數字是「在另一軸的目前條件下」還剩幾條，兩軸互相牽動。 */
+function filtersHTML(g) {
+  /* 給了集團就只算那一家：詳頁的 chip 數字若是全站的，讀者會以為在看全站 */
+  const base = g ? D.rows.filter(r => r.g === g) : D.rows;
+  const sub = r => !g || whoSub === '__all__' || r.sub === whoSub;
+  const hit = base.filter(r => (!fT.size || fT.has(r.t)) && (!fP.size || fP.has(r.p))
+    && (!fS.size || fS.has(r.sector)) && sub(r));
+  /* 每一軸的數字都吃「其他軸」的條件，自己那一軸不算——否則按下去的那顆會自我歸零 */
+  const cnt = (k, f) => base.filter(r => r[f] === k && sub(r) &&
+    (f === 't' || !fT.size || fT.has(r.t)) &&
+    (f === 'p' || !fP.size || fP.has(r.p)) &&
+    (f === 'sector' || !fS.size || fS.has(r.sector))).length;
+  const bar = (list, on, field) => list.map(x =>
+    `<button class="fchip ${on.has(x.id) ? 'on' : ''}" style="--c:${x.color}" onclick="toggleFilter('${field}','${x.id}')" title="${esc(x.def)}">
+      <i></i>${esc(x.name)}<span class="n">${cnt(x.id, field)}</span></button>`).join('');
+  return `<div class="filters">
+    <div class="frow"><span class="flabel">接觸點</span>${bar(TOUCH, fT, 't')}</div>
+    <div class="frow"><span class="flabel">目的</span>${bar(GOAL, fP, 'p')}</div>
+    ${g ? `<div class="frow"><span class="flabel">子公司</span>${subChips(g)}</div>`
+        : `<div class="frow"><span class="flabel">事業別</span>${bar(SECTORS, fS, 'sector')}</div>`}
+    <div class="frow"><span class="flabel"></span><span class="fsum">符合條件的佐證 <b>${hit.length}</b> / ${base.length} 則${g ? `（${esc(g)}）` : ''}</span>
+      ${filtering() ? '<button class="detail-close" onclick="clearFilters()">清除篩選</button>' : ''}</div>
+  </div>`;
+}
+
+/* 事業別：照組織層級排，不照筆數——讀者是照「金控／銀行／證券…」的心智模型在找 */
+const SECTOR_ORDER = ['金控', '銀行', '證券', '人壽', '產險', '投信', '期貨'];
+const buildSectors = () => SECTOR_ORDER
+  .filter(x => D.rows.some(r => r.sector === x))
+  .concat([...new Set(D.rows.map(r => r.sector))].filter(x => !SECTOR_ORDER.includes(x)))
+  .map(x => ({id: x, name: x, color: 'var(--navy)', def: x + '：依事業體分類，不是集團層級'}));
+
+/* 子公司只在單家詳頁出現：金控底下銀行／證券／人壽的推進節奏差很多，
+   但它是單選（看某一家子公司的軌跡），跟接觸點／目的的多選語意不同 */
+function subChips(g) {
+  const rows = D.rows.filter(r => r.g === g && (!fT.size || fT.has(r.t)) && (!fP.size || fP.has(r.p)));
+  const buckets = subBuckets(g).filter(b => rows.some(r => r.sub === b.key));
+  return `<button class="fchip ${whoSub === '__all__' ? 'on' : ''}" style="--c:var(--navy)" onclick="pickSub('__all__')">
+      全部<span class="n">${rows.length}</span></button>` +
+    buckets.map(b => {
+      const n = rows.filter(r => r.sub === b.key).length;
+      return `<button class="fchip ${whoSub === b.key ? 'on' : ''}" style="--c:var(--navy)"
+        onclick="pickSub('${jsq(b.key)}')" title="${esc(b.sector)}">${esc(b.name)}<span class="n">${n}</span></button>`;
+    }).join('');
+}
+
+/* ---------- 頁首 tile ---------- */
+/* 只留兩個：一個是真的中繼資料，一個是誠實揭露元大的覆蓋率。
+   「佐證 272 則」「已導入 242」那種數字是在數新聞抓到幾則，不是在數導入，故刪。 */
+function renderTiles() {
+  const latest = D.rows.map(r => r.date).filter(Boolean).sort().pop() || '—';
+  const meRows = D.rows.filter(r => r.g === ME);
+  const meCaps = MCAPS.filter(m => meRows.some(r => mcapOf(r) === m.id)).length;
+  document.getElementById('tiles').innerHTML = `
+    <div>資料截止 <b>${esc(latest)}</b>・全站 ${D.rows.length} 則佐證</div>
+    <div class="me">${ME} <b>${meRows.length}</b> 筆・涵蓋 <b>${meCaps}/10</b> 項・同業中位數 ${medianRows()} 筆</div>
+    <div class="hint">空格是未見公開資訊，不等於沒做</div>`;
+}
+
+/* ---------- 路由 ---------- */
+function render() {
+  document.querySelectorAll('.tabs .tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  document.getElementById('panel').innerHTML = view === 'main' ? renderMain() : renderOne();
+  renderTiles();
+  renderDetail();
+}
+function go(v) { view = v; sel = null; closeDrawer(); render(); }
+const FSET = {t: () => fT, p: () => fP, sector: () => fS};
+function toggleFilter(field, id) {
+  const set = FSET[field]();
+  set.has(id) ? set.delete(id) : set.add(id);
+  sel = null;
+  render();
+}
+function clearFilters() { fT.clear(); fP.clear(); fS.clear(); whoSub = '__all__'; sel = null; render(); }
+function pickSub(k) { whoSub = k; sel = null; render(); }
+function showOne(g) { who = g; view = 'one'; sel = null; closeDrawer(); render(); scrollTo({top: 0, behavior: 'smooth'}); }
+
+document.getElementById('menuToggle').onclick = () =>
+  document.getElementById('mobileMenu').classList.toggle('open');
+
+async function boot() {
+  const names = ['peer_taxonomy', 'peer_profile', 'peer_capability'];
+  try {
+    const [tax, prof, cap] = await Promise.all(names.map(n => fetch(csvUrl(n)).then(r => {
+      if (!r.ok) throw new Error(`${n}：HTTP ${r.status}`);
+      return r.text();
+    }).then(parseCSV)));
+    D = buildD(tax, prof, cap);
+    if (!D.rows.length) throw new Error('peer_capability 沒有可用的資料列');
+  } catch (e) {
+    console.error(e);
+    document.getElementById('panel').innerHTML =
+      `<div class="loaderr">讀不到 Google Sheet 的資料（${esc(e.message)}）。<br>`
+      + `請確認試算表的共用設定是「知道連結的任何人／檢視者」，並已跑過 `
+      + `<code>uv run peer_sheet.py push</code>。</div>`;
+    return;
+  }
+  GROUPS = D.groups; ME = D.me; CAPS = D.caps; TOUCH = D.touch; GOAL = D.goal;
+  T = Object.fromEntries(TOUCH.map(x => [x.id, x]));
+  P = Object.fromEntries(GOAL.map(x => [x.id, x]));
+  C = Object.fromEntries(CAPS.map(x => [x.id, x]));
+  MCAPS = buildMcaps();
+  M = Object.fromEntries(MCAPS.map(x => [x.id, x]));
+  CAP2M = Object.fromEntries(MCAPS.flatMap(m => m.src.map(x => [x, m.id])));
+  ALL_QS = quarterRange(D.rows.flatMap(datesOf));
+  SECTORS = buildSectors();
+  who = ME;
+  render();
+}
+boot();
+</script>
+</body>
+</html>

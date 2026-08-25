@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 小學堂｜數金情報站</title>
+    <meta name="description" content="每週一集，用當週的 AI 新聞當入口，把一個概念講透。寫給商管背景的同事。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+        .card-hover:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.06); }
+
+        .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+        .hero-classroom { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+
+        .filter-btn { transition: all 0.15s; }
+        .filter-btn.active { background: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+        .view-btn { border-bottom: 2px solid transparent; margin-bottom: -1px; }
+        .view-btn.active { color: #1e3a8a; border-bottom-color: #2563eb; }
+        i.lg { display:inline-block; width:.55rem; height:.55rem; border-radius:999px; margin-right:.25rem; vertical-align:middle; }
+
+        /* 時間軸左側線 */
+        #lessonList { position: relative; }
+        @media (min-width: 640px) {
+            #lessonList::before {
+                content: "";
+                position: absolute; left: -1.35rem; top: 0.6rem; bottom: 0.6rem;
+                width: 2px; border-radius: 999px;
+                background: linear-gradient(to bottom, #93c5fd, #e2e8f0);
+            }
+            .lesson-card { position: relative; }
+            .lesson-card::before {
+                content: "";
+                position: absolute; left: -1.75rem; top: 1.4rem;
+                width: 0.7rem; height: 0.7rem; border-radius: 999px;
+                background: #fff; border: 2px solid #3b82f6;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+    <!-- NAVBAR -->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../ai_classroom/classroom.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-white/70 hover:text-white py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../ai_classroom/classroom.html" class="block text-orange-300 font-semibold py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+
+    <!-- HERO -->
+    <header class="hero-classroom text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+            <div class="flex items-center gap-2.5 mb-3">
+                <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center">
+                    <svg class="w-4.5 h-4.5" style="width:1.1rem;height:1.1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/>
+                    </svg>
+                </div>
+                <h1 class="page-title">AI 小學堂</h1>
+            </div>
+            <p class="text-white/75 leading-relaxed max-w-2xl">
+                每週一集；用本週的 AI 新聞當入口，從裡面拉出幾個概念。
+            </p>
+            <div class="mt-6 inline-flex items-center gap-2 text-xs text-white/50 bg-white/10 rounded-full px-3.5 py-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                每週五更新
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+        <!-- 主分頁：課程 / 名詞圖 -->
+        <div class="flex items-center gap-1 mb-7 border-b border-slate-200">
+            <button data-view="lessons" class="view-btn active px-4 py-2.5 text-sm font-semibold text-gray-400">課程</button>
+            <button data-view="terms"   class="view-btn px-4 py-2.5 text-sm font-semibold text-gray-400">名詞圖</button>
+        </div>
+
+      <div id="view-lessons">
+        <!-- 篩選 -->
+        <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+            <div class="inline-flex items-center bg-slate-200/70 rounded-xl p-1 gap-0.5">
+                <button data-filter="全部" class="filter-btn active px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">全部</button>
+                <button data-filter="概念" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">概念</button>
+                <button data-filter="實作" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">實作</button>
+            </div>
+            <span id="lessonCount" class="text-xs text-gray-400"></span>
+        </div>
+
+        <!-- 集數清單（由 build_lessons.py 產生，不要手改） -->
+        <div id="lessonList" class="space-y-3 sm:ml-6">
+<!--LESSONS:START-->
+<a href="lessons/2026-W34-benchmark.html" class="lesson-card block bg-white rounded-2xl card card-hover transition-shadow px-5 py-4" data-type="概念"><div class="flex items-center gap-2 mb-2 text-[11px]"><span class="font-semibold tracking-wider text-gray-400">2026-W34</span><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-50 text-blue-600">概念</span><span class="text-gray-300">2026-08-19</span></div><h3 class="text-base font-semibold text-gray-800 leading-snug mb-1.5">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</h3><p class="text-sm text-gray-500 leading-relaxed mb-2.5">每次新模型發表，都會附上一排百分比。這一集回答那些數字是什麼、為什麼「不及格的分數」可以拿來當賣點，以及為什麼你們風控天天在跑的模型驗證幾乎不會有這種問題——順便講清楚採購時該追問哪三題。</p><div class="flex flex-wrap gap-1.5"><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">評測基準</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">評測污染</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">刷榜</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">採購</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">模型驗證</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">換模型</span></div></a>
+<a href="lessons/2026-W33-next-token-prediction.html" class="lesson-card block bg-white rounded-2xl card card-hover transition-shadow px-5 py-4" data-type="概念"><div class="flex items-center gap-2 mb-2 text-[11px]"><span class="font-semibold tracking-wider text-gray-400">2026-W33</span><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-50 text-blue-600">概念</span><span class="text-gray-300">2026-08-17</span></div><h3 class="text-base font-semibold text-gray-800 leading-snug mb-1.5">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</h3><p class="text-sm text-gray-500 leading-relaxed mb-2.5">你按過那個會先跑「思考中」再回答的模式，它答得比較準，也比較慢。這一集回答為什麼——順便講清楚模型平常到底在做什麼事，以及那段你看不到的思考，帳單是誰付的。</p><div class="flex flex-wrap gap-1.5"><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">推理模型</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">思考鏈</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">猜下一個字</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">Token</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">可驗證獎勵</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">成本</span><span class="text-[11px] text-gray-400 bg-slate-100 px-2 py-0.5 rounded-full">採購</span></div></a>
+<!--LESSONS:END-->
+        </div>
+
+        <div id="emptyState" class="hidden text-center py-16 text-gray-400 text-sm">
+            這個分類還沒有內容
+        </div>
+      </div><!-- /view-lessons -->
+
+      <div id="view-terms" class="hidden">
+        <p class="text-sm text-gray-500 leading-relaxed mb-5">
+            課文裡出現過的專有名詞。<b class="text-gray-700">實線箭頭</b>是「因為前一個留下的洞，它才出現」，
+            <b class="text-gray-700">虛線</b>是「這兩個很容易搞混」，<b class="text-gray-700">灰線</b>連到提過它的那一集。
+            可以拖曳節點、滾輪縮放；點一下進說明頁。
+        </p>
+
+        <div class="relative bg-white rounded-2xl card mb-6 overflow-hidden">
+            <svg id="graph" style="width:100%;height:min(70vh,560px);display:block;cursor:grab;"></svg>
+
+            <div class="absolute top-3 left-3 flex flex-col gap-1.5 text-[11px]">
+                <button id="showLessons" data-on="1" class="bg-white/90 backdrop-blur rounded-lg px-2.5 py-1.5 border border-slate-200 text-gray-600 hover:text-gray-900 text-left">集數節點：顯示中</button>
+                <button id="graphReset" class="bg-white/90 backdrop-blur rounded-lg px-2.5 py-1.5 border border-slate-200 text-gray-500 hover:text-gray-800">重設視角</button>
+            </div>
+
+            <div id="graphTip" class="hidden absolute pointer-events-none bg-white rounded-xl border border-slate-200 shadow-lg px-3 py-2 text-xs max-w-[16rem] leading-relaxed"></div>
+        </div>
+
+        <div class="flex items-center gap-2 mb-4 flex-wrap">
+            <input id="termSearch" type="search" placeholder="搜尋名詞…"
+                   class="flex-1 min-w-[10rem] bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm outline-none focus:border-blue-400">
+            <span id="termCount" class="text-xs text-gray-400"></span>
+        </div>
+
+        <div id="termList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<!--TERMLIST:START-->
+<a href="terms/benchmark-contamination.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="benchmark contamination 評測污染 考題早就被讀進訓練資料了，所以高分可能只是背起來。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Benchmark Contamination<span class="text-gray-400 font-normal text-xs"> · 評測污染</span></div><span class="text-[11px] text-gray-300">2026-W34</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">考題早就被讀進訓練資料了，所以高分可能只是背起來。</div></a>
+<a href="terms/leaderboard-tuning.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="leaderboard tuning 刷榜 為了榜單分數調校，而不是為了真的變強。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Leaderboard Tuning<span class="text-gray-400 font-normal text-xs"> · 刷榜</span></div><span class="text-[11px] text-gray-300">2026-W34</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">為了榜單分數調校，而不是為了真的變強。</div></a>
+<a href="terms/pretraining.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="pre-training 預訓練 拿海量文字猜下一個字，把語言能力和知識一起學進去。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Pre-training<span class="text-gray-400 font-normal text-xs"> · 預訓練</span></div><span class="text-[11px] text-gray-300">2026-W34</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">拿海量文字猜下一個字，把語言能力和知識一起學進去。</div></a>
+<a href="terms/ai-agent.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="ai agent ai 代理 模型 ＋ 可呼叫的工具 ＋ 一個沒人在看的迴圈。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">AI Agent<span class="text-gray-400 font-normal text-xs"> · AI 代理</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">模型 ＋ 可呼叫的工具 ＋ 一個沒人在看的迴圈。</div></a>
+<a href="terms/alignment.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="alignment 對齊 我們寫得出來的那個分數，跟我們心裡真正想要的結果，中間永遠有一段差距。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Alignment<span class="text-gray-400 font-normal text-xs"> · 對齊</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">我們寫得出來的那個分數，跟我們心裡真正想要的結果，中間永遠有一段差距。</div></a>
+<a href="terms/benchmark.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="benchmark 評測基準 一份標準考卷。它只證明模型擅長那份考卷。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Benchmark<span class="text-gray-400 font-normal text-xs"> · 評測基準</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">一份標準考卷。它只證明模型擅長那份考卷。</div></a>
+<a href="terms/chain-of-thought.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="chain-of-thought 思考鏈 先在草稿紙上寫過程再回答，正確率會上升。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Chain-of-Thought<span class="text-gray-400 font-normal text-xs"> · 思考鏈</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">先在草稿紙上寫過程再回答，正確率會上升。</div></a>
+<a href="terms/next-token-prediction.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="next token prediction 猜下一個字 模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Next Token Prediction<span class="text-gray-400 font-normal text-xs"> · 猜下一個字</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。</div></a>
+<a href="terms/reasoning-model.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="reasoning model 推理模型 允許它在難題上多想一會兒，而不是每題都想一樣久。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Reasoning Model<span class="text-gray-400 font-normal text-xs"> · 推理模型</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">允許它在難題上多想一會兒，而不是每題都想一樣久。</div></a>
+<a href="terms/rlvr.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="rlvr 可驗證獎勵強化學習 用「答案對不對」當獎勵，而不是用「人喜不喜歡」。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">RLVR<span class="text-gray-400 font-normal text-xs"> · 可驗證獎勵強化學習</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">用「答案對不對」當獎勵，而不是用「人喜不喜歡」。</div></a>
+<a href="terms/test-time-compute.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="test-time compute 推論時運算 把運算花在回答的當下，而不是只花在訓練。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Test-time Compute<span class="text-gray-400 font-normal text-xs"> · 推論時運算</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">把運算花在回答的當下，而不是只花在訓練。</div></a>
+<a href="terms/token.html" class="term-item block bg-white rounded-xl card px-4 py-3" data-search="token 詞元 文字被切成的最小單位，也是計費單位。"><div class="flex items-baseline justify-between gap-2 flex-wrap"><div class="text-sm font-semibold text-gray-800">Token<span class="text-gray-400 font-normal text-xs"> · 詞元</span></div><span class="text-[11px] text-gray-300">2026-W33</span></div><div class="text-xs text-gray-500 mt-1 leading-relaxed">文字被切成的最小單位，也是計費單位。</div></a>
+<!--TERMLIST:END-->
+        </div>
+        <div id="termEmpty" class="hidden text-center py-12 text-gray-400 text-sm">找不到這個名詞</div>
+      </div><!-- /view-terms -->
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 小學堂 · 每週一集
+    </footer>
+
+    <script>
+
+        const cards = [...document.querySelectorAll('.lesson-card')];
+        const countEl = document.getElementById('lessonCount');
+        const emptyEl = document.getElementById('emptyState');
+
+        function applyFilter(type) {
+            let shown = 0;
+            cards.forEach(c => {
+                const match = type === '全部' || c.dataset.type === type;
+                c.classList.toggle('hidden', !match);
+                if (match) shown++;
+            });
+            countEl.textContent = shown ? `共 ${shown} 集` : '';
+            emptyEl.classList.toggle('hidden', shown > 0);
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                applyFilter(btn.dataset.filter);
+            });
+        });
+
+        applyFilter('全部');
+
+        // ===== 主分頁：課程 / 名詞圖 =====
+        function showView(name) {
+            document.getElementById('view-lessons').classList.toggle('hidden', name !== 'lessons');
+            document.getElementById('view-terms').classList.toggle('hidden', name !== 'terms');
+            document.querySelectorAll('.view-btn').forEach(b =>
+                b.classList.toggle('active', b.dataset.view === name));
+            if (name === 'terms') window.renderGraph && window.renderGraph();
+            history.replaceState(null, '', name === 'terms' ? '#terms' : location.pathname);
+        }
+        document.querySelectorAll('.view-btn').forEach(b =>
+            b.addEventListener('click', () => showView(b.dataset.view)));
+        if (location.hash === '#terms') showView('terms');
+
+        // ===== 名詞搜尋 =====
+        const termItems = [...document.querySelectorAll('.term-item')];
+        const termCount = document.getElementById('termCount');
+        const termEmpty = document.getElementById('termEmpty');
+        function filterTerms(q) {
+            q = q.trim().toLowerCase();
+            let shown = 0;
+            termItems.forEach(el => {
+                const hit = !q || el.dataset.search.includes(q);
+                el.classList.toggle('hidden', !hit);
+                if (hit) shown++;
+            });
+            termCount.textContent = `共 ${shown} 個名詞`;
+            termEmpty.classList.toggle('hidden', shown > 0);
+        }
+        document.getElementById('termSearch').addEventListener('input', e => filterTerms(e.target.value));
+        filterTerms('');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="assets/graph.js" defer></script>
+    <script src="assets/terms.js" defer></script>
+</body>
+</html>

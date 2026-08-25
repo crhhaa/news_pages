@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>數金情報站 - 金融科技知識庫</title>
+    <title>數金情報站 - 前沿模型介紹</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
@@ -17,8 +17,9 @@
             background: #f9fafb;
         }
     </style>
+    <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+<body class="bg-slate-50 text-gray-800 min-h-screen flex flex-col">
 
     <!-- head -->
 <!--     <nav class="bg-blue-900 text-white p-3 shadow-md">
@@ -27,7 +28,12 @@
             <div class="flex flex-wrap gap-x-3 gap-y-1 text-sm sm:text-base">
                 <a href="index.html" class="hover:text-orange-300">AI 趨勢週報</a>
                 <a href="watch.html" class="hover:text-orange-300">全球金融科技觀測</a>
-                <a href="docs.html" class="hover:text-orange-300 border-b-2 border-white pb-0.5">金融科技知識庫</a>
+                <a href="peer.html" class="hover:text-orange-300">同業概觀</a>
+                    <a href="news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                        AI 新聞深度解讀
+                    </a>
+                <a href="docs.html" class="hover:text-orange-300 border-b-2 border-white pb-0.5">前沿模型介紹</a>
                 <a href="report.html" class="hover:text-orange-300">AI 月度專題報告</a>
             </div>
         </div>
@@ -60,11 +66,21 @@
                         </svg>
                         全球金融科技觀測
                     </a>
+                    <a href="peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        同業概觀</a>
+                <a href="news.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                    AI 新聞深度解讀
+                </a>
                     <a href="docs.html" class="text-orange-300 flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        知識庫
+                        前沿模型介紹
+                    </a>
+                    <a href="ai_classroom/classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                        AI 小學堂
                     </a>
                 </div>
 
@@ -88,21 +104,27 @@
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     全球金融科技觀測
                 </a>
+                <a href="peer.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                    同業概觀</a>
                 <a href="docs.html" class="flex items-center gap-2.5 text-orange-300 py-2.5 font-semibold">
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    金融科技知識庫
+                    前沿模型介紹
+                </a>
+                <a href="ai_classroom/classroom.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                    AI 小學堂
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- tab -->
-    <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-8 sm:py-12 shadow-inner">
+    <header class="hero-docs text-white py-8 sm:py-12 shadow-inner">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-3xl sm:text-4xl font-extrabold mb-3">金融科技知識庫</h2>
+            <h2 class="page-title mb-3">前沿模型介紹</h2>
 
             <!-- search box -->
-            <div class="max-w-2xl mx-auto relative mb-6">
+            <div id="modelSearchBox" class="hidden max-w-2xl mx-auto relative mb-6">
                 <input type="text" id="searchInput" placeholder="搜尋關鍵字..."
                        class="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg text-sm sm:text-base">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 absolute left-3 sm:left-4 top-3 sm:top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -110,22 +132,16 @@
 
             <!-- Tab 切換列 -->
             <div class="max-w-2xl mx-auto bg-white/20 rounded-xl p-1 flex">
-                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 bg-white text-blue-900 shadow" data-tab="models">
+                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 bg-white text-blue-900 shadow" data-tab="compare">
+                    <span class="hidden sm:inline">前沿模型能力比較</span>
+                    <span class="sm:hidden">比較圖</span>
+                </button>
+                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="models">
                     <span class="hidden sm:inline">模型介紹</span>
                     <span class="sm:hidden">介紹</span>
                 </button>
-                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="compare">
-                    <span class="hidden sm:inline">模型能力比較</span>
-                    <span class="sm:hidden">比較圖</span>
-                </button>
-                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="wiki">
-                    <span class="hidden sm:inline">知識百科</span>
-                    <span class="sm:hidden">百科</span>
-                </button>
-                <button class="tab-btn flex-1 py-2 px-2 rounded-lg text-sm sm:text-base font-semibold transition-all duration-200 text-white hover:bg-white/20" data-tab="comparisons">
-                    <span class="hidden sm:inline">相似名詞比較</span>
-                    <span class="sm:hidden">比較</span>
-                </button>
+                <!-- 知識百科 / 相似名詞比較：內容移到 AI 小學堂的名詞圖，暫時隱藏。
+                     資料來源 URL_WIKI / URL_COMPARISONS 仍保留在下方 script。 -->
             </div>
         </div>
     </header>
@@ -134,7 +150,7 @@
     <main class="max-w-7xl mx-auto p-4 sm:p-6 flex-grow w-full mt-2 sm:mt-4">
 
         <!-- ===== Tab 1: AI model ===== -->
-        <div id="tab-models">
+        <div id="tab-models" class="hidden">
             <!-- 分類篩選 -->
             <div class="mb-6 sm:mb-8 space-y-3">
                 <!-- 類型 (單選) -->
@@ -151,12 +167,12 @@
                     <div class="flex items-center gap-2 min-w-max px-1">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">分類</span>
                         <button class="cat-filter-btn active bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap" data-filter-cat="ALL">全部</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="chat">💬 Chat 對話</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="image-gen">🖼 圖片生成</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="video-gen">🎬 影片生成</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="audio">🎵 音樂/語音</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="agent">🤖 AI Agent</button>
-                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="search">🔍 搜尋</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="chat">Chat 對話</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="image-gen">圖片生成</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="video-gen">影片生成</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="audio">音樂/語音</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="agent">AI Agent</button>
+                        <button class="cat-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-cat="search">搜尋</button>
                     </div>
                 </div>
                 <!-- 公司 (單選) -->
@@ -171,10 +187,10 @@
                     <div class="flex items-center gap-2 min-w-max px-1">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">模態</span>
                         <span class="text-xs text-gray-400 whitespace-nowrap">(可多選)</span>
-                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="text">📝 文字</button>
-                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="vision">👁 視覺</button>
-                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="audio">🔊 音訊</button>
-                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="video">🎞 影片</button>
+                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="text">文字</button>
+                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="vision">視覺</button>
+                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="audio">音訊</button>
+                        <button class="mod-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-filter-mod="video">影片</button>
                     </div>
                 </div>
                 <!-- sort -->
@@ -204,12 +220,12 @@
                 <div class="flex items-center gap-2 min-w-max px-1">
                     <span class="text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap w-10 shrink-0">分類</span>
                     <button class="wiki-cat-btn active bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm transition whitespace-nowrap" data-wiki-cat="ALL">全部</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="AI">🤖 AI</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="資安相關">🛡 資安相關</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="IT 基礎設施">🖥 IT 基礎設施</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="區塊鏈">⛓ 區塊鏈</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="自動化工具">⚙️ 自動化工具</button>
-                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="其他">📌 其他</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="AI">AI</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="資安相關">資安相關</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="IT 基礎設施">IT 基礎設施</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="區塊鏈">區塊鏈</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="自動化工具">自動化工具</button>
+                    <button class="wiki-cat-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition whitespace-nowrap" data-wiki-cat="其他">其他</button>
                 </div>
             </div>
             <div id="wikiContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
@@ -233,7 +249,7 @@
         </div>
 
         <!-- ===== Tab 4: AI 模型比較（LLM 市場盤點熱力圖） ===== -->
-        <div id="tab-compare" class="hidden">
+        <div id="tab-compare">
             <div class="col-span-full text-center text-gray-500 py-10" id="loadingCompare">
                 <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 正在讀取市場盤點資料...
@@ -256,7 +272,7 @@
         let allWikiData = [];
         let allComparisonsData = [];
         let currentWikiCatFilter = 'ALL';
-        let currentTab = 'models';
+        let currentTab = 'compare';   // 預設落地：模型能力比較
         let currentTypeFilter = 'ALL';
         let currentCategoryFilter = 'ALL';
         let currentCompanyFilter = 'ALL';
@@ -449,6 +465,7 @@
             document.getElementById('tab-wiki').classList.toggle('hidden', tab !== 'wiki');
             document.getElementById('tab-comparisons').classList.toggle('hidden', tab !== 'comparisons');
             document.getElementById('tab-compare').classList.toggle('hidden', tab !== 'compare');
+            document.getElementById('modelSearchBox').classList.toggle('hidden', tab !== 'models');
 
             if (tab === 'compare') loadCompare();
             renderCurrent();
@@ -563,18 +580,18 @@
             const consIcon = `<svg class="w-4 h-4 text-red-400 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
 
             const CATEGORY_MAP = {
-                'chat':      { label: '💬 Chat 對話',  cls: 'bg-indigo-100 text-indigo-800' },
-                'image-gen': { label: '🖼 圖片生成',   cls: 'bg-violet-100 text-violet-800' },
-                'video-gen': { label: '🎬 影片生成',   cls: 'bg-pink-100 text-pink-800' },
-                'audio':     { label: '🎵 音樂/語音',  cls: 'bg-amber-100 text-amber-800' },
-                'agent':     { label: '🤖 AI Agent',   cls: 'bg-slate-100 text-slate-700' },
-                'search':    { label: '🔍 搜尋',       cls: 'bg-yellow-100 text-yellow-800' },
+                'chat':      { label: 'Chat 對話',  cls: 'bg-indigo-100 text-indigo-800' },
+                'image-gen': { label: '圖片生成',   cls: 'bg-violet-100 text-violet-800' },
+                'video-gen': { label: '影片生成',   cls: 'bg-pink-100 text-pink-800' },
+                'audio':     { label: '音樂/語音',  cls: 'bg-amber-100 text-amber-800' },
+                'agent':     { label: 'AI Agent',   cls: 'bg-slate-100 text-slate-700' },
+                'search':    { label: '搜尋',       cls: 'bg-yellow-100 text-yellow-800' },
             };
             const MODALITY_MAP = {
-                'text':   '📝 文字',
-                'vision': '👁 視覺',
-                'audio':  '🔊 音訊',
-                'video':  '🎞 影片',
+                'text':   '文字',
+                'vision': '視覺',
+                'audio':  '音訊',
+                'video':  '影片',
             };
 
             pageFiltered.forEach(model => {
@@ -644,11 +661,11 @@
 
                         <div class="p-4 sm:p-5 bg-blue-50/30 border-t border-gray-100 mt-auto">
                             <div class="mb-3">
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">🎯 Best For (最適合)</span>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">Best For (最適合)</span>
                                 <p class="text-sm text-gray-800 font-medium">${model['best_for']}</p>
                             </div>
                             <div>
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">💰 Pricing (計費方式)</span>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1">Pricing (計費方式)</span>
                                 <p class="text-sm text-orange-800 bg-orange-100 inline-block px-2 py-0.5 rounded">${model['pricing']}</p>
                             </div>
                         </div>
@@ -661,12 +678,12 @@
 
         // ===== Tab 2: 知識百科 =====
         const WIKI_CAT_MAP = {
-            'AI':         { cls: 'bg-indigo-100 text-indigo-800',  icon: '🤖' },
-            '資安相關':   { cls: 'bg-red-100 text-red-800',        icon: '🛡' },
-            'IT 基礎設施':{ cls: 'bg-sky-100 text-sky-800',        icon: '🖥' },
-            '區塊鏈':     { cls: 'bg-teal-100 text-teal-800',      icon: '⛓' },
-            '自動化工具': { cls: 'bg-amber-100 text-amber-800',    icon: '⚙️' },
-            '其他':       { cls: 'bg-gray-100 text-gray-700',      icon: '📌' },
+            'AI':         { cls: 'bg-indigo-100 text-indigo-800',  icon: '' },
+            '資安相關':   { cls: 'bg-red-100 text-red-800',        icon: '' },
+            'IT 基礎設施':{ cls: 'bg-sky-100 text-sky-800',        icon: '' },
+            '區塊鏈':     { cls: 'bg-teal-100 text-teal-800',      icon: '' },
+            '自動化工具': { cls: 'bg-amber-100 text-amber-800',    icon: '' },
+            '其他':       { cls: 'bg-gray-100 text-gray-700',      icon: '' },
         };
 
         function renderWiki(resetPage = true) {
@@ -676,7 +693,7 @@
 
             if (!URL_WIKI) {
                 container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-16">
-                    <p class="text-4xl mb-4">📚</p>
+                    <p class="mb-4 flex justify-center text-gray-300"><svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline-block;vertical-align:-.2em"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></p>
                     <p class="text-lg font-semibold mb-2">知識百科資料尚未設定</p>
                     <p class="text-sm">請建立 Google Sheet 並將 URL 填入 <code class="bg-gray-100 px-1 rounded">URL_WIKI</code> 常數</p>
                 </div>`;
@@ -702,7 +719,7 @@
             const pageWiki = filtered.slice((currentWikiPage - 1) * WIKI_PER_PAGE, currentWikiPage * WIKI_PER_PAGE);
 
             pageWiki.forEach(term => {
-                const catInfo = WIKI_CAT_MAP[term['category']] || { cls: 'bg-gray-100 text-gray-700', icon: '📌' };
+                const catInfo = WIKI_CAT_MAP[term['category']] || { cls: 'bg-gray-100 text-gray-700', icon: '' };
                 const categoryBadge = `<span class="${catInfo.cls} text-xs font-bold px-2.5 py-1 rounded">${catInfo.icon} ${term['category'] || '其他'}</span>`;
 
                 const relatedTagsHtml = (term['related_terms'] || '').split(/[\n,]/).map(t => t.trim()).filter(Boolean)
@@ -711,7 +728,7 @@
                 const financeVal = term['finance_relevance'] || term['financial_use_case'] || '';
                 const financeHtml = financeVal
                     ? `<div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-lg border border-blue-100">
-                           <p class="text-xs font-bold text-blue-700 mb-1">🏦 金融業應用情境</p>
+                           <p class="text-xs font-bold text-blue-700 mb-1">金融業應用情境</p>
                            <p class="text-sm text-blue-900 leading-relaxed">${financeVal}</p>
                        </div>` : '';
 
@@ -844,13 +861,13 @@
 
                 const keyDiffHtml = comp['key_difference'] ? `
                     <div class="mt-4 px-4 py-3 bg-amber-50 rounded-lg border border-amber-200">
-                        <p class="text-xs font-bold text-amber-700 mb-1">🔑 核心差異</p>
+                        <p class="text-xs font-bold text-amber-700 mb-1">核心差異</p>
                         <p class="text-sm text-amber-900 leading-relaxed">${comp['key_difference']}</p>
                     </div>` : '';
 
                 const financeHtml = comp['financial_use_case'] ? `
                     <div class="mt-3 px-4 py-3 bg-blue-50 rounded-lg border border-blue-100">
-                        <p class="text-xs font-bold text-blue-700 mb-1">🏦 金融業應用情境</p>
+                        <p class="text-xs font-bold text-blue-700 mb-1">金融業應用情境</p>
                         <p class="text-sm text-blue-900 leading-relaxed">${comp['financial_use_case']}</p>
                     </div>` : '';
 
@@ -926,7 +943,7 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        window.addEventListener('DOMContentLoaded', initData);
+        window.addEventListener('DOMContentLoaded', () => { initData(); loadCompare(); });
     </script>
 </body>
 </html>

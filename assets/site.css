@@ -1,0 +1,96 @@
+/* 全站樣式基準：字體、色票、標題級距、hero 底色。
+ *
+ * 每一頁（含 lessons/ terms/ 與 ai_classroom/news/ 的子頁）都在 </head> 前面
+ * 載入這一支，而且一定排在該頁自己的 <style> 之後，所以這裡的規則會蓋掉
+ * 各頁早期各寫各的字體與漸層。頁面專屬的東西才留在該頁的 <style> 裡。
+ *
+ * 新增頁面時只要 <link rel="stylesheet" href="assets/site.css">（子目錄用 ../），
+ * 標題套 .page-title、hero 底色套 .hero-bg 就會自動一致。
+ */
+
+:root {
+    /* 品牌藍：nav 與 hero 都由這三個階調組成 */
+    --brand-900: #0f2460;
+    --brand-700: #1e3a8a;
+    --brand-600: #1e40af;
+    --brand-500: #2563eb;
+    --accent:    #f97316;
+
+    /* 文字 */
+    --ink:    #0f172a;   /* 標題 */
+    --ink-2:  #334155;   /* 內文 */
+    --muted:  #64748b;   /* 次要說明 */
+    --faint:  #94a3b8;   /* 標籤、日期 */
+
+    /* 面 */
+    --page:    #f8fafc;
+    --surface: #ffffff;
+    --rule:    #e2e8f0;
+
+    --nav-grad:  linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%);
+    --hero-grad: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%);
+
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body,
+body.font-sans {
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--page);
+    color: var(--ink-2);
+}
+code, kbd, pre, samp { font-family: var(--mono); }
+
+/* hero 底色：週報／月報／季報／各分頁一律同一個漸層 */
+.hero-bg,
+.hero-bg-monthly,
+.hero-bg-quarterly,
+.hero-news,
+.hero-classroom,
+.hero-lesson,
+.hero-howto,
+.hero-term,
+.hero-docs { background: var(--hero-grad); }
+
+/* nav 底色 */
+.nav-grad { background: var(--nav-grad); }
+
+/* 頁面主標：所有分頁同一級距 */
+.page-title {
+    font-size: 1.75rem;
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: .01em;
+}
+@media (min-width: 640px) {
+    .page-title { font-size: 2.25rem; }
+}
+
+/* hero 裡主標下面那行說明 */
+.page-sub {
+    font-size: .875rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, .72);
+}
+
+/* 內容區的節標題（各頁的「本週摘要」「三大重點」這一級） */
+.sec-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--brand-700);
+    letter-spacing: .01em;
+}
+
+/* 取代 emoji 的線性圖示，跟導覽列同一套視覺 */
+.ico {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+    stroke-width: 2;
+}
+
+/* 課程內文：容器變寬之後仍要維持一行 40 字上下的可讀寬度 */
+.lesson-body { max-width: 46em; }

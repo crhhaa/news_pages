@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 新聞深度解讀｜數金情報站</title>
+    <meta name="description" content="每週 AI 新聞的完整版：週報整理當週產業與同業動態，專欄挑一個題目用資料講透。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+        .card-hover:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 16px 40px rgba(0,0,0,0.06); }
+
+        .hero-news { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+
+        .filter-btn { transition: all 0.15s; }
+        .filter-btn.active { background: #fff; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+        /* 時間軸左側線 */
+        #newsList { position: relative; }
+        @media (min-width: 640px) {
+            #newsList::before {
+                content: "";
+                position: absolute; left: -1.35rem; top: 0.6rem; bottom: 0.6rem;
+                width: 2px; border-radius: 999px;
+                background: linear-gradient(to bottom, #93c5fd, #e2e8f0);
+            }
+            .news-card { position: relative; }
+            .news-card::before {
+                content: "";
+                position: absolute; left: -1.7rem; top: 1.35rem;
+                width: 0.7rem; height: 0.7rem; border-radius: 999px;
+                background: #fff; border: 2px solid #93c5fd;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800">
+
+    <!-- NAV -->
+    <nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,0.25);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-14">
+                <a href="index.html" class="flex items-center gap-2.5 group">
+                    <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                    <a href="index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                        AI 趨勢
+                    </a>
+                    <a href="watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        全球金融科技觀測
+                    </a>
+                    <a href="peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        同業概觀
+                    </a>
+                    <a href="news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                        AI 新聞深度解讀
+                    </a>
+                    <a href="docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        前沿模型介紹
+                    </a>
+                    <a href="ai_classroom/classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                        AI 小學堂
+                    </a>
+                </div>
+
+                <button id="menuToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+                <a href="index.html"     class="block text-white/70 hover:text-white py-2">AI 趨勢</a>
+                <a href="watch.html"     class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a>
+                <a href="peer.html"     class="block text-white/70 hover:text-white py-2">同業概觀</a>
+                <a href="news.html"      class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a>
+                <a href="docs.html"      class="block text-white/70 hover:text-white py-2">前沿模型介紹</a>
+                <a href="ai_classroom/classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero-news text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+            <div class="flex items-center gap-2.5 mb-3">
+                <div class="w-8 h-8 rounded-xl bg-white/15 flex items-center justify-center">
+                    <svg style="width:1.1rem;height:1.1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/>
+                    </svg>
+                </div>
+                <h1 class="page-title">AI 新聞深度解讀</h1>
+            </div>
+            <p class="text-white/75 leading-relaxed max-w-2xl">
+                AI 趨勢那邊是摘要，這裡是完整版：週報整理一週的 AI 產業與同業動態，專欄挑一個題目用資料把它講到底。
+            </p>
+            <div class="mt-6 inline-flex items-center gap-2 text-xs text-white/50 bg-white/10 rounded-full px-3.5 py-1.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                每週更新
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+        <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+            <div class="inline-flex items-center bg-slate-200/70 rounded-xl p-1 gap-0.5">
+                <button data-filter="全部" class="filter-btn active px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">全部</button>
+                <button data-filter="週報" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">週報</button>
+                <button data-filter="專欄" class="filter-btn px-4 py-1.5 rounded-lg text-sm font-semibold text-gray-500">專欄</button>
+            </div>
+            <span id="newsCount" class="text-xs text-gray-400"></span>
+        </div>
+
+        <!-- 清單（由 build_news.py 產生，不要手改） -->
+        <div id="newsList" class="space-y-3 sm:ml-6">
+<!--NEWS:START-->
+<a href="ai_classroom/news/ai_weekly_20260824.html" class="news-card block bg-white rounded-2xl card card-hover transition-shadow px-5 py-4" data-type="週報"><div class="flex items-center gap-2 mb-2 text-[11px]"><span class="font-semibold tracking-wider text-gray-400">2026-W34</span><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-50 text-blue-600">週報</span><span class="text-gray-300">2026-08-24</span></div><h3 class="text-base font-semibold text-gray-800 leading-snug mb-1.5">本週的新聞多半不在比模型強弱，而在三件事：成本、資料、能不能換。</h3><p class="text-sm text-gray-500 leading-relaxed">08/17 – 08/23 · AI 產業 11 則 ＋ 同業動態 11 則</p></a>
+<a href="ai_classroom/news/ai_column_20260819_china-open-weights.html" class="news-card block bg-white rounded-2xl card card-hover transition-shadow px-5 py-4" data-type="專欄"><div class="flex items-center gap-2 mb-2 text-[11px]"><span class="font-semibold tracking-wider text-gray-400">2026-W34</span><span class="px-2 py-0.5 rounded-full font-semibold bg-orange-50 text-orange-600">專欄</span><span class="text-gray-300">2026-08-19</span></div><h3 class="text-base font-semibold text-gray-800 leading-snug mb-1.5">中國模型確實追上來了，但他們公開的是次一階的權重， 最強的那一顆留在自家 API 上收錢。</h3><p class="text-sm text-gray-500 leading-relaxed">開源模型「開」的是什麼 · 資料截至 2026-08-19</p></a>
+<a href="ai_classroom/news/ai_weekly_20260817.html" class="news-card block bg-white rounded-2xl card card-hover transition-shadow px-5 py-4" data-type="週報"><div class="flex items-center gap-2 mb-2 text-[11px]"><span class="font-semibold tracking-wider text-gray-400">2026-W33</span><span class="px-2 py-0.5 rounded-full font-semibold bg-blue-50 text-blue-600">週報</span><span class="text-gray-300">2026-08-17</span></div><h3 class="text-base font-semibold text-gray-800 leading-snug mb-1.5">本週 AI 算力同時出現三件事：資金、風險、價格。</h3><p class="text-sm text-gray-500 leading-relaxed">08/10 – 08/17</p></a>
+<!--NEWS:END-->
+        </div>
+
+        <div id="emptyState" class="hidden text-center py-16 text-gray-400 text-sm">
+            這個分類還沒有內容
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 新聞深度解讀
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        const cards = [...document.querySelectorAll('.news-card')];
+        const countEl = document.getElementById('newsCount');
+        const emptyEl = document.getElementById('emptyState');
+
+        function apply(filter) {
+            let shown = 0;
+            cards.forEach(c => {
+                const hit = filter === '全部' || c.dataset.type === filter;
+                c.classList.toggle('hidden', !hit);
+                if (hit) shown++;
+            });
+            countEl.textContent = shown + ' 篇';
+            emptyEl.classList.toggle('hidden', shown > 0);
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                apply(btn.dataset.filter);
+            });
+        });
+
+        apply('全部');
+    </script>
+</body>
+</html>

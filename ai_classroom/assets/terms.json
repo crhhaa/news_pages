@@ -1,0 +1,162 @@
+{
+ "agent-governance": {
+  "term": "Agent Governance",
+  "zh": "代理治理",
+  "oneline": "同時管工具、網路、憑證、輪數、和紀錄——單靠任何一道都不夠。"
+ },
+ "agent-loop": {
+  "term": "Agent Loop",
+  "zh": "代理迴圈",
+  "oneline": "拿到目標 → 判斷 → 下指令 → 執行 → 看結果 → 再判斷，跑到它說完成為止。"
+ },
+ "ai-agent": {
+  "term": "AI Agent",
+  "zh": "AI 代理",
+  "oneline": "模型 ＋ 可呼叫的工具 ＋ 一個沒人在看的迴圈。"
+ },
+ "alignment": {
+  "term": "Alignment",
+  "zh": "對齊",
+  "oneline": "我們寫得出來的那個分數，跟我們心裡真正想要的結果，中間永遠有一段差距。"
+ },
+ "autonomous-agent": {
+  "term": "Autonomous Agent",
+  "zh": "自主代理",
+  "oneline": "同一件事的極端版：目標更模糊、迴圈更長、人看得更少。"
+ },
+ "benchmark-contamination": {
+  "term": "Benchmark Contamination",
+  "zh": "評測污染",
+  "oneline": "考題早就被讀進訓練資料了，所以高分可能只是背起來。"
+ },
+ "benchmark": {
+  "term": "Benchmark",
+  "zh": "評測基準",
+  "oneline": "一份標準考卷。它只證明模型擅長那份考卷。"
+ },
+ "chain-of-thought": {
+  "term": "Chain-of-Thought",
+  "zh": "思考鏈",
+  "oneline": "先在草稿紙上寫過程再回答，正確率會上升。"
+ },
+ "chatbot": {
+  "term": "Chatbot",
+  "zh": "聊天機器人",
+  "oneline": "只產生文字，人自己去做。出錯上限是說錯話。"
+ },
+ "context-window": {
+  "term": "Context Window",
+  "zh": "上下文視窗",
+  "oneline": "它一次能看多少字。像工作桌的大小，不等於理解品質。"
+ },
+ "egress": {
+  "term": "Egress",
+  "zh": "出向流量管控",
+  "oneline": "它能主動連出去到哪裡——這條線就是它的能力邊界。"
+ },
+ "guardrail": {
+  "term": "Guardrail",
+  "zh": "護欄",
+  "oneline": "擋得住的邊界不是它讀到的字，是它做得到的事。"
+ },
+ "harness": {
+  "term": "Harness",
+  "zh": "韁繩",
+  "oneline": "模型只負責產生文字，其餘全部是外面那一層在做。"
+ },
+ "hugging-face": {
+  "term": "Hugging Face",
+  "zh": "抱臉",
+  "oneline": "全球 AI 模型的公開集散地——整個產業的上游倉庫。"
+ },
+ "human-in-the-loop": {
+  "term": "Human-in-the-Loop",
+  "zh": "人類介入審核",
+  "oneline": "把人放在不可逆的那一步之前，不是每一步都審。"
+ },
+ "ingress": {
+  "term": "Ingress / Private Endpoint",
+  "zh": "入向連線",
+  "oneline": "外面怎麼進得來；跟 egress 是相反的方向。"
+ },
+ "leaderboard-tuning": {
+  "term": "Leaderboard Tuning",
+  "zh": "刷榜",
+  "oneline": "為了榜單分數調校，而不是為了真的變強。"
+ },
+ "moe": {
+  "term": "MoE",
+  "zh": "混合專家",
+  "oneline": "模型很大，但每次只叫醒其中一小塊出來上工。"
+ },
+ "next-token-prediction": {
+  "term": "Next Token Prediction",
+  "zh": "猜下一個字",
+  "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。"
+ },
+ "posttraining": {
+  "term": "Post-training",
+  "zh": "後訓練",
+  "oneline": "預訓練之後再調一輪，教它怎麼好好回答人。"
+ },
+ "pretraining": {
+  "term": "Pre-training",
+  "zh": "預訓練",
+  "oneline": "拿海量文字猜下一個字，把語言能力和知識一起學進去。"
+ },
+ "react": {
+  "term": "ReAct",
+  "zh": "想一步做一步",
+  "oneline": "想一步、做一步、讀結果、再修正——今天代理迴圈的原型。"
+ },
+ "reasoning-model": {
+  "term": "Reasoning Model",
+  "zh": "推理模型",
+  "oneline": "允許它在難題上多想一會兒，而不是每題都想一樣久。"
+ },
+ "red-team": {
+  "term": "Red Teaming",
+  "zh": "紅隊測試",
+  "oneline": "不是考它會不會答題，是主動扮演攻擊者，看防線會從哪裡破。"
+ },
+ "reward-hacking": {
+  "term": "Reward Hacking / Sycophancy",
+  "zh": "獎勵駭客／諂媚",
+  "oneline": "分數變高了，但真正的目標沒達成。諂媚是它的一種。"
+ },
+ "rlhf": {
+  "term": "RLHF",
+  "zh": "人類回饋強化學習",
+  "oneline": "用人類的偏好教模型怎麼回答——也順便教出了諂媚。"
+ },
+ "rlvr": {
+  "term": "RLVR",
+  "zh": "可驗證獎勵強化學習",
+  "oneline": "用「答案對不對」當獎勵，而不是用「人喜不喜歡」。"
+ },
+ "sandbox-escape": {
+  "term": "Sandbox Escape",
+  "zh": "沙盒逃逸",
+  "oneline": "本來被關在隔離環境裡的東西，跑到了正式環境。"
+ },
+ "sandbox": {
+  "term": "Sandbox",
+  "zh": "沙盒",
+  "oneline": "新人的模擬帳戶：可以練習，但下的單不會真的成交。"
+ },
+ "test-time-compute": {
+  "term": "Test-time Compute",
+  "zh": "推論時運算",
+  "oneline": "把運算花在回答的當下，而不是只花在訓練。"
+ },
+ "token": {
+  "term": "Token",
+  "zh": "詞元",
+  "oneline": "文字被切成的最小單位，也是計費單位。"
+ },
+ "tool-use": {
+  "term": "Tool Use / Function Calling",
+  "zh": "工具呼叫",
+  "oneline": "讓模型用固定格式「點餐」，外部程式負責真的去做。"
+ }
+}

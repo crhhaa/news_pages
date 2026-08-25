@@ -1,0 +1,272 @@
+{
+ "nodes": [
+  {
+   "id": "ai-agent",
+   "label": "AI Agent",
+   "zh": "AI 代理",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/ai-agent.html",
+   "oneline": "模型 ＋ 可呼叫的工具 ＋ 一個沒人在看的迴圈。",
+   "deg": 1
+  },
+  {
+   "id": "alignment",
+   "label": "Alignment",
+   "zh": "對齊",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/alignment.html",
+   "oneline": "我們寫得出來的那個分數，跟我們心裡真正想要的結果，中間永遠有一段差距。",
+   "deg": 1
+  },
+  {
+   "id": "benchmark-contamination",
+   "label": "Benchmark Contamination",
+   "zh": "評測污染",
+   "kind": "term",
+   "cat": "2026-W34",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/benchmark-contamination.html",
+   "oneline": "考題早就被讀進訓練資料了，所以高分可能只是背起來。",
+   "deg": 1
+  },
+  {
+   "id": "benchmark",
+   "label": "Benchmark",
+   "zh": "評測基準",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#60a5fa",
+   "pending": false,
+   "url": "terms/benchmark.html",
+   "oneline": "一份標準考卷。它只證明模型擅長那份考卷。",
+   "deg": 2
+  },
+  {
+   "id": "chain-of-thought",
+   "label": "Chain-of-Thought",
+   "zh": "思考鏈",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/chain-of-thought.html",
+   "oneline": "先在草稿紙上寫過程再回答，正確率會上升。",
+   "deg": 1
+  },
+  {
+   "id": "leaderboard-tuning",
+   "label": "Leaderboard Tuning",
+   "zh": "刷榜",
+   "kind": "term",
+   "cat": "2026-W34",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/leaderboard-tuning.html",
+   "oneline": "為了榜單分數調校，而不是為了真的變強。",
+   "deg": 1
+  },
+  {
+   "id": "next-token-prediction",
+   "label": "Next Token Prediction",
+   "zh": "猜下一個字",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/next-token-prediction.html",
+   "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。",
+   "deg": 1
+  },
+  {
+   "id": "pretraining",
+   "label": "Pre-training",
+   "zh": "預訓練",
+   "kind": "term",
+   "cat": "2026-W34",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/pretraining.html",
+   "oneline": "拿海量文字猜下一個字，把語言能力和知識一起學進去。",
+   "deg": 1
+  },
+  {
+   "id": "reasoning-model",
+   "label": "Reasoning Model",
+   "zh": "推理模型",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/reasoning-model.html",
+   "oneline": "允許它在難題上多想一會兒，而不是每題都想一樣久。",
+   "deg": 1
+  },
+  {
+   "id": "rlvr",
+   "label": "RLVR",
+   "zh": "可驗證獎勵強化學習",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/rlvr.html",
+   "oneline": "用「答案對不對」當獎勵，而不是用「人喜不喜歡」。",
+   "deg": 1
+  },
+  {
+   "id": "test-time-compute",
+   "label": "Test-time Compute",
+   "zh": "推論時運算",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/test-time-compute.html",
+   "oneline": "把運算花在回答的當下，而不是只花在訓練。",
+   "deg": 1
+  },
+  {
+   "id": "token",
+   "label": "Token",
+   "zh": "詞元",
+   "kind": "term",
+   "cat": "2026-W33",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/token.html",
+   "oneline": "文字被切成的最小單位，也是計費單位。",
+   "deg": 1
+  },
+  {
+   "id": "ep:2026-W34-benchmark",
+   "label": "2026-W34",
+   "zh": "那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W34-benchmark.html",
+   "oneline": "每次新模型發表，都會附上一排百分比。這一集回答那些數字是什麼、為什麼「不及格的分數」可以拿來當賣點，以及為什麼你們風控天天在跑的模型驗證幾乎不會有這種問題——順便講清楚採購時該追問哪三題。",
+   "deg": 0
+  },
+  {
+   "id": "ep:2026-W33-next-token-prediction",
+   "label": "2026-W33",
+   "zh": "那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W33-next-token-prediction.html",
+   "oneline": "你按過那個會先跑「思考中」再回答的模式，它答得比較準，也比較慢。這一集回答為什麼——順便講清楚模型平常到底在做什麼事，以及那段你看不到的思考，帳單是誰付的。",
+   "deg": 0
+  }
+ ],
+ "links": [
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "ai-agent",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "alignment",
+   "type": "mentions"
+  },
+  {
+   "source": "benchmark",
+   "target": "benchmark-contamination",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "benchmark-contamination",
+   "type": "mentions"
+  },
+  {
+   "source": "next-token-prediction",
+   "target": "benchmark",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "benchmark",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "benchmark",
+   "type": "mentions"
+  },
+  {
+   "source": "next-token-prediction",
+   "target": "chain-of-thought",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "chain-of-thought",
+   "type": "mentions"
+  },
+  {
+   "source": "benchmark",
+   "target": "leaderboard-tuning",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "leaderboard-tuning",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "next-token-prediction",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "pretraining",
+   "type": "mentions"
+  },
+  {
+   "source": "chain-of-thought",
+   "target": "reasoning-model",
+   "type": "succeeds"
+  },
+  {
+   "source": "rlvr",
+   "target": "reasoning-model",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "reasoning-model",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "rlvr",
+   "type": "mentions"
+  },
+  {
+   "source": "reasoning-model",
+   "target": "test-time-compute",
+   "type": "succeeds"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "test-time-compute",
+   "type": "mentions"
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "token",
+   "type": "mentions"
+  }
+ ]
+}

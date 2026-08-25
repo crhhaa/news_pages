@@ -152,8 +152,9 @@
             background: linear-gradient(to right, #eff6ff, #f8faff);
         }
     </style>
+    <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="bg-slate-100 text-gray-800 antialiased">
+<body class="bg-slate-50 text-gray-800">
 
     <!-- NAVBAR -->
     <nav class="hero-bg text-white sticky top-0 z-50" style="box-shadow:0 2px 20px rgba(0,0,0,0.25);">
@@ -169,21 +170,6 @@
                     <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
                 </a>
 
-                <!-- Desktop tab switcher -->
-                <div class="hidden md:flex items-center bg-white/10 rounded-xl p-1 gap-0.5">
-                    <button id="tab-weekly-btn" onclick="switchMainTab('weekly')"
-                            class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold bg-white text-blue-900 shadow-sm">
-                        週報
-                    </button>
-                    <button id="tab-monthly-btn" onclick="switchMainTab('monthly')"
-                            class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-white/70 hover:text-white">
-                        月報
-                    </button>
-                    <button id="tab-quarterly-btn" onclick="switchMainTab('quarterly')"
-                            class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-white/70 hover:text-white">
-                        季報
-                    </button>
-                </div>
 
                 <!-- Desktop nav links -->
                 <div class="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -199,11 +185,21 @@
                         </svg>
                         全球金融科技觀測
                     </a>
+                    <a href="peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        同業概觀</a>
+                    <a href="news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                        AI 新聞深度解讀
+                    </a>
                     <a href="docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        知識庫
+                        前沿模型介紹
+                    </a>
+                    <a href="ai_classroom/classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                        AI 小學堂
                     </a>
                 </div>
 
@@ -231,9 +227,19 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     全球金融科技觀測
                 </a>
+                <a href="peer.html" class="flex items-center gap-2 text-white/70 hover:text-white py-2 transition-colors"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                    同業概觀</a>
+                <a href="news.html" class="flex items-center gap-2 text-white/70 hover:text-white py-2 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                    AI 新聞深度解讀
+                </a>
                 <a href="docs.html" class="flex items-center gap-2 text-white/70 hover:text-white py-2 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    金融科技知識庫
+                    前沿模型介紹
+                </a>
+                <a href="ai_classroom/classroom.html" class="flex items-center gap-2 text-white/70 hover:text-white py-2 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                    AI 小學堂
                 </a>
             </div>
         </div>
@@ -241,6 +247,22 @@
 
     <!-- MAIN -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+
+        <!-- 報別切換（原本在導覽列裡，移出來讓各頁的 bar 一致） -->
+        <div class="hidden md:flex items-center bg-slate-200/70 rounded-xl p-1 gap-0.5 w-max mb-5">
+            <button id="tab-weekly-btn" onclick="switchMainTab('weekly')"
+                    class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold bg-white text-blue-900 shadow-sm">
+                週報
+            </button>
+            <button id="tab-monthly-btn" onclick="switchMainTab('monthly')"
+                    class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-gray-500">
+                月報
+            </button>
+            <button id="tab-quarterly-btn" onclick="switchMainTab('quarterly')"
+                    class="main-tab-btn px-5 py-1.5 rounded-lg text-sm font-semibold text-gray-500">
+                季報
+            </button>
+        </div>
 
         <!-- ========================================
              趨勢週報
@@ -257,7 +279,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-7 gap-4">
                         <div>
                             <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">AI Weekly Intelligence</p>
-                            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wider mb-1">AI 趨勢週報</h2>
+                            <h2 class="page-title mb-1">AI 趨勢週報</h2>
                             <p class="text-white/60 text-sm" id="headerSubtitle">洞察·趨勢 | 載入中...</p>
                         </div>
                         <div class="w-full sm:w-auto flex-shrink-0">
@@ -292,9 +314,9 @@
             <!-- Summary (above article list) -->
             <div id="summarySection" class="bg-white rounded-2xl card p-5 mb-4" style="border-top: 3px solid #f97316;">
                 <h3 class="text-base font-bold text-blue-900 mb-3 flex items-center gap-2 uppercase tracking-widest">
-                    <span class="text-orange-500">📋</span> 本週摘要
+                    <span class="text-orange-500"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span> 本週摘要
                 </h3>
-                <div id="summaryText" class="text-gray-750 leading-relaxed text-sm md:text-base space-y-3">資料載入中...</div>
+                <div id="summaryText" data-auto-terms class="text-gray-750 leading-relaxed text-sm md:text-base space-y-3">資料載入中...</div>
             </div>
 
             <!-- Weekly two-panel: nav + detail -->
@@ -310,7 +332,7 @@
                 </nav>
 
                 <!-- Article detail -->
-                <div id="weeklyDetail" class="flex-1 min-w-0 bg-white rounded-2xl card p-5 sm:p-8" style="min-height:480px;">
+                <div id="weeklyDetail" data-auto-terms class="flex-1 min-w-0 bg-white rounded-2xl card p-5 sm:p-8" style="min-height:480px;">
                     <div class="text-gray-400 text-center py-16 text-sm">載入中...</div>
                 </div>
             </div>
@@ -328,7 +350,7 @@
                 <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                     <div>
                         <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">AI Monthly Intelligence Report</p>
-                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wide mb-1">AI 月度專題報告</h2>
+                        <h2 class="page-title mb-1">AI 月度專題報告</h2>
                         <p id="monthly-hero-meta" class="text-white/60 text-sm">載入中...</p>
                     </div>
                     <div class="w-full sm:w-auto flex-shrink-0">
@@ -351,22 +373,22 @@
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">本月目錄</p>
                         <nav class="space-y-0.5" id="section-nav">
                             <a href="#m-summary"         class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">📌</span><span>摘要</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span><span>摘要</span>
                             </a>
                             <a href="#m-highlights"      class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">🏆</span><span>三大重點</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></span><span>三大重點</span>
                             </a>
                             <a href="#m-themes"          class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">🌐</span><span>產業動態</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>產業動態</span>
                             </a>
                             <a href="#m-competitors"     class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">🏢</span><span>競業動態</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></span><span>競業動態</span>
                             </a>
                             <a href="#m-recommendations" class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">💡</span><span>行動建議</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span><span>行動建議</span>
                             </a>
                             <a href="#m-reads"           class="section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">📎</span><span>深讀推薦</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></span><span>深讀推薦</span>
                             </a>
                         </nav>
                     </div>
@@ -374,7 +396,7 @@
 
                 <!-- Monthly content -->
                 <div class="flex-1 min-w-0">
-                    <div id="monthly-content" class="space-y-6">
+                    <div id="monthly-content" data-auto-terms class="space-y-6">
                         <div class="text-center py-20 text-gray-400">
                             <svg class="w-10 h-10 mx-auto mb-3 text-gray-300 animate-spin" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -399,7 +421,7 @@
                 <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                     <div>
                         <p class="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">AI Quarterly Trend Report</p>
-                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wide mb-1">AI 季度趨勢報告</h2>
+                        <h2 class="page-title mb-1">AI 季度趨勢報告</h2>
                         <p id="quarterly-hero-meta" class="text-white/60 text-sm">載入中...</p>
                     </div>
                     <div class="w-full sm:w-auto flex-shrink-0">
@@ -421,25 +443,25 @@
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 px-1">本季目錄</p>
                         <nav class="space-y-0.5" id="quarter-section-nav">
                             <a href="#q-summary"         class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">📌</span><span>季度綜述</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span><span>季度綜述</span>
                             </a>
                             <a href="#q-timeline"        class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">🕒</span><span>時間軸</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><span>時間軸</span>
                             </a>
                             <a href="#q-arcs"            class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">📈</span><span>趨勢弧線</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></span><span>趨勢弧線</span>
                             </a>
                             <a href="#q-inflections"     class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">⚡</span><span>轉折點</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span><span>轉折點</span>
                             </a>
                             <a href="#q-competitors"     class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">🏢</span><span>競業軌跡</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></span><span>競業軌跡</span>
                             </a>
                             <a href="#q-recommendations" class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">💡</span><span>策略重點</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span><span>策略重點</span>
                             </a>
                             <a href="#q-reads"           class="q-section-nav-link flex items-center gap-2.5 px-3 py-2 text-sm text-gray-600 rounded-xl hover:bg-slate-50 transition-colors">
-                                <span class="text-base leading-none">📎</span><span>深讀推薦</span>
+                                <span class="text-base leading-none"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></span><span>深讀推薦</span>
                             </a>
                         </nav>
                     </div>
@@ -447,7 +469,7 @@
 
                 <!-- Quarterly content -->
                 <div class="flex-1 min-w-0">
-                    <div id="quarterly-content" class="space-y-6">
+                    <div id="quarterly-content" data-auto-terms class="space-y-6">
                         <div class="text-center py-20 text-gray-400">
                             <svg class="w-10 h-10 mx-auto mb-3 text-gray-300 animate-spin" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -579,7 +601,7 @@
             btns[k].classList.toggle('bg-white', active);
             btns[k].classList.toggle('text-blue-900', active);
             btns[k].classList.toggle('shadow-sm', active);
-            btns[k].classList.toggle('text-white/70', !active);
+            btns[k].classList.toggle('text-gray-500', !active);
         });
 
         document.getElementById('monthlyBottomNav').classList.toggle('hidden', tab !== 'monthly');
@@ -846,7 +868,7 @@
             yuantaBlock = `
                 <div class="mb-6 yuanta-block rounded-2xl p-5">
                     <h3 class="flex items-center text-blue-800 font-bold text-sm mb-3">
-                        <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center mr-2 flex-shrink-0 text-xs">🏛️</div>
+                        <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center mr-2 flex-shrink-0 text-xs"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"/></svg></div>
                         元大洞察
                     </h3>
                     ${chips ? `<div class="flex flex-wrap gap-2 mb-3">${chips}</div>` : ''}
@@ -885,7 +907,7 @@
 
                 <div class="mb-6 insight-block rounded-2xl p-5">
                     <h3 class="flex items-center text-orange-800 font-bold text-sm mb-2">
-                        <div class="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-2 flex-shrink-0 text-xs">💡</div>
+                        <div class="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-2 flex-shrink-0 text-xs"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
                         關鍵洞察
                     </h3>
                     <div class="text-gray-700 text-sm leading-relaxed">${highlightText(article['pm_insight']||'',currentSearchTerm)}</div>
@@ -1080,7 +1102,7 @@
             <div id="m-summary" class="${SM} bg-white rounded-2xl card overflow-hidden" style="border-top:4px solid #f97316;">
                 <div class="p-6 sm:p-8">
                     <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">📌</span>
+                        <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
                         本月趨勢摘要
                     </h3>
                     <div class="text-gray-700 leading-relaxed space-y-2 text-sm">${fmtSummary(data.executive_summary?.summary_text||'')}</div>
@@ -1090,7 +1112,7 @@
             <!-- Highlights -->
             <div id="m-highlights" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-yellow-100 flex items-center justify-center text-base flex-shrink-0">🏆</span>
+                    <span class="w-8 h-8 rounded-xl bg-yellow-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></span>
                     三大重點
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1110,7 +1132,7 @@
             <!-- Themes -->
             <div id="m-themes" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-base flex-shrink-0">🌐</span>
+                    <span class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
                     AI 產業動態
                 </h3>
                 <div class="space-y-2.5">
@@ -1137,7 +1159,7 @@
             <!-- Competitors -->
             <div id="m-competitors" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-base flex-shrink-0">🏢</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></span>
                     競業動態
                 </h3>
                 <div class="bg-white rounded-2xl card overflow-hidden">
@@ -1185,7 +1207,7 @@
             <!-- Recommendations -->
             <div id="m-recommendations" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">💡</span>
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>
                     行動建議
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1210,7 +1232,7 @@
             <!-- Reads -->
             <div id="m-reads" class="${SM} pb-4">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-base flex-shrink-0">📎</span>
+                    <span class="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></span>
                     深讀推薦
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1415,7 +1437,7 @@
             <div id="q-summary" class="${SM} bg-white rounded-2xl card overflow-hidden" style="border-top:4px solid #f97316;">
                 <div class="p-6 sm:p-8">
                     <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">📌</span>
+                        <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
                         本季趨勢綜述
                     </h3>
                     <div class="text-gray-700 leading-relaxed space-y-2 text-sm">${fmtSummary(data.executive_summary?.summary_text||'')}</div>
@@ -1425,7 +1447,7 @@
             <!-- Timeline (招牌) -->
             <div id="q-timeline" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-base flex-shrink-0">🕒</span>
+                    <span class="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
                     季度時間軸
                 </h3>
                 <div class="relative pl-7">
@@ -1453,7 +1475,7 @@
             <!-- Trend arcs -->
             <div id="q-arcs" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-base flex-shrink-0">📈</span>
+                    <span class="w-8 h-8 rounded-xl bg-indigo-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></span>
                     主題趨勢弧線
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1483,14 +1505,14 @@
             <!-- Inflection points -->
             <div id="q-inflections" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-base flex-shrink-0">⚡</span>
+                    <span class="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
                     季度轉折點
                 </h3>
                 <div class="space-y-2.5">
                     ${(data.inflection_points||[]).map(p => `
                         <div class="bg-white rounded-2xl card p-5 flex items-start gap-4">
                             <div class="flex-shrink-0 flex flex-col items-center">
-                                <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg">⚡</span>
+                                <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
                             </div>
                             <div class="min-w-0">
                                 <div class="flex items-center gap-2 mb-1">
@@ -1506,7 +1528,7 @@
             <!-- Competitor trajectory -->
             <div id="q-competitors" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-base flex-shrink-0">🏢</span>
+                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></span>
                     競業季度軌跡
                 </h3>
                 <div class="bg-white rounded-2xl card overflow-hidden">
@@ -1528,7 +1550,7 @@
             <!-- Recommendations (10 subsidiaries) -->
             <div id="q-recommendations" class="${SM}">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0">💡</span>
+                    <span class="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></span>
                     季度策略重點
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1553,7 +1575,7 @@
             <!-- Reads -->
             <div id="q-reads" class="${SM} pb-4">
                 <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-base flex-shrink-0">📎</span>
+                    <span class="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-base flex-shrink-0"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg></span>
                     深讀推薦
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1611,5 +1633,6 @@
     // ======================================================
     window.addEventListener('DOMContentLoaded', initData);
     </script>
+    <script src="assets/terms.js?v=2" defer></script>
 </body>
 </html>

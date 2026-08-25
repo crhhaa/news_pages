@@ -9,8 +9,9 @@
     <style>
         html { scroll-behavior: smooth; }
     </style>
+    <link rel="stylesheet" href="assets/site.css">
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans">
+<body class="bg-slate-50 text-gray-800">
 
     <!-- NAVBAR -->
     <nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,0.25);">
@@ -40,11 +41,21 @@
                         </svg>
                         全球金融科技觀測
                     </a>
+                    <a href="peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        同業概觀</a>
+                    <a href="news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                        AI 新聞深度解讀
+                    </a>
                     <a href="docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        知識庫
+                        前沿模型介紹
+                    </a>
+                    <a href="ai_classroom/classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                        AI 小學堂
                     </a>
                 </div>
 
@@ -68,13 +79,24 @@
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     全球金融科技觀測
                 </a>
+                <a href="peer.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors"><svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                    同業概觀</a>
+                <a href="news.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>
+                    AI 新聞深度解讀
+                </a>
                 <a href="docs.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors">
                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    金融科技知識庫
+                    前沿模型介紹
+                </a>
+                <a href="ai_classroom/classroom.html" class="flex items-center gap-2.5 text-white/70 hover:text-white py-2.5 transition-colors">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0112 20.055a12.083 12.083 0 01-6.16-9.477L12 14z"/></svg>
+                    AI 小學堂
                 </a>
             </div>
         </div>
     </nav>
+
 
     <!-- main -->
     <main class="max-w-7xl mx-auto px-4 py-6">
@@ -82,30 +104,30 @@
         <!-- 篩選1：國內/國外 -->
         <div class="mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
             <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-5">
-                <h2 class="text-xl font-semibold text-gray-700">全球金融科技觀測</h2>
+                <h2 class="text-2xl font-bold text-slate-900">全球金融科技觀測</h2>
                 <div class="flex items-center gap-1 bg-gray-100 rounded-xl p-1 flex-shrink-0">
-                    <button class="market-tab px-4 py-1.5 rounded-lg text-sm font-semibold transition-all" data-market="DOMESTIC">🇹🇼 台灣市場</button>
-                    <button class="market-tab px-4 py-1.5 rounded-lg text-sm font-semibold transition-all" data-market="GLOBAL">🌐 國際市場</button>
+                    <button class="market-tab px-4 py-1.5 rounded-lg text-sm font-semibold transition-all" data-market="DOMESTIC"><span class="inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>台灣市場</span></button>
+                    <button class="market-tab px-4 py-1.5 rounded-lg text-sm font-semibold transition-all" data-market="GLOBAL"><span class="inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>國際市場</span></button>
                 </div>
             </div>
             <!-- 篩選2：領域篩選 -->
             <div class="flex flex-wrap items-center gap-2 mb-3">
-                <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏷️ 篩選領域：</span>
+                <span class="text-sm font-medium text-gray-600 whitespace-nowrap inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>篩選領域：</span>
                 <button class="domain-filter-btn bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-domain="ALL">全部</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="AI">🤖 AI</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="行動App">📲 行動App</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="支付工具">💳 支付工具</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="信用貸款">🏦 信用貸款</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="數位帳戶">🏧 數位帳戶</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="智能客服">🤝 智能客服</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="智能理財">📈 智能理財</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="區塊鏈">🔗 區塊鏈</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="資訊安全">🔒 資訊安全</button>
-                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-domain="監理政策">⚖️ 監理政策</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="AI"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>AI</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="行動App"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>行動App</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="支付工具"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>支付工具</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="信用貸款"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>信用貸款</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="數位帳戶"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"/></svg>數位帳戶</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="智能客服"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>智能客服</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="智能理財"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>智能理財</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="區塊鏈"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>區塊鏈</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="資訊安全"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>資訊安全</button>
+                <button class="domain-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-blue-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap inline-flex items-center gap-1.5" data-domain="監理政策"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>監理政策</button>
             </div>
             <!-- 篩選3：集團篩選 -->
             <div id="groupFilterRow" class="flex flex-wrap items-center gap-2 mb-3">
-                <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏢 集團：</span>
+                <span class="text-sm font-medium text-gray-600 whitespace-nowrap inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>集團：</span>
                 <button class="group-filter-btn bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-group="ALL">全部</button>
                 <button class="group-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-indigo-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-group="元大">元大</button>
                 <button class="group-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-indigo-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-group="國泰">國泰</button>
@@ -122,11 +144,12 @@
             </div>
             <!-- 篩選4：業別篩選 -->
             <div id="typeFilterRow" class="flex flex-wrap items-center gap-2 mb-3">
-                <span class="text-sm font-medium text-gray-600 whitespace-nowrap">🏦 業別：</span>
+                <span class="text-sm font-medium text-gray-600 whitespace-nowrap inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"/></svg>業別：</span>
                 <button class="type-filter-btn bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm transition whitespace-nowrap" data-type="ALL">全部</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="金控">金控</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="銀行">銀行</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="人壽">人壽</button>
+                <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="產險">產險</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="證券">證券</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="投信">投信</button>
                 <button class="type-filter-btn bg-white text-gray-600 border border-gray-300 hover:bg-teal-50 px-3 py-1 rounded-full text-xs font-semibold transition whitespace-nowrap" data-type="投顧">投顧</button>
@@ -134,7 +157,7 @@
             </div>
             <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
                 <div class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-gray-600">📅 篩選月份：</span>
+                    <span class="text-sm font-medium text-gray-600 inline-flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>篩選月份：</span>
                     <select id="monthSelector" class="border border-gray-300 rounded-lg p-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         <option value="ALL">全部顯示 (All)</option>
                     </select>
@@ -155,7 +178,7 @@
         </div>
 
         <!-- card list -->
-        <div id="timelineContainer">
+        <div id="timelineContainer" data-auto-terms>
         </div>
         <div id="paginationContainer"></div>
 
@@ -181,16 +204,16 @@
 
         const GROUP_MAP = {
             '元大': ['元大金控','元大銀行','元大投信','元大投顧','元大證券','元大期貨','元大人壽','元大創投','元大國際資產(AMC)','元大證金'],
-            '國泰': ['國泰金控','國泰人壽','國泰世華銀行','國泰投信','國泰證券'],
-            '富邦': ['富邦金控','台北富邦銀行','富邦人壽','富邦證券','富邦投信'],
+            '國泰': ['國泰金控','國泰人壽','國泰世華銀行','國泰產險','國泰投信','國泰證券'],
+            '富邦': ['富邦金控','台北富邦銀行','富邦人壽','富邦產險','富邦證券','富邦投信'],
             '中信': ['中信金控','中國信託商業銀行','台灣人壽','中信證券','中信投信'],
-            '玉山': ['玉山金控','玉山銀行','玉山證券'],
-            '永豐': ['永豐金控','永豐銀行','永豐金證券'],
-            '兆豐': ['兆豐金控','兆豐銀行','兆豐證券','兆豐投信'],
-            '第一': ['第一金控','第一銀行','第一金證券','第一金投信'],
-            '台新': ['台新金控','台新銀行','台新人壽','台新證券','台新投信'],
-            '合庫': ['合庫金控','合作金庫銀行','合庫證券','合庫投信'],
-            '華南': ['華南金控','華南銀行','華南永昌證券'],
+            '玉山': ['玉山金控','玉山銀行','玉山證券','玉山投信','三商美邦人壽'],
+            '永豐': ['永豐金控','永豐銀行','永豐金證券','永豐投信','京城銀行'],
+            '兆豐': ['兆豐金控','兆豐銀行','兆豐證券','兆豐產險','兆豐投信','兆豐期貨'],
+            '第一': ['第一金控','第一銀行','第一金人壽','第一金證券','第一金投信'],
+            '台新': ['台新金控','台新銀行','台新人壽','新光人壽','台新證券','台新投信','台新投顧','新光銀行'],
+            '合庫': ['合庫金控','合作金庫銀行','合庫證券','合庫人壽','合庫投信'],
+            '華南': ['華南金控','華南銀行','華南永昌證券','華南產險','華南永昌投信'],
             '凱基': ['開發金控','凱基銀行','凱基證券','凱基投信','凱基金控'],
         };
 
@@ -205,12 +228,13 @@
 
         const TYPE_MAP = {
             '金控': ['國泰金控','富邦金控','中信金控','玉山金控','永豐金控','元大金控','兆豐金控','第一金控','台新金控','合庫金控','華南金控','開發金控','凱基金控'],
-            '銀行': ['國泰世華銀行','台北富邦銀行','中國信託商業銀行','玉山銀行','永豐銀行','元大銀行','兆豐銀行','第一銀行','台新銀行','合作金庫銀行','華南銀行','凱基銀行','台灣銀行','土地銀行'],
-            '人壽': ['國泰人壽','富邦人壽','台灣人壽','元大人壽','台新人壽'],
+            '銀行': ['國泰世華銀行','台北富邦銀行','中國信託商業銀行','玉山銀行','永豐銀行','京城銀行','元大銀行','兆豐銀行','第一銀行','台新銀行','新光銀行','合作金庫銀行','華南銀行','凱基銀行','台灣銀行','土地銀行'],
+            '人壽': ['國泰人壽','富邦人壽','台灣人壽','三商美邦人壽','元大人壽','台新人壽','新光人壽','凱基人壽','第一金人壽','合庫人壽'],
+            '產險': ['國泰產險','富邦產險','兆豐產險','華南產險'],
             '證券': ['國泰證券','富邦證券','中信證券','玉山證券','永豐金證券','元大證券','兆豐證券','第一金證券','台新證券','合庫證券','華南永昌證券','凱基證券'],
-            '投信': ['國泰投信','富邦投信','中信投信','元大投信','兆豐投信','第一金投信','台新投信','合庫投信','凱基投信'],
-            '投顧': ['元大投顧'],
-            '期貨': ['元大期貨'],
+            '投信': ['國泰投信','富邦投信','中信投信','玉山投信','永豐投信','元大投信','兆豐投信','第一金投信','台新投信','合庫投信','凱基投信','華南永昌投信'],
+            '投顧': ['元大投顧','台新投顧'],
+            '期貨': ['元大期貨','兆豐期貨'],
         };
 
         const DOMAIN_ALIASES = {
@@ -311,19 +335,19 @@
         };
 
         const domainBadgeMap = {
-            'AI':       { bg: 'bg-blue-100',    text: 'text-blue-700',    label: '🤖 AI' },
-            '行動App':  { bg: 'bg-pink-100',    text: 'text-pink-700',    label: '📲 行動App' },
-            '行動APP':  { bg: 'bg-pink-100',    text: 'text-pink-700',    label: '📲 行動App' },
-            '支付工具': { bg: 'bg-purple-100',  text: 'text-purple-700',  label: '💳 支付工具' },
-            '數位平台': { bg: 'bg-purple-100',  text: 'text-purple-700',  label: '💳 支付工具' },
-            '信用貸款': { bg: 'bg-orange-100',  text: 'text-orange-700',  label: '🏦 信用貸款' },
-            '數位帳戶': { bg: 'bg-indigo-100',  text: 'text-indigo-700',  label: '🏧 數位帳戶' },
-            '智能客服': { bg: 'bg-cyan-100',    text: 'text-cyan-700',    label: '🤝 智能客服' },
-            '智能理財': { bg: 'bg-emerald-100', text: 'text-emerald-700', label: '📈 智能理財' },
-            '區塊鏈':   { bg: 'bg-teal-100',    text: 'text-teal-700',    label: '🔗 區塊鏈' },
-            '資訊安全': { bg: 'bg-red-100',     text: 'text-red-700',     label: '🔒 資訊安全' },
-            '資安':     { bg: 'bg-red-100',     text: 'text-red-700',     label: '🔒 資訊安全' },
-            '監理政策': { bg: 'bg-green-100',   text: 'text-green-700',   label: '⚖️ 監理政策' },
+            'AI':       { bg: 'bg-blue-100',    text: 'text-blue-700',    label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>AI' },
+            '行動App':  { bg: 'bg-pink-100',    text: 'text-pink-700',    label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>行動App' },
+            '行動APP':  { bg: 'bg-pink-100',    text: 'text-pink-700',    label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>行動App' },
+            '支付工具': { bg: 'bg-purple-100',  text: 'text-purple-700',  label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>支付工具' },
+            '數位平台': { bg: 'bg-purple-100',  text: 'text-purple-700',  label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>支付工具' },
+            '信用貸款': { bg: 'bg-orange-100',  text: 'text-orange-700',  label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>信用貸款' },
+            '數位帳戶': { bg: 'bg-indigo-100',  text: 'text-indigo-700',  label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"/></svg>數位帳戶' },
+            '智能客服': { bg: 'bg-cyan-100',    text: 'text-cyan-700',    label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>智能客服' },
+            '智能理財': { bg: 'bg-emerald-100', text: 'text-emerald-700', label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>智能理財' },
+            '區塊鏈':   { bg: 'bg-teal-100',    text: 'text-teal-700',    label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>區塊鏈' },
+            '資訊安全': { bg: 'bg-red-100',     text: 'text-red-700',     label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>資訊安全' },
+            '資安':     { bg: 'bg-red-100',     text: 'text-red-700',     label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>資訊安全' },
+            '監理政策': { bg: 'bg-green-100',   text: 'text-green-700',   label: '<svg class="w-3 h-3 inline-block align-[-2px] mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>監理政策' },
         };
 
         function buildCard(news, domestic) {
@@ -379,13 +403,13 @@
                         <div class="space-y-2 md:border-l md:border-gray-100 md:pl-6">
                             ${insight ? `
                             <div class="bg-amber-50 rounded-lg px-3 py-2.5">
-                                <p class="text-sm font-bold text-amber-600 mb-1.5">💡 關鍵洞察</p>
+                                <p class="text-sm font-bold text-amber-600 mb-1.5"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline-block;vertical-align:-.2em"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> 關鍵洞察</p>
                                 <p class="text-sm text-gray-700 leading-relaxed">${insight}</p>
                             </div>
                             ` : ''}
                             ${yuantaLines.length > 0 ? `
                             <div class="bg-blue-50 rounded-lg px-3 py-2.5">
-                                <p class="text-sm font-bold text-blue-700 mb-2">🏛️ 元大洞察</p>
+                                <p class="text-sm font-bold text-blue-700 mb-2"><svg class="ico" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:inline-block;vertical-align:-.2em"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6"/></svg> 元大洞察</p>
                                 <div class="space-y-3">
                                     ${yuantaLines.map(line => `<p class="text-sm text-gray-700 leading-relaxed">${line}</p>`).join('')}
                                 </div>
@@ -677,5 +701,6 @@
 
         window.addEventListener('DOMContentLoaded', initData);
     </script>
+    <script src="assets/terms.js?v=2" defer></script>
 </body>
 </html>

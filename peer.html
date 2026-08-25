@@ -173,6 +173,18 @@ a{color:inherit}
   color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
 /* 每年第一季換行成兩截，年份才不會在一排 Q 裡糊掉 */
 .qaxis-track span.yr{color:var(--ink);font-weight:700}
+.qaxis-track span i{display:block;min-height:.875rem;font-style:normal;font-size:.625rem;
+  font-weight:700;color:var(--muted);line-height:1.4}
+/* 手機：左邊三欄佔掉一半寬度，季度條被擠到卡片外——收起「首次導入」、能力項名縮短 */
+@media (max-width:640px){
+  .hide-sm{display:none}
+  .lad-inner{min-width:30rem}
+  .lad-m{display:none}
+  .qaxis-spacer{width:12.5rem}
+  .pano .lad-g{width:7rem!important;font-size:.75rem}
+  .pano .lad.lad-sub .lad-g{font-size:.6875rem}
+  .pano .qaxis-spacer{width:13rem!important}
+}
 
 /* 能力與場景合併後的主視圖 */
 .map-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
@@ -253,6 +265,8 @@ a{color:inherit}
 .xtable tr:last-child td,.xtable tr:last-child th{border-bottom:0}
 .xtable th:last-child,.xtable td:last-child{border-right:0}
 .xtable thead th{background:var(--rule-soft);color:var(--ink-2);font-weight:700;font-size:.75rem}
+/* 左上角那格也要黏住，不然橫捲時欄名會跟著跑掉、留下沒有標題的列 */
+.xtable thead th:first-child{position:sticky;left:0;z-index:2;border-right:1px solid var(--rule)}
 .xtable tbody th{text-align:left;font-weight:700;background:#fff;position:sticky;left:0;z-index:1;border-right:1px solid var(--rule)}
 .xtable tbody th i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:.4375rem;vertical-align:middle}
 .xtable td.x{cursor:pointer;font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy)}
@@ -565,6 +579,15 @@ function quarterRange(ds) {
    一格＝一季：該季有已導入佐證→實色，只有宣示中→空心環，只有暫停→紅，沒有→灰底。
    click 是 q => onclick 屬性字串，由呼叫端決定點下去開什麼。
    ========================================================================= */
+/* 季度表頭：年份自己一行，季度一行——擠在同一行時 "2024 Q4" 會跟下一格黏在一起 */
+function qaxisHead() {
+  return ALL_QS.map((q, i) => {
+    const [y, qq] = q.split(' ');
+    const yr = i === 0 || qq === 'Q1';
+    return `<span class="${yr ? 'yr' : ''}"><i>${yr ? esc(y) : ''}</i>${esc(qq)}</span>`;
+  }).join('');
+}
+
 function qStrip(rows, click) {
   return `<span class="qstrip">${ALL_QS.map(q => {
     const hit = rows.filter(r => datesOf(r).some(d => qOf(d) === q));
@@ -618,8 +641,8 @@ function panorama(g, rows) {
       縱向是 10 個能力項，橫向每格一季（${esc(ALL_QS[0] || '')} ～ ${esc(ALL_QS[ALL_QS.length - 1] || '')}）。
       <span class="qkey done"></span> 該季有已導入佐證　<span class="qkey claim"></span> 只有宣示中
       <span class="qkey stop"></span> 暫停　<span class="qkey"></span> 該季無動作。點長條看那一季的佐證，點能力項名看定義。</p>
-    <div class="lad-wrap thin"><div class="lad-inner">
-      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer" style="width:25.5rem">能力項／狀態／首次導入</span><span class="qaxis-track">${ALL_QS.map((q, i) => `<span class="${i === 0 || q.endsWith('Q1') ? 'yr' : ''}">${esc(q)}</span>`).join('')}</span></div>` : ''}
+    <div class="lad-wrap thin pano"><div class="lad-inner">
+      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer" style="width:25.5rem">能力項／狀態<span class="hide-sm">／首次導入</span></span><span class="qaxis-track">${qaxisHead()}</span></div>` : ''}
       ${bands}
     </div></div>`;
 }
@@ -668,7 +691,7 @@ function ladder(sel) {
       <span class="qkey done"></span> 該季有已導入佐證　<span class="qkey claim"></span> 只有宣示中
       <span class="qkey stop"></span> 暫停　<span class="qkey"></span> 該季無動作。點長條看佐證。</p>
     <div class="lad-wrap thin"><div class="lad-inner">
-      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer">集團／狀態／首次導入</span><span class="qaxis-track">${ALL_QS.map((q, i) => `<span class="${i === 0 || q.endsWith('Q1') ? 'yr' : ''}">${esc(q)}</span>`).join('')}</span><span style="width:3.75rem;flex-shrink:0"></span></div>` : ''}
+      ${ALL_QS.length ? `<div class="qaxis"><span class="qaxis-spacer">集團／狀態<span class="hide-sm">／首次導入</span></span><span class="qaxis-track">${qaxisHead()}</span><span style="width:3.75rem;flex-shrink:0"></span></div>` : ''}
       ${rows || '<p class="empty">尚無佐證</p>'}
     </div></div>
     ${idle.length ? `<p class="footnote" style="margin-top:.875rem;padding-top:.75rem;border-top:1px solid var(--rule)">

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benchmark｜AI 小學堂 名詞</title>
-    <meta name="description" content="一份標準考卷。它只證明模型擅長那份考卷。">
-    <meta property="og:title" content="Benchmark 評測基準">
-    <meta property="og:description" content="一份標準考卷。它只證明模型擅長那份考卷。">
+    <title>LoRA｜AI 小學堂 名詞</title>
+    <meta name="description" content="原本的權重凍住不動，只在旁邊加一小塊新參數去調，讓微調便宜好幾個數量級。">
+    <meta property="og:title" content="LoRA 低秩調適">
+    <meta property="og:description" content="原本的權重凍住不動，只在旁邊加一小塊新參數去調，讓微調便宜好幾個數量級。">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
@@ -18,7 +18,7 @@
         .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 
         /* 每頁的重點色來自「第幾集首次出現」，整頁只用這一個變數 */
-        :root { --accent: #2563eb; }
+        :root { --accent: #c2410c; }
         .hero-term {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, color-mix(in srgb, var(--accent) 30%, #1e293b) 100%);
         }
@@ -271,10 +271,10 @@
             </a>
             <div class="flex items-center gap-2 flex-wrap mb-3 text-[11px]">
                 <span class="font-semibold tracking-wider rounded-full px-2.5 py-1"
-                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W33</span>
+                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W35</span>
             </div>
-            <h1 class="page-title">Benchmark</h1>
-            <p class="text-white/50 text-sm mt-1.5">評測基準</p>
+            <h1 class="page-title">LoRA</h1>
+            <p class="text-white/50 text-sm mt-1.5">低秩調適</p>
         </div>
     </header>
 
@@ -282,32 +282,53 @@
 
         <div class="cols">
             <main class="space-y-9 min-w-0">
-                <p class="pull">一份標準考卷。它只證明模型擅長那份考卷。</p>
+                <p class="pull">原本的權重凍住不動，只在旁邊加一小塊新參數去調，讓微調便宜好幾個數量級。</p>
                 <article class="term-body">
 <section class="tb tb1"><h2 id="_1">定義</h2>
-<p>Benchmark 是一份<strong>標準化的考卷</strong>：固定的題目、固定的評分方式，讓不同模型在相同條件下比較。</p>
-<p>常見的幾類：</p>
-<div class="fl"><div class="fl-step"><div class="fl-who">知識類</div><div class="fl-what">大學程度的跨學科選擇題</div></div><div class="fl-step"><div class="fl-who">數理類</div><div class="fl-what">競賽等級的數學題、程式題</div></div><div class="fl-step"><div class="fl-who">長文類</div><div class="fl-what">給一份很長的文件，測它找不找得到關鍵資訊</div></div><div class="fl-step"><div class="fl-who">代理類</div><div class="fl-what">給一個多步驟任務，測它做不做得完</div></div></div>
+<p>LoRA 是<a href="fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>的一種做法：<strong>不動原本那包<a href="weights.html" class="term-link" data-term="weights">權重</a></strong>，把它整包凍住，訓練時只調旁邊新加的一小塊參數，使用時再把兩邊疊起來一起跑。</p>
+<p>跟它對照的是<strong>全量微調</strong>——把幾千億個數字整包重算一次。兩者的差別不在效果好不好，在<strong>你搬不搬得動整包</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>全量微調</th>
+<th>LoRA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>動到的參數</td>
+<td>全部</td>
+<td>新增的一小塊</td>
+</tr>
+<tr>
+<td>需要的資料</td>
+<td>大量標註資料</td>
+<td>常常數千筆就夠</td>
+</tr>
+<tr>
+<td>硬體</td>
+<td>要能容納整包權重</td>
+<td>一般運算卡跑得動</td>
+</tr>
+</tbody>
+</table>
+<p>還有一個更省的版本叫 <strong>QLoRA</strong>：做法跟 LoRA 一樣，但先把原本的權重壓成更小的數字格式再載入，<mark class="hl">記憶體需求再降一階，一般電腦上就能跑</mark>。它不是另一種概念，是 LoRA 的省記憶體版本。</p>
 </section><section class="tb tb2"><h2 id="_2">為何會出現</h2>
-<p>每個團隊都說自己的模型更好，但用的題目和評分方式都不一樣，<mark class="hl">根本沒辦法比</mark>。Benchmark 提供了一個共同的座標系。</p>
-<p>這個貢獻是真實的——沒有它，整個領域會停在互相宣稱的階段。</p>
-<p>但它也帶進了一個新問題：<strong>當一個分數變成競爭目標，人們就會開始針對那個分數優化。</strong> 見<a href="benchmark-contamination.html" class="term-link" data-term="benchmark-contamination">評測污染</a>和<a href="leaderboard-tuning.html" class="term-link" data-term="leaderboard-tuning">刷榜</a>。</p>
+<p>現在的模型參數量以千億計，早年的語言模型只有一到三億。<mark class="hl">參數量漲了三個數量級，「整包重算一次」就從一件麻煩的事變成一件多數人做不起的事。</mark></p>
+<p>LoRA 的切入點是：改變輸出風格所需要的調整，其實遠小於整包參數。既然如此，就沒有必要動整包——凍住原本的，只訓練新加的那一小塊就好。</p>
+<p>這個做法的結果是，微調的成本又往下掉了一個數量級。<mark class="hl">它是「微調」從研究室的事變成企業做得起的事的轉折點</mark>，現在企業實際會做的微調，幾乎都是這一類。</p>
+<div class="callout callout-比喻"><div class="callout-title">採購的比喻</div><p>全量微調像是<mark class="hl">為了補一個新領域，把整座圖書館的書重新採購一遍</mark>；LoRA 像是只添購幾十本該領域的專書，原本的藏書一本都不動。QLoRA 則是連那幾十本都改買精簡版。</p></div>
 </section><section class="tb tb3"><h2 id="_3">金融背景怎麼理解</h2>
-<p><strong><mark class="hl">Benchmark 只證明模型擅長那份考卷。</mark></strong></p>
-<p>這句話值得反覆說，因為採購時最常犯的錯就是拿排行榜當決策依據。一個模型在通用知識測驗拿高分，跟它能不能正確處理你們的保單條款、看得懂你們的內部術語，<mark class="hl">是兩個獨立的問題</mark>。</p>
-<p>當廠商說「我們在某某 benchmark 領先」，追問兩題：</p>
-<ol>
-<li><strong>這份測驗跟我們的業務性質像嗎？</strong> 選擇題跟「讀完 80 頁合約找出矛盾條款」不是同一種能力。</li>
-<li><strong>有沒有用我們自己的題目盲測過？</strong></li>
-</ol>
-<div class="callout callout-提醒"><div class="callout-title">最有用的一件事：自己出一份考卷</div><p>採購前，用你們<strong>真實的案例</strong>出一份小考——<mark class="hl">幾十題就夠了</mark>，而且事先定義好怎樣算答對。</p>
-<p>這比任何公開排行榜都準，因為它測的是你真正要用的能力。而且這份考卷可以一直沿用：換模型、換版本、換廠商時，你有一個固定的參照點。</p></div>
-<p>實務上這件事的價值還在於：<strong>它逼你把「什麼叫做對」講清楚。</strong> 很多 AI 專案做不下去，不是模型不行，是從頭到尾沒有人定義過驗收標準。出一份考卷會強迫這件事發生。</p></section>
+<p>這個詞你會在廠商提案書上直接看到——「以 LoRA 微調」是很常見的一句話。看到它，有兩件事值得追問。</p>
+<p><strong>第一，它決定成本量級。</strong> LoRA 與全量微調的報價不會在同一個級距，而簡報上兩者都寫成「微調」。</p>
+<p><strong>第二，它決定你的投入能不能搬走。</strong> LoRA 調出來的那一小塊是獨立的檔案，掛在某一版特定的權重上。所以要問：<mark class="hl">底層模型換版本、換供應商的時候，這一小塊要不要重做？</mark> 這一題的答案，會影響你之後每一次換模型的成本。</p>
+<p>外面的公開案例可以看出這條路的位置：FinGPT 走的是 LoRA 加上人類回饋訓練，FinLlama 用 QLoRA 微調開放權重模型——<mark class="hl">它們改的都是「怎麼判讀金融文字」這種講法層次的事</mark>，不是拿它來記住某一份文件的內容。那個界線在 <a href="fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>那頁講得更清楚。</p></section>
                 </article>
             </main>
             <aside class="rail space-y-7 min-w-0">
-                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="benchmark-contamination.html">Benchmark Contamination<span>評測污染</span></a><a href="leaderboard-tuning.html">Leaderboard Tuning<span>刷榜</span></a></div></section>
-                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="../lessons/2026-W34-benchmark.html" class="ep"><div class="ep-w">2026-W34</div><div class="ep-t">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><a href="../lessons/2026-W33-next-token-prediction.html" class="ep"><div class="ep-w">2026-W33</div><div class="ep-t">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a></div></section>
+                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="fine-tuning.html">Fine-tuning<span>微調</span></a><a href="weights.html">Weights<span>權重</span></a></div></section>
+                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a></div></section>
             </aside>
         </div>
 

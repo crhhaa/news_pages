@@ -26,11 +26,6 @@
     const allNodes = data.nodes.map(d => ({ ...d }));
     const allLinks = data.links.map(d => ({ ...d }));
 
-    svg.append('defs').append('marker')
-      .attr('id', 'arrow').attr('viewBox', '0 -5 10 10').attr('refX', 20)
-      .attr('markerWidth', 5).attr('markerHeight', 5).attr('orient', 'auto')
-      .append('path').attr('d', 'M0,-4L9,0L0,4').attr('fill', '#cbd5e1');
-
     const root = svg.append('g');
     const gLink = root.append('g');
     const gNode = root.append('g');
@@ -45,7 +40,7 @@
 
     const sim = d3.forceSimulation()
       .force('link', d3.forceLink().id(d => d.id).distance(l =>
-        l.type === 'mentions' ? 170 : l.type === 'confused' ? 90 : 115).strength(0.6))
+        l.layer === 1 ? 170 : 100).strength(0.6))
       .force('charge', d3.forceManyBody().strength(-500))
       .force('center', d3.forceCenter(W / 2, H / 2))
       // 沒有連到主體的小群（例如 benchmark 那條鏈）會被斥力一路推到天邊，
@@ -72,12 +67,12 @@
       });
 
       link = gLink.selectAll('line').data(links, l =>
-        (l.source.id || l.source) + '>' + (l.target.id || l.target) + l.type)
+        (l.source.id || l.source) + '>' + (l.target.id || l.target) + l.layer)
         .join('line')
-        .attr('stroke', l => l.type === 'mentions' ? '#e2e8f0' : '#cbd5e1')
-        .attr('stroke-width', l => l.type === 'mentions' ? 2 : 1.4)
-        .attr('stroke-dasharray', l => l.type === 'confused' ? '3,3' : null)
-        .attr('marker-end', l => l.type === 'succeeds' ? 'url(#arrow)' : null);
+        // 兩層，都是實線、都沒有箭頭，層級只靠粗細深淺分：
+        //   第一層＝課程提到（粗、深）；第二層＝名詞頁內文提到、比較表同組、chain（細、淺）。
+        .attr('stroke', l => l.layer === 1 ? '#cbd5e1' : '#eef2f7')
+        .attr('stroke-width', l => l.layer === 1 ? 2.2 : 1.2);
 
       node = gNode.selectAll('circle').data(nodes, d => d.id)
         .join('circle')

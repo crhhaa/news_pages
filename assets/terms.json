@@ -54,6 +54,11 @@
   "zh": "出向流量管控",
   "oneline": "它能主動連出去到哪裡——這條線就是它的能力邊界。"
  },
+ "fine-tuning": {
+  "term": "Fine-tuning",
+  "zh": "微調",
+  "oneline": "拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。"
+ },
  "guardrail": {
   "term": "Guardrail",
   "zh": "護欄",
@@ -83,6 +88,11 @@
   "term": "Leaderboard Tuning",
   "zh": "刷榜",
   "oneline": "為了榜單分數調校，而不是為了真的變強。"
+ },
+ "lora": {
+  "term": "LoRA",
+  "zh": "低秩調適",
+  "oneline": "原本的權重凍住不動，只在旁邊加一小塊新參數去調，讓微調便宜好幾個數量級。"
  },
  "moe": {
   "term": "MoE",
@@ -158,5 +168,10 @@
   "term": "Tool Use / Function Calling",
   "zh": "工具呼叫",
   "oneline": "讓模型用固定格式「點餐」，外部程式負責真的去做。"
+ },
+ "weights": {
+  "term": "Weights",
+  "zh": "權重",
+  "oneline": "模型訓練完的那一大包參數檔，模型的全部能力都在裡面。"
  }
 }

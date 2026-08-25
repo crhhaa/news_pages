@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benchmark｜AI 小學堂 名詞</title>
-    <meta name="description" content="一份標準考卷。它只證明模型擅長那份考卷。">
-    <meta property="og:title" content="Benchmark 評測基準">
-    <meta property="og:description" content="一份標準考卷。它只證明模型擅長那份考卷。">
+    <title>Weights｜AI 小學堂 名詞</title>
+    <meta name="description" content="模型訓練完的那一大包參數檔，模型的全部能力都在裡面。">
+    <meta property="og:title" content="Weights 權重">
+    <meta property="og:description" content="模型訓練完的那一大包參數檔，模型的全部能力都在裡面。">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
@@ -18,7 +18,7 @@
         .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 
         /* 每頁的重點色來自「第幾集首次出現」，整頁只用這一個變數 */
-        :root { --accent: #2563eb; }
+        :root { --accent: #c2410c; }
         .hero-term {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, color-mix(in srgb, var(--accent) 30%, #1e293b) 100%);
         }
@@ -271,10 +271,10 @@
             </a>
             <div class="flex items-center gap-2 flex-wrap mb-3 text-[11px]">
                 <span class="font-semibold tracking-wider rounded-full px-2.5 py-1"
-                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W33</span>
+                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W35</span>
             </div>
-            <h1 class="page-title">Benchmark</h1>
-            <p class="text-white/50 text-sm mt-1.5">評測基準</p>
+            <h1 class="page-title">Weights</h1>
+            <p class="text-white/50 text-sm mt-1.5">權重</p>
         </div>
     </header>
 
@@ -282,32 +282,50 @@
 
         <div class="cols">
             <main class="space-y-9 min-w-0">
-                <p class="pull">一份標準考卷。它只證明模型擅長那份考卷。</p>
+                <p class="pull">模型訓練完的那一大包參數檔，模型的全部能力都在裡面。</p>
                 <article class="term-body">
 <section class="tb tb1"><h2 id="_1">定義</h2>
-<p>Benchmark 是一份<strong>標準化的考卷</strong>：固定的題目、固定的評分方式，讓不同模型在相同條件下比較。</p>
-<p>常見的幾類：</p>
-<div class="fl"><div class="fl-step"><div class="fl-who">知識類</div><div class="fl-what">大學程度的跨學科選擇題</div></div><div class="fl-step"><div class="fl-who">數理類</div><div class="fl-what">競賽等級的數學題、程式題</div></div><div class="fl-step"><div class="fl-who">長文類</div><div class="fl-what">給一份很長的文件，測它找不找得到關鍵資訊</div></div><div class="fl-step"><div class="fl-who">代理類</div><div class="fl-what">給一個多步驟任務，測它做不做得完</div></div></div>
+<p>權重是模型訓練結束後留下的<strong>參數檔案</strong>，裡面是幾千億個數字。</p>
+<p>要理解它，先要知道模型<strong>不是</strong>什麼。模型的程式碼很短，而且是公開的——光有程式碼，什麼也做不到。真正決定模型會什麼、不會什麼的，是那包數字。</p>
+<p>那些數字在做的事很具體：模型每<a href="next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜一個字</a>，都要算出「下一個字每個可能性各佔多少機率」，而算那個機率用的就是這些數字。所以<mark class="hl">模型讀過的東西、學會的語感、記住的常識，沒有一樣是以條文形式存在的，全部被壓成了數字</mark>。</p>
+<p>「拿到權重」等於拿到模型本體：可以下載到自己的機器上載入、可以拿去<a href="fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>、可以離線跑。所謂「開放權重」，指的就是把這一包放出來給人下載。</p>
 </section><section class="tb tb2"><h2 id="_2">為何會出現</h2>
-<p>每個團隊都說自己的模型更好，但用的題目和評分方式都不一樣，<mark class="hl">根本沒辦法比</mark>。Benchmark 提供了一個共同的座標系。</p>
-<p>這個貢獻是真實的——沒有它，整個領域會停在互相宣稱的階段。</p>
-<p>但它也帶進了一個新問題：<strong>當一個分數變成競爭目標，人們就會開始針對那個分數優化。</strong> 見<a href="benchmark-contamination.html" class="term-link" data-term="benchmark-contamination">評測污染</a>和<a href="leaderboard-tuning.html" class="term-link" data-term="leaderboard-tuning">刷榜</a>。</p>
+<p>這個詞會被單獨拿出來講，是因為它把「模型」這個含糊的說法切成了兩半：<strong>能力躺在權重裡，服務跑在別人的機房裡。</strong></p>
+<p>分清楚這兩半，很多爭論才有辦法談：</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">權重公開</div><div class="fl-what">可以下載、可以自己跑、可以改，通常沒有授權金</div></div><div class="fl-step"><div class="fl-who">服務收費</div><div class="fl-what">你不自己跑、直接呼叫對方的線上服務，照樣按用量付錢</div></div></div>
+<p><mark class="hl">免費的是權重，不是服務</mark>。這兩件事常被混為一談，但它們的成本結構完全相反：前者是先付機器與電，後者是用多少算多少。</p>
+<p>它也解釋了「為什麼有人願意送」。權重是一個檔案，<strong>複製它的成本幾乎是零</strong>——<a href="pretraining.html" class="term-link" data-term="pretraining">預訓練</a>那筆錢已經花掉且固定，送出去不會失去它。所以問題不是「送了會不會虧」，而是「送出去能換到什麼」。</p>
 </section><section class="tb tb3"><h2 id="_3">金融背景怎麼理解</h2>
-<p><strong><mark class="hl">Benchmark 只證明模型擅長那份考卷。</mark></strong></p>
-<p>這句話值得反覆說，因為採購時最常犯的錯就是拿排行榜當決策依據。一個模型在通用知識測驗拿高分，跟它能不能正確處理你們的保單條款、看得懂你們的內部術語，<mark class="hl">是兩個獨立的問題</mark>。</p>
-<p>當廠商說「我們在某某 benchmark 領先」，追問兩題：</p>
-<ol>
-<li><strong>這份測驗跟我們的業務性質像嗎？</strong> 選擇題跟「讀完 80 頁合約找出矛盾條款」不是同一種能力。</li>
-<li><strong>有沒有用我們自己的題目盲測過？</strong></li>
-</ol>
-<div class="callout callout-提醒"><div class="callout-title">最有用的一件事：自己出一份考卷</div><p>採購前，用你們<strong>真實的案例</strong>出一份小考——<mark class="hl">幾十題就夠了</mark>，而且事先定義好怎樣算答對。</p>
-<p>這比任何公開排行榜都準，因為它測的是你真正要用的能力。而且這份考卷可以一直沿用：換模型、換版本、換廠商時，你有一個固定的參照點。</p></div>
-<p>實務上這件事的價值還在於：<strong>它逼你把「什麼叫做對」講清楚。</strong> 很多 AI 專案做不下去，不是模型不行，是從頭到尾沒有人定義過驗收標準。出一份考卷會強迫這件事發生。</p></section>
+<p>把權重想成<mark class="hl">一份完整的配方</mark>，不是一瓶做好的飲料。拿到配方的人可以自己開一條產線，也可以照著改；而配方抄一次不花錢。</p>
+<p>實務上，這個詞會在三個場合出現：</p>
+<table>
+<thead>
+<tr>
+<th>場合</th>
+<th>它實際在問什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>「這個模型是不是開源的」</td>
+<td>權重能不能下載——通常<strong>只有權重</strong>開放，訓練資料與訓練方法並沒有</td>
+</tr>
+<tr>
+<td>「我們要不要自建」</td>
+<td>權重放在誰的機器上跑：先付機器電力，還是按次付費</td>
+</tr>
+<tr>
+<td>「換模型會不會很麻煩」</td>
+<td>你的投入是掛在權重上，還是掛在廠商的服務介面上</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-提醒"><div class="callout-title">開放權重不等於開源</div><p>一套完整的軟體開源，指的是別人能重做一次。但模型開放權重時，<mark class="hl">訓練資料和訓練方法幾乎都沒有一起公開</mark>，別人重做不出來，只能拿現成的那一包來用。兩者常被同一個「開源」蓋住，開會時值得先確認對方指的是哪一種。</p></div></section>
                 </article>
             </main>
             <aside class="rail space-y-7 min-w-0">
-                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="benchmark-contamination.html">Benchmark Contamination<span>評測污染</span></a><a href="leaderboard-tuning.html">Leaderboard Tuning<span>刷榜</span></a></div></section>
-                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="../lessons/2026-W34-benchmark.html" class="ep"><div class="ep-w">2026-W34</div><div class="ep-t">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><a href="../lessons/2026-W33-next-token-prediction.html" class="ep"><div class="ep-w">2026-W33</div><div class="ep-t">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a></div></section>
+                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="next-token-prediction.html">Next Token Prediction<span>猜下一個字</span></a><a href="fine-tuning.html">Fine-tuning<span>微調</span></a><a href="pretraining.html">Pre-training<span>預訓練</span></a></div></section>
+                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a></div></section>
             </aside>
         </div>
 

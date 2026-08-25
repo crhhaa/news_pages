@@ -42,11 +42,11 @@
    "zh": "評測基準",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#60a5fa",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/benchmark.html",
    "oneline": "一份標準考卷。它只證明模型擅長那份考卷。",
-   "deg": 2
+   "deg": 3
   },
   {
    "id": "chain-of-thought",
@@ -58,6 +58,18 @@
    "pending": false,
    "url": "terms/chain-of-thought.html",
    "oneline": "先在草稿紙上寫過程再回答，正確率會上升。",
+   "deg": 1
+  },
+  {
+   "id": "fine-tuning",
+   "label": "Fine-tuning",
+   "zh": "微調",
+   "kind": "term",
+   "cat": "2026-W35",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/fine-tuning.html",
+   "oneline": "拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。",
    "deg": 1
   },
   {
@@ -73,16 +85,28 @@
    "deg": 1
   },
   {
+   "id": "lora",
+   "label": "LoRA",
+   "zh": "低秩調適",
+   "kind": "term",
+   "cat": "2026-W35",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/lora.html",
+   "oneline": "原本的權重凍住不動，只在旁邊加一小塊新參數去調，讓微調便宜好幾個數量級。",
+   "deg": 1
+  },
+  {
    "id": "next-token-prediction",
    "label": "Next Token Prediction",
    "zh": "猜下一個字",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/next-token-prediction.html",
    "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "pretraining",
@@ -90,11 +114,11 @@
    "zh": "預訓練",
    "kind": "term",
    "cat": "2026-W34",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/pretraining.html",
    "oneline": "拿海量文字猜下一個字，把語言能力和知識一起學進去。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "reasoning-model",
@@ -145,6 +169,29 @@
    "deg": 1
   },
   {
+   "id": "weights",
+   "label": "Weights",
+   "zh": "權重",
+   "kind": "term",
+   "cat": "2026-W35",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/weights.html",
+   "oneline": "模型訓練完的那一大包參數檔，模型的全部能力都在裡面。",
+   "deg": 1
+  },
+  {
+   "id": "ep:2026-W35-pretraining-finetuning",
+   "label": "2026-W35",
+   "zh": "他們送出去的到底是什麼——燒一次的錢，和改一次的錢",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W35-pretraining-finetuning.html",
+   "oneline": "排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。",
+   "deg": 0
+  },
+  {
    "id": "ep:2026-W34-benchmark",
    "label": "2026-W34",
    "zh": "那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用",
@@ -171,102 +218,217 @@
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "ai-agent",
-   "type": "mentions"
+   "layer": 1
+  },
+  {
+   "source": "alignment",
+   "target": "pretraining",
+   "layer": 2
+  },
+  {
+   "source": "alignment",
+   "target": "rlvr",
+   "layer": 2
+  },
+  {
+   "source": "ai-agent",
+   "target": "alignment",
+   "layer": 2
   },
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "alignment",
-   "type": "mentions"
+   "layer": 1
   },
   {
    "source": "benchmark",
    "target": "benchmark-contamination",
-   "type": "succeeds"
+   "layer": 2
   },
   {
-   "source": "ep:2026-W34-benchmark",
-   "target": "benchmark-contamination",
-   "type": "mentions"
-  },
-  {
-   "source": "next-token-prediction",
-   "target": "benchmark",
-   "type": "succeeds"
-  },
-  {
-   "source": "ep:2026-W34-benchmark",
-   "target": "benchmark",
-   "type": "mentions"
-  },
-  {
-   "source": "ep:2026-W33-next-token-prediction",
-   "target": "benchmark",
-   "type": "mentions"
-  },
-  {
-   "source": "next-token-prediction",
-   "target": "chain-of-thought",
-   "type": "succeeds"
-  },
-  {
-   "source": "ep:2026-W33-next-token-prediction",
-   "target": "chain-of-thought",
-   "type": "mentions"
-  },
-  {
-   "source": "benchmark",
-   "target": "leaderboard-tuning",
-   "type": "succeeds"
-  },
-  {
-   "source": "ep:2026-W34-benchmark",
-   "target": "leaderboard-tuning",
-   "type": "mentions"
-  },
-  {
-   "source": "ep:2026-W33-next-token-prediction",
-   "target": "next-token-prediction",
-   "type": "mentions"
-  },
-  {
-   "source": "ep:2026-W34-benchmark",
+   "source": "benchmark-contamination",
    "target": "pretraining",
-   "type": "mentions"
+   "layer": 2
+  },
+  {
+   "source": "benchmark-contamination",
+   "target": "leaderboard-tuning",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "benchmark-contamination",
+   "layer": 1
+  },
+  {
+   "source": "benchmark",
+   "target": "next-token-prediction",
+   "layer": 2
+  },
+  {
+   "source": "benchmark",
+   "target": "leaderboard-tuning",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "benchmark",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "benchmark",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "benchmark",
+   "layer": 1
+  },
+  {
+   "source": "chain-of-thought",
+   "target": "next-token-prediction",
+   "layer": 2
   },
   {
    "source": "chain-of-thought",
    "target": "reasoning-model",
-   "type": "succeeds"
-  },
-  {
-   "source": "rlvr",
-   "target": "reasoning-model",
-   "type": "succeeds"
+   "layer": 2
   },
   {
    "source": "ep:2026-W33-next-token-prediction",
-   "target": "reasoning-model",
-   "type": "mentions"
+   "target": "chain-of-thought",
+   "layer": 1
   },
   {
-   "source": "ep:2026-W33-next-token-prediction",
+   "source": "fine-tuning",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "fine-tuning",
+   "target": "pretraining",
+   "layer": 2
+  },
+  {
+   "source": "fine-tuning",
    "target": "rlvr",
-   "type": "mentions"
+   "layer": 2
+  },
+  {
+   "source": "fine-tuning",
+   "target": "lora",
+   "layer": 2
+  },
+  {
+   "source": "benchmark",
+   "target": "fine-tuning",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "fine-tuning",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "leaderboard-tuning",
+   "layer": 1
+  },
+  {
+   "source": "lora",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "lora",
+   "layer": 1
+  },
+  {
+   "source": "alignment",
+   "target": "next-token-prediction",
+   "layer": 2
+  },
+  {
+   "source": "next-token-prediction",
+   "target": "reasoning-model",
+   "layer": 2
+  },
+  {
+   "source": "ai-agent",
+   "target": "next-token-prediction",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "pretraining",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W34-benchmark",
+   "target": "pretraining",
+   "layer": 1
+  },
+  {
+   "source": "reasoning-model",
+   "target": "rlvr",
+   "layer": 2
+  },
+  {
+   "source": "ai-agent",
+   "target": "reasoning-model",
+   "layer": 2
   },
   {
    "source": "reasoning-model",
    "target": "test-time-compute",
-   "type": "succeeds"
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "reasoning-model",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W33-next-token-prediction",
+   "target": "rlvr",
+   "layer": 1
   },
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "test-time-compute",
-   "type": "mentions"
+   "layer": 1
   },
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "token",
-   "type": "mentions"
+   "layer": 1
+  },
+  {
+   "source": "pretraining",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "next-token-prediction",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W35-pretraining-finetuning",
+   "target": "weights",
+   "layer": 1
   }
  ]
 }

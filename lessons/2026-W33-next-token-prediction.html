@@ -134,8 +134,10 @@
         .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
 
         /* ===== 實作課：有序清單變步驟卡 ===== */
-        .howto .lesson-body > ol { list-style: none; padding-left: 0; counter-reset: step; }
-        .howto .lesson-body > ol > li {
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
             counter-increment: step;
             position: relative;
             background: #fff;
@@ -145,7 +147,8 @@
             margin: 0.85rem 0;
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
-        .howto .lesson-body > ol > li::before {
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
             content: counter(step);
             position: absolute; left: 1rem; top: 1.05rem;
             width: 1.75rem; height: 1.75rem;
@@ -154,8 +157,10 @@
             font-size: 0.85rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
-        .howto .lesson-body > ol > li > p:first-child { margin-top: 0; }
-        .howto .lesson-body > ol > li > p:last-child  { margin-bottom: 0; }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
 
         /* 截圖 */
         .lesson-body img {

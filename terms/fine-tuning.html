@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benchmark｜AI 小學堂 名詞</title>
-    <meta name="description" content="一份標準考卷。它只證明模型擅長那份考卷。">
-    <meta property="og:title" content="Benchmark 評測基準">
-    <meta property="og:description" content="一份標準考卷。它只證明模型擅長那份考卷。">
+    <title>Fine-tuning｜AI 小學堂 名詞</title>
+    <meta name="description" content="拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。">
+    <meta property="og:title" content="Fine-tuning 微調">
+    <meta property="og:description" content="拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
@@ -18,7 +18,7 @@
         .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 
         /* 每頁的重點色來自「第幾集首次出現」，整頁只用這一個變數 */
-        :root { --accent: #2563eb; }
+        :root { --accent: #c2410c; }
         .hero-term {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, color-mix(in srgb, var(--accent) 30%, #1e293b) 100%);
         }
@@ -271,10 +271,10 @@
             </a>
             <div class="flex items-center gap-2 flex-wrap mb-3 text-[11px]">
                 <span class="font-semibold tracking-wider rounded-full px-2.5 py-1"
-                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W33</span>
+                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W35</span>
             </div>
-            <h1 class="page-title">Benchmark</h1>
-            <p class="text-white/50 text-sm mt-1.5">評測基準</p>
+            <h1 class="page-title">Fine-tuning</h1>
+            <p class="text-white/50 text-sm mt-1.5">微調</p>
         </div>
     </header>
 
@@ -282,36 +282,53 @@
 
         <div class="cols">
             <main class="space-y-9 min-w-0">
-                <p class="pull">一份標準考卷。它只證明模型擅長那份考卷。</p>
+                <p class="pull">拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。</p>
                 <article class="term-body">
 <section class="tb tb1"><h2 id="_1">定義</h2>
-<p>Benchmark 是一份<strong>標準化的考卷</strong>：固定的題目、固定的評分方式，讓不同模型在相同條件下比較。</p>
-<p>常見的幾類：</p>
-<div class="fl"><div class="fl-step"><div class="fl-who">知識類</div><div class="fl-what">大學程度的跨學科選擇題</div></div><div class="fl-step"><div class="fl-who">數理類</div><div class="fl-what">競賽等級的數學題、程式題</div></div><div class="fl-step"><div class="fl-who">長文類</div><div class="fl-what">給一份很長的文件，測它找不找得到關鍵資訊</div></div><div class="fl-step"><div class="fl-who">代理類</div><div class="fl-what">給一個多步驟任務，測它做不做得完</div></div></div>
+<p>微調是拿一包已經訓練好的<a href="weights.html" class="term-link" data-term="weights">權重</a>，用少量自己的資料再訓練一輪，讓模型的輸出更符合你要的樣子。</p>
+<p>它是<a href="posttraining.html" class="term-link" data-term="posttraining">後訓練</a>底下的<strong>其中一種手段</strong>——後訓練是預訓練之後所有調整階段的統稱，<a href="rlhf.html" class="term-link" data-term="rlhf">RLHF</a>、<a href="rlvr.html" class="term-link" data-term="rlvr">RLVR</a> 也都屬於那一層，微調只是其中最常被企業碰到的那一種。這兩個詞常被混用，但範圍不一樣。</p>
+<p>做法上分兩類：</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">全量微調</div><div class="fl-what">把整包權重重算一次，效果好但要搬得動整包，成本高</div></div><div class="fl-step"><div class="fl-who">LoRA 這一類</div><div class="fl-what">原本的權重凍住，只在旁邊加一小塊新參數去調</div></div></div>
+<p>現在企業實際會做的幾乎都是後者，見 <a href="lora.html" class="term-link" data-term="lora">LoRA</a>。</p>
 </section><section class="tb tb2"><h2 id="_2">為何會出現</h2>
-<p>每個團隊都說自己的模型更好，但用的題目和評分方式都不一樣，<mark class="hl">根本沒辦法比</mark>。Benchmark 提供了一個共同的座標系。</p>
-<p>這個貢獻是真實的——沒有它，整個領域會停在互相宣稱的階段。</p>
-<p>但它也帶進了一個新問題：<strong>當一個分數變成競爭目標，人們就會開始針對那個分數優化。</strong> 見<a href="benchmark-contamination.html" class="term-link" data-term="benchmark-contamination">評測污染</a>和<a href="leaderboard-tuning.html" class="term-link" data-term="leaderboard-tuning">刷榜</a>。</p>
+<p><a href="pretraining.html" class="term-link" data-term="pretraining">預訓練</a>完的模型有廣泛的語言能力，但它不知道<strong>你要它怎麼講話</strong>——你們的公文格式、你們的用語、你們簽核流程的順序，這些都不在公開資料裡。</p>
+<p>而重新預訓練一次要幾億美元，為了「講法不對」重燒一次顯然不合理。微調補的就是這個洞：<mark class="hl">在別人燒完的東西上，用幾個數量級以下的成本改掉輸出的樣子</mark>。</p>
+<div class="callout callout-比喻"><div class="callout-title">兩段錢的差別</div><p><a href="pretraining.html" class="term-link" data-term="pretraining">預訓練</a>像是讓一個人從識字開始把整座圖書館讀完，貴、慢、而且只發生一次；微調像是那個人進公司之後的兩週職前訓練。前者決定他的底子，後者決定他怎麼跟你們共事。</p></div>
 </section><section class="tb tb3"><h2 id="_3">金融背景怎麼理解</h2>
-<p><strong><mark class="hl">Benchmark 只證明模型擅長那份考卷。</mark></strong></p>
-<p>這句話值得反覆說，因為採購時最常犯的錯就是拿排行榜當決策依據。一個模型在通用知識測驗拿高分，跟它能不能正確處理你們的保單條款、看得懂你們的內部術語，<mark class="hl">是兩個獨立的問題</mark>。</p>
-<p>當廠商說「我們在某某 benchmark 領先」，追問兩題：</p>
-<ol>
-<li><strong>這份測驗跟我們的業務性質像嗎？</strong> 選擇題跟「讀完 80 頁合約找出矛盾條款」不是同一種能力。</li>
-<li><strong>有沒有用我們自己的題目盲測過？</strong></li>
-</ol>
-<div class="callout callout-提醒"><div class="callout-title">最有用的一件事：自己出一份考卷</div><p>採購前，用你們<strong>真實的案例</strong>出一份小考——<mark class="hl">幾十題就夠了</mark>，而且事先定義好怎樣算答對。</p>
-<p>這比任何公開排行榜都準，因為它測的是你真正要用的能力。而且這份考卷可以一直沿用：換模型、換版本、換廠商時，你有一個固定的參照點。</p></div>
-<p>實務上這件事的價值還在於：<strong>它逼你把「什麼叫做對」講清楚。</strong> 很多 AI 專案做不下去，不是模型不行，是從頭到尾沒有人定義過驗收標準。出一份考卷會強迫這件事發生。</p></section>
+<p><strong>這是企業真正碰得到的那一層</strong>，但它的邊界必須先講清楚，否則錢會花在錯的地方。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>微調做得到</th>
+<th>微調做不到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改什麼</td>
+<td>語氣、格式、流程遵循、專業術語</td>
+<td><strong>它本來不知道的事</strong></td>
+</tr>
+<tr>
+<td>例子</td>
+<td>照我們的格式標出合約差異條款</td>
+<td>依照最新版內規判斷這條能不能簽</td>
+</tr>
+</tbody>
+</table>
+<p>右邊那一欄是最常見的誤會。微調調的是<strong>回答的傾向</strong>，不是把資料存進模型裡。「把內部規章拿去微調，它就會記住規章」<mark class="hl">這個因果是錯的</mark>——想讓模型依據你們的文件回答，正確做法是在它回答之前把文件給它讀。</p>
+<p>所以聽到「我們要不要微調一個自己的模型」時，<mark class="hl">先問一句：你想改的是講法，還是知識？</mark> 講法是微調的候選，知識不是。</p>
+<div class="callout callout-提醒"><div class="callout-title">微調完要怎麼驗收</div><p>用一份你自己出的<a href="benchmark.html" class="term-link" data-term="benchmark">考卷</a>：微調前跑一次、微調後跑同一份。<mark class="hl">沒有那份考卷，這筆錢沒有辦法驗收</mark>，你只會拿到一句「看起來有比較好」。</p></div></section>
                 </article>
             </main>
             <aside class="rail space-y-7 min-w-0">
-                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="benchmark-contamination.html">Benchmark Contamination<span>評測污染</span></a><a href="leaderboard-tuning.html">Leaderboard Tuning<span>刷榜</span></a></div></section>
-                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="../lessons/2026-W34-benchmark.html" class="ep"><div class="ep-w">2026-W34</div><div class="ep-t">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><a href="../lessons/2026-W33-next-token-prediction.html" class="ep"><div class="ep-w">2026-W33</div><div class="ep-t">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a></div></section>
+                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="weights.html">Weights<span>權重</span></a><a href="posttraining.html">Post-training<span>後訓練</span></a><a href="rlhf.html">RLHF<span>人類回饋強化學習</span></a><a href="rlvr.html">RLVR<span>可驗證獎勵強化學習</span></a><a href="lora.html">LoRA<span>低秩調適</span></a><a href="pretraining.html">Pre-training<span>預訓練</span></a><a href="benchmark.html">Benchmark<span>評測基準</span></a></div></section>
+                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a></div></section>
             </aside>
         </div>
 
-        
+        <section><div class="sec-h">容易跟它搞混</div><div class="cmp"><div class="cmp-title">預訓練 vs 後訓練 vs 微調 vs 提示工程 vs RAG</div><p class="cmp-sum">五種讓模型「照你要的方式回答」的做法，差別先看一件事——動不動到權重</p><div class="cmp-grid" style="--n:5"><div class="cmp-card"><div class="cmp-head" style="background:#1d4ed8">預訓練（Pre-training）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">從零開始拿海量文字訓練，產出的就是那包權重</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">決定模型的能力底子與世界知識，一切的起點</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">成本以億美元計，需要數萬張運算卡跑上數月</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">模型公司。企業幾乎不會自己做（彭博的 BloombergGPT 是罕見特例）</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1e293b">後訓練（Post-training）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">預訓練之後所有調整階段的統稱，塑造的是行為不是知識</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">把只會續寫文字的模型，變成會回答人的助理</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">是統稱不是單一手段，談成本要先問指的是哪一種</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">模型公司；其中的微調那一種，企業也做得起</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#ea580c">微調（Fine-tuning）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">拿別人訓練好的權重，用少量自己的資料再調一輪</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">能改語氣、格式、流程遵循，成本比預訓練低好幾個數量級</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">改不動「它本來不知道的事」；換底層模型時可能要重做</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">輸出格式與風格要求嚴格、且內容不常變的任務</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1d4ed8">提示工程（Prompt Engineering）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">用指令引導這一次的輸出，完全不動模型參數</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">成本幾乎為零、改了馬上生效、非技術人員也能做</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">只能引導模型既有的能力，拉不出它沒有的東西</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">初期驗證、快速試做，以及所有還沒確定需求的場景</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1e293b">RAG（檢索增強生成）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">不動參數，每次回答前先去查你的資料，把查到的內容給它讀</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">資料即時更新、答案可回溯到來源文件</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">答得好不好取決於查得準不準，要另外建一套檢索管道</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">內容會變動、且要求依據正確的場景（法規、商品條款、內部知識庫）</div></div></div></div><div class="cmp-note cmp-key"><div class="cmp-note-k">核心差異</div><p>先看一件事：動不動到權重。預訓練生出權重，後訓練與微調改權重，提示工程與 RAG 完全不動權重。第二件事是它改得動什麼——微調改的是「講法」（語氣、格式、流程），RAG 改的是「它答題時看得到什麼資料」。所以「把內部規章拿去微調，它就會記住規章」是錯的因果，那是 RAG 的工作。成本量級由高到低：預訓練（億美元）&gt;&gt; 微調（千元至百萬元）&gt; RAG（建檢索管道的工）&gt; 提示工程（幾乎為零）。多數企業的正確順序是先提示工程、再 RAG，確認需求後才評估微調。</p></div><div class="cmp-note cmp-biz"><div class="cmp-note-k">金融業應用情境</div><p>照我們的格式標出合約差異條款 → 微調（要改的是講法）；依最新版內規判斷這條能不能簽 → RAG（要改的是知識，且內容會變）；快速試做一個會議記錄摘要 → 提示工程；自建金融專屬基礎模型 → 預訓練（成本過高，幾乎不適用）</p></div></div></section>
 
         <div class="text-center pt-3 border-t border-slate-200">
             <a href="../classroom.html#terms" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">回名詞圖 →</a>

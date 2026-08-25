@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>他們送出去的到底是什麼——燒一次的錢，和改一次的錢｜AI 小學堂</title>
+    <meta name="description" content="排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。">
+    <meta property="og:title" content="他們送出去的到底是什麼——燒一次的錢，和改一次的錢">
+    <meta property="og:description" content="排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。">
+    <meta property="og:type" content="article">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+        .hero-lesson  { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+        .hero-howto   { background: linear-gradient(135deg, #0f2460 0%, #115e59 55%, #0d9488 100%); }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+
+        /* ===== 內文排版：Typography 打底，以下是本站客製 ===== */
+        .lesson-body { line-height: 1.9; }
+        .lesson-body :where(p, li) { letter-spacing: 0.01em; }
+
+        /* 大節標題：左側色條 */
+        .lesson-body h2 {
+            position: relative;
+            padding-left: 0.85rem;
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            scroll-margin-top: 4.5rem;
+        }
+        .lesson-body h2::before {
+            content: "";
+            position: absolute; left: 0; top: 0.15em; bottom: 0.15em;
+            width: 4px; border-radius: 999px;
+            background: var(--accent, #2563eb);
+        }
+        .lesson-body h3 { margin-top: 2rem; font-size: 1.1rem; color: #334155; scroll-margin-top: 4.5rem; }
+
+        /* 一般引言 */
+        .lesson-body blockquote {
+            font-style: normal;
+            border-left: 3px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 0.85rem 1.1rem;
+            color: #475569;
+        }
+        .lesson-body blockquote p:first-child { margin-top: 0; }
+        .lesson-body blockquote p:last-child  { margin-bottom: 0; }
+
+        /* ===== Callout：來自 .md 的 > [!類型] 標題 ===== */
+        .callout {
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem;
+            margin: 1.75rem 0;
+            border: 1px solid transparent;
+        }
+        .callout-title {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .callout-title svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
+        .callout > p:last-child { margin-bottom: 0; }
+        .callout > p { margin: 0.4rem 0; font-size: 0.97rem; }
+
+        .callout-先備  { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-先備 .callout-title { color: #1d4ed8; }
+        .callout-比喻  { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+        .callout-比喻 .callout-title { color: #ea580c; }
+        .callout-重點  { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
+        .callout-重點 .callout-title { color: #4f46e5; }
+        .callout-提醒  { background: #fef2f2; border-color: #fecaca; color: #7f1d1d; }
+        .callout-提醒 .callout-title { color: #dc2626; }
+        .callout-總結  { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
+        .callout-總結 .callout-title { color: #16a34a; }
+        .callout-金融業  { background: linear-gradient(to right, #eff6ff, #f8faff); border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-金融業 .callout-title { color: #1d4ed8; }
+
+        /* ===== 段落分級：口白＝現場唸的，延伸＝只在網頁 ===== */
+        .seg-extra > h2::after {
+            content: "延伸";
+            margin-left: 0.6rem;
+            padding: 0.15rem 0.45rem;
+            border: 1px solid #e2e8f0; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 600; color: #94a3b8;
+            vertical-align: middle;
+        }
+
+        /* ===== 表格：卡片化 ===== */
+        .lesson-body table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin: 1.75rem 0;
+        }
+        .lesson-body thead { background: #f1f5f9; }
+        .lesson-body th {
+            text-align: left; font-weight: 600; color: #334155;
+            padding: 0.7rem 0.9rem; border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        .lesson-body td { padding: 0.7rem 0.9rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        .lesson-body tbody tr:last-child td { border-bottom: none; }
+        .lesson-body tbody tr:hover { background: #f8fafc; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* ===== 程式碼／示意框 ===== */
+        .lesson-body pre {
+            background: #0f172a; color: #e2e8f0;
+            border-radius: 0.9rem; padding: 1rem 1.15rem;
+            font-size: 0.87rem; line-height: 1.7;
+            overflow-x: auto;
+        }
+        .lesson-body :not(pre) > code {
+            background: #f1f5f9; color: #be123c;
+            padding: 0.12em 0.4em; border-radius: 0.35rem;
+            font-size: 0.88em; font-weight: 500;
+        }
+        .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
+
+        /* ===== 實作課：有序清單變步驟卡 ===== */
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
+            counter-increment: step;
+            position: relative;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem 1.1rem 3.4rem;
+            margin: 0.85rem 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
+            content: counter(step);
+            position: absolute; left: 1rem; top: 1.05rem;
+            width: 1.75rem; height: 1.75rem;
+            border-radius: 999px;
+            background: #0d9488; color: #fff;
+            font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
+
+        /* 截圖 */
+        .lesson-body img {
+            border-radius: 0.9rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 1.5rem auto;
+        }
+
+        /* 目錄 */
+        .toc-link {
+            display: block; padding: 0.4rem 0.7rem;
+            font-size: 0.83rem; color: #64748b;
+            border-radius: 0.6rem; border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .toc-link:hover { background: #f8fafc; color: #1d4ed8; }
+        .toc-link.active { color: #1d4ed8; border-left-color: #2563eb; background: #eff6ff; font-weight: 500; }
+        /* ==螢光筆==：只染下半截，像真的用螢光筆畫過 */
+        mark.hl {
+            background: linear-gradient(transparent 52%, #fde68a 52%);
+            color: inherit; padding: 0 .12em; border-radius: .1em;
+        }
+
+        /* ===== ```flow 流程：誰做了什麼，靠 CSS 對齊不靠空格 ===== */
+        .fl { margin: 1.2rem 0; }
+        .fl-step { position: relative; display: grid; gap: .1rem 1rem; padding: 0 0 1.15rem 1.6rem; }
+        @media (min-width: 640px) { .fl-step { grid-template-columns: 8rem 1fr; align-items: baseline; } }
+        .fl-step:last-child { padding-bottom: 0; }
+        .fl-step::before {
+            content: ""; position: absolute; left: .28rem; top: .5rem;
+            width: .55rem; height: .55rem; border-radius: 999px;
+            background: #fff; border: 2px solid var(--accent);
+        }
+        .fl-step:not(:last-child)::after {
+            content: ""; position: absolute; left: .5rem; top: 1.2rem; bottom: .1rem;
+            width: 2px; background: #e2e8f0;
+        }
+        .fl-who {
+            font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+            color: var(--accent);
+        }
+        .fl-what {
+            font-size: .9rem; color: #334155; line-height: 1.75;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* 內文裡的 [[ ]] */
+        .term-link {
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        }
+        .term-link:hover { border-bottom-color: var(--accent); }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800 lesson">
+
+    <!-- NAVBAR -->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-white/70 hover:text-white py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-orange-300 font-semibold py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+
+    <!-- HERO -->
+    <header class="hero-lesson text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <a href="../classroom.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-5 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                AI 小學堂
+            </a>
+            <div class="flex items-center gap-2.5 mb-3 text-xs">
+                <span class="px-2.5 py-1 rounded-full bg-white/15 font-semibold tracking-wider">2026-W35</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
+                <span class="text-white/50">2026-08-25</span>
+            </div>
+            <h1 class="page-title mb-3">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</h1>
+            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。</p>
+            <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">權重是怎麼做出來的：燒一次的預訓練，和改一次的微調</span></div></div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex gap-8 items-start">
+            <!-- 目錄 -->
+            <aside class="hidden lg:block w-52 flex-shrink-0 sticky" style="top:4.5rem;">
+                <div class="bg-white rounded-2xl card p-3">
+                    <div class="px-2.5 py-1.5 text-xs font-semibold text-gray-400 tracking-wider">本集內容</div>
+                    <nav id="toc" class="space-y-0.5"><a href="#_1" class="toc-link seg-spoken">技術詞鉤子：他們送出去的到底是什麼</a><a href="#_2" class="toc-link seg-extra">那個你看不懂的詞：權重</a><a href="#_3" class="toc-link seg-spoken">一個金融業的比喻：一個讀完整座圖書館的新人</a><a href="#_4" class="toc-link seg-spoken">為什麼可以做到：一包檔案為什麼等於一整個模型</a><a href="#_5" class="toc-link seg-spoken">以前為什麼做不到：以前沒有一包值得下載的東西</a><a href="#_6" class="toc-link seg-extra">拆一層：微調其實連整包都不用動</a><a href="#_7" class="toc-link seg-spoken">所以對我們的意義：把那句話拆開</a><a href="#_8" class="toc-link seg-spoken">一句話總結</a></nav>
+                </div>
+            </aside>
+
+            <!-- 內文 -->
+            <main class="flex-1 min-w-0">
+                <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
+                    <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
+<section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：他們送出去的到底是什麼</h2>
+<p>上一集講完那排百分比，結尾留了一個問題。</p>
+<p>打開現在任何一份模型排行榜，前段班有一批模型有個共同點：<strong>它們可以整包下載回自己的機器上跑，不用付授權金。</strong> 能力分數五十分以上、而且開放下載的，目前全世界六顆，全部來自中國團隊；美國最前面那幾家，旗艦一顆都沒放出來。</p>
+<p>先把背景補清楚，因為這件事的怪異之處就藏在數字裡。做出這樣一顆模型，成本是<strong>幾億美元起跳</strong>——那是數萬張運算卡連續跑好幾個月的電費和機器錢，不是一筆可以隨手認賠的預算。</p>
+<p>然後他們把成果放到網路上，任何人都能下載。</p>
+<p>一個燒了幾億美元做出來的東西，為什麼有人願意送？而且更要緊的是：<strong>他們送出去的，到底是「什麼」？</strong></p>
+<p>這一集不談誰在跟誰較勁、也不談背後的商業盤算——那筆帳我們在<a href="../news/ai_column_20260819_china-open-weights.html">新聞專欄那一篇</a>已經算過了。這一集只回答一件事：<strong>那包能下載的東西是什麼，它是怎麼做出來的。</strong></p>
+<p>因為答案會直接決定另一句話怎麼回。那句話你在會議室裡一定聽過：<mark class="hl">「我們要不要微調一個自己的模型？」</mark></p>
+</section><section class="seg seg-extra"><h2 id="_2">那個你看不懂的詞：權重</h2>
+<p>那包能下載的東西叫做<a href="../terms/weights.html" class="term-link" data-term="weights">權重</a>。</p>
+<p>先講它<strong>不是</strong>什麼。它不是一套程式。模型的程式碼其實很短，公開的、任何人都看得到，短到可以印在幾張紙上——而且光有那幾張紙，你什麼都做不到。</p>
+<p><a href="../terms/weights.html" class="term-link" data-term="weights">權重</a>是一個檔案，裡面裝的是<strong>幾千億個數字</strong>。</p>
+<p>這些數字在幹嘛？回到上上集講過的事：模型回答問題的方式，是一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a>。它每猜一個字，都要算出「接下來每一個可能的字，各有多少機率」——而算那個機率用的，就是這幾千億個數字。</p>
+<p>所以這句話可以講得很硬：<strong>模型的全部能力，就是那堆數字的值。</strong> 它讀過的東西、學會的語感、記住的常識，沒有一樣是以「條文」的形式存在的，全部被壓成了數字。</p>
+<div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
+<p>那這些數字是怎麼來的？答案就是這一集的兩個主角：一個叫<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>，一個叫<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>。</p>
+</section><section class="seg seg-spoken"><h2 id="_3">一個金融業的比喻：一個讀完整座圖書館的新人</h2>
+<p>想像你要補一個人進來做合約審閱。</p>
+<p><strong>第一種做法</strong>：找一個什麼都還不會的人，從識字開始教，讓他把全世界公開的文字讀過一遍——法律、財經、新聞、說明書、論壇上的閒聊，全部。讀完之後，他語感很好、常識很廣、看得懂複雜句子，但他<strong>還不知道你們公司怎麼做事</strong>。</p>
+<p>這一段叫<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>。它極貴、極慢，而且<strong>只發生一次</strong>。</p>
+<p><strong>第二種做法</strong>：那個人已經讀完了，你把他請進來，花兩週教他你們的公文格式、你們的用語、你們簽核的順序。</p>
+<p>這一段叫<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>。它便宜到你負擔得起——<mark class="hl">兩者的成本差距是幾億美元對上幾十萬台幣，不是差幾倍，是差好幾個數量級</mark>。</p>
+<p>比喻到這裡都成立。但接下來有一件事，比喻<strong>擋不住</strong>，而那件事正是這一集的關鍵：</p>
+<p><strong>人不能複製，那包數字可以。</strong></p>
+<p>你花五年培養出來的那個人，他就是一個人，他在你這裡就不在別人那裡。但<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>燒掉幾億美元換來的東西是一個<strong>檔案</strong>——複製它跟複製一份簡報沒有兩樣，複製一萬份，原本那份也不會少。</p>
+<div class="callout callout-重點"><div class="callout-title">這就是「為什麼願意送」的答案</div><p>送出去不會失去它。<mark class="hl">花掉的錢是固定的，複製的成本幾乎是零。</mark> 所以問題從來不是「送出去會不會虧」，而是「送出去能換到什麼」。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_4">為什麼可以做到：一包檔案為什麼等於一整個模型</h2>
+<p>把上一段那件事拆開講清楚，因為它反直覺。</p>
+<p>一般我們講「一套系統」，指的是程式邏輯——那些判斷式、那些流程、那些寫死的規則。你要複製一套系統，得連環境、資料庫、設定一起搬，搬完通常還跑不起來。</p>
+<p>模型不是這樣。<strong>模型的程式邏輯短得不值錢，值錢的全部在數字裡。</strong></p>
+<div class="fl"><div class="fl-step"><div class="fl-who">公開的程式碼</div><div class="fl-what">幾百行，任何人都拿得到，本身什麼也不會</div></div><div class="fl-step"><div class="fl-who">權重檔案</div><div class="fl-what">幾千億個數字，模型的全部能力都在這裡</div></div><div class="fl-step"><div class="fl-who">下載並載入</div><div class="fl-what">同一包數字，在誰的機器上跑，行為都一樣</div></div></div>
+<p>所以「下載一個模型」這件事，在別的產業裡沒有對應物。它比較接近<strong>拿到一份完整的配方</strong>，而不是買到一瓶做好的飲料——而且這份配方，抄一次的成本是零。</p>
+<p>這也順帶解釋了一件常被誤解的事：<mark class="hl">免費的是那包權重，不是服務。</mark> 你要是不自己跑，直接呼叫對方的線上服務，照樣按用量付錢。<strong>下載回來自己跑，跟付錢請對方跑，是兩件不同的事</strong>——那是下一集的題目。</p>
+</section><section class="seg seg-spoken"><h2 id="_5">以前為什麼做不到：以前沒有一包值得下載的東西</h2>
+<p>這裡要問一個容易被跳過的問題：<strong>「下載別人做好的模型回來改」這件事，為什麼是這幾年才出現的？</strong></p>
+<p>金融業用模型用了幾十年。以前沒有人在下載別人的模型，也沒有人想下載。原因有兩層，而且兩層都要成立，這件事才會發生。</p>
+<p><strong>第一層：以前沒有「一包值得下載的東西」。</strong></p>
+<p>在這之前，金融業用的是<strong>傳統機器學習模型</strong>——一顆只做反洗錢警示、一顆只做流失預測、一顆只做文件分類。<mark class="hl">一顆模型一件事，而且那件事是在做它之前就被決定死的。</mark></p>
+<p>這種模型的參數是<strong>為了那一件事</strong>才長成那個樣子的。你把做反洗錢那顆的參數拿給做合約審閱用，一點意義都沒有——它學到的全部，就只有「這筆交易像不像可疑交易」。所以在那個世界裡，「下載別人的模型」是一個沒有價值的動作，不是做不到，是<strong>做了也沒用</strong>。</p>
+<p><strong>第二層：現在那包數字裡裝的是通用能力。</strong></p>
+<p><a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>學的不是某一個任務，是<strong>語言本身</strong>。它做的事情從頭到尾只有一件——遮住下一個字讓模型猜、猜錯就調整數字，重複幾兆次。沒有人在過程中告訴它「你以後要做合約審閱」。</p>
+<p>所以同一包權重，可以被改去做合約比對，也可以被改去做會議紀錄整理，還可以被改去寫程式。<mark class="hl">它不是一個功能，是一個底子。</mark></p>
+<div class="callout callout-提醒"><div class="callout-title">這兩層要一起看</div><p>只有第二層，沒有第一層，你會以為這是「模型變聰明了」——不是。真正變的是<strong>同一包東西可以被改成很多用途</strong>，所以「改」這個動作才第一次值得花錢。<strong>能力提升和用途通用，是兩件事。</strong></p></div>
+</section><section class="seg seg-extra"><h2 id="_6">拆一層：微調其實連整包都不用動</h2>
+<p>前面說微調便宜，但它有多便宜、以及<strong>為什麼</strong>便宜，值得再拆一層。</p>
+<p>最直覺的做法是把那幾千億個數字<strong>整包重算一次</strong>，這叫<strong>全量微調</strong>。它確實有效，但代價是你得有能力搬動整包權重——記憶體、運算卡、標註好的大量資料，一樣都不能少。這種做法貴到大部分企業做不起。</p>
+<p>現在主流的做法完全不同：<strong>不動原本那包，只在旁邊加一小塊新的數字。</strong></p>
+<p>這個做法叫 <a href="../terms/lora.html" class="term-link" data-term="lora">LoRA</a>。原本的權重整包凍住不動，訓練時只調那一小塊新增的參數，用完把兩邊疊在一起跑。它需要的資料常常只有數千筆，一般的運算卡就跑得動。<mark class="hl">成本因此又往下掉了一個數量級</mark>，而這正是「微調」從研究室的事變成企業做得起的事的轉折點。</p>
+<p>還有一件事必須講清楚，因為它是後面所有判斷的基礎：</p>
+<div class="callout callout-提醒"><div class="callout-title">微調改不動「它本來不知道的事」</div><p>微調調的是<strong>回答的傾向</strong>——用什麼語氣、什麼格式、遵循什麼流程。它不是把資料塞進模型裡存起來。</p>
+<p>所以「我們把內部規章拿去微調，它就會記住規章」<mark class="hl">這個因果是錯的</mark>。想讓模型依據你們的文件回答，正確做法是在它回答前<strong>把文件給它讀</strong>，那是另一套機制，另一集講。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_7">所以對我們的意義：把那句話拆開</h2>
+<p>回到開頭那句話。<strong>「我們要不要微調一個自己的模型？」</strong></p>
+<p>這句話的問題在於，它把三件成本差好幾個數量級的事情，用同一個動詞蓋住了。所以下次聽到它，先不要回答要或不要，<mark class="hl">先問一句：你想改的是「講法」，還是「知識」？</mark></p>
+<ul>
+<li><strong>要改講法</strong>——輸出的格式不對、語氣不像、該遵循的流程它不遵循。這一類<strong>微調做得到</strong>，成本落在你的預算量級內，可以往下評估。</li>
+<li><strong>要改知識</strong>——它不知道我們的規章、不知道我們的商品條款、不知道上週剛發的函令。這一類<strong>微調做不到</strong>，硬做只會得到一個語氣很像但講錯話的東西。那是另一件事，另一集講。</li>
+</ul>
+<p>這不是理論。把外面已經公開的案例排一排，剛好就是一道階梯，每一階的花費差好幾個數量級：</p>
+<ul>
+<li><strong>自己從頭預訓練</strong>：彭博做過 BloombergGPT，用了三千多億個金融語料加上四十年的自有資料。<mark class="hl">這一階基本上不在任何一家的預算表上</mark>，列出來是為了知道它有多遠。</li>
+<li><strong>在別人燒完的東西上微調</strong>：FinBERT 是拿 Google 的模型做金融領域微調，FinGPT、FinLlama 走的是 <a href="../terms/lora.html" class="term-link" data-term="lora">LoRA</a> 這條路。<mark class="hl">這一階做得起</mark>，而它們改的都是「怎麼判讀金融文字」這種講法層次的事。</li>
+<li><strong>完全不動權重，改成讓它讀資料</strong>：摩根大通、富國銀行、新光人壽的商品助理都走這條。它們要的是<strong>最新的、自己的</strong>內容——保單條款、理賠規則、內部知識庫，那不是微調處理的問題。</li>
+</ul>
+<p>把這道階梯套回我們手上的場景，判斷會變得很快。<mark class="hl">以合約比對這類場景為例</mark>：你要的是「照我們的格式標出差異條款」，那是講法，微調的候選；但你要的是「依照最新版的內規判斷這條可不可以簽」，那是知識，微調解決不了。<mark class="hl">像會議記錄生成這種場景</mark>，要的幾乎都是格式和用語的一致性，落在微調那一階；<mark class="hl">像內部規章問答這種場景</mark>，要的則是內容的正確與即時，一開始就不該往微調的方向想。</p>
+<p>而最後還有一題：<strong>你怎麼知道微調完真的有比較好？</strong></p>
+<p>用上一集那份<strong>你自己出的<a href="../terms/benchmark.html" class="term-link" data-term="benchmark">考卷</a></strong>。微調前跑一次、微調後跑同一份，分數有沒有動一目瞭然。<mark class="hl">沒有那份考卷，你花的錢會沒有辦法驗收</mark>——這也是為什麼上一集要先講它。</p>
+<div class="callout callout-金融業"><div class="callout-title">廠商提「幫你們微調一個專屬模型」時，追問這三題</div><p><strong>一、你要改的是講法還是知識？</strong> 如果對方的簡報寫著「讓模型學會貴公司的規章」，<mark class="hl">那句話本身就有問題</mark>，先問清楚他實際上打算做什麼。</p>
+<p><strong>二、是全量微調還是 LoRA 這一類？</strong> 這決定成本量級，也決定之後換底層模型時，你的投入能不能跟著搬走。</p>
+<p><strong>三、驗收標準是什麼、誰出題？</strong> 題目由我們出、在動工前就寫好答案，<mark class="hl">否則你會拿到一份「看起來不錯」的驗收報告</mark>。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_8">一句話總結</h2>
+<div class="callout callout-總結"><div class="callout-title">這一集</div><p>那包能下載的東西叫<strong>權重</strong>，它是<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>燒掉的幾億美元唯一的產物，也是「開源模型」四個字真正指的東西。<strong>燒一次的錢很貴，而複製它幾乎不要錢</strong>——所以送得出去。至於<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>，它改的是<strong>講法</strong>，不是<strong>知識</strong>。下次有人問「我們要不要微調一個自己的模型」，先問他想改哪一個。</p></div>
+<p>留一個問題給下一集。</p>
+<p>你現在知道那包東西是什麼、也知道改它比生它便宜太多了。但真正要決定的那一題還沒問：<strong>這包東西要放在誰的機器上跑？</strong></p>
+<p>放在別人的機器上，你付的是每一次呼叫的錢，用多少算多少，不用管機房。搬回自己的機房，你付的是機器、電、和養它的那群人——<mark class="hl">而且那筆錢是先付的，不管你用不用得到</mark>。</p>
+<p>一邊是隨用隨付、另一邊是先砸下去。這兩種帳的算法完全不同，而且答案會隨著用量翻轉。下一集就講這筆帳怎麼算：<strong>權重下載回來，然後呢？</strong></p></section>
+                    </div>
+                </article>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W34-benchmark.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 小學堂 · 每週一集
+    </footer>
+
+    <script>
+
+        // 表格加水平捲動外框，手機才不會撐破版面
+        document.querySelectorAll('.lesson-body table').forEach(t => {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            t.parentNode.insertBefore(wrap, t);
+            wrap.appendChild(t);
+        });
+
+        // 目錄高亮
+        const links = [...document.querySelectorAll('.toc-link')];
+        const heads = links.map(a => document.getElementById(a.hash.slice(1))).filter(Boolean);
+        if (heads.length) {
+            const onScroll = () => {
+                let idx = 0;
+                heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 120) idx = i; });
+                links.forEach((a, i) => a.classList.toggle('active', i === idx));
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+    </script>
+    <script src="../assets/terms.js" defer></script>
+</body>
+</html>

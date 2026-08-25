@@ -18,6 +18,7 @@
     const card = createCard();
     const bound = new WeakSet();
     const aliases = makeAliases(TERMS);
+    const linkedIn = new WeakMap();
     let hideTimer;
 
     function show(el) {
@@ -90,7 +91,7 @@
         acceptNode(node) {
           if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
           const parent = node.parentElement;
-          if (!parent || parent.closest('a,script,style,textarea,code,pre,[data-no-terms]')) {
+          if (!parent || parent.closest('a,script,style,textarea,code,pre,svg,[data-no-terms]')) {
             return NodeFilter.FILTER_REJECT;
           }
           return NodeFilter.FILTER_ACCEPT;
@@ -98,7 +99,10 @@
       });
       const nodes = [];
       while (walker.nextNode()) nodes.push(walker.currentNode);
-      nodes.forEach(node => linkifyTextNode(node, aliases));
+      // 同一個名詞在一個容器裡只連第一次——長文全連會整片變藍字。
+      const linked = linkedIn.get(root) || new Set();
+      linkedIn.set(root, linked);
+      nodes.forEach(node => linkifyTextNode(node, aliases, linked));
     }
 
     bindWithin(document);
@@ -125,11 +129,12 @@
       delete card.dataset.for;
     }, { passive: true });
 
-    function linkifyTextNode(node, aliasList) {
+    function linkifyTextNode(node, aliasList, linked) {
       const text = node.nodeValue;
       const matches = [];
 
       aliasList.forEach(alias => {
+        if (linked && linked.has(alias.slug)) return;
         const re = new RegExp(escapeRegExp(alias.label), 'gi');
         let match;
         while ((match = re.exec(text))) {
@@ -146,13 +151,17 @@
       matches.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
 
       const selected = [];
+      const used = new Set();
       let cursor = -1;
       matches.forEach(match => {
-        if (match.start >= cursor) {
+        if (match.start >= cursor && !used.has(match.slug)) {
           selected.push(match);
+          used.add(match.slug);
           cursor = match.end;
         }
       });
+      if (linked) used.forEach(slug => linked.add(slug));
+      if (!selected.length) return;
 
       const fragment = document.createDocumentFragment();
       cursor = 0;

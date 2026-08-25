@@ -134,8 +134,10 @@
         .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
 
         /* ===== 實作課：有序清單變步驟卡 ===== */
-        .howto .lesson-body > ol { list-style: none; padding-left: 0; counter-reset: step; }
-        .howto .lesson-body > ol > li {
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
             counter-increment: step;
             position: relative;
             background: #fff;
@@ -145,7 +147,8 @@
             margin: 0.85rem 0;
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
-        .howto .lesson-body > ol > li::before {
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
             content: counter(step);
             position: absolute; left: 1rem; top: 1.05rem;
             width: 1.75rem; height: 1.75rem;
@@ -154,8 +157,10 @@
             font-size: 0.85rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
-        .howto .lesson-body > ol > li > p:first-child { margin-top: 0; }
-        .howto .lesson-body > ol > li > p:last-child  { margin-bottom: 0; }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
 
         /* 截圖 */
         .lesson-body img {
@@ -410,7 +415,7 @@
                     </div>
                 </article>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W33-next-token-prediction.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W33-next-token-prediction.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a><a href="2026-W35-pretraining-finetuning.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
             </main>
         </div>
     </div>

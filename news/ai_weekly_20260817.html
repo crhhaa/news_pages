@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 週報 2026-W33｜算力金融化</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+  .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+
+  /* 區塊編號徽章 */
+  .sec-no { background:#1e3a8a; color:#fff; width:26px; height:26px; border-radius:8px;
+            display:inline-flex; align-items:center; justify-content:center;
+            font-size:13px; font-weight:800; flex:none; }
+
+  /* 流程圖箭頭：窄螢幕轉向下 */
+  .arrow { color:#f97316; font-size:26px; font-weight:800; line-height:1; }
+  @media (max-width: 767px) { .arrow { transform: rotate(90deg); } }
+
+  /* 彈跳框：原生 <dialog>，Esc 與 backdrop 由瀏覽器處理 */
+  dialog { border:0; border-radius:16px; padding:0; width:min(760px, 92vw); max-height:86vh;
+           box-shadow:0 20px 60px rgba(15,23,42,.3); }
+  dialog::backdrop { background:rgba(15,23,42,.55); }
+  dialog .dlg-head { position:sticky; top:0; background:#1e3a8a; color:#fff;
+                     padding:14px 18px; display:flex; align-items:flex-start; gap:12px; }
+  dialog .dlg-head h3 { font-size:15px; font-weight:800; line-height:1.5; flex:1; }
+  dialog .dlg-x { background:rgba(255,255,255,.15); border:0; color:#fff; cursor:pointer;
+                  width:28px; height:28px; border-radius:8px; font-size:17px; line-height:1; flex:none; }
+  dialog .dlg-x:hover { background:rgba(255,255,255,.3); }
+  dialog .dlg-body { padding:18px; overflow-y:auto; max-height:calc(86vh - 56px); }
+
+  .dlg-open { align-self:flex-start; margin-top:12px; border:1.5px solid #1e3a8a; border-radius:8px;
+              cursor:pointer; padding:5px 12px; font-size:12px; font-weight:800; letter-spacing:.5px;
+              background:transparent; color:#1e3a8a; transition:.15s; }
+  .dlg-open:hover { background:#1e3a8a; color:#fff; }
+
+  /* 術語註解：括號內的白話說明 */
+  .gl { color:#64748b; font-size:12px; }
+
+  /* ── 元大洞察卡片 ── */
+  .ins-list { list-style:none; padding:0; margin:0; }
+  .ins-list li { padding:5px 0; font-size:12.5px; color:#334155; line-height:1.6; }
+  .ins-src { font-size:11px; font-weight:400; color:#94a3b8; margin-top:12px; padding-top:8px; border-top:1px dashed #e2e8f0; }
+
+  /* 因為／所以：左邊放觀察，右邊放做法 */
+  .why { display:grid; grid-template-columns:1fr 1.1fr; border:1px solid #e2e8f0;
+         border-radius:10px; overflow:hidden; background:#fff; }
+  .why + .why { margin-top:8px; }
+  .why > div { padding:9px 12px; }
+  .why-c { background:#f8fafc; border-right:1px dashed #cbd5e1; }
+  .why-t { font-size:10px; font-weight:800; letter-spacing:.14em; display:block; margin-bottom:3px; }
+  .why-c .why-t { color:#94a3b8; }
+  .why-a .why-t { color:#c2410c; }
+  .why-c p { font-size:12.5px; color:#475569; line-height:1.7; }
+  .why-a p { font-size:13px; color:#0f172a; line-height:1.7; font-weight:600; }
+  @media (max-width:640px){ .why { grid-template-columns:1fr; }
+                            .why-c { border-right:0; border-bottom:1px dashed #cbd5e1; } }
+
+  /* 同業做了什麼 → 我們哪個場景可以套 */
+  .scn { border-left:3px solid #f97316; background:#fff7ed; border-radius:0 8px 8px 0; padding:9px 12px; }
+  .scn + .scn { margin-top:6px; }
+  .scn .peer { font-size:11.5px; color:#a16207; display:block; margin-bottom:3px; letter-spacing:.02em; }
+  .scn p { font-size:12.5px; color:#7c2d12; line-height:1.7; }
+  .scn b { color:#9a3412; }
+
+  /* 卡片內的小節標題 */
+  .sub-h { font-size:11px; font-weight:800; letter-spacing:.14em; color:#64748b;
+           display:flex; align-items:center; gap:8px; margin:14px 0 8px; }
+  .sub-h::after { content:""; flex:1; height:1px; background:#e2e8f0; }
+
+  /* 段落快捷列 */
+  .jump { display:flex; flex-wrap:wrap; gap:6px; }
+  .jump a { font-size:12px; font-weight:700; color:#1e3a8a; background:#fff;
+            border:1px solid #dbeafe; border-radius:999px; padding:4px 12px; transition:.15s; }
+  .jump a:hover { background:#1e3a8a; color:#fff; border-color:#dbeafe; }
+  section { scroll-margin-top:72px; }
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-slate-900">
+<!--NAV:START-->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+<!--NAV:END-->
+
+
+<!-- ══ 標題列 ══ -->
+<header class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-5 py-8">
+    <a href="../news.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-4 transition-colors"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>AI 深度解讀</a>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wide">AI 週報 2026-W33</h1>
+    <p class="text-white/70 text-sm mt-1 tracking-wider">08/10 – 08/17</p>
+    <div class="mt-5 border-l-4 border-orange-400 pl-4">
+      <p class="text-lg sm:text-xl font-bold leading-relaxed">
+        本週 AI 算力同時出現三件事：<span class="text-orange-300">資金</span>、<span class="text-orange-300">風險</span>、<span class="text-orange-300">價格</span>。
+      </p>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-8 space-y-10">
+
+  <nav class="jump" aria-label="本頁段落">
+    <a href="#s1">01 主線</a><a href="#s2">02 台廠與基礎建設</a><a href="#s3">03 同業動態</a><a href="#s4">04 元大洞察</a>
+  </nav>
+
+  <!-- ══ 01 主線 ══ -->
+  <section id="s1">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">01</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">主線：算力金融化，一週內完成三個階段</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">本週報告重心，約佔六成篇幅</p>
+
+    <!-- 三步流程圖 -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7">
+      <div class="flex flex-col md:flex-row items-stretch gap-3">
+
+        <!-- ① 資金 -->
+        <div class="flex-1 rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">① 資金進場</div>
+          <div class="text-base font-extrabold leading-snug mb-2">輝達 × 六大金融機構</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 目標募集 <b class="text-blue-900">5,000 億美元</b>外部資金</li>
+            <li>· 阿波羅、黑石、貝萊德、Brookfield、高盛、KKR</li>
+            <li>· 客戶不必一次付清，改以融資方式取得 GPU 與資料中心</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-blue-200 text-[12px] text-blue-900 font-semibold leading-relaxed">
+            「晶片首度成為可投資的資產類別」— 黃仁勳
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg1').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <!-- ② 風險 -->
+        <div class="flex-1 rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">② 風險顯現</div>
+          <div class="text-base font-extrabold leading-snug mb-2">博通單日 −5.94%</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 市值跌破 <b class="text-rose-800">1.9 兆美元</b></li>
+            <li>· 美銀估相關融資平台 2029 年中累積 <b class="text-rose-800">3,700 億美元</b>債務</li>
+            <li>· 博通為客戶的設備租金作保，形成潛在負債</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-rose-200 text-[12px] text-rose-900 font-semibold leading-relaxed">
+            市場開始追問：AI 的需求有多少是客戶自己掏錢，而不是借來的
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg2').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <!-- ③ 定價 -->
+        <div class="flex-1 rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">③ 價格形成</div>
+          <div class="text-base font-extrabold leading-snug mb-2">CME 推出算力期貨</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· <b class="text-emerald-900">10 月 5 日</b>掛牌，市場首批</li>
+            <li>· 連結輝達 H100、B200 顯示卡的租金指數</li>
+            <li>· AI 開發商可鎖定成本，資料中心可鎖定收入</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-emerald-200 text-[12px] text-emerald-900 font-semibold leading-relaxed">
+            算力首次具備公開的參考價格
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg3').showModal()">看完整分析</button>
+        </div>
+      </div>
+
+      <!-- 全頁唯一的完整結論 -->
+      <div class="mt-6 pt-5 border-t-2 border-slate-900">
+        <p class="text-center text-base sm:text-xl font-extrabold text-slate-900 leading-relaxed">
+          一週之內，AI 算力完成了一項資產成形的三個階段。
+        </p>
+        <p class="text-center text-[13px] text-slate-500 mt-2 leading-relaxed">
+          這三則新聞不是各自獨立的：先有錢進來，接著有人要評估風險，最後市場開始給它一個價格。
+        </p>
+      </div>
+    </div>
+
+    <!-- 主線三則細節：彈跳框 -->
+    <div>
+
+      <dialog id="dlg1">
+        <div class="dlg-head">
+          <h3>① 輝達攜手六大金融機構設立算力融資平台，目標募集逾 5,000 億美元</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg1').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>輝達與阿波羅全球管理、黑石集團、貝萊德、Brookfield 資產管理、高盛及 KKR 簽署協議，設立算力融資平台，目標募集逾 5,000 億美元外部資金，為 AI 研發機構、一般企業與雲端服務商提供購買 GPU 與興建資料中心所需的資金。執行長黃仁勳表示，這是晶片首度成為可投資的資產類別，並強調引進大型機構投資人可化解外界對「循環融資」<span class="gl">（供應商先投資客戶，客戶再回頭購買供應商的產品）</span>的疑慮。這件事讓 AI 算力從一筆花出去的錢，變成可以包裝成金融商品、讓投資人持有的資產。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>合作方為阿波羅、黑石、貝萊德、Brookfield、高盛、KKR 六家大型金融機構</li>
+              <li>平台目標募集逾 5,000 億美元外部資金，並非輝達自有資金</li>
+              <li>資金用途涵蓋 AI 研發機構、一般企業與雲端服務商的 GPU 與資料中心採購</li>
+              <li>黃仁勳定調：晶片首度成為可投資的資產類別</li>
+              <li>設計目的之一，是回應外界對輝達「投資客戶、客戶再回頭買貨」的質疑</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：算力變成一種可以抵押、可以投資的資產，金融業必須學會替它估價。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>算力要怎麼估價當擔保品，目前還沒有成熟做法：顯示卡折舊多快、租金收得穩不穩、二手好不好賣，現行評分表裡都沒有</li>
+<li>銀行端先從既有 AI 伺服器供應鏈客戶著手，以設備融資與應收帳款融資累積實際資料</li>
+<li>資產管理與投顧要先準備好說法，讓客戶知道這類資產不是低風險的固定收益商品</li>
+<li>集團風險控管把「AI 融資」單獨列為追蹤項目</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>NVIDIA、鴻海、廣達、緯創、台積電 — 客戶取得資金更容易，不必一次付清即可擴充算力，出貨速度加快</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>承作這類融資的銀行與私募信貸機構、高度仰賴租賃取得算力的中小型 AI 業者 — 需求若不如預期，損失會沿著融資鏈放大</p>
+          </div>
+          <a href="https://money.udn.com/money/story/123398/9685540" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg2">
+        <div class="dlg-head">
+          <h3>② AI 晶片融資風險疑慮升高，博通單日重挫近 6%、市值跌破 1.9 兆美元</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg2').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>博通股價 8 月 14 日下跌 5.94%，收在每股 392.99 美元，市值跌破 1.9 兆美元。美國銀行分析指出，替博通 AI 晶片客戶提供資金的融資平台，到 2029 年年中可能累積 3,700 億美元債務。這些債務雖然不由博通直接承擔，但博通已替部分客戶的設備租金作保；一旦客戶無法按期付款，或 AI 需求不如預期，這些保證就會轉為博通的實際虧損。這件事讓市場開始追問：AI 的需求有多少是靠借錢與作保撐起來的，而不是客戶自己的現金。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>博通週五收 392.99 美元、下跌 5.94%，市值跌破 1.9 兆美元</li>
+              <li>美銀估算相關融資平台到 2029 年中的債務規模上看 3,700 億美元</li>
+              <li>2027 年單一年度的新增發行規模估計可能達 1,500 億美元</li>
+              <li>博通替部分客戶的設備租金作保，形成潛在負債<span class="gl">（尚未發生，但條件成立時就必須認列的負債）</span></li>
+              <li>與輝達融資平台形成對照：同一週，市場同時看到算力融資的機會與風險</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：科技廠替客戶作的保證不會寫在財報主要數字裡，照傳統方式看信用會低估風險。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>科技廠替客戶作的保證多半不列在資產負債表上，只看負債比率會低估真實風險</li>
+<li>授信與研究單位建一份「AI 供應鏈替誰作了保」的清單，把租金保證、回購承諾納入對方的信用評估</li>
+<li>財富管理：AI 概念商品與 ETF 的風險說明要更新，現在股價的波動主要來自融資條件，不是本業</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>台積電、微軟、Alphabet — 資金轉向自有現金充足、不需要替客戶作保的公司</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>Broadcom、客戶多為 GPU 出租業者的伺服器代工廠 — 股價必須反映保證事項與客戶違約的風險</p>
+          </div>
+          <a href="https://news.cnyes.com/news/id/6577617" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg3">
+        <div class="dlg-head">
+          <h3>③ CME 將推出首批 AI 算力期貨，連結輝達 H100、B200 租金指數</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg3').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>芝加哥商業交易所（CME）計劃於 10 月 5 日推出首批算力期貨，商品為「Silicon Data H100 租賃指數期貨」與「Silicon Data B200 租賃指數期貨」，價格連結輝達 H100、B200 顯示卡的租金。企業與投資人可以像交易石油等原物料一樣，針對 AI 算力的價格波動進行避險。CME 指出，這項商品提供了市場過去沒有的東西：所有 AI 系統都要用到的資源，第一次有了公開且可以交易的參考價格。AI 開發商可以用它鎖定成本，資料中心業者可以用它鎖定收入。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>預計 10 月 5 日上市，為市場首批算力期貨商品</li>
+              <li>兩檔商品分別連結 H100 與 B200 顯示卡的租金指數</li>
+              <li>首度為 AI 算力建立公開、可交易的參考價格</li>
+              <li>主要避險需求方為 AI 開發商（成本端）與資料中心業者（收入端）</li>
+              <li>與輝達 5,000 億美元融資平台互補：一個提供資金，一個提供管理價格風險的工具</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：算力有了公開報價，期貨業可以開新商品，公司自己也可以用它把 AI 成本鎖住。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>算力變成可以交易的商品，是台灣期貨與衍生性商品業務難得的搶先機會</li>
+<li>期貨與證券自營單位研究指數編製與結算方式，評估海外期貨下單上架時程</li>
+<li>集團自身的 AI 推論成本已是實際支出，未來可用這類工具鎖定價格</li>
+<li>投信可以觀察有沒有條件發相關商品，前提是那個指數要夠透明、別人也複製得出來</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>CME、國內外期貨經紀商 — 新商品帶來交易量與企業端的避險需求</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>GPU 轉租仲介、沒有長期合約保障的中小型算力出租業者 — 價格公開後，賺取價差的空間被壓縮</p>
+          </div>
+          <a href="https://money.udn.com/money/story/5599/9686167" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 02 巨頭動態 ══ -->
+  <section id="s2">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">02</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">巨頭動態</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">本週四則，其中兩則來自 Google</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-emerald-700 px-2 py-0.5 rounded">NVIDIA</span>
+          <span class="text-[11px] text-slate-400">見主線 ①</span>
+        </div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed">
+          <li>· 與六大金融機構設立算力融資平台，目標 5,000 億美元</li>
+          <li>· GPU 從單純的硬體銷售，轉為可包裝成金融商品的資產</li>
+        </ul>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-rose-700 px-2 py-0.5 rounded">Broadcom</span>
+          <span class="text-[11px] text-slate-400">見主線 ②</span>
+        </div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed">
+          <li>· 單日下跌 5.94%，市值跌破 1.9 兆美元</li>
+          <li>· 替客戶作保的融資平台，2029 年中估累積 3,700 億美元債務</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Google 專區：困境 → 兩個反應 → 結論 -->
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+
+      <div class="hero-bg text-white px-5 py-3">
+        <span class="font-extrabold text-sm">Google</span>
+        <span class="text-white/60 text-[12px] ml-2">本週兩則，要放在一起看</span>
+      </div>
+
+      <div class="p-5 space-y-4">
+
+        <!-- 背景：壓成兩行小字 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-[12.5px] text-slate-600 leading-relaxed">
+          <div>
+            <span class="font-bold text-slate-900">DeepMind</span>
+            ：2010 年創立於倫敦、2014 年被 Google 收購，現為 Google 全部 AI 模型的開發單位。哈薩比斯是共同創辦人。
+          </div>
+          <div>
+            <span class="font-bold text-slate-900">Gemini</span>
+            ：Google 的主力模型，分 Pro（高階）與 Flash（便宜、快、跑大量例行作業）。除自用外也透過 Google Cloud 賣給企業。
+          </div>
+        </div>
+
+        <!-- 困境 -->
+        <div class="rounded-xl border-2 border-rose-500 bg-rose-50/60 p-4">
+          <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">Google 的困境</div>
+          <p class="text-[15px] font-extrabold text-slate-900 leading-relaxed mb-3">
+            企業最捨得為 AI 付錢的用途是「寫程式」，而這一塊 Google 打不贏 OpenAI 與 Anthropic。
+          </p>
+          <div class="flex flex-col sm:flex-row gap-2 text-[12.5px]">
+            <div class="flex-1 bg-white/70 rounded-lg px-3 py-2 text-slate-700">高階的 Gemini 3.5 Pro 延期至今</div>
+            <div class="flex-1 bg-white/70 rounded-lg px-3 py-2 text-slate-700">2026 年初起未再推出領先業界的模型</div>
+            <div class="flex-1 bg-white/70 rounded-lg px-3 py-2 text-slate-700">模型落後會直接拖累 Google Cloud 的企業訂單</div>
+          </div>
+        </div>
+
+        <!-- 轉折 -->
+        <div class="flex items-center gap-3">
+          <div class="h-px bg-slate-300 flex-1"></div>
+          <span class="text-[11px] font-extrabold text-orange-600 tracking-widest whitespace-nowrap">本週的兩個反應</span>
+          <div class="h-px bg-slate-300 flex-1"></div>
+        </div>
+
+        <!-- 兩個反應 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+          <div class="rounded-xl border border-blue-200 bg-blue-50/40 p-4 flex flex-col">
+            <div class="text-[11px] font-extrabold text-blue-700 tracking-widest mb-1.5">反應一 · 用價格搶市占</div>
+            <div class="text-sm font-extrabold text-slate-900 mb-2">推出 Gemini 3.7 Flash</div>
+            <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+              <li>· 距上一版僅<b>三週</b>，改版速度創同級模型紀錄</li>
+              <li>· 主打程式開發，程式測驗 34.4% → 43.6%</li>
+              <li>· 上市優惠<b>半價</b>至 2026 年底，2027 年起翻倍</li>
+            </ul>
+            <button class="dlg-open" onclick="document.getElementById('dlg4').showModal()">看完整分析</button>
+          </div>
+
+          <div class="rounded-xl border border-orange-200 bg-orange-50/40 p-4 flex flex-col">
+            <div class="text-[11px] font-extrabold text-orange-700 tracking-widest mb-1.5">反應二 · 換掉負責人</div>
+            <div class="text-sm font-extrabold text-slate-900 mb-2">DeepMind 領導層改組</div>
+            <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+              <li>· 創辦人哈薩比斯轉任董事長</li>
+              <li>· 資深員工 Kavukcuoglu 接手日常營運，直接向皮蔡報告</li>
+              <li>· 交接已進行約一年，屬規劃中的接班</li>
+            </ul>
+            <button class="dlg-open" onclick="document.getElementById('dlg5').showModal()">看完整分析</button>
+          </div>
+
+        </div>
+
+        <!-- 結論 -->
+        <div class="rounded-xl hero-bg text-white p-5">
+          <p class="text-base sm:text-lg font-extrabold leading-relaxed mb-4">
+            同一週降價、又換人，指向同一件事：<span class="text-orange-300">Google 正在追趕，而且很急。</span>
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-[13px] leading-relaxed">
+            <div>
+              <div class="text-[11px] font-extrabold text-white/50 tracking-widest mb-2">對 Google 自己</div>
+              <ul class="space-y-1.5 text-white/90">
+                <li>· 三週改一次版、又主打程式開發，等於承認過去的節奏跟不上對手</li>
+                <li>· 半價是搶市占的手段，先把企業客戶留住，2027 年再回收</li>
+                <li>· 創辦人退居董事長、工程主管接手營運，通常代表重心從研究轉向出貨</li>
+              </ul>
+            </div>
+            <div class="md:border-l md:border-white/20 md:pl-5">
+              <div class="text-[11px] font-extrabold text-orange-300 tracking-widest mb-2">對我們</div>
+              <ul class="space-y-1.5 text-white/90">
+                <li>· 短期是好事：中階模型正在削價競爭，導入 AI 的成本比半年前低</li>
+                <li>· 中期要留意：現在的低價是搶市占的價格，不是長期價格</li>
+                <li>· 換人與延期同週發生，代表不該把流程綁死在單一供應商</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <dialog id="dlg4">
+        <div class="dlg-head">
+          <h3>Google 發表 Gemini 3.7 Flash，主打程式開發並推出半價優惠</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg4').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>Google 於 8 月 13 日發表 Gemini 3.7 Flash，把它當成公司最主力的日常工作模型，針對寫程式、讓 AI 自己分步驟把事情做完，以及需要大量知識的工作做了加強。這次發布距離上一版 Gemini 3.6 Flash 僅三週，Google 表示是因為開發者回饋與演算法改進。價格方面採上市優惠，每百萬個字元<span class="gl">（AI 的計費單位，一個中文字約一到兩個單位）</span>輸入 0.75 美元、輸出 3.75 美元，優惠到 2026 年底，2027 年起恢復為兩倍價格。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>8 月 13 日發布，距上一版僅三週，改版速度創下同級模型的紀錄</li>
+              <li>軟體開發測驗 FrontierCode 1.1 由 34.4% 提升至 43.6%</li>
+              <li>程式修復測驗 DeepSWE v1.1 由約 49% 提升至 65.3%</li>
+              <li>上市優惠價：輸入 0.75 美元、輸出 3.75 美元，至 2026 年底</li>
+              <li>2027 年起恢復為 1.50 與 7.50 美元，等於現在是半價</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：便宜又夠強的模型讓大量例行作業自動化變得划算，但要留意 2027 年價格翻倍。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>金融業真正的 AI 支出集中在文件分類、法規比對、客服摘要、程式碼檢查這類例行作業</li>
+<li>重點不是換便宜雲端模型，而是 2027 年價格翻倍時手上有沒有別的選項</li>
+<li>真正的備案是地端：格式固定、量又大的例行作業，最適合把開放權重模型微調後放在自家機房跑</li>
+<li>在中間加一層自己的介面同時管雲端與地端，並用自己實際的工作內容測試，不要看官方分數</li>
+            </ul>
+          </div>
+          <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg5">
+        <div class="dlg-head">
+          <h3>Google DeepMind 改組，哈薩比斯轉任董事長</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg5').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>Google 宣布 DeepMind 領導層改組，共同創辦人哈薩比斯轉任董事長，任職 13 年的資深員工 Kavukcuoglu 升任資深副總裁，直接向執行長皮蔡報告，負責 Gemini 模型開發與日常營運。背景是 Google 自 2026 年初以來未再推出足以領先業界的模型，Gemini 3.5 Pro 仍在延期，在程式生成領域被 OpenAI 與 Anthropic 拉開差距。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>哈薩比斯轉任董事長，Kavukcuoglu 升任資深副總裁並直接向皮蔡報告</li>
+              <li>Kavukcuoglu 於 2012 年加入 DeepMind，主導多項核心技術開發</li>
+              <li>交接過程已進行約一年，屬於規劃中的接班而非突發異動</li>
+              <li>Google 自 2026 年初未再推出領先業界的模型，Gemini 3.5 Pro 延期</li>
+              <li>分析師指出 Google 過度集中在能立即賺錢的領域，程式生成落後 OpenAI 與 Anthropic</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：不要把整套流程綁死在單一家 AI 模型上，要留備援。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>客服、法遵、研究流程若綁死單一供應商版本，策略或價格變動會直接衝擊業務</li>
+<li>把模型當成可更換的零件：介面標準化、至少保留一家備援供應商</li>
+<li>定期用自己的題庫比較各家表現，納入第三方風險管理與營運持續計畫</li>
+            </ul>
+          </div>
+          <a href="https://www.bnext.com.tw/article/91843/google-deepmind-koray-kavukcuoglu" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 03 本週兩項待辦 ══ -->
+  <section id="s3">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">03</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">本週兩項待辦</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">以下兩則與算力主線無直接關聯，但均建議近期處理</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="text-[11px] font-extrabold text-orange-600 tracking-widest mb-2">A · 地緣政治</div>
+        <div class="text-sm font-extrabold leading-snug mb-2">美國要求 35 國在 AI 陣營中擇一</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 美方立場：「什麼都參加，等於什麼都沒參加」</li>
+          <li>· 美國陣營「矽盛世」24 國，中國陣營 WAICO</li>
+          <li>· <b>建議做法</b>：盤點模型與雲端供應商的國別與資料存放位置，關鍵場景指定地端備援模型</li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('dlg6').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="text-[11px] font-extrabold text-orange-600 tracking-widest mb-2">B · 資安治理</div>
+        <div class="text-sm font-extrabold leading-snug mb-2">員工私用未核准 AI 工具，封鎖無效</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· <b>48–49%</b> 員工使用公司未核准的 AI 工具</li>
+          <li>· <b>69%</b> 高階主管願意為了速度犧牲安全（一般人員為 37%）</li>
+          <li>· <b>建議做法</b>：提供更好用的內部工具，而非只封鎖網站</li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('dlg7').showModal()">看完整分析</button>
+      </div>
+
+      <dialog id="dlg6">
+        <div class="dlg-head">
+          <h3>A. 美國要求 35 國在 AI 陣營中擇一 — 盤點模型與雲端供應商的國別</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg6').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>美國國務院草擬信函，向今年 6 月簽署美方「AI 機會聯合聲明」的 35 個國家傳達訊息：同時加入中國主導的「世界人工智慧合作組織（WAICO）」者，可能被排除在美國主導的「矽盛世」聯盟之外。草案直接寫明「什麼都參加，等於什麼都沒參加」。矽盛世於 2025 年 12 月成立、目前有 24 個簽署國，WAICO 則於今年 7 月成立，用於推廣中國的開放權重技術<span class="gl">（模型參數公開、可自行下載使用）</span>。哈薩克是目前唯一已知同時加入兩邊的國家。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>信函由美國國務院草擬，對象為 35 個曾簽署 AI 機會聯合聲明的國家</li>
+              <li>矽盛世聯盟 2025 年 12 月成立，目前 24 個簽署國</li>
+              <li>中國 WAICO 今年 7 月成立，主打參數公開的模型技術輸出</li>
+              <li>美方官員表態「你不能兩邊都要」</li>
+              <li>哈薩克為唯一已知同時加入兩邊的國家，已引起美方關注</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：選哪一家 AI 模型與雲端，已經不只是成本問題，而是合規與能否持續使用的問題。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>模型與雲端供應商的挑選除了成本效能，還要考量法規遵循與服務能否持續</li>
+<li>集團雲端 AI 集中在 AOAI（美系），盤點各子公司與海外據點使用的模型、雲端來自哪一國</li>
+<li>務實的備案：主要 AI 應用做成隨時可以換模型的架構，重要場景各指定一個地端備援模型</li>
+<li>合約端要求供應商說明技術來源與備用方案</li>
+            </ul>
+          </div>
+          <a href="https://udn.com/news/story/6809/9694032" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg7">
+        <div class="dlg-head">
+          <h3>B. 近半員工私用未核准的 AI 工具，69% 高階主管願為速度犧牲安全</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg7').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>多項調查顯示，約 48% 至 49% 的員工在工作中使用未經公司核准的 AI 工具，70% 的資訊主管已發現員工在公司設備上使用這類工具。行為模式上，69% 的高階主管願意為了速度犧牲安全性，遠高於一般行政人員的 37%，顯示繞過規範的情況反而更常出現在管理層。即使工具被封鎖，仍有 70% 的使用者會繼續使用。雖然有 90% 的企業聲稱已制定 AI 使用政策，但私下使用的數量在過去 12 個月成長為三倍。醫療業在提供核准工具之後，未經授權的使用量下降達 89%。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>48% 至 49% 員工使用未核准的 AI 工具，70% 資訊主管已察覺</li>
+              <li>69% 高階主管願為速度犧牲安全，一般行政人員僅 37%</li>
+              <li>工具被封鎖後，仍有 70% 使用者繼續使用</li>
+              <li>企業 AI 政策覆蓋率達 90%，但私下使用量一年成長為三倍</li>
+              <li>醫療業提供好用的核准工具後，未經授權的使用量下降 89%</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：禁止沒有用，要提供夠好用的內部工具，員工才不會私下使用外部服務。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>禁止無效，提供替代方案才有效；高階主管帶頭繞過規範，治理不能只靠由上往下宣導</li>
+<li>把 AOAI 底座包成夠好用的內部平台，速度與功能不能明顯落後外部工具</li>
+<li>敏感內容（未發布報告、持股、客戶個資）改走地端模型，員工不必自行判斷能不能貼</li>
+<li>網路層偵測外傳內容，AI 使用規範納入主管考核與稽核項目</li>
+            </ul>
+          </div>
+          <a href="https://technews.tw/2026/08/15/half-your-workforce-already-bypassed-your-ai-policy/" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 04 元大洞察 ══ -->
+  <section id="s4">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">04</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">元大洞察：本週彙整</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-4 tracking-wide">每則建議都標出它是從哪一則新聞推出來的；下半段是同業做法對照到集團現有場景</p>
+
+    <div class="space-y-3">
+
+      <!-- 元大金控 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大金控</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">供應商選擇已從成本題變成「未來還能不能繼續用」——集團的雲端底座在 AOAI 上，這正是要同步鋪地端備援的理由。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>美國要求 35 國在 AI 技術上選邊，模型與雲端的可用性開始受地緣政治影響；而集團目前說不出各子公司與海外據點實際用了哪些模型、資料落在哪一國。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>先盤點各子公司與海外據點使用的模型、雲端來自哪一國、資料存放位置，沒有這張表就談不了備援。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>Google DeepMind 換負責人顯示前沿實驗室的路線可能隨人事變動；單一供應商不可用的情境已經不只是理論風險。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>關鍵場景各指定一個地端備援模型，並寫明 AOAI 不可用時的切換方式與負責人，切換要能演練而不是只寫在文件裡。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>集團多數 AI 場景是委外或平台內建，換模型的介面不在自己手上，備援模型再多也換不過去。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>主要 AI 應用改為可更換模型的架構，並在續約時把介面收回集團，這是後續所有地端規劃的前提。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>AI 供應商一旦不可用，影響的是已經上線、每天在跑的業務流程，性質與一般軟體採購不同。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>把 AI 供應商正式納入第三方風險管理與營運持續計畫，比照核心系統的委外管理層級處理。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：近半員工私下使用未核准的 AI 工具，單純封鎖擋不住</span><b>我們：</b>金控法令遵循部與人力資源部的問答諮詢正在進行中，把它做成好用的內部入口，本身就是最有效的替代方案；工具不好用，規範寫得再嚴也只是把使用推到看不見的地方。</p></div>
+          <div class="scn"><p><span class="peer">同業與新聞面：模型供應可能因地緣政治中斷，可更換架構是先決條件</span><b>我們：</b>數位金融事業處的合約比對與會議記錄生成、法令遵循部的法規比對都在進行中，狀態還沒定型，正是最容易在此刻改成「呼叫內部統一介面」的一批，等上線後再改要動業務系統。</p></div>
+
+          <p class="ins-src">依據：美國要求 35 國選邊、Google DeepMind 換負責人</p>
+        </div>
+      </div>
+
+      <!-- 元大銀行 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大銀行</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">算力正變成新的擔保品，但現有授信評分表沒有這個項目；上游廠商的保證事項也不在財報主要數字上。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>輝達推出 5,000 億美元規模的算力融資平台，等於把顯示卡當成可融資的資產；但這類標的的實際違約與回收表現，銀行手上還沒有任何資料。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>從既有 AI 伺服器供應鏈客戶著手，以設備融資與應收帳款融資先累積實際資料，用小額部位換資料，不要一開始就評大案。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>顯示卡的折舊速度與二手轉售市場都還沒有穩定的定價慣例，現行授信評分表沒有這個項目可以填。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>建立算力擔保品估價方式，至少涵蓋折舊速度、租約收入穩定度、二手轉售市場三項，並訂定重估頻率。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>博通替客戶作保引發重挫，顯示保證事項與回購承諾這類未列在財報主要數字上的項目，才是這一輪風險的實際來源。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>審查時把交易對手的租金保證與回購承諾一併納入評估，並訂定 AI 供應鏈的單一產業總額度上限。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：保證事項藏在附註裡，看財報主要數字看不出來</span><b>我們：</b>授信審查部的案件內規比對與輔助資料搜尋已上線，處理的正是這類長文件的比對工作，可直接把「保證事項與回購承諾」加成固定檢核項目，讓既有場景多承接一項風險辨識。</p></div>
+          <div class="scn"><p><span class="peer">同業與新聞面：AI 相關授信是全新類別，內規也還在補</span><b>我們：</b>法令遵循部的內外規比對與作業服務部的內規比對都已上線，新增算力擔保品相關內規時，這個既有流程可以直接拿來比對新舊版本的差異，不必另建一套。</p></div>
+
+          <p class="ins-src">依據：輝達 5,000 億美元算力融資平台、博通替客戶作保重挫</p>
+        </div>
+      </div>
+
+      <!-- 元大期貨 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大期貨</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">全新的商品類別，掛牌日期已經確定——先做的人比較容易把法人客戶留住。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>CME 將於 10 月 5 日推出首批 AI 算力期貨，這是全新的商品類別，指數編製與結算方式都還沒有市場慣例可循。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>先研究指數編製、結算方式與流動性，確認是否適合上架；不確定的部分要在掛牌前問完，掛牌後才問就落後了。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>新商品先做的人容易把法人客戶留住，而掛牌日期已經確定，時間就這麼多。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>海外期貨下單商品上架時程抓在 10 月 5 日掛牌前後，並同步準備法人客戶說明素材，重點放在哪些客戶真的需要避險。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>集團自身也是算力的買方，往地端走之後這筆支出會變成長期且固定的成本項目。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>評估用這類工具鎖定集團自身 AI 算力成本的價格，把它當成內部成本管理工具而不只是銷售商品。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：新商品上架前的資料蒐集量大、時效性強</span><b>我們：</b>證券端的法令新訊搜集與重大消息蒐集這兩個爬蟲彙整場景已上線，期貨端的新商品研究可以沿用同一套彙整流程，把 CME 的規格公告與市場評論納入既有的每日彙整，不必另開一條線。</p></div>
+
+          <p class="ins-src">依據：CME 10 月 5 日推出首批 AI 算力期貨</p>
+        </div>
+      </div>
+
+      <!-- 元大投信 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大投信</span>
+          <span class="bg-slate-200 text-slate-700 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">持續觀察</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">AI 主題商品的波動來源已從公司本業轉向融資條件，風險說明要跟上。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>博通事件顯示，這一輪 AI 標的的股價變動來自保證事項與融資條件，而不是本業營運；現行風險說明沒有涵蓋這一類。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>檢視 AI 主題基金與 ETF 持股中的保證事項，並把供應鏈保證與未列財報的負債加進風險說明，通路端說明素材同步更新。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>Gemini 3.7 Flash 降到半價這件事本身說明，同一批批次任務的合理單價正在快速下降，逐筆計費的長期成本並不穩定。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>財報與公告的大量摘要改由地端模型承接，不必每筆走 AOAI 計費，把成本從隨用量浮動改成固定。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：批次摘要的單價在下降，但量在上升，逐筆計費長期不划算</span><b>我們：</b>專戶管理部的每日市場資訊彙整摘要、固定收益部的財經資訊蒐集與重點摘要都在進行中，格式固定、每日都跑，是投信這邊最適合先做地端成本對照的兩個場景。</p></div>
+          <div class="scn"><p><span class="peer">同業與新聞面：風險揭露要新增項目，等於所有文件都要重新對一次</span><b>我們：</b>法令遵循部的信託契約與公開說明書審查、行政管理部的簡式公說書更新相關數據都在進行中，新增的揭露項目正好由這個既有流程一次帶過，不必人工一份一份翻。</p></div>
+
+          <p class="ins-src">依據：博通替客戶作保重挫、Gemini 3.7 Flash 半價</p>
+        </div>
+      </div>
+
+      <!-- 元大證券 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大證券</span>
+          <span class="bg-slate-200 text-slate-700 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">持續觀察</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">個股報告若只看財報負債，會漏掉這輪 AI 行情真正的風險點。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>博通因為替客戶作保而被市場重新打分數，代表這類沒寫在財報主要數字上的承諾，已經開始被算進股價；但研究報告目前沒有固定欄位寫它。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>建立 AI 供應鏈保證事項追蹤表，並列為個股報告的固定揭露欄位，讓它每期都要被填，而不是想到才寫。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>顯示卡租金價格反映的是算力供需的即時狀態，比財報早好幾個月。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>把顯示卡租金價格固定列進追蹤清單，它比財報早好幾個月反映供需。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>程式助手仰賴前沿模型能力，是少數不適合下放地端的類型；但已買的授權有沒有被實際用起來，目前沒有數字。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>程式助手維持雲端不變，先確認既有授權的實際使用率，再談要不要加購。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：風險訊號分散在公告、附註與外電，人工盯不完</span><b>我們：</b>法令遵循部的法令新訊搜集、作業中心的重大消息蒐集、股代的公開資訊觀測站重訊通知都已上線，把「保證事項與回購承諾」列成關鍵字條件，就能讓既有的爬蟲彙整多產出一份風險清單。</p></div>
+          <div class="scn"><p><span class="peer">同業與新聞面：程式助手要留在雲端，但要證明買的授權有被用</span><b>我們：</b>資訊系統開發二部、數位金融部、資訊安全管理部與金融交易部都在推程式助手，正好一起訂同一套計算使用率的方式，避免各部門各報各的。</p></div>
+
+          <p class="ins-src">依據：博通替客戶作保被市場重新打分數、Gemini 3.7 Flash 強化程式開發</p>
+        </div>
+      </div>
+
+      <!-- 元大投顧 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大投顧</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">研究人員最容易把草稿與持股貼進外部 AI 工具，調查顯示單純封鎖沒有用。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>調查顯示近半員工私下使用未核准的 AI 工具，代表需求真實存在；只封鎖不提供替代方案，只是把使用推到看不見的地方。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>把 AOAI 包成研究人員真的好用的內部入口，至少涵蓋長文摘要、財報問答、報告草稿三項，讓內部工具比外部順手。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>未發布的報告草稿與持股資訊一旦外流，影響的不只是資安，還有利益衝突與內線疑慮。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>這兩類內容改走地端模型，直接從架構上消除資料出門的疑慮，不倚賴使用規範。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>可用的外部 AI 工具每週都在增加，以網址清單封鎖永遠落後；而規範沒有納入考核就沒有約束力。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>改在網路層偵測外傳內容而非只封鎖網址，並把 AI 使用規範納入主管考核與稽核項目。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們哪個場景可以套</div>
+
+          <div class="scn"><p><span class="peer">同業與新聞面：員工私用外部工具的主因是內部工具不好用</span><b>我們：</b>投顧的內部 AI 平台建置已上線，是集團少數已經有入口的一家，可以直接把長文摘要與財報問答補進去，並用實際使用率驗證「好用就不會外流」這個假設，結果再橫向複製到其他子公司。</p></div>
+          <div class="scn"><p><span class="peer">同業與新聞面：未發布內容最需要留在內網</span><b>我們：</b>研究中心的法說會 AI 研究報告與編譯管理部的 AI 研究編譯都已上線，處理的正是尚未發布的內容，是最該優先評估改走地端的兩個場景。</p></div>
+
+          <p class="ins-src">依據：近半員工私用未核准的 AI 工具</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-200 mt-6">
+  <div class="max-w-6xl mx-auto px-5 py-6 text-[12px] text-slate-400">
+    <p>資料來源：ai_weekly_news_20260810.json（2026-W33，共 10 則）</p>
+    <p class="mt-1">元大金控 數位金融事業處 · 內部參考用途</p>
+  </div>
+</footer>
+
+<script>
+// 點背景關閉。Esc 與焦點管理由 <dialog> 自行處理。
+document.querySelectorAll('dialog').forEach(d => {
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+});
+</script>
+
+<!--FOOT:START-->
+<div class="max-w-6xl mx-auto px-5 pb-10 text-center">
+  <a href="../news.html" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-700 transition-colors">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>回 AI 新聞深度解讀
+  </a>
+</div>
+<!--FOOT:END-->
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 專欄 2026-W34｜開源模型「開」的是什麼</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .sec-no{background:var(--brand-700);color:#fff;width:26px;height:26px;border-radius:8px;
+          display:inline-flex;align-items:center;justify-content:center;
+          font-size:13px;font-weight:800;flex:none}
+  .prose p{font-size:15px;line-height:2;color:var(--ink-2);margin-bottom:14px}
+  .prose p:last-child{margin-bottom:0}
+  .prose b{color:var(--ink);font-weight:800}
+  svg.cv{width:100%;height:auto;display:block;overflow:visible;font-family:inherit}
+  .fig{border:1px solid var(--rule);border-radius:14px;background:var(--surface);padding:18px 16px}
+  .lgd{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--ink-2);margin-bottom:10px}
+  .lgd span{display:inline-flex;align-items:center;gap:6px}
+  .lgd i{width:10px;height:10px;border-radius:50%;flex:none}
+  .lgd i.dash{width:18px;height:0;border-top:2px dashed var(--brand-700);border-radius:0}
+  .fig figcaption{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px;
+                  border-top:1px dashed var(--rule);padding-top:10px}
+  table.d{width:100%;border-collapse:collapse;font-size:13px}
+  table.d th{background:var(--brand-700);color:#fff;padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap}
+  table.d td{padding:9px 11px;border-bottom:1px solid var(--rule);color:#475569;vertical-align:top;line-height:1.8}
+  table.d td b{color:var(--ink)}
+  table.d tr.hl td{background:#fff7ed}
+  table.d tr:hover td{background:#f8fafc}
+  table.d tr.hl:hover td{background:#ffedd5}
+  table.d td.nw{white-space:nowrap}
+  table.d ul{margin:0;padding-left:15px;list-style:disc}
+  table.d li{margin:0 0 4px}
+  table.d li:last-child{margin-bottom:0}
+  table.d td.why{font-weight:800;color:var(--ink);white-space:nowrap}
+  .chip{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;color:#475569;
+        background:#fff;border:1px solid var(--rule);border-radius:999px;padding:3px 10px}
+  .chip i{font-style:normal;font-weight:800;color:#94a3b8;margin-right:5px}
+  .tag{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;white-space:nowrap}
+  svg.cv rect[data-h]{cursor:help}
+  svg.cv rect[data-h]:hover{opacity:.75}
+  .tw{overflow-x:auto;border:1px solid var(--rule);border-radius:12px}
+  .num{font-variant-numeric:tabular-nums}
+  .kpi{border-left:4px solid var(--accent);padding-left:16px}
+  #toc a{display:block;padding:7px 0 7px 13px;margin-left:-1px;border-left:2px solid transparent;
+          color:var(--muted);line-height:1.45;transition:color .15s,border-color .15s}
+  #toc a:hover{color:var(--brand-700)}
+  #toc a.on{color:var(--brand-700);font-weight:800;border-left-color:var(--accent)}
+  #toc a .n{display:block;font-size:10px;letter-spacing:.1em;color:#94a3b8;font-weight:800}
+  #toc a.on .n{color:var(--accent)}
+  .nx{margin-top:22px;border-left:2px solid var(--accent);padding-left:12px;
+      font-size:12.5px;line-height:1.9;color:var(--muted)}
+  .nx b{color:var(--ink)}
+  .rd{display:grid;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule)}
+  .rd div{font-size:13px;line-height:1.85;color:#475569;padding-left:20px;position:relative}
+  .rd div::before{content:attr(data-n);position:absolute;left:0;top:0;font-size:10.5px;font-weight:800;
+                  color:var(--accent);line-height:2.2}
+  .rd b{color:var(--ink)}
+  .kpi .v{font-size:34px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-.02em}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800">
+<!--NAV:START-->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+<!--NAV:END-->
+
+<header class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-5 py-8">
+    <a href="../news.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-4 transition-colors"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>AI 深度解讀</a>
+    <h1 class="page-title font-extrabold tracking-wide">AI 專欄 2026-W34</h1>
+    <p class="text-white/70 text-sm mt-1 tracking-wider">開源模型「開」的是什麼 · 資料截至 2026-08-19</p>
+    <div class="mt-5 border-l-4 border-orange-400 pl-4">
+      <p class="text-lg sm:text-xl font-bold leading-relaxed">
+        能力五十分以上的開放權重模型，全世界<span class="text-orange-300">六顆，全部來自中國</span>；
+        美國前沿廠商<span class="text-orange-300">一顆都沒放</span>。
+        「開源」在 2026 年不是技術理念之爭，是搶市場的手段。
+      </p>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-[12px] text-white/70">
+      <div><span class="block text-white font-bold tracking-widest">資料源</span>Artificial Analysis · llm-stats.com</div>
+      <div><span class="block text-white font-bold tracking-widest">樣本</span>現役 257 顆有能力分數，303 顆有公開程度評分</div>
+      <div><span class="block text-white font-bold tracking-widest">篇幅</span>4 節 · 2 圖 · 5 表</div>
+      <div><span class="block text-white font-bold tracking-widest">性質</span>資料型專欄，非投資建議</div>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-5 py-8 lg:grid lg:grid-cols-[208px_minmax(0,1fr)] lg:gap-10">
+
+  <aside class="hidden lg:block">
+    <nav id="toc" class="sticky top-[4.75rem] text-[13px] border-l border-slate-200">
+      <div class="text-[10px] font-extrabold tracking-[.18em] text-slate-400 pl-[13px] pb-2">本篇主線</div>
+      <a href="#s0" data-t="s0"><span class="n">導讀</span>這篇在回答什麼</a>
+      <a href="#s1" data-t="s1"><span class="n">01</span>先講結論：三個數字</a>
+      <a href="#s2" data-t="s2"><span class="n">02</span>「開源」是三件事</a>
+      <a href="#s3" data-t="s3"><span class="n">03</span>錢從哪裡來</a>
+      <a href="#s4" data-t="s4"><span class="n">04</span>對我們的間接影響</a>
+      <a href="#s5" data-t="s5"><span class="n">口徑</span>資料、限制與延伸</a>
+      <p class="pl-[13px] pt-4 mt-3 border-t border-slate-200 text-[11.5px] leading-relaxed text-slate-400">
+        誰在前面 → 開了哪一層 → 錢從哪來 → 間接影響到我們哪裡
+      </p>
+    </nav>
+  </aside>
+
+<main class="space-y-12 min-w-0">
+
+  <!-- ══ 導讀 ══ -->
+  <section id="s0" class="scroll-mt-24">
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-3">
+        <span class="font-extrabold text-sm">這篇在回答什麼</span>
+      </div>
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="prose max-w-none">
+          <p>每次報告模型評比，最常被問回來的一句話是：<b>排行榜前段班一半是中國團隊，而且都說自己開源，那他們靠什麼賺錢？</b>後面還跟著兩題：模型都免費下載了，為什麼還有人付錢？這件事跟我們有什麼關係？</p>
+          <p>先講一個詞。<b>「權重」就是模型訓練完的那一大包參數檔</b>，拿到它等於拿到模型本體，可以下載到自己的機器上跑。所謂「開放權重」，指的就是這一包放出來給人下載。</p>
+          <p>把資料攤開後，上面三題其實是同一題。「開源」聽起來像是非題——開了，或沒開——但在這個產業裡從來不是。<b>該問的是「開了哪一層、為什麼只開這一層」</b>。問法一改，錢從哪來、對我們有什麼影響，答案就跟著出來了。</p>
+          <p><b>整篇只有一條線：</b>誰在前面（第 1 節）→ 前面那幾顆到底開了什麼（第 2 節）→ 沒開的那幾層怎麼變成錢（第 3 節）→ 這場競爭間接影響到我們哪裡（第 4 節）。</p>
+          <p class="!text-[12px] !leading-[1.9] !text-slate-400 !mb-0">全篇數字取自兩個公開資料源，抓取日期 2026-08-19，每個結論都可以往回追到圖表。第 4 節是推估，不是既成事實，該節另有標示。</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">問題一</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">他們「開」的到底是什麼</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">八個項目裡只開了「權重」那兩項，其餘六項留著。八項全開的是學術機構，不是這些公司。見第 2 節。</p>
+          </div>
+          <div class="rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">問題二</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">那他們靠什麼收錢</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">雲服務、私有化部署、授權金，沒有一條是靠賣模型本身。而且授權正在收緊。見第 3 節。</p>
+          </div>
+          <div class="rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">問題三</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">對我們有什麼影響</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">我們不採用中國模型，但自建模型的能力天花板、AOAI 的價格、供應商包進產品裡的模型，都被這場競爭牽動。見第 4 節。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 01 ══ -->
+  <section id="s1" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">01</span><h2 class="text-xl sm:text-2xl font-extrabold">先講結論：兩個數字</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">後面三節都是這兩個數字的證據與延伸</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white border border-slate-200 rounded-2xl p-6">
+      <div class="kpi">
+        <div class="v num">6 / 6</div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">能力 50 分以上、權重可下載的模型，全部來自中國</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">Kimi K3、Qwen3.8 兩款、DeepSeek 兩款、GLM-5.2。可下載的模型現役共 177 顆，跨過 50 分的只有這六顆。</p>
+      </div>
+      <div class="kpi">
+        <div class="v num">42.3</div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">美國最強的可下載模型，能力分數</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">Thinking Machines 的 Inkling，比全球第一的 Claude Opus 5（63.05）低 20.8 分。美國最前面三家的旗艦一顆都沒放。</p>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5">
+        <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">本篇主張</div>
+        <p class="text-[14px] leading-relaxed text-slate-700">「開源」在這個產業裡是三件不同的事，被同一個詞蓋住了：學術機構要的是「別人能重做一次」、中國廠商要的是搶市場、真正把最強模型放出來這件事則誰都沒做。分開看就清楚：<b class="text-blue-900">中國廠商放出權重是通路策略，不是做慈善</b>——真正的產品是後面的雲服務與私有化部署。</p>
+      </div>
+    </div>
+    <div class="prose max-w-none mt-6 mb-4">
+      <p>這兩個數字是同一張圖的兩個角。把目前能力最前面的模型排成一列，用顏色標<b>總部在哪一國</b>、用「開」字標<b>權重可以下載</b>，誰在前面、哪幾顆開放、又分別來自哪裡，一眼看完。</p>
+    </div>
+
+    <figure class="fig">
+      <div class="text-[13px] font-extrabold text-slate-900 mb-1">圖 1　能力前段班：誰做的、哪一國、哪幾顆權重有公開</div>
+      <div class="text-[12px] text-slate-500 mb-3">能力指數前 22 名（同名模型僅保留最高分變體），外加美國最強的開放權重模型作為對照，2026-08-19</div>
+      <div class="lgd"><span><i style="background:#1e3a5f"></i>美國</span><span><i style="background:#b93a2f"></i>中國</span><span><i style="background:#2563eb"></i>南韓</span><span><i style="background:#fdba74"></i>「開」＝權重可下載</span></div>
+<svg class="cv" viewBox="0 0 760 288" role="img" aria-label="能力前段班模型：依國別著色，標示權重是否公開">
+<defs><style>.a-ax{font-size:10.5px;fill:#94a3b8}.a-vl{font-size:11px;fill:#ffffff;font-weight:800}.a-nm{font-size:10.5px;fill:#475569}.a-an{font-size:11.5px;font-weight:800;fill:#64748b}.a-op{font-size:9.5px;fill:#c2410c;font-weight:800}</style></defs>
+<line x1="46" y1="182.5" x2="748" y2="182.5" stroke="#eef2f7"/>
+<text class="a-ax" x="38" y="186" text-anchor="end">0</text>
+<line x1="46" y1="136.7" x2="748" y2="136.7" stroke="#eef2f7"/>
+<text class="a-ax" x="38" y="138.9" text-anchor="end">20</text>
+<line x1="46" y1="90.8" x2="748" y2="90.8" stroke="#eef2f7"/>
+<text class="a-ax" x="38" y="93" text-anchor="end">40</text>
+<line x1="46" y1="45" x2="748" y2="45" stroke="#eef2f7"/>
+<text class="a-ax" x="38" y="47.2" text-anchor="end">60</text>
+<line x1="46" y1="67.9" x2="748" y2="67.9" stroke="#f97316" stroke-width="1.1" stroke-dasharray="5 4"/>
+<text class="a-op" x="38" y="70.1" text-anchor="end">50</text>
+<rect x="50.1" y="37.9" width="21.0" height="144.6" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="60.6" y="50.7" text-anchor="middle">63</text>
+<text class="a-nm" x="60.6" y="193.5" text-anchor="end" transform="rotate(-52 60.6 193.5)">Claude Opus 5</text>
+<rect x="79.4" y="40.1" width="21.0" height="142.4" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="89.9" y="52.9" text-anchor="middle">62</text>
+<text class="a-nm" x="89.9" y="193.5" text-anchor="end" transform="rotate(-52 89.9 193.5)">Claude Fable 5</text>
+<rect x="108.6" y="42.9" width="21.0" height="139.6" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="119.1" y="55.7" text-anchor="middle">61</text>
+<text class="a-nm" x="119.1" y="193.5" text-anchor="end" transform="rotate(-52 119.1 193.5)">GPT-5.6 Sol</text>
+<rect x="137.9" y="42.9" width="21.0" height="139.6" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="148.4" y="55.7" text-anchor="middle">61</text>
+<text class="a-nm" x="148.4" y="193.5" text-anchor="end" transform="rotate(-52 148.4 193.5)">Grok 4.6</text>
+<rect x="167.1" y="45.7" width="21.0" height="136.8" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="177.6" y="58.5" text-anchor="middle">60</text>
+<rect x="169.1" y="31.6" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="177.6" y="41.3" text-anchor="middle">開</text>
+<text class="a-nm" x="177.6" y="193.5" text-anchor="end" transform="rotate(-52 177.6 193.5)">Kimi K3</text>
+<rect x="196.4" y="46.1" width="21.0" height="136.4" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="206.9" y="58.9" text-anchor="middle">60</text>
+<text class="a-nm" x="206.9" y="193.5" text-anchor="end" transform="rotate(-52 206.9 193.5)">GLM-5.3</text>
+<rect x="225.6" y="49.3" width="21.0" height="133.2" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="236.1" y="62.1" text-anchor="middle">58</text>
+<text class="a-nm" x="236.1" y="193.5" text-anchor="end" transform="rotate(-52 236.1 193.5)">Qwen3.8 Max</text>
+<rect x="254.9" y="50.3" width="21.0" height="132.2" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="265.4" y="63.1" text-anchor="middle">58</text>
+<rect x="256.9" y="36.2" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="265.4" y="45.9" text-anchor="middle">開</text>
+<text class="a-nm" x="265.4" y="193.5" text-anchor="end" transform="rotate(-52 265.4 193.5)">Qwen3.8 2.4T</text>
+<rect x="284.1" y="52.3" width="21.0" height="130.2" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="294.6" y="65.1" text-anchor="middle">57</text>
+<text class="a-nm" x="294.6" y="193.5" text-anchor="end" transform="rotate(-52 294.6 193.5)">Muse Spark 1.2</text>
+<rect x="313.4" y="52.8" width="21.0" height="129.7" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="323.9" y="65.6" text-anchor="middle">57</text>
+<text class="a-nm" x="323.9" y="193.5" text-anchor="end" transform="rotate(-52 323.9 193.5)">GPT-5.6 Terra</text>
+<rect x="342.6" y="54.2" width="21.0" height="128.3" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="353.1" y="67" text-anchor="middle">56</text>
+<text class="a-nm" x="353.1" y="193.5" text-anchor="end" transform="rotate(-52 353.1 193.5)">Gemini 3.7 Flash</text>
+<rect x="371.9" y="54.6" width="21.0" height="127.9" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="382.4" y="67.4" text-anchor="middle">56</text>
+<text class="a-nm" x="382.4" y="193.5" text-anchor="end" transform="rotate(-52 382.4 193.5)">Grok 4.5</text>
+<rect x="401.1" y="55.8" width="21.0" height="126.7" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="411.6" y="68.6" text-anchor="middle">55</text>
+<text class="a-nm" x="411.6" y="193.5" text-anchor="end" transform="rotate(-52 411.6 193.5)">Claude Sonnet 5</text>
+<rect x="430.4" y="60.5" width="21.0" height="122" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="440.9" y="73.3" text-anchor="middle">53</text>
+<rect x="432.4" y="46.5" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="440.9" y="56.2" text-anchor="middle">開</text>
+<text class="a-nm" x="440.9" y="193.5" text-anchor="end" transform="rotate(-52 440.9 193.5)">DeepSeek V4 Pro</text>
+<rect x="459.6" y="61.9" width="21.0" height="120.6" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="470.1" y="74.7" text-anchor="middle">53</text>
+<rect x="461.6" y="47.9" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="470.1" y="57.6" text-anchor="middle">開</text>
+<text class="a-nm" x="470.1" y="193.5" text-anchor="end" transform="rotate(-52 470.1 193.5)">GLM-5.2</text>
+<rect x="488.9" y="62.6" width="21.0" height="119.9" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="499.4" y="75.4" text-anchor="middle">52</text>
+<text class="a-nm" x="499.4" y="193.5" text-anchor="end" transform="rotate(-52 499.4 193.5)">GPT-5.6 Luna</text>
+<rect x="518.1" y="63.3" width="21.0" height="119.2" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="528.6" y="76.1" text-anchor="middle">52</text>
+<rect x="520.1" y="49.3" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="528.6" y="59" text-anchor="middle">開</text>
+<text class="a-nm" x="528.6" y="193.5" text-anchor="end" transform="rotate(-52 528.6 193.5)">Qwen3.8 27B</text>
+<rect x="547.4" y="63.8" width="21.0" height="118.7" rx="3" fill="#b93a2f"/>
+<text class="a-vl" x="557.9" y="76.6" text-anchor="middle">52</text>
+<rect x="549.4" y="49.7" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="557.9" y="59.4" text-anchor="middle">開</text>
+<text class="a-nm" x="557.9" y="193.5" text-anchor="end" transform="rotate(-52 557.9 193.5)">DeepSeek V4 Flash</text>
+<rect x="576.6" y="64.2" width="21.0" height="118.3" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="587.1" y="77" text-anchor="middle">52</text>
+<text class="a-nm" x="587.1" y="193.5" text-anchor="end" transform="rotate(-52 587.1 193.5)">Gemini 3.6 Flash</text>
+<rect x="605.9" y="73.2" width="21.0" height="109.3" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="616.4" y="86" text-anchor="middle">48</text>
+<text class="a-nm" x="616.4" y="193.5" text-anchor="end" transform="rotate(-52 616.4 193.5)">Gemini 3.1 Pro</text>
+<rect x="635.1" y="73.9" width="21.0" height="108.6" rx="3" fill="#2563eb"/>
+<text class="a-vl" x="645.6" y="86.7" text-anchor="middle">47</text>
+<rect x="637.1" y="59.8" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="645.6" y="69.5" text-anchor="middle">開</text>
+<text class="a-nm" x="645.6" y="193.5" text-anchor="end" transform="rotate(-52 645.6 193.5)">Motif 3</text>
+<rect x="664.4" y="75.5" width="21.0" height="107" rx="3" fill="#1e3a5f"/>
+<text class="a-vl" x="674.9" y="88.3" text-anchor="middle">47</text>
+<text class="a-nm" x="674.9" y="193.5" text-anchor="end" transform="rotate(-52 674.9 193.5)">Gemini 3.5 Flash</text>
+<line x1="698.3" y1="30" x2="698.3" y2="182.5" stroke="#e2e8f0" stroke-dasharray="3 3"/>
+<rect x="722.9" y="85.5" width="21.0" height="97" rx="3" fill="#1e3a5f" fill-opacity=".5"/>
+<text class="a-vl" x="733.4" y="98.3" text-anchor="middle">42</text>
+<rect x="724.9" y="71.5" width="17" height="13.5" rx="4" fill="#fff7ed" stroke="#fdba74"/>
+<text class="a-op" x="733.4" y="81.2" text-anchor="middle">開</text>
+<text class="a-nm" x="733.4" y="193.5" text-anchor="end" transform="rotate(-52 733.4 193.5)">Inkling</text>
+<text class="a-an" x="748" y="41" text-anchor="end">美國最強的</text>
+<text class="a-an" x="748" y="54" text-anchor="end">開放權重模型</text>
+<line x1="733.4" y1="58.6" x2="733.4" y2="71.9" stroke="#cbd5e1"/>
+<line x1="46" y1="182.5" x2="748" y2="182.5" stroke="#cbd5e1"/>
+<text class="a-ax" x="8" y="5.2">能力指數</text>
+</svg>
+      <div class="rd">
+        <div data-n="A"><b>前四名都在美國，而且一顆都沒有標「開」。</b>第五名開始，中國模型連續出現在整段前段班裡。</div>
+        <div data-n="B"><b>標「開」的幾乎全部集中在中國那一側。</b>50 分線以上共六顆，全部來自中國；線下第一顆標「開」的是南韓 Motif 3，是這張圖上唯一的例外。</div>
+        <div data-n="C"><b>右邊那根淺色的是美國最強的可下載模型。</b>42.3 分，跟同一國的旗艦差 20.8 分——差距不在做不做得到，在放不放。</div>
+      </div>
+      <figcaption>能力指數是 Artificial Analysis 的綜合評分，模型之間可以互比。「開」只代表權重可以下載，不代表訓練資料或方法有公開，也不代表可以無條件商用——這正是第 2 節與第 3 節要拆的兩件事。</figcaption>
+    </figure>
+
+    <p class="nx">下一節：圖上那個「開」字，是這整篇的入口。<b>標了開，到底開了哪一層？</b></p>
+
+  </section>
+
+  <!-- ══ 02 ══ -->
+  <section id="s2" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">02</span><h2 class="text-xl sm:text-2xl font-extrabold">「開源」是三件不同的事，被同一個詞蓋住了</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">承上：圖 1 裡標了「開」的那幾顆，開的到底是哪一層</p>
+    <div class="prose max-w-none mb-6">
+      <p>Artificial Analysis 不把模型分成「開源／閉源」兩類，而是把公開程度拆成八個項目分開打分。八項可以歸成三組：<b>權重</b>（能不能下載、下載後能拿來做什麼）、<b>資料</b>（用哪些資料訓練的、那些資料能不能再用）、<b>方法</b>（訓練流程講得多細、講出來的方法能不能被別人用）。<b>八項裡只要開了第一項，對外就可以說自己「開源」</b>——這就是這個詞失去意義的地方。</p>
+    </div>
+
+    <p class="text-[13px] leading-[1.9] text-slate-600 mt-6">那八項是哪八項、中國廠商開的是哪兩項，攤開來看。</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-5">
+      <div class="rounded-xl border-2 border-orange-400 bg-orange-50/40 p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-[15px] font-extrabold text-slate-900">權重</span>
+          <span class="text-[12px] text-slate-500">2 項</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="chip"><i>1</i>權重取得</span><span class="chip"><i>2</i>權重授權</span>
+        </div>
+        <p class="text-[12.5px] text-slate-700 leading-relaxed flex-1">能不能下載，下載後能拿來做什麼。下載多半完全開放，能不能商用則各家不同（見第 3 節）。</p>
+        <div class="mt-3 pt-3 border-t border-orange-200"><span class="tag bg-orange-100 text-orange-800">中國廠商開的就是這一組</span></div>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-[15px] font-extrabold text-slate-900">資料</span>
+          <span class="text-[12px] text-slate-500">4 項</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="chip"><i>3</i>預訓練資料</span><span class="chip"><i>4</i>預訓練資料授權</span><span class="chip"><i>5</i>後訓練資料</span><span class="chip"><i>6</i>後訓練資料授權</span>
+        </div>
+        <p class="text-[12.5px] text-slate-700 leading-relaxed flex-1">用哪些資料訓練的，那些資料能不能再用。外界要查證模型學過什麼、或想自己重建一顆，靠的都是這四項。</p>
+        <div class="mt-3 pt-3 border-t border-slate-200"><span class="tag bg-slate-100 text-slate-600">商用模型沒有一家完整公開</span></div>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-3">
+          <span class="text-[15px] font-extrabold text-slate-900">方法</span>
+          <span class="text-[12px] text-slate-500">2 項</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="chip"><i>7</i>方法揭露</span><span class="chip"><i>8</i>方法授權</span>
+        </div>
+        <p class="text-[12.5px] text-slate-700 leading-relaxed flex-1">訓練流程講得多細，講出來的方法能不能被別人用。報告寫得細不細，就是這一項的分數差別。</p>
+        <div class="mt-3 pt-3 border-t border-slate-200"><span class="tag bg-slate-100 text-slate-600">多數只有一篇技術報告</span></div>
+      </div>
+    </div>
+    <p class="text-[12px] text-slate-500 mt-3">表 1　公開程度的八個項目。分類方式與評分來自 Artificial Analysis，本表為分組整理。八項只要開了第 1 項，對外就能說自己開源。</p>
+
+    <div class="prose max-w-none mb-6">
+      <p>把這三種「開放」放到同一把尺上（圖 2），差別很清楚。<b>美國前沿旗艦</b>八項一項都沒開，AA 連分都沒給，但能力排最前面。<b>中國大廠</b>開的是八項裡的二到四項，全部落在權重那一組，能力 51.8 到 59.7，緊跟在旗艦後面。<b>學術機構</b>八項全開，但能力最高只有 17.4 分——艾倫人工智慧研究院的 Olmo、阿聯 MBZUAI 的 K2、瑞士 Apertus 都在這一群，他們公開是為了讓研究能被別人重做一次，本來就不在能力競賽裡。<b>三群人做的是三件不同的事，只是共用了「開源」這個詞。</b></p>
+    </div>
+
+    <figure class="fig">
+      <div class="text-[13px] font-extrabold text-slate-900 mb-1">圖 2　三種「開放」，放在同一把尺上</div>
+      <div class="text-[12px] text-slate-500 mb-3">左邊：表 1 的八個面向，這顆模型公開了幾項（橘色格子）。右邊：能力指數，跨模型可比。代表性模型，2026-08-19</div>
+<svg class="cv" viewBox="0 0 760 442" role="img" aria-label="三種開放放在同一把尺上比較">
+<defs><style>.b-ax{font-size:10.5px;fill:#94a3b8}.b-nm{font-size:11.5px;fill:#0f172a;font-weight:700}.b-gt{font-size:12px;font-weight:800}.b-gs{font-size:10.5px;fill:#94a3b8}.b-vl{font-size:11px;font-weight:800}.b-hd{font-size:10.5px;fill:#64748b;font-weight:800}</style></defs>
+<text class="b-hd" x="150" y="28">八項裡公開了幾項（橘色＝已公開）</text>
+<text class="b-hd" x="340" y="28">能力指數</text>
+<line x1="450.3" y1="36" x2="450.3" y2="426" stroke="#f1f5f9"/>
+<text class="b-ax" x="450.3" y="34" text-anchor="middle">20</text>
+<line x1="560.6" y1="36" x2="560.6" y2="426" stroke="#f1f5f9"/>
+<text class="b-ax" x="560.6" y="34" text-anchor="middle">40</text>
+<line x1="670.9" y1="36" x2="670.9" y2="426" stroke="#f1f5f9"/>
+<text class="b-ax" x="670.9" y="34" text-anchor="middle">60</text>
+<text class="b-gt" x="0" y="58" fill="#1e3a5f">美國前沿旗艦</text>
+<text class="b-gs" x="148" y="58">權重不公開，AA 連公開程度都沒給評分</text>
+<text class="b-nm" x="140" y="87.5" text-anchor="end">Claude Opus 5</text>
+<rect x="150.0" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="165.2" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="180.4" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="195.6" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="210.8" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="226.0" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="241.2" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="256.4" y="77.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text class="b-gs" x="330" y="87.5" text-anchor="end">未評分</text>
+<rect x="340" y="76.5" width="348.0" height="14" rx="3" fill="#1e3a5f"/>
+<text class="b-vl" x="694.0" y="87.5" fill="#1e3a5f">63.1</text>
+<text class="b-nm" x="140" y="110.5" text-anchor="end">GPT-5.6 Sol</text>
+<rect x="150.0" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="165.2" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="180.4" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="195.6" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="210.8" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="226.0" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="241.2" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<rect x="256.4" y="100.5" width="12" height="12" rx="2.5" fill="none" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text class="b-gs" x="330" y="110.5" text-anchor="end">未評分</text>
+<rect x="340" y="99.5" width="335.9" height="14" rx="3" fill="#1e3a5f"/>
+<text class="b-vl" x="681.9" y="110.5" fill="#1e3a5f">60.9</text>
+<text class="b-gt" x="0" y="138" fill="#b93a2f">中國大廠：只開權重那一層</text>
+<text class="b-gs" x="148" y="138">能力 50 分以上的開放權重模型</text>
+<text class="b-nm" x="140" y="167.5" text-anchor="end">Kimi K3</text>
+<rect x="150.0" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="157.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="157.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="157.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="157.5" width="6.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="157.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="167.5" text-anchor="end">3.5 項</text>
+<rect x="340" y="156.5" width="329.3" height="14" rx="3" fill="#b93a2f"/>
+<text class="b-vl" x="675.3" y="167.5" fill="#b93a2f">59.7</text>
+<text class="b-nm" x="140" y="190.5" text-anchor="end">Qwen3.8 2.4T</text>
+<rect x="150.0" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="180.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="180.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="180.5" width="6.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="210.8" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="180.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="190.5" text-anchor="end">2.5 項</text>
+<rect x="340" y="179.5" width="318.2" height="14" rx="3" fill="#b93a2f"/>
+<text class="b-vl" x="664.2" y="190.5" fill="#b93a2f">57.7</text>
+<text class="b-nm" x="140" y="213.5" text-anchor="end">DeepSeek V4 Pro</text>
+<rect x="150.0" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="203.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="203.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="203.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="203.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="203.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="213.5" text-anchor="end">4 項</text>
+<rect x="340" y="202.5" width="293.4" height="14" rx="3" fill="#b93a2f"/>
+<text class="b-vl" x="639.4" y="213.5" fill="#b93a2f">53.2</text>
+<text class="b-nm" x="140" y="236.5" text-anchor="end">GLM-5.2</text>
+<rect x="150.0" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="226.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="226.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="226.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="226.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="226.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="236.5" text-anchor="end">4 項</text>
+<rect x="340" y="225.5" width="290.1" height="14" rx="3" fill="#b93a2f"/>
+<text class="b-vl" x="636.1" y="236.5" fill="#b93a2f">52.6</text>
+<text class="b-nm" x="140" y="259.5" text-anchor="end">DeepSeek V4 Flash</text>
+<rect x="150.0" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="249.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="249.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="249.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="249.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="249.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="259.5" text-anchor="end">4 項</text>
+<rect x="340" y="248.5" width="285.7" height="14" rx="3" fill="#b93a2f"/>
+<text class="b-vl" x="631.7" y="259.5" fill="#b93a2f">51.8</text>
+<text class="b-gt" x="0" y="287" fill="#64748b">美國最強的開放權重模型</text>
+<text class="b-gs" x="148" y="287">同樣只開權重那一層</text>
+<text class="b-nm" x="140" y="316.5" text-anchor="end">Inkling</text>
+<rect x="150.0" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="306.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="306.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="306.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="306.5" width="6.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="306.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<text class="b-gs" x="330" y="316.5" text-anchor="end">3.5 項</text>
+<rect x="340" y="305.5" width="233.3" height="14" rx="3" fill="#64748b"/>
+<text class="b-vl" x="579.3" y="316.5" fill="#64748b">42.3</text>
+<text class="b-gt" x="0" y="344" fill="#0891b2">學術機構：八項全開</text>
+<text class="b-gs" x="148" y="344">目的是研究可重現性，不在能力競賽裡</text>
+<text class="b-nm" x="140" y="373.5" text-anchor="end">K2 Think V2</text>
+<rect x="150.0" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="210.8" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="226.0" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="241.2" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="256.4" y="363.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="363.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<text class="b-gs" x="330" y="373.5" text-anchor="end">8 項</text>
+<rect x="340" y="362.5" width="96.0" height="14" rx="3" fill="#0891b2"/>
+<text class="b-vl" x="442.0" y="373.5" fill="#0891b2">17.4</text>
+<text class="b-nm" x="140" y="396.5" text-anchor="end">Olmo 3.1 32B</text>
+<rect x="150.0" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="150.0" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="165.2" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="165.2" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="180.4" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="180.4" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="195.6" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="195.6" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="210.8" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="210.8" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="226.0" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="226.0" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="241.2" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="241.2" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<rect x="256.4" y="386.5" width="12" height="12" rx="2.5" fill="#eef2f7"/>
+<rect x="256.4" y="386.5" width="12.0" height="12" rx="2.5" fill="#f97316"/>
+<text class="b-gs" x="330" y="396.5" text-anchor="end">8 項</text>
+<rect x="340" y="385.5" width="43.6" height="14" rx="3" fill="#0891b2"/>
+<text class="b-vl" x="389.6" y="396.5" fill="#0891b2">7.9</text>
+<line x1="340" y1="36" x2="340" y2="426" stroke="#cbd5e1"/>
+</svg>
+      <div class="rd">
+        <div data-n="A"><b>能力最前面那兩列，格子是空的。</b>美國前沿旗艦八項一項都沒公開，AA 連公開程度評分都給不出來。</div>
+        <div data-n="B"><b>中國那五列，橘色格子全部擠在前面幾格。</b>就是表 1 權重那一組的「權重取得、權重授權」，資料那四項與方法那兩項沒有動；能力條卻只比前沿旗艦短一點。</div>
+        <div data-n="C"><b>沒有任何一列是左邊填滿、右邊也長。</b>八項全開那兩列，能力條不到最上面兩列的三分之一——這就是為什麼「開源」不能當是非題看。</div>
+      </div>
+      <figcaption>
+        「幾項」是這顆模型在八個項目上的公開程度加總（滿分 8 項，半格＝半項）。本圖只列代表性模型；303 顆有公開程度評分的模型裡，權重可下載的 234 顆、八項全開的學術模型 23 顆、其餘 46 顆權重受限或不公開。<br>
+        兩項限制：能力 50 分以上、權重可下載的模型共六顆，其中 Qwen3.8 27B 沒有公開程度評分，所以本圖只列五顆；不公開的模型多數沒被評分，因此本圖不能用來推論「閉源模型整體有多強」。
+      </figcaption>
+    </figure>
+
+    <div class="prose max-w-none">
+      <p>看圖 2 很容易得到一個結論：「公開得愈完整，能力就愈弱」。這句話是錯的。圖上那三群人本來就不在比同一件事——學術機構八項全開，是為了讓別人能把研究重做一次，他們沒有要跟旗艦比能力。</p>
+      <p>真正該看的是中間那五列：<b>能力已經很接近美國旗艦，格子卻只填了最前面幾格。</b>換個講法，他們給你的是一台能跑、也能改的機器，但沒有給你製造這台機器的圖紙和原料清單。你可以下載來用、可以拿自己的資料再訓練它，卻造不出第二台，也查不到它當初是拿什麼資料學的。</p>
+    </div>
+
+    <div class="mt-6 rounded-xl border-l-4 border-blue-800 bg-blue-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">那閉源的旗艦就不能微調嗎</div>
+      <p class="text-[14px] leading-relaxed text-slate-800 mb-4">可以，AOAI 就支援。但兩邊講的「微調」不是同一件事——差別不在能不能調，在<b>調完的那顆模型放在誰家</b>。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="rounded-lg bg-white border border-slate-200 p-4">
+          <div class="text-[13.5px] font-extrabold text-slate-900 mb-2">閉源微調：買到一個調過的服務</div>
+          <ul class="text-[13px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-4">
+            <li>資料上傳、訓練、部署全在對方雲上，調完的模型也留在那裡</li>
+            <li>拿不走、離不了線；對方改版、下架、調價，只能跟著走</li>
+            <li>換算成錢：仍然是按用量計費，量愈大付愈多</li>
+          </ul>
+        </div>
+        <div class="rounded-lg bg-white border border-slate-200 p-4">
+          <div class="text-[13.5px] font-extrabold text-slate-900 mb-2">開放權重微調：買到一顆自己的模型</div>
+          <ul class="text-[13px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-4">
+            <li>模型檔在自己手上，可以在自己的機房調、離線跑</li>
+            <li>可以把版本凍住不動，對要留稽核軌跡的流程有差</li>
+            <li>換算成錢：變動費用變成固定費用，但要先付硬體（第 4 節有實際卡數）</li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-[13px] leading-relaxed text-slate-700 mt-4 mb-2"><b>落到實際任務上，差別大概是這樣：</b></p>
+      <ul class="text-[13px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-5">
+        <li><b>會議記錄生成、報告摘要</b>——格式固定、量大、天天在跑。用雲端就是每個月照用量付錢；換成調過的地端小模型，這筆會從變動費用變成固定費用</li>
+        <li><b>合約比對、法規比對</b>——吃的是內部文件。雲端做得到，但每一次比對都得把文件送出去；自己的模型可以整批離線跑完</li>
+        <li><b>錄音全量檢查</b>——語音檔含客戶個資、而且量大，是最典型「值得為它自建」的一類</li>
+        <li><b>程式助手</b>——反過來，這類最吃前沿能力，開放權重目前接不起來，留在雲端才合理</li>
+      </ul>
+      <p class="text-[13px] leading-relaxed text-slate-700 mt-4"><b>一句話：</b>閉源微調買的是更貼合的服務，開放權重微調買的是一顆自己的模型。前者省事，後者能離線、能凍結版本、量夠大時單位成本更低——代價是硬體要自己扛。</p>
+    </div>
+
+
+
+    <div class="mt-6 rounded-xl border-l-4 border-blue-800 bg-blue-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">給選型會議的一句話</div>
+      <p class="text-[14px] leading-relaxed text-slate-800">供應商說「我們用的是開源模型」時，要追問<b>開了哪幾項</b>。如果只開權重，那「可稽核」「訓練資料可驗證」這些說法就不成立——你能驗的是它的輸出，不是它的來源。這一句就足以決定要不要繼續談下去。</p>
+    </div>
+
+    <p class="nx">下一節：既然只開權重、資料與方法都留著，那<b>放出權重就不可能是收入來源</b>——錢一定在別的地方。</p>
+  </section>
+
+  <!-- ══ 03 ══ -->
+  <section id="s3" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">03</span><h2 class="text-xl sm:text-2xl font-extrabold">錢從哪裡來：沒有一家靠賣權重</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">承上：既然只開權重那一層，留著的那幾層怎麼變成錢</p>
+    <div class="prose max-w-none mb-6">
+      <p>回到最初的問題。九家公司的公開資料整理起來，答案很一致：<b>沒有一家的收入來自權重本身。</b>權重是入口，先讓開發者用熟、把周邊工具建起來，再把需要穩定、需要規模、需要有人負責的客戶導回付費的託管服務。這是通路策略，不是慈善，所以也不必用「他們能撐多久」去質疑——這門生意本來就不靠那一步賺錢。</p>
+      <p>更值得追蹤的是第二件事：<b>授權條件正在收緊，而且從最強的那幾顆開始。</b>目前最強的兩顆可下載模型——Kimi K3 與 Qwen3.8 2.4T——都已改成附商業條件的自訂授權；排在後面的 DeepSeek 與 GLM-5.2 還是可以自由商用。方向很清楚：權重照樣能下載，但用到一定規模就得回到談判桌。Kimi K3 設了兩道門檻：月活躍用戶超過一億、或月營收超過兩千萬美元，必須標示模型來源；拿它轉售服務、十二個月營收超過兩千萬美元的，要另簽商業協議。</p>
+      <p>另一種做法是把最強的那顆留在自家 API。阿里巴巴 2026-08-12 放出的版本是純文字版，拿掉了看圖能力與超長文件處理能力；同一天上架、不公開的託管版 Qwen3.8 Max 分數 58.08，高於開放版的 57.70。智譜最強的 GLM-5.3 不公開，放出來的是前一代 GLM-5.2。<b>只有月之暗面例外</b>——Kimi K3 是自家最強、權重也放了，只是晚 11 天釋出並加上授權門檻。三家三種做法，共同點是都留了一手，只是留的位置不同。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">路線一 · 雲服務</div>
+        <div class="text-[14px] font-extrabold mb-2">模型免費，算力收費</div>
+        <p class="text-[13px] text-slate-600 leading-relaxed">權重放出去讓大家先用熟，要跑得穩、跑得快還是得回自家雲租機器。阿里巴巴、字節跳動、百度、Google 都是這一類，其中阿里雲 FY2026 營收人民幣 1,581 億元、年增 34%，規模最大。</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">路線二 · 私有化部署</div>
+        <div class="text-[14px] font-extrabold mb-2">賣「裝進你家機房」</div>
+        <p class="text-[13px] text-slate-600 leading-relaxed">國企、政府、金融機構的資料不能外送，模型得裝進自家機房。權重免費，收的是<b>把它裝起來、調好、顧著不出事</b>的錢：一次性的建置與客製，加上每年按機器數或人數計的維運與支援費。權重公開反而讓這門生意更好做——客戶先自己下載試，試出興趣才回來簽約。智譜 2025 年營收約人民幣 7.24 億元、年增約 132%。</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">路線三 · 授權金</div>
+        <div class="text-[14px] font-extrabold mb-2">小用戶免費，大用戶另談</div>
+        <p class="text-[13px] text-slate-600 leading-relaxed">授權條款設營收或用戶數門檻，跨過就要標示來源或另簽約。月之暗面 2026 年 6 月的年化營收約 3 億美元，其中 API 授權占七成以上。</p>
+      </div>
+    </div>
+
+    <div class="tw">
+      <table class="d">
+        <thead><tr><th>能力</th><th>模型</th><th>公司</th><th>授權類別</th><th>釋出日</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="num"><b>59.70</b></td><td>Kimi K3</td><td>月之暗面</td><td><b>附商業條件的自訂授權</b></td><td class="num">2026-07-16</td></tr>
+          <tr class="hl"><td class="num"><b>57.70</b></td><td>Qwen3.8 2.4T A95B</td><td>阿里巴巴</td><td><b>附商業條件的自訂授權</b></td><td class="num">2026-08-12</td></tr>
+          <tr><td class="num">53.20</td><td>DeepSeek V4 Pro 0813</td><td>DeepSeek</td><td>可自由商用</td><td class="num">2026-08-13</td></tr>
+          <tr><td class="num">52.64</td><td>GLM-5.2</td><td>智譜</td><td>可自由商用</td><td class="num">2026-06-16</td></tr>
+          <tr><td class="num">52.02</td><td>Qwen3.8 27B</td><td>阿里巴巴</td><td>可自由商用</td><td class="num">2026-08-14</td></tr>
+          <tr><td class="num">51.77</td><td>DeepSeek V4 Flash 0731</td><td>DeepSeek</td><td>可自由商用</td><td class="num">2026-07-31</td></tr>
+          <tr style="border-top:2px solid #cbd5e1"><td class="num">42.29</td><td>Inkling</td><td>Thinking Machines（美國）</td><td>可自由商用</td><td class="num">2026-07-15</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 mt-2">表 2　能力 50 分以上、權重可下載的模型全部六顆，加上美國最強的一顆作為對照。授權類別由 Artificial Analysis 分類。前兩強都已經不能自由商用，這一欄值得每季重看一次。</p>
+
+    <div class="tw mt-6">
+      <table class="d">
+        <thead><tr><th>公司</th><th>國</th><th>靠什麼收錢</th><th>說明與來源</th><th>開放性的實際狀況</th></tr></thead>
+        <tbody>
+          <tr><td><b>阿里巴巴 / Qwen</b></td><td class="nw">中國</td><td class="why">雲服務</td><td><ul><li>雲事業群 FY2026 營收人民幣 1,581 億元（約 229 億美元），年增 34%</li><li>其中 AI 相關雲端營收年化約 52 億美元</li><li><a class="text-blue-700 underline" href="https://www.alibabagroup.com/en-US/documents-investor" target="_blank" rel="noopener">阿里 FY2026 6-K</a></li></ul></td><td><ul><li>8/12 放出的版本是純文字，拿掉看圖與超長文件能力</li><li>改用自訂授權（前幾代是可自由商用的 Apache 2.0）</li><li>最強的 Qwen3.8 Max 只在自家託管，不公開</li></ul></td></tr>
+          <tr><td><b>月之暗面 / Kimi</b></td><td class="nw">中國</td><td class="why">API 授權</td><td><ul><li>2026 年 6 月年化營收 3 億美元</li><li>其中 API 授權占七成以上</li><li><a class="text-blue-700 underline" href="https://www.unite.ai/" target="_blank" rel="noopener">Unite.AI</a></li></ul></td><td><ul><li>K3 是自家最強，權重有放出來</li><li>比託管版晚 11 天釋出</li><li>授權設了兩道商業門檻</li></ul></td></tr>
+          <tr><td><b>智譜 / Z.ai</b></td><td class="nw">中國</td><td class="why">私有化部署</td><td><ul><li>客戶集中在國企、政府、金融機構，資料不能外送</li><li>權重免費，收的是建置客製費，加上每年按機器數或人數計的維運與支援費</li><li>2025 年營收約人民幣 7.24 億元（約 1.05 億美元），年增約 132%</li><li>2024 年淨損人民幣 24.7 億元</li><li><a class="text-blue-700 underline" href="https://www.turingpost.com/" target="_blank" rel="noopener">Turing Post</a></li></ul></td><td><ul><li>最強的 GLM-5.3 不公開</li><li>放出來的是前一代 GLM-5.2</li></ul></td></tr>
+          <tr><td><b>DeepSeek</b></td><td class="nw">中國</td><td class="why">API 用量</td><td><ul><li>API 用量約占營收 75%、企業授權約 15%</li><li>2026-08-16 起改為尖峰／離峰計價</li><li><a class="text-blue-700 underline" href="https://benchlm.com/" target="_blank" rel="noopener">BenchLM 定價整理</a></li></ul></td><td><ul><li>六顆之中公開程度最高（指數 44.4）</li><li>目前仍可自由商用</li></ul></td></tr>
+          <tr><td><b>字節跳動 / Seed</b></td><td class="nw">中國</td><td class="why">雲服務</td><td><ul><li>火山引擎雲服務</li><li>2026 年模型服務營收目標由人民幣 100 億元上調至 150 億元</li><li><a class="text-blue-700 underline" href="https://www.tmtpost.com/" target="_blank" rel="noopener">TMTPost</a></li></ul></td><td><ul><li>旗艦 Doubao／Seed 不公開，只給 API</li><li>另以 Seed-OSS 名義放出較小的模型</li></ul></td></tr>
+          <tr><td><b>百度 / ERNIE</b></td><td class="nw">中國</td><td class="why">API 與雲服務</td><td><ul><li>千帆平台 API 與雲服務</li><li>ERNIE 5.1 每百萬 token 輸入 0.59 美元、輸出 2.65 美元</li><li><a class="text-blue-700 underline" href="https://www.codersera.com/" target="_blank" rel="noopener">Codersera</a></li></ul></td><td><ul><li>ERNIE 4.5 系列 2025 年開源</li><li>ERNIE 5.0／5.1 只提供託管</li></ul></td></tr>
+          <tr class="hl"><td><b>OpenAI</b></td><td class="nw">美國</td><td class="why">API 與訂閱</td><td><ul><li>已簽署輝達 7/24 的「開放權重與美國 AI 領導地位」公開信（第二波 50 家名單）</li><li><a class="text-blue-700 underline" href="https://securityboulevard.com/" target="_blank" rel="noopener">Security Boulevard</a></li></ul></td><td><ul><li>旗艦仍不公開</li><li>對 Azure 用戶：模型本來就在目錄裡，這件事不改變可用性</li></ul></td></tr>
+          <tr class="hl"><td><b>Google</b></td><td class="nw">美國</td><td class="why">雲服務與訂閱</td><td><ul><li>同列前述公開信第二波簽署名單</li><li><a class="text-blue-700 underline" href="https://www.forbes.com/" target="_blank" rel="noopener">Forbes</a></li></ul></td><td><ul><li>Gemini 旗艦不公開</li><li>放出來的是較小的 Gemma，最強 29.7 分</li></ul></td></tr>
+          <tr class="hl"><td><b>Anthropic</b></td><td class="nw">美國</td><td class="why">API 與訂閱</td><td><ul><li>未簽署該公開信（亞馬遜也沒簽）</li><li>公開表示不主張禁止開放權重，但關切權重放出後被濫用、被拿去訓練別的模型</li><li><a class="text-blue-700 underline" href="https://www.forbes.com/" target="_blank" rel="noopener">Forbes</a></li></ul></td><td><ul><li>全系列不公開</li><li>對 Azure 用戶：Claude 不在 Azure 目錄內，要另循管道</li></ul></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 mt-2">表 3　九家公司靠什麼收錢，以及各自的開放性。輝達於 2026-07-24 發表〈Open Weights and American AI Leadership〉公開信，初始 25 家連署、隔日增至 50 家，Anthropic 與亞馬遜未連署，後續成立 Open Secure AI Alliance。</p>
+
+    <div class="mt-6 rounded-xl border-l-4 border-orange-400 bg-orange-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-orange-700 mb-2">順帶澄清一個常見說法</div>
+      <p class="text-[14px] leading-relaxed text-slate-800 mb-4">「開源比較便宜」對不對，要看你是哪一種用法。這是兩本不同的帳。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="rounded-lg bg-white border border-orange-200 p-4">
+          <div class="text-[13.5px] font-extrabold text-slate-900 mb-2">叫 API：跟開不開源沒關係</div>
+          <p class="text-[13px] leading-relaxed text-slate-700">你付的是別人幫你跑模型的錢，不是模型本身的錢。在能力相近的一群模型裡比每百萬 token（大約七十萬字）的輸出價，<b>最便宜的反而是不公開的美國模型</b> GPT-5.6 Luna，1.2 美元；同一群最貴的 3.75 美元，差三倍，權重有公開的那三顆都落在中間。</p>
+        </div>
+        <div class="rounded-lg bg-white border border-orange-200 p-4">
+          <div class="text-[13.5px] font-extrabold text-slate-900 mb-2">自己建（地端）：這時開源才有差</div>
+          <p class="text-[13px] leading-relaxed text-slate-700">權重免費，但機房、加速卡、電費、維運人力都要自己算。<b>只有在用量夠大、或資料完全不能離開公司的時候才划算</b>——這兩個條件在金融業並不罕見，第 4 節會算這筆帳。</p>
+        </div>
+      </div>
+      <p class="text-[12.5px] leading-relaxed text-slate-600 mt-3">另外，低價常常帶促銷性質。DeepSeek 已從 2026-08-16 改成尖峰／離峰計價，編預算時要用原價估。</p>
+    </div>
+
+    <p class="nx">下一節：前三節都是可查核的資料，最後一節是推估。<b>我們不採用中國模型，那這場競爭是從哪幾條路走到我們面前的。</b></p>
+  </section>
+
+  <!-- ══ 04 ══ -->
+  <section id="s4" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">04</span><h2 class="text-xl sm:text-2xl font-extrabold">對我們的影響：不用它，也會被它影響</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">收束：我們不會採用中國模型，所以這一節只談間接影響——這場競爭透過哪幾條路徑走到我們面前</p>
+    <div class="prose max-w-none mb-6">
+      <p>前三節都是可查核的事實，這一節是推估。中國廠商把權重放出來、美國廠商把最強的留在自家 API，這場競爭我們不是參賽者，但它改變的東西會走到我們面前。四條路徑，按跟我們的距離由近到遠排。</p>
+      <p><b>最近的一條，是「自己養一顆模型」這個選項的可行性。</b>只要考慮把任務搬進自家機房，能挑的就只有權重下載得到的那些。這個前提一擺上去，第 1 節那張圖就不只是別人的排名了：能力 50 分以上、下載得到的六顆全部來自中國，扣掉這六顆之後，能挑的最強的是美國的 Inkling，42.3 分，比全球第一低 20.8 分。<b>換句話說，機房裡能達到的能力上限，不是我們的預算決定的，是這場競爭決定的。</b></p>
+      <p><b>而且能力還不是唯一的門檻，機器也是。</b>這些模型的體積差距非常大：同樣叫「開放權重」，最強的那幾顆要兩台八卡伺服器才放得下，能力略低的那幾顆只要幾張卡，最小的一張卡就能跑。表 4 把六顆加上美國最強的那顆並排，看的是同一件事——<b>每往上多要幾分能力，硬體帳單就跳一個級距。</b>所以真正該問的不是「地端能不能跑」，而是「哪一段任務值得為它買這些卡」。</p>
+    </div>
+
+    <div class="tw">
+      <table class="d">
+        <thead><tr><th>模型</th><th>國</th><th>能力</th><th>總參數</th><th>每次實際動用</th><th>權重要多少顯示記憶體</th><th>大概要幾張卡</th></tr></thead>
+        <tbody>
+          <tr><td><b>Kimi K3</b></td><td class="nw">中國</td><td class="num">59.7</td><td class="num nw">2,800 B</td><td class="num nw">104 B</td><td class="num nw">約 1.4 TB</td><td class="nw">10 張以上，兩台八卡伺服器</td></tr>
+          <tr><td><b>Qwen3.8 2.4T</b></td><td class="nw">中國</td><td class="num">57.7</td><td class="num nw">2,400 B</td><td class="num nw">95 B</td><td class="num nw">約 1.2 TB</td><td class="nw">9 張以上，兩台八卡伺服器</td></tr>
+          <tr><td><b>DeepSeek V4 Pro</b></td><td class="nw">中國</td><td class="num">53.2</td><td class="num nw">1,600 B</td><td class="num nw">49 B</td><td class="num nw">約 800 GB</td><td class="nw">6 至 8 張，一台八卡伺服器</td></tr>
+          <tr><td><b>GLM-5.2</b></td><td class="nw">中國</td><td class="num">52.6</td><td class="num nw">753 B</td><td class="num nw">40 B</td><td class="num nw">約 380 GB</td><td class="nw">3 至 4 張</td></tr>
+          <tr><td><b>DeepSeek V4 Flash</b></td><td class="nw">中國</td><td class="num">51.8</td><td class="num nw">284 B</td><td class="num nw">13 B</td><td class="num nw">約 145 GB</td><td class="nw">2 張</td></tr>
+          <tr class="hl"><td><b>Qwen3.8 27B</b></td><td class="nw">中國</td><td class="num">52.0</td><td class="num nw">27 B</td><td class="num nw">全部</td><td class="num nw">約 15 GB</td><td class="nw"><b>1 張，一般推論卡就夠</b></td></tr>
+          <tr style="border-top:2px solid #cbd5e1"><td><b>Inkling</b></td><td class="nw">美國</td><td class="num">42.3</td><td class="num nw">975 B</td><td class="num nw">41 B</td><td class="num nw">約 490 GB</td><td class="nw">4 至 6 張</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 mt-2">表 4　六顆模型的體積與硬體門檻，加上美國最強的一顆作為對照。參數量取自本篇資料源；記憶體為 4-bit 量化下的<b>權重估算</b>（約等於參數量的一半 GB），實務上還要再加對話快取，長文件場景抓 1.3 到 1.5 倍。卡數以單卡 141 GB 的資料中心 GPU 估算，一台伺服器八張卡。<b>「每次實際動用」那一欄容易被誤讀</b>：這幾顆大模型每次只用到一小部分參數來算，速度不慢，但整包權重仍然得全部放進記憶體，所以帳單看的是「總參數」那一欄。</p>
+
+    <div class="mt-5 rounded-xl border-l-4 border-orange-400 bg-orange-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-orange-700 mb-2">表 4 最值得帶走的一列</div>
+      <p class="text-[14px] leading-relaxed text-slate-800">橘色那一列的 Qwen3.8 27B，能力 52.0，跟要兩台伺服器的 Kimi K3 只差 7.7 分，硬體卻是<b>一張卡對上十張卡</b>。這說明了一件事：<b>能力天花板跟實務落點是兩回事。</b>要接近天花板，成本是伺服器等級的；但真正天天在跑的那些任務——格式固定的摘要、比對、分類——用一張卡的小模型加上自己的資料微調，多半就夠了。真正的決策點不是「地端行不行」，是「哪些任務放得進一張卡」。</p>
+    </div>
+
+    <div class="prose max-w-none mt-8 mb-6">
+      <p><b>第二條是價格。</b>權重免費放出來，等於把「堪用的基本能力」變成免費品，前沿廠商只能靠更強的旗艦和更便宜的中階來回應。這對我們是好消息：AOAI 同一個能力級距裡，可選的型號變多、單價往下走。但第 3 節那個提醒還是成立——低價常常帶促銷，編預算要用原價估。</p>
+      <p><b>第三條繞過我們的選擇。</b>開放權重可以被任何廠商包進自己的產品，而且不必對外揭露。我們不採用，不代表委外系統、SaaS 或資安產品裡面沒有。這條路徑上的來源相當集中，因為能力夠好又下載得到的就那六顆。</p>
+      <p><b>第四條最遠，但一旦發生就是急件。</b>輝達 2026-07-24 那封公開信的連署出現分裂（Anthropic 與亞馬遜沒簽），背後是各國在 AI 供應體系上選邊的政策討論。如果哪天監理或上級要求盤點「我們用的模型是誰做的、哪一國」，需要的是一張模型與供應商的對應表，臨時很難生出來。</p>
+    </div>
+
+    <div class="tw">
+      <table class="d">
+        <thead><tr><th>間接影響</th><th>怎麼傳過來的</th><th>對我們的意思</th><th>怎麼知道它發生了</th><th>信心</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><b>自建模型能拿到的能力上限，被這場競爭決定</b></td><td>自家機房只跑得了下載得到的模型。能力 50 分以上、下載得到的六顆全部來自中國；扣掉之後能挑的最強是 42.3 分，與全球第一差 20.8 分。</td><td>要接近天花板，硬體是兩台八卡伺服器起跳；能一張卡跑完的那一級，能力落在 52 分附近。</td><td>每季重看美國最強開放權重模型的分數，與 42.3 的差距是否縮小；同時記錄自建題組上小模型與 AOAI 的分數差。</td><td><b>高</b></td></tr>
+          <tr class="hl"><td><b>委外與 SaaS 產品裡可能已經有開放權重模型</b></td><td>開放權重可以被任何廠商包進自己的產品，不必對外揭露；而能力夠好又下載得到的就那六顆，來源集中。</td><td>我們自己不採用，擋不住供應商採用。這一段不在我們的模型使用規範管得到的範圍內。</td><td>在既有第三方風險問卷加一題「底層模型是誰的、哪一國」；統計回覆中說不出來的比例。</td><td><b>高</b></td></tr>
+          <tr class="hl"><td><b>AOAI 這一級的單價與可選型號持續變動</b></td><td>開放權重把基本能力變成免費品，前沿廠商靠更強的旗艦與更便宜的中階回應；同能力區間目前價差已達 3 倍。</td><td>同樣的任務，換一顆同級模型就可能省下可觀成本；但低價常帶促銷，不能當長期單價。</td><td>每季重算主力模型的每百萬 token 單價，與同能力區間最低價比較；標註哪些是促銷價。</td><td>中</td></tr>
+          <tr><td>公開排行榜越來越不能當選型依據</td><td>本篇資料源的趨勢資料 610 筆中有 435 筆（71%）是推估值，不是實測；兩份金融考卷的名次一致程度只有 0.34。</td><td>供應商拿榜單截圖來提案時，那個數字有七成機率不是實測。決定權要回到自己的題組。</td><td>改用自建題組驗收；記錄每次換模型時題組分數的變化。</td><td>中</td></tr>
+          <tr><td>若監理或上級要求盤點模型國別，要能馬上產出清單</td><td>2026 年 7 月已有要求各國在 AI 供應體系中選邊的政策討論；輝達公開信的連署分裂就是訊號之一。</td><td>要的是模型與供應商的對應表，包含委外系統在內，臨時很難補齊。</td><td>確認現行資產清冊有沒有模型名稱、供應商、國別這三欄。</td><td>中</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 mt-2">表 5　五條間接影響路徑與對應的觀察指標。橘底那三列信心較高，而且現在就能自己查證。每一項都附一個可以自己動手驗證的指標，用意是讓這些推估下一季能被驗證或推翻，不要變成一份放著不動的簡報。</p>
+
+    <div class="mt-6 rounded-2xl bg-slate-900 text-white p-6">
+      <div class="text-[11px] font-extrabold tracking-widest text-orange-300 mb-4">如果這一節只做三件事，做這三件</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div>
+          <div class="text-[15px] font-extrabold mb-2">一 · 找出「放得進一張卡」的任務</div>
+          <ul class="text-[13px] text-white/80 leading-relaxed space-y-1.5 list-disc pl-4">
+            <li>先挑格式固定、量大、天天在跑的那幾類：摘要、比對、分類</li>
+            <li>拿一張卡的小模型加自己的資料微調，跟現在的雲端結果比一次</li>
+            <li>高能力任務短期內留在雲端，不要為了搬進機房遷就能力</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[15px] font-extrabold mb-2">二 · 盯供應商用了誰</div>
+          <ul class="text-[13px] text-white/80 leading-relaxed space-y-1.5 list-disc pl-4">
+            <li>開放權重可以被任何廠商包進產品，而且不必揭露</li>
+            <li>我們不採用，擋不住委外系統、SaaS、資安產品採用</li>
+            <li>在既有第三方風險問卷加一題：底層模型是誰的、哪一國</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[15px] font-extrabold mb-2">三 · 建自己的那把尺</div>
+          <ul class="text-[13px] text-white/80 leading-relaxed space-y-1.5 list-disc pl-4">
+            <li>用自己實際的十到二十件工作出一份題組</li>
+            <li>要能同時跑 AOAI 與候選的自建模型，才比得出上面那個落差</li>
+            <li>每次換模型跑同一份，紀錄即是給稽核的選型依據</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 口徑 ══ -->
+  <section id="s5" class="scroll-mt-24">
+    <div class="bg-white border border-slate-200 rounded-2xl p-6">
+      <div class="text-[13px] font-extrabold text-slate-900 mb-4">資料口徑、限制與延伸閱讀</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="text-[12px] font-extrabold tracking-widest text-blue-800 mb-2">資料怎麼來的</div>
+          <p class="text-[13px] text-slate-600 leading-relaxed">全部數字取自 Artificial Analysis（artificialanalysis.ai）與 llm-stats.com，2026-08-19 由 <code class="text-[12px]">llm_scan_fetch.py</code> 抓取，彙整於<code class="text-[12px]">模型能力_總表_20260819.xlsx</code>。兩張圖皆為內嵌 SVG，不載入外部圖表函式庫。</p>
+        </div>
+        <div>
+          <div class="text-[12px] font-extrabold tracking-widest text-blue-800 mb-2">四項限制</div>
+          <ul class="text-[13px] text-slate-600 leading-relaxed space-y-1 list-disc pl-4">
+            <li>兩個資料源是不同機構的不同量表，跨來源的數值不能互比，只能比名次</li>
+            <li>趨勢資料 610 筆中有 435 筆（71%）標記為推估值，不是實測</li>
+            <li>圖 2 的樣本有偏差：不公開的模型多數沒有公開程度評分</li>
+            <li>第 4 節為推估，不是既成事實；其餘各節為可查核的資料</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[12px] font-extrabold tracking-widest text-blue-800 mb-2">相關課程與名詞</div>
+          <p class="text-[13px] text-slate-600 leading-relaxed">課程：<a class="text-blue-700 underline" href="../lessons/2026-W34-benchmark.html">那排百分比到底是什麼考卷</a>——說明評測分數為何會失真，以及自建題組怎麼做。這一篇引用的所有排名，都適用那一集講的保留態度。<br>名詞：<a class="text-blue-700 underline" href="../terms/pretraining.html">預訓練</a>、<a class="text-blue-700 underline" href="../terms/posttraining.html">後訓練</a>、<a class="text-blue-700 underline" href="../terms/benchmark.html">評測基準</a>。</p>
+        </div>
+        <div>
+          <div class="text-[12px] font-extrabold tracking-widest text-blue-800 mb-2">二手評論（非一手資料）</div>
+          <p class="text-[13px] text-slate-600 leading-relaxed">硅谷101《从 DeepSeek、Kimi 到「黄仁勋联盟」：AI 模型开源，到底「开」了什么？》。該片的三分類架構與本篇資料一致；但其中「中國廠商授權日益開放」一項與本篇資料所示相反，見表 2。</p>
+        </div>
+      </div>
+      <p class="text-[11.5px] text-slate-400 mt-5 pt-4 border-t border-slate-200">元大金控 數位金融事業處 · 內部參考用途 · 資料型專欄，非投資建議</p>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  const ls = [...document.querySelectorAll('#toc a')];
+  const secs = ls.map(a => document.getElementById(a.dataset.t)).filter(Boolean);
+  const spy = () => {
+    const seen = secs.filter(x => x.getBoundingClientRect().top < 160);
+    const id = (seen.length ? seen[seen.length-1] : secs[0]).id;
+    ls.forEach(a => a.classList.toggle('on', a.dataset.t === id));
+  };
+  addEventListener('scroll', spy, {passive:true}); spy();
+})();
+</script>
+
+<!--FOOT:START-->
+<div class="max-w-6xl mx-auto px-5 pb-10 text-center">
+  <a href="../news.html" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-700 transition-colors">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>回 AI 新聞深度解讀
+  </a>
+</div>
+<!--FOOT:END-->
+</body>
+</html>

@@ -1,6 +1,6 @@
 /* 全站樣式基準：字體、色票、標題級距、hero 底色。
  *
- * 每一頁（含 lessons/ terms/ 與 ai_classroom/news/ 的子頁）都在 </head> 前面
+ * 每一頁（含 lessons/ terms/ news/ 的子頁）都在 </head> 前面
  * 載入這一支，而且一定排在該頁自己的 <style> 之後，所以這裡的規則會蓋掉
  * 各頁早期各寫各的字體與漸層。頁面專屬的東西才留在該頁的 <style> 裡。
  *

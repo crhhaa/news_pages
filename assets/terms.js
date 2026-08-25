@@ -6,8 +6,8 @@
  * - slug 不在 terms.json 裡就跳過，不產生死連結。
  */
 (function () {
-  // 名詞頁與 terms.json 都住在 ai_classroom/ 底下；這一支只給根目錄那幾頁用。
-  const base = './ai_classroom';
+  const base = /\/(lessons|terms|news)\//.test(location.pathname)
+    ? '..' : '.';
 
   fetch(`${base}/assets/terms.json`)
     .then(r => r.ok ? r.json() : Promise.reject(r.status))

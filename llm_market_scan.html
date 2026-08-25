@@ -186,7 +186,7 @@
   <!-- ── 1. 熱力圖 ── -->
   <section id="secHeat" class="bg-white rounded-2xl shadow border border-gray-200 p-5 sm:p-6">
     <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1 flex items-center gap-2"><span class="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-orange-500 text-white text-sm font-extrabold">1</span>能力熱力圖</h3>
-    <p class="text-sm text-gray-500 mb-3">列＝應用維度 · 欄＝6 大陣營（中國拆分為開源／閉源兩欄，以辨識其開源釋出是否為自家最佳模型）· 每格為<b>該陣營於該維度分數最高的模型</b> · 顏色＝同列跨欄的相對強度 · 游標移入格內可檢視該陣營前三名。<b>各列指標不同</b>：文字分類為綜合評分（Rating）、文生圖／影片為 Elo、語音辨識為 WER（數值越低越佳）、語音對話為 S2S 指數。</p>
+    <p class="text-sm text-gray-500 mb-3">列＝應用維度 · 欄＝7 大陣營（軸＝國別 × 是否釋出權重，逐「模型」歸屬而非逐公司，因此同一家的旗艦與次旗艦可能分列兩欄）· 每格為<b>該陣營於該維度分數最高的模型</b> · 顏色＝同列跨欄的相對強度 · 游標移入格內可檢視該陣營前三名。<b>各列指標不同</b>：文字分類為綜合評分（Rating）、文生圖／影片為 Elo、語音辨識為 WER（數值越低越佳）、語音對話為 S2S 指數。</p>
     <p class="text-sm text-amber-900 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3"><b>本圖與下方排行榜採用 llm-stats 評分</b>（TrueSkill 保守值，公布成績較少的模型分數會被壓低）；<b>第 3 節趨勢圖採用 Artificial Analysis 智慧指數</b>，係另一機構以同一套九份測驗自行評測的結果。<b>同一模型於兩處的數值不同，亦不應相互比較</b>，僅各自體系內比較具意義。排行榜之「AA 指數」欄提供並列對照值。</p>
     <p class="text-sm text-blue-900 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 mb-3"><b>僅收錄現行可取得的模型：</b>尚未正式發布或已下架的預覽版不予列入，無法代表該陣營現階段實際可用的能力。目前排除 <b id="gaEx"></b> 個。</p>
     <div class="overflow-x-auto"><table class="heat"><thead id="heatHead"></thead><tbody id="heatBody"></tbody></table></div>
@@ -200,7 +200,7 @@
       <span>★＝該列最高分</span>
       <span>＊＝產業別 · ◆＝生成／語音（Elo／WER／指數）</span>
     </div>
-    <p class="text-xs text-gray-400 mt-2">陣營歸屬：OpenAI／Anthropic／Google 三欄僅收各自閉源模型；<b>權重可下載者一律歸入「開源」欄</b>；其餘閉源廠商歸入「其他」。</p>
+    <p class="text-xs text-gray-400 mt-2">陣營歸屬：OpenAI／Anthropic／Google 三欄僅收各自<b>閉源</b>模型，這三家釋出的開放權重模型（如 gpt-oss）歸入「非中國開放權重」欄；其餘非中國閉源廠商歸入「其他閉源」。本欄軸只分辨「權重能不能下載」這個二分，<b>不等於開放程度</b>——授權條款、資料與方法揭露的差異需另看開放程度八維。</p>
   </section>
 
   <!-- ── 2. 排行榜 ── -->
@@ -399,17 +399,25 @@ $('#kpis').innerHTML = [
 
 // ══════════ 1. 熱力圖 ══════════
 const BIG = ['OpenAI','Anthropic','Google'];
-// 陣營必須互斥，否則「★ 本列第一」沒有意義。中國（開源／閉源）先切出去，
-// 剩下的非中國開源模型（Llama／Mistral／Olmo…）落在「其他」。
+// 陣營必須互斥且窮盡，否則「★ 本列第一」沒有意義。切法＝國別 × 開放權重，
+// 逐「模型」判定不是逐「公司」——同一家的旗艦閉源與次旗艦開放權重會落在不同欄，
+// 這正是要看見的事（Qwen Max vs Qwen3.8-27B、Seedream Pro vs Seed-OSS）。
 const isCN = r => r.ct === '中國';
 const CAMPS = [
   {k:'OpenAI',    lbl:'OpenAI',    sub:'GPT 系列',       co:'OpenAI',    f:r=>r.c==='OpenAI'&&!r.o},
   {k:'Anthropic', lbl:'Anthropic', sub:'Claude 系列',    co:'Anthropic', f:r=>r.c==='Anthropic'&&!r.o},
   {k:'Google',    lbl:'Google',    sub:'Gemini 系列',    co:'Google',    f:r=>r.c==='Google'&&!r.o},
-  {k:'cnopen',    lbl:'中國開源',  sub:'Qwen/DeepSeek/Kimi', co:'',      f:r=>isCN(r)&&r.o},
-  {k:'cnclosed',  lbl:'中國閉源',  sub:'Qwen Max/GLM/ERNIE', co:'',      f:r=>isCN(r)&&!r.o},
-  {k:'other',     lbl:'其他',      sub:'xAI/Meta/Mistral/Llama', co:'',  f:r=>!isCN(r)&&!BIG.includes(r.c)},
+  {k:'cnopen',    lbl:'中國開放權重', sub:'Qwen/DeepSeek/Kimi', co:'',   f:r=>isCN(r)&&r.o},
+  {k:'cnclosed',  lbl:'中國閉源',  sub:'Qwen Max/GLM/豆包',  co:'',      f:r=>isCN(r)&&!r.o},
+  {k:'open',      lbl:'非中國開放權重', sub:'Llama/Mistral/Nemotron/gpt-oss', co:'', f:r=>!isCN(r)&&r.o},
+  {k:'other',     lbl:'其他閉源',  sub:'xAI/Cohere/Mistral 商用', co:'', f:r=>!isCN(r)&&!BIG.includes(r.c)&&!r.o},
 ];
+// 互斥＋窮盡的自我檢查：任一模型恰好落在一個陣營。不成立就在 console 出聲，不要靜靜漏掉
+// （舊版 other 少了 !r.o，gpt-oss 這類「BIG 家的開放權重」整批沒有任何一欄收，是靜默丟失）。
+CATS.forEach(cat=>cat.rows.forEach(r=>{
+  const n = CAMPS.filter(c=>c.f(r)).length;
+  if(n!==1) console.warn(`[熱力圖陣營] ${r.n||'?'}（${r.c}）落在 ${n} 個陣營`);
+}));
 let gaExcluded = 0;
 CATS.forEach(c=>{ gaExcluded += c.rows.filter(r=>!r.ga && r.sc!=null).length; });
 $('#gaEx').textContent = gaExcluded;

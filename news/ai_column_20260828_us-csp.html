@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 專欄 2026-W35｜錢繞一圈，回到自己口袋</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .sec-no{background:var(--brand-700);color:#fff;width:26px;height:26px;border-radius:8px;
+          display:inline-flex;align-items:center;justify-content:center;
+          font-size:13px;font-weight:800;flex:none}
+  .prose p{font-size:15.5px;line-height:2.05;color:var(--ink-2);margin-bottom:16px}
+  .prose p:last-child{margin-bottom:0}
+  .prose b{color:var(--ink);font-weight:800}
+  svg.cv{width:100%;height:auto;display:block;overflow:visible;font-family:inherit}
+  .fig{border:1px solid var(--rule);border-radius:14px;background:var(--surface);padding:18px 16px}
+  .fig figcaption{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px;
+                  border-top:1px dashed var(--rule);padding-top:10px}
+  table.d{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.d th{background:var(--brand-700);color:#fff;padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap}
+  table.d td{padding:10px 11px;border-bottom:1px solid var(--rule);color:#475569;vertical-align:top;line-height:1.85}
+  table.d td b{color:var(--ink)}
+  table.d tr.hl td{background:#fff7ed}
+  table.d tr:hover td{background:#f8fafc}
+  table.d tr.hl:hover td{background:#ffedd5}
+  table.d td.nw{white-space:nowrap}
+  table.d td.why{font-weight:800;color:var(--ink);white-space:nowrap}
+  .tw{overflow-x:auto;border:1px solid var(--rule);border-radius:12px}
+  .num{font-variant-numeric:tabular-nums}
+  .kpi{border-left:4px solid var(--accent);padding-left:16px}
+  .kpi .v{font-size:32px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-.02em}
+  .plain{background:#f8fafc;border:1px solid var(--rule);border-radius:14px;padding:18px 20px}
+  .plain .lb{font-size:11px;font-weight:800;letter-spacing:.18em;color:#64748b;margin-bottom:10px}
+  .plain p{font-size:14.5px;line-height:2;color:#475569;margin-bottom:12px}
+  .plain p:last-child{margin-bottom:0}
+  .plain b{color:var(--ink);font-weight:800}
+  .bub{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;line-height:1.9;
+       color:#475569;margin:14px 0 4px}
+  .bub dt{font-weight:800;color:var(--ink);white-space:nowrap}
+  .bub dd{margin:0}
+  #toc a{display:block;padding:7px 0 7px 13px;margin-left:-1px;border-left:2px solid transparent;
+          color:var(--muted);line-height:1.45;transition:color .15s,border-color .15s}
+  #toc a:hover{color:var(--brand-700)}
+  #toc a.on{color:var(--brand-700);font-weight:800;border-left-color:var(--accent)}
+  #toc a .n{display:block;font-size:10px;letter-spacing:.1em;color:#94a3b8;font-weight:800}
+  #toc a.on .n{color:var(--accent)}
+  .nx{margin-top:22px;border-left:2px solid var(--accent);padding-left:12px;
+      font-size:12.5px;line-height:1.9;color:var(--muted)}
+  .nx b{color:var(--ink)}
+  .rd{display:grid;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule)}
+  .rd div{font-size:13.5px;line-height:1.9;color:#475569;padding-left:20px;position:relative}
+  .rd div::before{content:attr(data-n);position:absolute;left:0;top:0;font-size:10.5px;font-weight:800;
+                  color:var(--accent);line-height:2.2}
+  .rd b{color:var(--ink)}
+  .cast{border:1px solid var(--rule);border-radius:14px;background:#fff;padding:18px 20px}
+  .cast .role{font-size:11px;font-weight:800;letter-spacing:.16em;color:#94a3b8;margin-bottom:4px}
+  .cast h3{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px}
+  .cast p{font-size:14px;line-height:1.95;color:#475569;margin-bottom:10px}
+  .cast p:last-child{margin-bottom:0}
+  .cast b{color:var(--ink);font-weight:800}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/terms.js" defer></script>
+</head>
+<body class="bg-slate-50 text-gray-800">
+<!--NAV:START-->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+<!--NAV:END-->
+
+
+<header class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-5 py-8">
+    <a href="../news.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-4 transition-colors"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>AI 深度解讀</a>
+    <h1 class="page-title font-extrabold tracking-wide">AI 專欄 2026-W35</h1>
+    <p class="text-white/70 text-sm mt-1 tracking-wider">錢繞一圈，回到自己口袋——美國雲端業者的盤算，與他們正在往上看的地方 · 資料截至 2026-08-28</p>
+    <div class="mt-5 border-l-4 border-orange-400 pl-4">
+      <p class="text-lg sm:text-xl font-bold leading-relaxed">
+        Google 上一季的淨利是 <span class="text-orange-300">1,122 億美元</span>，接近去年同期的四倍。
+        財報公布當天，股價<span class="text-orange-300">跌了 7%</span>。
+        市場看的不是它賺多少，是這些錢從哪裡來、又要花到哪裡去。
+      </p>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-[12px] text-white/70">
+      <div><span class="block text-white font-bold tracking-widest">主角</span>Microsoft · Google · AWS</div>
+      <div><span class="block text-white font-bold tracking-widest">配角</span>Oracle · Meta · SpaceX · NVIDIA</div>
+      <div><span class="block text-white font-bold tracking-widest">篇幅</span>10 節 · 5 圖 · 8 表</div>
+      <div><span class="block text-white font-bold tracking-widest">性質</span>產業解讀，非投資建議</div>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-5 py-8 lg:grid lg:grid-cols-[208px_minmax(0,1fr)] lg:gap-10">
+
+  <aside class="hidden lg:block">
+    <nav id="toc" class="sticky top-[4.75rem] text-[13px] border-l border-slate-200">
+      <div class="text-[10px] font-extrabold tracking-[.18em] text-slate-400 pl-[13px] pb-2">本篇主線</div>
+      <a href="#s0" data-t="s0"><span class="n">導讀</span>這篇在回答什麼</a>
+      <a href="#s1" data-t="s1"><span class="n">01</span>一份很好看卻被賣的財報</a>
+      <a href="#s2" data-t="s2"><span class="n">02</span>錢是怎麼繞一圈的</a>
+      <a href="#s3" data-t="s3"><span class="n">03</span>為什麼他們要這樣做</a>
+      <a href="#s4" data-t="s4"><span class="n">04</span>帳上的副作用</a>
+      <a href="#s5" data-t="s5"><span class="n">05</span>帳單有多大</a>
+      <a href="#s6" data-t="s6"><span class="n">06</span>三家的商業模式</a>
+      <a href="#s7" data-t="s7"><span class="n">07</span>牌桌旁邊的四個人</a>
+      <a href="#s8" data-t="s8"><span class="n">08</span>往上看：太空算力</a>
+      <a href="#s9" data-t="s9"><span class="n">09</span>金融業的樣板熱力圖</a>
+      <a href="#s10" data-t="s10"><span class="n">10</span>對金融業的意義</a>
+      <a href="#s11" data-t="s11"><span class="n">口徑</span>資料與限制</a>
+      <p class="pl-[13px] pt-4 mt-3 border-t border-slate-200 text-[11.5px] leading-relaxed text-slate-400">
+        一份財報 → 一台機器 → 為什麼要轉 → 帳上代價 → 現金代價 → 三家牌面 → 四個配角 → 天花板 → 干我們什麼事
+      </p>
+    </nav>
+  </aside>
+
+<main class="space-y-12 min-w-0" data-auto-terms>
+
+  <!-- 導讀 -->
+  <section id="s0" class="scroll-mt-24">
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-3">
+        <span class="font-extrabold text-sm">這篇在回答什麼</span>
+      </div>
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="prose max-w-none">
+          <p>上一篇我們談了 NVIDIA——那個賣鏟子的人。這一篇往上走一層，看<b>買鏟子的大戶</b>：Microsoft、Google、Amazon（AWS）。它們就是所謂的 CSP，雲端服務業者；白話講，就是<b>把電腦租給別人用的房東</b>。</p>
+          <p>這三家最近同時做了一件很奇怪的事：<b>它們拿錢去投資自己的客戶。</b></p>
+          <p>Microsoft 投錢給 OpenAI，OpenAI 拿這筆錢回頭租 Microsoft 的電腦。Amazon 投錢給 Anthropic，Anthropic 拿這筆錢回頭租 Amazon 的電腦、買 Amazon 自己設計的晶片。Google 也投 Anthropic，Anthropic 也向 Google 租算力。<b>錢從房東的左口袋出去，繞一圈，變成租金回到右口袋。</b></p>
+          <p>這不違法，也不是騙局，甚至有它的商業道理（第 3 節會講）。但它會產生兩個後果：<b>第一，財報上的「營收」與「獲利」變得比較難讀</b>（第 4 節）；<b>第二，這台機器要靠不斷加碼的資本支出才轉得動</b>，而帳單已經大到讓股東不安（第 5 節）。</p>
+          <p>然後故事會往兩個方向岔開。<b>一個往旁邊</b>：牌桌邊還坐著四個人——把機房租給別人的 Oracle、把模型免費送出去的 Meta、把火箭跟 AI 併在一起的 SpaceX，以及那個誰都得跟他買鏟子的 NVIDIA（第 7 節）。<b>一個往上</b>：地面的電、水、土地已經快要不夠用了，所以 2026 年 8 月，NVIDIA 跟 SpaceX 宣布要把機櫃送上軌道（第 8 節）。</p>
+          <p><b>整篇的線是這樣：</b>一份很好看卻被賣掉的財報（第 1 節）→ 錢是怎麼繞這一圈的（第 2 節）→ 他們為什麼非這樣做不可（第 3 節）→ 帳上的副作用（第 4 節）→ 現金上的代價（第 5 節）→ 三家各自的商業模式（第 6 節）→ 牌桌旁的四個配角（第 7 節）→ 天花板與太空（第 8 節）→ 它們在金融業留下的樣板（第 9 節）→ 對我們的意義（第 10 節）。</p>
+          <p class="!text-[12.5px] !leading-[1.9] !text-slate-400 !mb-0">本篇的數字分兩種：財報數字有一手來源，交易金額與規劃多半來自公司宣布與媒體報導。第 11 節會逐項交代哪些確定、哪些是推的。</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">問題一</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">賺這麼多，在跌什麼</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">Google 雲端成長 82%、在手訂單 5,140 億美元，股價當天卻跌 7%。問題出在錢的品質與去向。見第 1、4、5 節。</p>
+          </div>
+          <div class="rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">問題二</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">為什麼投資自己的客戶</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">因為模型會愈來愈便宜，算力不會。投資是預付款，買的是「未來的雲端帳單」。見第 2、3 節。</p>
+          </div>
+          <div class="rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">問題三</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">這場競賽會往哪走</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">地面的電力與土地正在封頂，所以有人開始往軌道上蓋機房。見第 8 節。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 -->
+  <section id="s1" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">01</span><h2 class="text-xl sm:text-2xl font-extrabold">一份很好看，卻被賣掉的財報</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">先講事件本身：7 月 28 日那天發生了什麼</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>2026 年 7 月 28 日，Alphabet（Google 母公司）公布第二季財報。以「成績」而言，這是一份漂亮到不太真實的報告：<b>Google Cloud 單季營收成長 82%</b>，來到 248 億美元；<b>還沒認列的在手訂單累積到 5,140 億美元</b>；雲端部門的營業利益翻了三倍。</p>
+      <p>然後股價當天跌了 7%。Amazon、Meta、Microsoft 同步下跌。</p>
+      <p>市場不滿的不是成績單，是<b>成績單旁邊那張帳單</b>——Alphabet 同時把 2026 年的資本支出上調到 <b>1,950 至 2,050 億美元</b>，而它的自由現金流已經轉為負數。<b>賺得多，花得更多，而且開始借錢花。</b></p>
+      <p>這一天值得記住，因為它標記了一個轉折：<b>過去三年，宣布加碼投資會讓股價上漲，因為那代表「需求強到接不完」；從這一天起，同一個動作開始被解讀成「這些錢什麼時候才回得來」。</b>整篇文章要回答的，就是市場為什麼會改變讀法。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white border border-slate-200 rounded-2xl p-6 mb-5">
+      <div class="kpi">
+        <div class="v num">82<span class="text-lg"> %</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">Google Cloud 單季成長</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">同一季 Azure 成長 43%、AWS 成長 37%。三家都在加速，沒有一家在衰退。</p>
+      </div>
+      <div class="kpi">
+        <div class="v num">5,140<span class="text-lg"> 億美元</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">Google Cloud 在手訂單</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">已經簽約、還沒認列成營收的部分。這個數字是這一輪雲端敘事的核心，第 4 節會說明它為什麼也是風險。</p>
+      </div>
+      <div class="kpi">
+        <div class="v num">-7<span class="text-lg"> %</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">財報當天股價</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">四家雲端業者同步下跌。<b>這是本篇的起點：好成績為什麼換不到掌聲。</b></p>
+      </div>
+    </div>
+
+    <div class="plain">
+      <div class="lb">先把三家的位置擺清楚</div>
+      <p>全球雲端市占（2026 上半年）大致是 <b>AWS 約 28%、Azure 約 21%、Google Cloud 約 14 到 15%</b>。順序多年沒變，但成長率的順序是反過來的——<b>基數最小的 Google 跑最快</b>。這件事本身沒有懸念，真正的差別在它們各自靠什麼賺錢，第 6 節會攤開來比。</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s2" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">02</span><h2 class="text-xl sm:text-2xl font-extrabold">錢是怎麼繞一圈的</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">這台機器只有三個動作，但它會自己愈轉愈快</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>先用一句話講完：<b>雲端業者把錢投給 AI 模型公司，模型公司把這筆錢當成雲端帳單付回來，這筆帳單最後變成買晶片的錢。</b></p>
+      <p>三個動作，首尾相接，所以叫循環。</p>
+    </div>
+
+    <figure class="fig mb-5">
+<svg class="cv" viewBox="0 0 760 480" role="img" aria-label="雲端業者、模型公司、算力承包商與晶片商之間的資金與算力循環圖">
+  <defs>
+    <marker id="cb" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 1 L10 6 L1 11" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="co" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 1 L10 6 L1 11" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="cg" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M1 1 L10 6 L1 11" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="66" width="232" height="110" rx="20" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <text x="156" y="95" text-anchor="middle" font-size="11.5" font-weight="700" fill="#60a5fa" letter-spacing="1.5">出錢的人，也是收租的人</text>
+  <text x="156" y="128" text-anchor="middle" font-size="17" font-weight="800" fill="#1e3a8a">雲端業者</text>
+  <text x="156" y="154" text-anchor="middle" font-size="12.5" fill="#64748b">Microsoft · Google · Amazon</text>
+
+  <rect x="488" y="66" width="232" height="110" rx="20" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+  <text x="604" y="95" text-anchor="middle" font-size="11.5" font-weight="700" fill="#34d399" letter-spacing="1.5">拿錢的人，也是付租金的人</text>
+  <text x="604" y="128" text-anchor="middle" font-size="17" font-weight="800" fill="#15803d">模型公司</text>
+  <text x="604" y="154" text-anchor="middle" font-size="12.5" fill="#64748b">OpenAI · Anthropic</text>
+
+  <rect x="40" y="304" width="232" height="106" rx="20" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+  <text x="156" y="332" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fb923c" letter-spacing="1.5">賣鏟子的人</text>
+  <text x="156" y="365" text-anchor="middle" font-size="17" font-weight="800" fill="#c2410c">晶片商</text>
+  <text x="156" y="390" text-anchor="middle" font-size="12.5" fill="#64748b">NVIDIA</text>
+
+  <rect x="488" y="304" width="232" height="106" rx="20" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <text x="604" y="332" text-anchor="middle" font-size="11.5" font-weight="700" fill="#c084fc" letter-spacing="1.5">出租機房的人</text>
+  <text x="604" y="365" text-anchor="middle" font-size="17" font-weight="800" fill="#7e22ce">算力承包商</text>
+  <text x="604" y="390" text-anchor="middle" font-size="12.5" fill="#64748b">Oracle</text>
+
+  <path d="M274 92 C 350 54, 412 54, 484 92" stroke="#2563eb" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#cb)"/>
+  <text x="379" y="34" text-anchor="middle" font-size="13" font-weight="800" fill="#1d4ed8">投資：錢出去</text>
+  <circle cx="379" cy="66" r="12" fill="#2563eb"/>
+  <text x="379" y="70.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">1</text>
+
+  <path d="M484 150 C 412 188, 350 188, 276 150" stroke="#2563eb" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#cb)"/>
+  <circle cx="379" cy="176" r="12" fill="#2563eb"/>
+  <text x="379" y="180.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">2</text>
+  <text x="379" y="212" text-anchor="middle" font-size="13" font-weight="800" fill="#1d4ed8">雲端帳單：同一筆錢回來</text>
+
+  <path d="M604 180 L604 298" stroke="#2563eb" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#cb)"/>
+  <circle cx="604" cy="240" r="12" fill="#2563eb"/>
+  <text x="604" y="244.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">3</text>
+  <text x="586" y="232" text-anchor="end" font-size="12.5" font-weight="700" fill="#475569">也去租第二個機房</text>
+  <text x="586" y="252" text-anchor="end" font-size="11.5" fill="#94a3b8">不把身家押在一朵雲上</text>
+
+  <path d="M156 180 L156 298" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#co)"/>
+  <circle cx="156" cy="240" r="12" fill="#f97316"/>
+  <text x="156" y="244.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">4</text>
+  <text x="176" y="232" text-anchor="start" font-size="12.5" font-weight="700" fill="#9a3412">帳單變成買晶片的錢</text>
+  <text x="176" y="252" text-anchor="start" font-size="11.5" fill="#94a3b8">除非被自研晶片攔下來，留在自己家</text>
+
+  <path d="M484 356 L280 356" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round" marker-end="url(#co)"/>
+  <circle cx="382" cy="356" r="12" fill="#f97316"/>
+  <text x="382" y="360.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">5</text>
+  <text x="382" y="388" text-anchor="middle" font-size="12.5" font-weight="700" fill="#9a3412">承包商的租金，也變成 GPU 訂單</text>
+
+  <path d="M258 312 C 356 288, 452 258, 528 190" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 5" fill="none" stroke-linecap="round" marker-end="url(#cg)"/>
+  <circle cx="398" cy="268" r="12" fill="#94a3b8"/>
+  <text x="398" y="272.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">6</text>
+  <text x="424" y="300" text-anchor="start" font-size="12" font-weight="700" fill="#64748b">晶片商反過來投資模型公司</text>
+
+  <line x1="40" y1="452" x2="720" y2="452" stroke="#f1f5f9" stroke-width="1"/>
+  <rect x="40" y="460" width="20" height="3.5" rx="2" fill="#2563eb"/>
+  <text x="68" y="466" font-size="11.5" fill="#94a3b8">錢的流向</text>
+  <rect x="164" y="460" width="20" height="3.5" rx="2" fill="#f97316"/>
+  <text x="192" y="466" font-size="11.5" fill="#94a3b8">算力與晶片的流向</text>
+  <rect x="336" y="460" width="20" height="3.5" rx="2" fill="#cbd5e1"/>
+  <text x="364" y="466" font-size="11.5" fill="#94a3b8">反向投資</text>
+</svg>
+      <figcaption>①②是同一批錢：投資款以雲端帳單的形式回到出資方帳上，成為它的營收——<b>投資方、供應商、營收來源是同一家公司</b>。③是模型公司刻意分散：把一部分算力放到 Oracle 這類承包商，降低對單一朵雲的依賴（第 7 節）。④⑤是這台機器的出口，最後都變成 GPU 訂單，除非被自研晶片攔下來（Google 的 TPU、Amazon 的 Trainium、Microsoft 的 Maia，2026 年 6 月起連 OpenAI 也自己做了一顆推論晶片）。⑥是 NVIDIA 反過來投資模型公司，讓這個圈更緊。</figcaption>
+    </figure>
+
+    <div class="tw mb-5">
+      <table class="d">
+        <thead><tr><th></th><th><b>Microsoft → OpenAI</b></th><th><b>Amazon → Anthropic</b></th><th><b>Google → Anthropic</b></th><th><b>Microsoft → Anthropic</b></th><th><b>NVIDIA → OpenAI</b></th><th><b>SoftBank／MGX → Stargate</b></th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="why">投出去多少</td>
+            <td>累計承諾約 130 億美元</td>
+            <td>累計 80 億美元起跳，2026 年再加碼，總額上看 250 億</td>
+            <td>累計逾 30 億美元，持股約 14%（無投票權、無董事席）</td>
+            <td>2025 年 11 月投資，金額未揭露</td>
+            <td>意向上看 1,000 億美元，2026 年 2 月實際入股約 300 億</td>
+            <td>四年 5,000 億美元的建設計畫，OpenAI 為使用者</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">對方回頭花在哪</td>
+            <td>OpenAI 的雲端工作幾乎全在 Azure 上跑</td>
+            <td>Anthropic 承諾 10 年、逾 1,000 億美元的 AWS 用量，並使用 Amazon 自研的 Trainium 晶片</td>
+            <td>Anthropic 向 Google 租用上看 100 萬顆 TPU 的算力</td>
+            <td>Anthropic 同時承諾採購 300 億美元的 Azure 算力</td>
+            <td>OpenAI 拿這筆錢採購 NVIDIA 的 GPU</td>
+            <td>算力蓋在 Oracle 的機房裡，Oracle 再去買 NVIDIA 的卡</td>
+          </tr>
+          <tr>
+            <td class="why">這一圈的意思</td>
+            <td>兩年之內，Microsoft 從 OpenAI 認列的雲端營收超過 300 億美元，<b>約是它投資額的兩倍</b></td>
+            <td>投資額與回購承諾的比例最誇張的一組：<b>投 1 塊，換回 10 塊以上的長約</b></td>
+            <td>刻意不要控制權，避開反壟斷紅線，但把對方變成自家晶片的最大買家</td>
+            <td><b>投資與採購同一天宣布</b>，是這個模式最直白的一次</td>
+            <td>賣鏟子的人出錢讓客戶來買自己的鏟子，圈裡最赤裸的一筆</td>
+            <td>資本從基金流進機房、再流向晶片商，<b>Oracle 成了這台機器的第四個節點</b>（見第 7 節）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl border-2 border-amber-500 bg-amber-50/60 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-amber-700 mb-2">這件事本身合法，但有一個真實的副作用</div>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed">當投資方、供應商、營收來源是<b>同一家公司</b>，外界就很難分辨：這筆雲端營收，是市場上真的有人要用，還是自己出錢請對方來用的。市場給了它一個名字叫<b>循環融資</b>，估計規模超過 8,000 億美元。歷史上有過類似的畫面——2001 年網路泡沫時，電信業者之間互相交換光纖產能來製造營收。</p>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed mt-3 pt-3 border-t border-amber-300"><b>公平地說，兩者不完全一樣。</b>今天的算力確實有人在用、帳單確實在發生，不是純粹的紙上交易。但「有多少是真需求」這個問題，目前<b>沒有辦法從財報上分辨</b>——這正是市場開始扣分的地方。</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="s3" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">03</span><h2 class="text-xl sm:text-2xl font-extrabold">為什麼他們非這樣做不可</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">一句話：模型會愈來愈便宜，算力不會</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>要理解這台機器，得先接受一個事實：<b>「賣模型」不是一門好生意。</b></p>
+      <p>頂尖模型的能力正在趨同——GPT、Claude、Gemini 在主要測驗上的差距已經縮到個位數百分點；再加上開放權重模型（上一篇談過的那一批）把價格往下壓，<b>每一百萬字的處理費用一路走跌</b>。一個會隨時間變便宜、又隨時可能被對手追上的東西，撐不起長期的超額利潤。</p>
+      <p>所以三家做了同一件事：<b>把收銀機從「模型」搬到「模型底下的算力」。</b>模型變成引流品，把客戶帶進門；真正穩定的錢，在下面這三格貨架上。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">貨架一</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">雲端用量</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">按使用的算力計費。<b>這是三家最核心、也最經常性的收入</b>，AI 用得愈多，帳單愈長。</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">貨架二</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">席次訂閱</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">每人每月多少錢，一個員工一席。單價從十幾到近百美元不等，<b>續訂率高、黏著度強</b>，是 Microsoft 最強的一塊。</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">貨架三</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">自研晶片</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">Google 的 TPU、Amazon 的 Trainium、Microsoft 的 Maia。<b>把原本要付給 NVIDIA 的錢留在自己家</b>，同時把客戶綁在自己的機器上。</p>
+      </div>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p><b>但為什麼是現在才轉？</b>因為 AI 的用法變了。</p>
+      <p>過去是「問一句、答一句」：你打一段字，模型回一段字，然後停。算力需求像脈衝——尖峰很高，但中間都是空的，而空的時間裡機器還是要養著。現在流行的是 <b>agent</b>：你交代一件事，它自己拆步驟、自己查資料、自己執行、自己檢查，可能跑上幾十分鐘。</p>
+      <p>對雲端業者來說，這是夢寐以求的變化：<b>用量從間歇變成連續，從脈衝變成高原。</b></p>
+    </div>
+
+    <figure class="fig mb-6">
+<svg class="cv" viewBox="0 0 760 300" role="img" aria-label="算力用量從脈衝變成高原的比較圖">
+  <text x="20" y="22" font-size="13" font-weight="800" fill="#0f2460">同樣一段時間，算力用量的形狀變了</text>
+
+  <text x="40" y="56" font-size="12.5" font-weight="800" fill="#475569">過去：問一句，答一句</text>
+  <text x="40" y="76" font-size="11.5" fill="#94a3b8">尖峰很高，但中間是空的</text>
+  <line x1="40" y1="230" x2="350" y2="230" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="40" y1="100" x2="40" y2="230" stroke="#cbd5e1" stroke-width="1.5"/>
+  <path d="M40 230 L74 230 L84 132 L94 230 L140 230 L150 146 L160 230 L206 230 L216 122 L226 230 L280 230 L290 154 L300 230 L350 230"
+        fill="#dbeafe" stroke="#1e3a8a" stroke-width="2" stroke-linejoin="round"/>
+  <text x="35" y="106" text-anchor="end" font-size="11" fill="#94a3b8">用量</text>
+  <text x="195" y="252" text-anchor="middle" font-size="11.5" fill="#94a3b8">時間</text>
+  <text x="195" y="278" text-anchor="middle" font-size="12" font-weight="700" fill="#64748b">機器要養著，但大部分時間閒著</text>
+
+  <text x="410" y="56" font-size="12.5" font-weight="800" fill="#9a3412">現在：交代一件事，它自己跑完</text>
+  <text x="410" y="76" font-size="11.5" fill="#94a3b8">一路佔用，直到任務結束</text>
+  <line x1="410" y1="230" x2="720" y2="230" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="410" y1="100" x2="410" y2="230" stroke="#cbd5e1" stroke-width="1.5"/>
+  <path d="M410 230 L440 230 C 468 230, 470 128, 500 126 L690 126 L700 230 Z"
+        fill="#ffedd5" stroke="#ea580c" stroke-width="2" stroke-linejoin="round"/>
+  <line x1="500" y1="126" x2="690" y2="126" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="595" y="112" text-anchor="middle" font-size="11.5" font-weight="800" fill="#c2410c">連續佔用</text>
+  <text x="565" y="252" text-anchor="middle" font-size="11.5" fill="#94a3b8">時間</text>
+  <text x="565" y="278" text-anchor="middle" font-size="12" font-weight="700" fill="#64748b">同一批機器，收得到的租金完全不同</text>
+</svg>
+      <figcaption>示意圖，非實際量測數據。重點不在絕對高度，而在「面積」——雲端業者收的是面積，不是尖峰。agent 把面積填滿，這就是三家同時押注 agent 的商業理由。</figcaption>
+    </figure>
+
+    <div class="prose max-w-none mb-5">
+      <p>所以三家的 agent 產品幾乎是同時推出的，名字很多、也很容易混淆。<b>與其記名字，不如看它們各自蓋到哪一層</b>——下面這張表把同一疊技術棧橫著切開，一列就是一層。</p>
+    </div>
+
+    <div class="tw mb-5">
+      <table class="d">
+        <thead><tr><th>這一層在做什麼</th><th>Microsoft</th><th>Google</th><th>AWS</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="why">模型本身<br><span class="text-slate-400 font-normal text-[12px]">誰的腦</span></td>
+            <td>沒有自研前沿模型，<b>以 OpenAI 為主</b>，另投資 Anthropic</td>
+            <td><b>自研 Gemini</b>，三家中唯一從模型到晶片全自製</td>
+            <td>沒有自研前沿模型，<b>以 Anthropic 為主</b>，自家 Nova 補中低階</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">模型貨架<br><span class="text-slate-400 font-normal text-[12px]">能挑誰的模型</span></td>
+            <td><b>Microsoft Foundry</b><span class="text-slate-400">（原 Azure AI Foundry，2026 年 1 月改名）</span>——多模型，賣點是 OpenAI 新模型第一時間就能用</td>
+            <td><b>Model Garden</b>——除了自家 Gemini，也正式擺上競爭對手的 Claude</td>
+            <td><b>Amazon Bedrock</b>——貨架最廣，Claude、Llama、Mistral 同一組介面隨時切換</td>
+          </tr>
+          <tr>
+            <td class="why">agent 執行環境<br><span class="text-slate-400 font-normal text-[12px]">怎麼把 agent 跑起來</span></td>
+            <td>Copilot Studio 組裝，Foundry 部署</td>
+            <td><b>Gemini Enterprise</b>——把原本給工程師的 Vertex AI 整併成企業版介面，內建 Deep Research 這類會自己查一整輪資料的 agent</td>
+            <td><b>Bedrock AgentCore</b>（2025 年 10 月推出）——把記憶、身分、對外連線、行為紀錄這些「上線之後才會痛」的東西包成標配</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">agent 治理<br><span class="text-slate-400 font-normal text-[12px]">誰在管這些 agent</span></td>
+            <td><b>Agent 365——三家裡唯一獨立成品的治理層。</b>把公司裡跑來跑去的 agent 當「員工」列管：誰建的、能碰哪些資料、做了什麼，全部沿用既有的帳號與權限系統</td>
+            <td>管控內建在平台裡，沒有獨立的治理層品牌</td>
+            <td>治理功能包在 AgentCore 裡（身分與可觀測性），非獨立產品</td>
+          </tr>
+          <tr>
+            <td class="why">終端應用<br><span class="text-slate-400 font-normal text-[12px]">員工實際會打開的東西</span></td>
+            <td><b>Microsoft 365 Copilot</b>——接在 Word、Excel、Teams、Outlook 裡，每人每月一筆固定費用，公司不必改任何系統</td>
+            <td>Gemini Enterprise 席次，直接對打 Copilot</td>
+            <td>Amazon Q，相對單薄——AWS 的重心不在這一層</td>
+          </tr>
+          <tr>
+            <td class="why">所以它在賣什麼</td>
+            <td><b>賣治理與席次</b></td>
+            <td><b>賣成品與成本</b></td>
+            <td><b>賣貨架與不綁定</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="plain">
+      <div class="lb">把第 2 節接回來</div>
+      <p>看懂這張表，就看懂了投資模型公司的動機。<b>三家真正想賣的，都不是模型，而是模型跑起來之後那條長長的帳單。</b>所以付錢給實驗室不是慈善，是<b>鎖住未來算力去向的預付款</b>——買的是「它未來幾年的雲端帳單會記在誰家」。</p>
+      <p>這也解釋了為什麼它們願意把對手的模型擺上自己的貨架：<b>模型可以換，機房不能換。</b>只要客戶的資料、流程、權限都長在自己的雲上，模型換誰做都無所謂——租金照收。</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="s4" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">04</span><h2 class="text-xl sm:text-2xl font-extrabold">帳上的副作用：淨利被 AI 估值綁架</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">回到第 1 節那份財報，拆給你看</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>Alphabet 2026 年第二季的淨利是 <b>1,122 億美元</b>，稀釋後每股盈餘 9.11 美元，去年同期是 2.31。看起來像是本業暴衝。</p>
+      <p>但把損益表拆開，會看到另一件事：這一季有一筆 <b>990 億美元的「權益證券利得」</b>。這筆錢<b>沒有任何現金進來</b>——它是「我持有的某家未上市公司，最近一輪募資的估值漲了，所以我帳上跟著漲」。</p>
+    </div>
+
+    <div class="tw mb-5">
+      <table class="d">
+        <thead><tr><th>Alphabet 2026 Q2</th><th>金額（百萬美元）</th><th>白話說明</th></tr></thead>
+        <tbody>
+          <tr><td class="nw"><b>營業利益（本業）</b></td><td class="nw num">40,770</td><td>比去年同期成長 30%，<b>這一段是真金白銀</b>，搜尋與雲端都在賺</td></tr>
+          <tr class="hl"><td class="nw"><b>權益證券利得</b></td><td class="nw num">99,031</td><td>持股估值重估產生的帳面數字，<b>沒有現金流入</b>，去年同期只有 12.86 億</td></tr>
+          <tr><td class="nw"><b>稅後淨利</b></td><td class="nw num">112,193</td><td>兩者相加後的結果，接近去年同期的四倍</td></tr>
+          <tr><td class="nw"><b>每股盈餘 9.11 美元</b></td><td class="nw">—</td><td>其中約 <b>6.26 美元來自那筆一次性利得</b>；扣掉之後，本業每股盈餘約 <b>2.85 美元</b>（去年 2.31）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="plain mb-5">
+      <div class="lb">為什麼會「突然」冒出一大筆</div>
+      <p>會計上，公司持有的股權要按公允價值評價。<b>上市公司的股票每季按市價重估</b>，漲跌都跟著走，所以波動是連續的。但<b>沒有公開報價的未上市股權，只有在發生一次「看得到的價格」時才重估一次</b>——例如那家公司完成了新一輪募資。</p>
+      <p>所以這種利得的形狀是<b>階梯狀</b>的：平常都不動，某一季突然跳一大格。Google 帳上最大的一塊未上市部位，就是<b>持股約 14% 的 Anthropic</b>——投入逾 30 億美元，帳面價值一路推到 1,350 億美元左右。財報沒有點名，但部位規模與跳動形態都指向它是主要來源之一。</p>
+      <p><b>Amazon 是同一套結構的鏡像</b>：它同樣是 Anthropic 的大股東，同樣在淨利裡認列了一筆數以百億美元計的未實現利得。</p>
+    </div>
+
+    <div class="rounded-xl border-2 border-rose-500 bg-rose-50/50 p-5 mb-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-rose-700 mb-2">這裡有一個對稱的風險，值得記下來</div>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed">同一套會計方法，<b>反過來也會成立</b>。AI 一級市場的估值一旦回檔，這些部位會反向認列鉅額的未實現「損失」，一樣灌進淨利、一樣不影響現金。也就是說，<b>這幾家公司的帳面淨利，已經被綁在整個 AI 新創估值的方向盤上</b>。看這類財報，要看營業利益與自由現金流，不要被每股盈餘的數字迷惑。</p>
+    </div>
+
+    <div class="prose max-w-none">
+      <p>第二個帳面問題，出在<b>在手訂單</b>——就是第 1 節那個 5,140 億。這個數字被當成「未來營收的保證」在講，但它同樣有集中度問題：據報導，<b>Microsoft 高達 6,270 億美元的在手訂單裡，約有 49% 綁在 OpenAI 一家</b>；Oracle 的比例更高，超過一半。四家雲端業者合計約 2 兆美元的在手訂單中，<b>超過一半來自 OpenAI 與 Anthropic 這兩家客戶</b>。</p>
+      <p><b>把第 2 節和這一節接起來看，就是這台機器真正的樣子：</b>雲端業者投資模型公司 → 模型公司簽下巨額雲端長約 → 長約變成在手訂單、撐起雲端業者的股價 → 模型公司的估值也因此跳升 → 雲端業者的持股帳面獲利再跳一次。<b>估值是算力的抵押品，算力又是估值的抵押品。</b></p>
+      <p>而這台機器要繼續轉，前提是那些長約背後真的有機房蓋出來。下一節就講那張帳單。</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s5" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">05</span><h2 class="text-xl sm:text-2xl font-extrabold">帳單有多大：七千億美元與它的資金來源</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">賣算力聽起來很穩，前提是要先把算力蓋出來</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>四家大型科技業者（Amazon、Google、Microsoft、Meta）2026 年的資本支出合計約 <b>7,250 億美元</b>，比 2025 年的 4,100 億<b>增加 77%</b>。換算新台幣約 22 兆元，這個數字大到失去實感，所以只要記得一件事就好：<b>光是它一年的增加額，就超過台灣一整年的中央政府總預算好幾倍。</b></p>
+      <p>更關鍵的不是金額，是<b>錢從哪裡來</b>。過去這些公司的資本支出幾乎完全由本業現金流支應；現在不是了。</p>
+    </div>
+
+    <figure class="fig mb-5">
+<svg class="cv" viewBox="0 0 760 340" role="img" aria-label="2025 與 2026 年四大業者資本支出金額與資金來源比較長條圖">
+  <text x="20" y="24" font-size="13" font-weight="800" fill="#0f2460">資本支出，以及有多少是借來的</text>
+  <text x="20" y="44" font-size="11.5" fill="#64748b">Amazon · Google · Microsoft · Meta 合計，單位：億美元</text>
+
+  <line x1="90" y1="270" x2="700" y2="270" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <rect x="180" y="163" width="130" height="97" rx="4" fill="#1e3a8a"/>
+  <rect x="180" y="260" width="130" height="10" rx="4" fill="#ea580c"/>
+  <rect x="180" y="260" width="130" height="6" fill="#ea580c"/>
+  <text x="245" y="150" text-anchor="middle" font-size="20" font-weight="800" fill="#0f2460">4,100</text>
+  <text x="245" y="215" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">本業現金流</text>
+  <text x="245" y="292" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0f2460">2025 年</text>
+  <text x="245" y="313" text-anchor="middle" font-size="11.5" fill="#64748b">舉債支應約 9%</text>
+
+  <rect x="490" y="80" width="130" height="129" rx="4" fill="#1e3a8a"/>
+  <rect x="490" y="209" width="130" height="61" rx="4" fill="#ea580c"/>
+  <rect x="490" y="209" width="130" height="10" fill="#ea580c"/>
+  <text x="555" y="67" text-anchor="middle" font-size="20" font-weight="800" fill="#0f2460">7,250</text>
+  <text x="555" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">本業現金流</text>
+  <text x="555" y="246" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">舉債 32%</text>
+  <text x="555" y="292" text-anchor="middle" font-size="13.5" font-weight="800" fill="#0f2460">2026 年（預估）</text>
+  <text x="555" y="313" text-anchor="middle" font-size="11.5" fill="#64748b">舉債支應約 32%</text>
+
+  <path d="M322 138 L470 80" stroke="#c2410c" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
+  <text x="396" y="100" text-anchor="middle" font-size="15" font-weight="800" fill="#c2410c">+77%</text>
+
+  <rect x="470" y="16" width="14" height="12" rx="3" fill="#1e3a8a"/>
+  <text x="492" y="26" font-size="11.5" fill="#64748b">本業現金流支應</text>
+  <rect x="600" y="16" width="14" height="12" rx="3" fill="#ea580c"/>
+  <text x="622" y="26" font-size="11.5" fill="#64748b">外部舉債支應</text>
+</svg>
+      <figcaption>柱高與金額成比例。橘色是「靠舉債支應」的比例：從 2024 會計年度約占資本支出的 9%，升到 2026 年年中的近 32%。比例為第三方研究機構對五家（含 Oracle）的整體估算，套用在四家合計金額上為示意，非逐家精確拆分。</figcaption>
+    </figure>
+
+    <div class="plain mb-5">
+      <div class="lb">三個具體的壓力訊號</div>
+      <p><b>一、自由現金流轉負。</b>Alphabet 的自由現金流已經翻負，Amazon 今年也被預期轉負。這代表本業賺的現金，已經不夠付蓋機房的錢。</p>
+      <p><b>二、開始借錢與增資。</b>從幾乎全部自籌，變成三分之一靠外部資金。這在信用市場上是新增的供給，也是新增的風險。</p>
+      <p><b>三、股東開始扣分。</b>第 1 節那個 7% 就是。過去上調資本支出被解讀為「需求強勁」，現在被解讀為「回收期不明」。<b>市場的解讀方向反過來了，這是 2026 年最重要的情緒變化。</b></p>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p>那麼，這是不是泡沫？</p>
+      <p>市場上最有名的空方論述，是一份列出 35 個理由做空 NVIDIA 的報告。這份報告逐點查核之後，<b>多數論點被發現誇大</b>——例如「客戶集中度 65%」實際上是三家客戶約 54%；本益比 23 倍，遠低於當年網路泡沫時期思科的 100 倍以上；循環投資屬於股權投資，占營收比重也不高。</p>
+      <p><b>但有一條被完全認同：資本支出正在燒乾現金流。</b>也就是上面那張圖。</p>
+    </div>
+
+    <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">所以泡沫爭議的重點是什麼</div>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed">爭議的核心<b>不是「AI 沒有用」</b>——AI 有沒有用，跟這些機房幾年能回本，是兩個完全不同的問題。真正的爭議是<b>回收期與現金流風險</b>。對企業客戶而言，這個結論反而是清楚的：<b>值得押注的是「能整合進自己工作流、而且不會被鎖死」的平台，不是「誰的資本支出敘事最壯觀」。</b>這一點會在第 10 節展開。</p>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="s6" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">06</span><h2 class="text-xl sm:text-2xl font-extrabold">三家的商業模式</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">同一台機器，三種完全不同的算盤</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>前面五節講的是它們的<b>共通點</b>。這一節講差別——因為對客戶來說，真正要判斷的不是「雲端好不好」，而是<b>「這一家靠什麼賺我的錢，以及它會怎麼留住我」</b>。三家的答案完全不同，而且都跟它們各自的出身有關。</p>
+    </div>
+
+    <div class="tw mb-6">
+      <table class="d">
+        <thead><tr><th></th><th>Microsoft／Azure</th><th>Google Cloud</th><th>Amazon／AWS</th></tr></thead>
+        <tbody>
+          <tr><td class="why">一句話</td><td><b>賣席次的人</b><br><span class="text-slate-500">不必你換系統，只要你多付一筆</span></td><td><b>賣成本的人</b><br><span class="text-slate-500">從晶片到模型都自己做</span></td><td><b>賣選擇的人</b><br><span class="text-slate-500">貨架本身就是生意</span></td></tr>
+          <tr class="hl">
+            <td class="why">出身</td>
+            <td>不是靠雲端起家的。全世界公司的文件、信件、會議紀錄、Excel 檔本來就住在它家，<b>這個安裝基數是整套 AI 策略的地基</b></td>
+            <td>三家裡唯一<b>自研晶片＋自有雲＋自研模型</b>三層全包。TPU 是為了自家搜尋與 YouTube 做了十年的東西，不是這一波才開始</td>
+            <td>雲端這門生意的發明者，市占第一，客戶基數最廣，也是 Amazon 集團真正的<b>利潤引擎</b>（零售的利潤率遠不如它）</td>
+          </tr>
+          <tr>
+            <td class="why">怎麼賺錢</td>
+            <td>AI 做成<b>每人每月的固定費用</b>，接在員工每天都要開的軟體裡。不必搬資料、不必改流程，只要決定買幾席。收入穩定、可預測</td>
+            <td>中間沒有 NVIDIA 抽一手，單位算力成本結構不同，<b>敢用價格換市占</b>。同時把 TPU 賣給外部客戶——連對手的對手都在向它租算力</td>
+            <td>單純<b>賣用量</b>。自己的模型不是最前沿，解法是把所有人的模型都擺上貨架，客戶換模型很自由，但每一次呼叫都還是記在 AWS 帳上</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">怎麼留住你</td>
+            <td><b>身分與權限。</b>帳號系統、資料外洩防護規則都在它手上，agent 可以直接沿用。<b>愈受監理、愈在意內控的產業，這個賣點愈重</b></td>
+            <td><b>成品。</b>它不太賣工具，賣已經做完的東西——反洗錢的 AI、財管顧問 agent（第 9 節），降低「買回來還要自己做半年」的風險</td>
+            <td><b>資料重力與長約。</b>資料一旦大量存在它家，搬走成本高得嚇人；再加上自研晶片綁定的長期合約（Anthropic 那筆 10 年逾千億美元）</td>
+          </tr>
+          <tr>
+            <td class="why">最大的弱點</td>
+            <td>對 OpenAI 一家依賴太深，在手訂單約半數綁在它身上；而 OpenAI 正系統性把算力分散出去。自研晶片 Maia 進度落後，成本端沒籌碼</td>
+            <td>雲端規模仍是第三，企業既有資料多半不在它家，<b>搬遷成本是最大的敵人</b>；反壟斷官司纏身（14% 持有 Anthropic 就是官司文件流出才曝光）</td>
+            <td>模型端不是最前沿，得靠 Anthropic 補這條線，對單一夥伴依賴同樣深；資本支出壓著集團利潤，自由現金流今年可能轉負</td>
+          </tr>
+          <tr><td class="why">2026 Q2 雲端成長</td><td class="num">43%</td><td class="num">82%</td><td class="num">37%</td></tr>
+          <tr><td class="why">全球市占</td><td class="num">約 21%</td><td class="num">約 14–15%</td><td class="num">約 28%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p>把同一件事換個角度看：<b>從最底下的晶片，到最上面員工看得到的介面，這三家各自蓋到哪一層？</b></p>
+    </div>
+
+    <div class="tw mb-6">
+      <table class="d">
+        <thead><tr><th>層級（由下往上）</th><th>Microsoft</th><th>Google</th><th>AWS</th></tr></thead>
+        <tbody>
+          <tr><td class="why">① 自研晶片</td><td>有，<b>Maia</b>（進度落後）</td><td>有，<b>TPU</b>（最成熟、外部客戶最多）</td><td>有，<b>Trainium／Inferentia</b>（綁大客戶長約）</td></tr>
+          <tr class="hl"><td class="why">② 資料中心與雲</td><td>Azure，市占約 21%</td><td>Google Cloud，市占約 14–15%</td><td>AWS，<b>市占第一約 28%</b></td></tr>
+          <tr><td class="why">③ 自研前沿模型</td><td><b>無</b>（靠 OpenAI）</td><td><b>有，Gemini</b></td><td><b>無</b>（靠 Anthropic）</td></tr>
+          <tr class="hl"><td class="why">④ 模型貨架</td><td>Microsoft Foundry</td><td>Model Garden</td><td><b>Bedrock（最廣）</b></td></tr>
+          <tr><td class="why">⑤ agent 平台</td><td>Copilot Studio ＋ Foundry</td><td>Gemini Enterprise</td><td>Bedrock AgentCore</td></tr>
+          <tr class="hl"><td class="why">⑥ agent 治理</td><td><b>Agent 365（唯一獨立成品）</b></td><td>內建於平台</td><td>包在 AgentCore 裡</td></tr>
+          <tr><td class="why">⑦ 終端應用與席次</td><td><b>M365 Copilot（最強）</b></td><td>Gemini Enterprise 席次</td><td>Amazon Q（相對薄）</td></tr>
+          <tr class="hl"><td class="why">⑧ 金融垂直成品</td><td>治理範本、Excel 財務 agent</td><td><b>AML 反洗錢 AI、Citi Sky 財管 agent</b></td><td>券商與交易所基建、資管系統</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="plain">
+      <div class="lb">為什麼這三種模式會同時存在</div>
+      <p>因為它們搶的其實不是同一塊錢。<b>Microsoft 搶的是「員工的時間」</b>，一個人一個月幾十美元；<b>Google 與 AWS 搶的是「系統的用量」</b>，按算力計費、沒有上限。前者好賣但天花板明確（公司有幾個員工就是幾席），後者難賣但沒有天花板。</p>
+      <p>這也是為什麼三家最後都往 agent 走——<b>agent 是唯一同時屬於這兩塊的東西</b>：它以「席次」的樣子賣給客戶，卻以「用量」的樣子計費。</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="s7" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">07</span><h2 class="text-xl sm:text-2xl font-extrabold">牌桌旁邊的四個人</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">不是主角，但每一個都在改變牌局的規則</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>如果這場競賽只有三家雲端業者和兩家模型公司，故事會單純很多。但牌桌旁還坐著四個角色，各自用完全不同的方式攪局——<b>一個把機房租給別人，一個把模型免費送出去，一個把火箭和 AI 併在一起，一個誰都得跟他買鏟子。</b></p>
+    </div>
+
+    <div class="tw mb-6">
+      <table class="d">
+        <thead><tr><th></th><th>Oracle<br><span class="text-slate-400 font-normal text-[12px]">算力包租公</span></th><th>Meta<br><span class="text-slate-400 font-normal text-[12px]">開源攪局者</span></th><th>SpaceX ＋ xAI<br><span class="text-slate-400 font-normal text-[12px]">把火箭和模型併在一起</span></th><th>NVIDIA<br><span class="text-slate-400 font-normal text-[12px]">賣鏟子的人，也是莊家</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="why">它是誰</td>
+            <td>賣企業資料庫的老牌公司，原本跟這一波 AI 幾乎沾不上邊</td>
+            <td>這群人裡<b>唯一不對外賣算力</b>的：蓋機房是自己用的（廣告推薦、AI 助理）</td>
+            <td>2026 年 2 月 SpaceX 收購同屬 Musk 旗下的 xAI。<b>xAI 有模型與超算，SpaceX 有火箭與全球最大低軌衛星群</b></td>
+            <td>算力的絕對底層，所有人的共同命脈</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">在這盤棋裡做什麼</td>
+            <td>當 OpenAI 決定不再把身家全押在 Microsoft 身上、需要第二個機房時，<b>它舉手了</b>。承接了五千億美元等級建設計畫的旗艦園區</td>
+            <td>把模型<b>免費送出去</b>。Llama 系列以開放權重釋出，任何人都能下載回去自己跑</td>
+            <td>「發射能力＋算力＋模型」一條龍。攪局點不在模型能力，而在<b>它有辦法把算力放到別人放不了的地方</b></td>
+            <td>從「賣卡」進化成<b>「投資＋賣卡」</b>：投 OpenAI、投 xAI、擴大與 Meta 合作——投出去的錢，最後多半變成向它採購的訂單</td>
+          </tr>
+          <tr>
+            <td class="why">關鍵數字</td>
+            <td>部署逾 <b>45 萬顆</b> NVIDIA 晶片、15 年租約；在手訂單衝到 <b>5,530 億美元</b>，但<b>逾半來自 OpenAI 一個客戶</b></td>
+            <td>2026 年資本支出 <b>1,250–1,450 億美元</b>，但這些錢不會變成別人的雲端帳單</td>
+            <td>合併後估值傳出上看 <b>1.25 兆美元</b>；Grok 在美國聊天機器人市場約 <b>17.8%</b>，第三名</td>
+            <td>對 OpenAI 意向上看 <b>1,000 億美元</b>、2026 年 2 月實際入股約 300 億</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">它改變了什麼</td>
+            <td><b>它讓「多雲」變成可能</b>：模型公司從此能在雲端業者之間比價、換手。代價是自己扛下極高集中度——自由現金流一度為負二百多億美元，財報隔天股價崩跌逾一成</td>
+            <td>當「夠好用」的模型不用錢，「最好用」的模型就很難賣得太貴。<b>它是第 3 節那句「模型會愈來愈便宜」的主要推手</b>——人在圈外，卻把圈裡的價格往下壓</td>
+            <td>把「算力的物理上限」這個問題端上桌。第 8 節整節都在講這件事</td>
+            <td>確保不管誰贏，鏟子的錢都先入袋。但<b>它的三個大客戶都在自己做晶片</b>（TPU、Trainium，2026 年 6 月再加上 OpenAI 那顆推論晶片），每多一顆，就有一段錢被留在體內</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="plain mb-6">
+      <div class="lb">四個配角，四種不同的施力點</div>
+      <p><b>Oracle 讓模型公司有第二個選擇</b>（降低單一雲的議價權）；<b>Meta 讓模型本身變便宜</b>（把戰場推向算力）；<b>SpaceX 讓算力有機會擺到地球以外</b>（打開天花板）；<b>NVIDIA 則確保不管誰贏，鏟子的錢都先入袋</b>。四個人各拉一個方向，這才是這盤棋真正的形狀。</p>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p>最後，把主角與配角放進同一張表。<b>這一場競賽說到底是一場「往上下游長」的競賽</b>——每一家都想從自己站的那一層，往上或往下多蓋一層，讓別人少賺一段。下面這張表就是目前的戰況：<b>橫著看是一家公司的版圖，直著看是一層的競爭者有誰。</b></p>
+    </div>
+
+    <div class="tw mb-5">
+      <table class="d">
+        <thead><tr><th>層級（由下往上）</th><th>Microsoft</th><th>Google</th><th>AWS</th><th>Oracle</th><th>Meta</th><th>NVIDIA</th><th>SpaceX·xAI</th><th>OpenAI</th><th>Anthropic</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="why">① 能源與場地</td>
+            <td>採購電力、自建園區</td>
+            <td>綁長期電力合約</td>
+            <td>自建園區</td>
+            <td>自建園區</td>
+            <td>自建園區</td>
+            <td class="text-slate-400">無</td>
+            <td><b>火箭與軌道</b></td>
+            <td>Stargate 園區</td>
+            <td>自建園區（德州／紐約）</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">② 自研晶片</td>
+            <td>Maia<span class="text-slate-400">（落後）</span></td>
+            <td><b>TPU</b><span class="text-slate-400">（最成熟）</span></td>
+            <td><b>Trainium</b></td>
+            <td class="text-slate-400">無</td>
+            <td>自研加速器</td>
+            <td><b>本業</b></td>
+            <td class="text-slate-400">無，全採 NVIDIA</td>
+            <td>Jalapeño<span class="text-slate-400">（2026 起）</span></td>
+            <td class="text-slate-400">無，用夥伴的</td>
+          </tr>
+          <tr>
+            <td class="why">③ 雲／對外賣算力</td>
+            <td><b>Azure</b></td>
+            <td><b>Google Cloud</b></td>
+            <td><b>AWS</b></td>
+            <td><b>OCI</b></td>
+            <td class="text-slate-400">不對外賣</td>
+            <td class="text-slate-400">無<span class="text-slate-400">（投資雲業者）</span></td>
+            <td>規劃中<span class="text-slate-400">（在軌）</span></td>
+            <td class="text-slate-400">全租別人的</td>
+            <td class="text-slate-400">全租別人的</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">④ 前沿模型</td>
+            <td class="text-slate-400">無，靠 OpenAI</td>
+            <td><b>Gemini</b></td>
+            <td class="text-slate-400">無，靠 Anthropic</td>
+            <td class="text-slate-400">無，轉售他家</td>
+            <td>Llama<span class="text-slate-400">（開放權重）</span></td>
+            <td class="text-slate-400">無</td>
+            <td>Grok</td>
+            <td><b>GPT</b></td>
+            <td><b>Claude</b></td>
+          </tr>
+          <tr>
+            <td class="why">⑤ 模型貨架</td>
+            <td>Foundry</td>
+            <td>Model Garden</td>
+            <td><b>Bedrock（最廣）</b></td>
+            <td>轉售 Gemini 等</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">只賣自己</td>
+            <td class="text-slate-400">只賣自己</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">⑥ agent 平台與治理</td>
+            <td><b>Agent 365</b></td>
+            <td>Gemini Enterprise</td>
+            <td>AgentCore</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td>Codex 等</td>
+            <td><b>Claude Code、MCP 標準</b></td>
+          </tr>
+          <tr>
+            <td class="why">⑦ 終端應用</td>
+            <td><b>M365 Copilot</b></td>
+            <td>Gemini app／席次</td>
+            <td>Amazon Q</td>
+            <td class="text-slate-400">無</td>
+            <td>Meta AI 助理</td>
+            <td class="text-slate-400">無</td>
+            <td>Grok app</td>
+            <td><b>ChatGPT</b></td>
+            <td>Claude</td>
+          </tr>
+          <tr class="hl">
+            <td class="why">⑧ 金融垂直成品</td>
+            <td>治理範本、財務 agent</td>
+            <td><b>AML AI、Citi Sky</b></td>
+            <td><b>券商與交易所基建</b></td>
+            <td class="text-slate-400">在台落地少</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td class="text-slate-400">無</td>
+            <td>樣板偏少</td>
+            <td><b>Claude 金融版</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">這張表最值得注意的三件事</div>
+      <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-2 list-disc pl-5">
+        <li><b>只有 Google 一家從第 1 層通到第 8 層。</b>這是它敢用價格換市占的底氣，也是它被反壟斷盯上的原因。</li>
+        <li><b>第 3 層（雲）與第 4 層（模型）幾乎沒有人同時擁有。</b>Microsoft 和 AWS 有雲沒模型，OpenAI 和 Anthropic 有模型沒雲——<b>這個錯位，正是第 2 節那台循環機器存在的根本原因</b>：雙方都得向對方買自己缺的那一半。</li>
+        <li><b>大家都在往缺的那一層長。</b>模型公司往下做晶片與自建機房，雲端業者往上做模型與應用，NVIDIA 往上投資客戶，SpaceX 往上蓋到軌道去。<b>這場競賽的下一階段，就是看誰先把自己缺的那一格補起來。</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="s8" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">08</span><h2 class="text-xl sm:text-2xl font-extrabold">往上看：當地面不夠用了</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">2026 年 8 月，NVIDIA 和 SpaceX 宣布要把機櫃送上軌道</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>第 5 節那張七千億的帳單，其實還藏著一個更根本的問題：<b>錢不是唯一的限制，地球才是。</b></p>
+      <p>一座 1GW 等級的 AI 資料中心，總造價約 500 多億美元，而它要吃掉的東西是：一整座電廠等級的電力、每消耗一度電要一到兩公升的冷卻用水、以及一大塊土地。美國的電網併網申請已經排隊到 150GW，審批要好幾年。<b>卡住這場競賽的，已經不是演算法或人才，是電、熱、水、地。</b></p>
+      <p>所以有人開始往上看。</p>
+    </div>
+
+    <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5 mb-6">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">2026 年 8 月 4 日的那則消息</div>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed">SpaceX 宣布與 NVIDIA 合作，為名為 <b>Starmind</b> 的在軌資料中心設計運算酬載，使用 NVIDIA 下一代的 Vera Rubin 機櫃架構，<b>目標 2027 年底把第一批機櫃送上軌道</b>。SpaceX 已向美國聯邦通訊委員會申請部署上看百萬顆的計算衛星，Musk 並宣稱該公司的 AI 算力在 2026 年底將超過 2GW、2027 年底接近 10GW。</p>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed mt-3 pt-3 border-t border-blue-200"><b>提醒：後面兩個數字是公司自己的宣稱，不是已完成的事實。</b>本節所有時程都應該當成「目標」而非「進度」——太空計畫延期是常態。</p>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p>為什麼要花這麼大力氣把電腦送上天？因為真空裡有三樣地面給不起的東西。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">好處一</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">能源</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">軌道上的太陽能沒有大氣層、沒有雲、沒有日夜交替，效率是地面的 <b>8 到 10 倍</b>，而且 24 小時不中斷。<b>能源第一次從「間歇資源」變成「連續變數」。</b></p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">好處二</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">散熱</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">太空背景溫度只有絕對溫標 3 度，廢熱可以直接輻射進深空，<b>不需要風扇、不需要水冷、不需要用水</b>。地面資料中心最頭痛的散熱瓶頸，在這裡幾乎消失。</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <div class="text-[11px] font-extrabold text-slate-500 tracking-widest mb-2">好處三</div>
+        <div class="text-[15px] font-extrabold leading-snug mb-2">延遲</div>
+        <p class="text-[13px] text-slate-700 leading-relaxed">光在真空中比在光纖裡快<b>約三成</b>。用雷射鏈路互連的軌道節點，在網路拓樸上反而可能離用戶更近。</p>
+      </div>
+    </div>
+
+    <figure class="fig mb-6">
+<svg class="cv" viewBox="0 0 760 250" role="img" aria-label="太空算力發展時間軸">
+  <text x="20" y="24" font-size="13" font-weight="800" fill="#0f2460">太空算力：從一顆衛星到一個產業的時間表</text>
+
+  <line x1="60" y1="130" x2="710" y2="130" stroke="#cbd5e1" stroke-width="2"/>
+
+  <circle cx="110" cy="130" r="8" fill="#1e3a8a"/>
+  <line x1="110" y1="122" x2="110" y2="92" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="110" y="80" text-anchor="middle" font-size="12.5" font-weight="800" fill="#0f2460">2025 年 11 月</text>
+  <text x="110" y="60" text-anchor="middle" font-size="11.5" fill="#475569">已發生</text>
+  <text x="110" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Starcloud × NVIDIA</text>
+  <text x="110" y="176" text-anchor="middle" font-size="11.5" fill="#64748b">H100 級 GPU 上軌</text>
+  <text x="110" y="194" text-anchor="middle" font-size="11.5" fill="#64748b">整套約 60 公斤</text>
+
+  <circle cx="300" cy="130" r="8" fill="#1e3a8a"/>
+  <line x1="300" y1="122" x2="300" y2="92" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="300" y="80" text-anchor="middle" font-size="12.5" font-weight="800" fill="#0f2460">2026 年 8 月</text>
+  <text x="300" y="60" text-anchor="middle" font-size="11.5" fill="#475569">已宣布</text>
+  <text x="300" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">SpaceX × NVIDIA</text>
+  <text x="300" y="176" text-anchor="middle" font-size="11.5" fill="#64748b">合作設計 Starmind 運算酬載</text>
+  <text x="300" y="194" text-anchor="middle" font-size="11.5" fill="#64748b">採 Vera Rubin 機櫃架構</text>
+
+  <circle cx="490" cy="130" r="8" fill="#ea580c"/>
+  <line x1="490" y1="122" x2="490" y2="92" stroke="#fdba74" stroke-width="1.5"/>
+  <text x="490" y="80" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9a3412">2027 年</text>
+  <text x="490" y="60" text-anchor="middle" font-size="11.5" fill="#c2410c">關鍵驗證年</text>
+  <text x="490" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">首批機櫃上軌（目標）</text>
+  <text x="490" y="176" text-anchor="middle" font-size="11.5" fill="#64748b">Google Suncatcher 原型同期</text>
+  <text x="490" y="194" text-anchor="middle" font-size="11.5" fill="#64748b">能否穩定運行是分水嶺</text>
+
+  <circle cx="660" cy="130" r="8" fill="#94a3b8"/>
+  <line x1="660" y1="122" x2="660" y2="92" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="660" y="80" text-anchor="middle" font-size="12.5" font-weight="800" fill="#475569">2030 年代中</text>
+  <text x="660" y="60" text-anchor="middle" font-size="11.5" fill="#94a3b8">經濟性門檻</text>
+  <text x="660" y="156" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">發射成本須降到</text>
+  <text x="660" y="176" text-anchor="middle" font-size="11.5" fill="#64748b">每公斤 200 美元以下</text>
+  <text x="660" y="194" text-anchor="middle" font-size="11.5" fill="#64748b">否則帳算不過來</text>
+
+  <text x="380" y="232" text-anchor="middle" font-size="11.5" fill="#94a3b8">橘色與灰色節點為目標與門檻，不是已完成的進度</text>
+</svg>
+      <figcaption>四家的路線不同：SpaceX 從 Starlink 星座長出算力、Google 的 Suncatcher 用自研 TPU 加光通訊、Amazon 旗下 Blue Origin 傳出在做 GW 級在軌資料中心、NVIDIA 則維持中立——誰上天都跟它買卡。</figcaption>
+    </figure>
+
+    <div class="plain mb-5">
+      <div class="lb">三道還沒跨過的坎</div>
+      <p><b>一、技術。</b>衛星的供電與散熱架構要整個重做，不是把地面機櫃原封不動送上去就好。</p>
+      <p><b>二、成本。</b>地面 1GW 約 500 多億美元；太空版保守估計要數千億。要划算，得等發射成本再降一個量級。</p>
+      <p><b>三、監管。</b>算力衛星更重、壽命更長、功率更高，一旦失效又無法及時離軌，就是長期的軌道碎片來源。近地軌道已經很擠了，這需要跨國治理。</p>
+    </div>
+
+    <div class="prose max-w-none">
+      <p><b>所以該怎麼看這件事？</b>短期內太空取代不了地面，它是補充，不是替代。2027 年是關鍵驗證年，2030 年代中才輪得到談經濟性。</p>
+      <p>但它印證了本篇一路講下來的主線：<b>這場競賽的瓶頸，已經從「誰的模型比較聰明」，一路下移到「誰有電、有地、有水、有晶片」。</b>當這些東西在地面上都開始見底，資本自然會去找沒有這些限制的地方。<b>把機房送上軌道聽起來像科幻，但它其實只是資本支出天花板被推到極限後，一個很合邏輯的下一步。</b></p>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section id="s9" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">09</span><h2 class="text-xl sm:text-2xl font-extrabold">三家在金融業各自留下什麼樣板</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">不看行銷簡報，只看已經做出來的案子</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>講完天上的事，把鏡頭拉回地面最後一哩：這三家在金融業，各自真的做出了什麼。</p>
+      <p>把公開案例攤開，會發現它們的強項<b>幾乎沒有重疊</b>——這不是巧合，而是第 6 節那三種商業模式的直接結果。下面這張圖用顏色深淺表示樣板完整度，格子裡就是代表案例。</p>
+    </div>
+
+    <figure class="fig mb-6">
+<svg class="cv" viewBox="0 0 760 632" role="img" aria-label="三家雲端業者在金融業各領域的樣板完整度熱力圖，含代表案例">
+    <text x="20" y="24" font-size="13" font-weight="800" fill="#0f2460">金融場景樣板完整度與代表案例</text>
+    <text x="20" y="44" font-size="11.5" fill="#64748b">顏色愈深＝公開可查的完整案例愈多、愈接近成品</text>
+    <rect x="240" y="62" width="170" height="32" rx="8" fill="#0f2460"/>
+    <text x="325" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">Microsoft</text>
+    <rect x="414" y="62" width="170" height="32" rx="8" fill="#0f2460"/>
+    <text x="499" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">Google</text>
+    <rect x="588" y="62" width="170" height="32" rx="8" fill="#0f2460"/>
+    <text x="673" y="84" text-anchor="middle" font-size="12.5" font-weight="800" fill="#fff">AWS</text>
+    <text x="228" y="132" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">券商核心</text>
+    <text x="228" y="152" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">交易系統上雲</text>
+    <rect x="240" y="102" width="170" height="66" rx="8" fill="#f8fafc"/>
+    <text x="253" y="126" font-size="12.5" font-weight="800" fill="#cbd5e1">無</text>
+    <text x="253" y="146" font-size="11" fill="#cbd5e1">—</text>
+    <rect x="414" y="102" width="170" height="66" rx="8" fill="#eaf1fd"/>
+    <text x="427" y="126" font-size="12.5" font-weight="800" fill="#1e3a8a">弱</text>
+    <text x="427" y="146" font-size="11" fill="#475569">量化交易 HPC</text>
+    <text x="427" y="162" font-size="11" fill="#475569">Citadel、HRT</text>
+    <rect x="588" y="102" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="601" y="126" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="601" y="146" font-size="11" fill="#c7d7f5">SBI 證券核心系統</text>
+    <text x="601" y="162" font-size="11" fill="#c7d7f5">KB 證券行動交易</text>
+    <text x="228" y="202" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">交易所與</text>
+    <text x="228" y="222" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">清算基建</text>
+    <rect x="240" y="172" width="170" height="66" rx="8" fill="#f8fafc"/>
+    <text x="253" y="196" font-size="12.5" font-weight="800" fill="#cbd5e1">無</text>
+    <text x="253" y="216" font-size="11" fill="#cbd5e1">—</text>
+    <rect x="414" y="172" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="427" y="196" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="427" y="216" font-size="11" fill="#334155">CME 專屬雲區</text>
+    <text x="427" y="232" font-size="11" fill="#334155">資本市場代幣化</text>
+    <rect x="588" y="172" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="601" y="196" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="601" y="216" font-size="11" fill="#c7d7f5">Nasdaq、LSEG</text>
+    <text x="601" y="232" font-size="11" fill="#c7d7f5">日本交易所、DTCC</text>
+    <text x="228" y="272" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">資產管理</text>
+    <text x="228" y="292" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">系統</text>
+    <rect x="240" y="242" width="170" height="66" rx="8" fill="#eaf1fd"/>
+    <text x="253" y="266" font-size="12.5" font-weight="800" fill="#1e3a8a">弱</text>
+    <text x="253" y="286" font-size="11" fill="#475569">Excel 財務 agent</text>
+    <rect x="414" y="242" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="427" y="266" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="427" y="286" font-size="11" fill="#334155">紐約梅隆銀行</text>
+    <text x="427" y="302" font-size="11" fill="#334155">深度研究 agent</text>
+    <rect x="588" y="242" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="601" y="266" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="601" y="286" font-size="11" fill="#c7d7f5">BlackRock Aladdin</text>
+    <text x="601" y="302" font-size="11" fill="#c7d7f5">Clearwater 800 agent</text>
+    <text x="228" y="342" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">財富管理</text>
+    <text x="228" y="362" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">顧問 agent</text>
+    <rect x="240" y="312" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="253" y="336" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="253" y="356" font-size="11" fill="#334155">泰國 KAsset 資管</text>
+    <rect x="414" y="312" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="427" y="336" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="427" y="356" font-size="11" fill="#c7d7f5">Citi Sky 財管成員</text>
+    <text x="427" y="372" font-size="11" fill="#c7d7f5">Finnomena 投顧</text>
+    <rect x="588" y="312" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="601" y="336" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="601" y="356" font-size="11" fill="#334155">Fiserv agentOS</text>
+    <text x="228" y="412" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">反洗錢</text>
+    <text x="228" y="432" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">與合規</text>
+    <rect x="240" y="382" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="253" y="406" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="253" y="426" font-size="11" fill="#334155">JSM 治理優先範本</text>
+    <rect x="414" y="382" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="427" y="406" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="427" y="426" font-size="11" fill="#c7d7f5">AML AI：滙豐驗證</text>
+    <text x="427" y="442" font-size="11" fill="#c7d7f5">可疑交易多抓 2–4 倍</text>
+    <rect x="588" y="382" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="601" y="406" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="601" y="426" font-size="11" fill="#334155">Nasdaq 市場監理</text>
+    <text x="601" y="442" font-size="11" fill="#334155">Q2 受治理開發</text>
+    <text x="228" y="482" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">員工生產力</text>
+    <text x="228" y="502" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">與內控範本</text>
+    <rect x="240" y="452" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="253" y="476" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="253" y="496" font-size="11" fill="#c7d7f5">Westpac 3.5 萬人</text>
+    <text x="253" y="512" font-size="11" fill="#c7d7f5">中信證券國際全鏈</text>
+    <rect x="414" y="452" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="427" y="476" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="427" y="496" font-size="11" fill="#334155">Gemini Enterprise 席次</text>
+    <rect x="588" y="452" width="170" height="66" rx="8" fill="#eaf1fd"/>
+    <text x="601" y="476" font-size="12.5" font-weight="800" fill="#1e3a8a">弱</text>
+    <text x="601" y="496" font-size="11" fill="#475569">Amazon Q</text>
+    <text x="228" y="552" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">投研與</text>
+    <text x="228" y="572" text-anchor="end" font-size="12.5" font-weight="700" fill="#334155">分析</text>
+    <rect x="240" y="522" width="170" height="66" rx="8" fill="#c7d7f5"/>
+    <text x="253" y="546" font-size="12.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="253" y="566" font-size="11" fill="#334155">經 Foundry 取得 Claude</text>
+    <rect x="414" y="522" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="427" y="546" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="427" y="566" font-size="11" fill="#c7d7f5">Gemini 研究 agent</text>
+    <text x="427" y="582" font-size="11" fill="#c7d7f5">BNY 投研落地</text>
+    <rect x="588" y="522" width="170" height="66" rx="8" fill="#1e3a8a"/>
+    <text x="601" y="546" font-size="12.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="601" y="566" font-size="11" fill="#c7d7f5">Bedrock ＋ Claude</text>
+    <text x="601" y="582" font-size="11" fill="#c7d7f5">金融評測居首</text>
+    <rect x="20" y="598" width="26" height="16" rx="5" fill="#1e3a8a" stroke="#e2e8f0"/>
+    <text x="28" y="610.5" font-size="10.5" font-weight="800" fill="#ffffff">強</text>
+    <text x="54" y="610.5" font-size="11" fill="#94a3b8">已有核心系統等級實績</text>
+    <rect x="200" y="598" width="26" height="16" rx="5" fill="#c7d7f5" stroke="#e2e8f0"/>
+    <text x="208" y="610.5" font-size="10.5" font-weight="800" fill="#0f2460">中</text>
+    <text x="234" y="610.5" font-size="11" fill="#94a3b8">有應用層案例</text>
+    <rect x="380" y="598" width="26" height="16" rx="5" fill="#eaf1fd" stroke="#e2e8f0"/>
+    <text x="388" y="610.5" font-size="10.5" font-weight="800" fill="#1e3a8a">弱</text>
+    <text x="414" y="610.5" font-size="11" fill="#94a3b8">僅周邊或單點</text>
+    <rect x="560" y="598" width="26" height="16" rx="5" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="568" y="610.5" font-size="10.5" font-weight="800" fill="#cbd5e1">無</text>
+    <text x="594" y="610.5" font-size="11" fill="#94a3b8">查無公開案例</text>
+  </svg>
+      <figcaption>評等為本篇依公開案例的數量、深度與是否已成品化所做的判讀，非任何第三方評分。判準：有核心系統等級的實績＝強，有應用層案例＝中，僅有周邊或單點＝弱。幾個值得記住的數字：SBI 證券遷上雲的核心系統，日均處理逾 2 兆日圓股票交易；Google 的 AML AI 經滙豐驗證，可疑交易偵測量提高 2 到 4 倍、同時誤報警示降低逾六成；Clearwater 在逾 10 兆美元資產上部署 800 個以上的 agent。最後一列三家都亮眼的原因是同一件事——<b>Anthropic 的 Claude 同時上架在三家的貨架上，要用它不必換雲</b>。</figcaption>
+    </figure>
+
+    <div class="rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-emerald-800 mb-2">從這張圖可以讀出的三件事</div>
+      <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-2 list-disc pl-5">
+        <li><b>愈靠近交易與清算的核心，樣板愈集中在 AWS。</b>這不是巧合——那是它花了十年在做的事，也呼應第 6 節它「資料重力＋長約」的模式。</li>
+        <li><b>愈靠近「面對客戶的顧問」與「合規稽核」，Google 的成品形態愈完整。</b>它把 AI 做成一個角色，而不是一個功能，這跟它「賣成品、不賣工具」的打法一致。</li>
+        <li><b>愈靠近「每個員工日常的文件工作」，Microsoft 的路徑愈短。</b>因為那些檔案本來就在它的系統裡——這就是席次模式的威力。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">10</span><h2 class="text-xl sm:text-2xl font-extrabold">對金融業的意義</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">不是「該選誰」，而是「該用哪幾把尺量」</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>這一整篇看下來，對金融機構最實際的收穫不是「哪一家比較好」，而是<b>幾個原本不會被放進評估表的維度</b>。以下五點，每一點都可以直接變成內部評估的欄位。</p>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 mb-5">
+      <dl class="bub">
+        <dt>① 模型鎖定與雲端鎖定，是兩件事</dt>
+        <dd>最強的金融模型未必只在一朵雲上——第 9 節那個例子（Claude 同時在三家的貨架上）說明了<b>換模型不一定要換雲</b>。而且從第 3 節可以看到，三家都<b>樂意</b>把對手的模型擺上自己的架子，因為它們賣的是機房不是模型。先把「模型可替換」處理掉，成本遠低於搬雲。</dd>
+        <dt>② 本業縱深看樣板，不看簡報</dt>
+        <dd>三家的強項不重疊，第 9 節那張熱力圖就是地圖。要對標的是核心交易與清算、財富管理顧問、還是全員文件作業，答案不一樣。<b>問供應商「這個場景你有哪一家同業的案子」，比問功能清單有效。</b></dd>
+        <dt>③ 集中度是監理題，不只是技術題</dt>
+        <dd>金融監理普遍要求管理委外的集中度風險。<b>單一供應商鎖定本身，就是一個需要被記錄與說明的風險項目</b>，而不只是技術偏好。這一點在評估報告裡的位置，應該跟成本並列。</dd>
+        <dt>④ 供應商的財務體質，是新增的評估欄位</dt>
+        <dd>這是第 4、5、7 節的直接應用。當供應商的在手訂單有一半集中在一兩個客戶（Microsoft 與 Oracle 都是）、當它的資本支出有三分之一靠舉債，<b>這些都會影響它未來的定價與服務承諾</b>。傳統的委外評估表裡，通常沒有這一欄。</dd>
+        <dt>⑤ 自研晶片的成本優勢有適用範圍</dt>
+        <dd>TPU、Trainium 的成本優勢主要體現在<b>重度、持續的推論與訓練</b>。用量沒到那個級距的時候，這個優勢在報價單上看得到、在帳單上感覺不到。</dd>
+      </dl>
+    </div>
+
+    <div class="plain mb-5">
+      <div class="lb">另外，第 4 節那件事本身就是一個場景</div>
+      <p>「淨利裡有多少是未實現的帳面利得」這種拆解，過去要分析師逐頁翻財報附註，把「權益證券利得」「按市價重估」這些項目一個一個挑出來。<b>以財報附註的獲利品質拆解這類場景為例</b>，它剛好符合幾個特徵：<b>格式固定、高頻、單筆不複雜、但量大到人工做不完</b>——這正是語言模型現階段最擅長的區間。</p>
+      <p>同一類的還有：把跨家的交叉持股與循環營收整理成關係圖譜（也就是本篇第 2 節那張圖，只是要做到自動化）、把財報結果翻譯成客戶看得懂的白話對照。<b>共同的前提也一樣</b>：AI 產出草稿、人工做最後判斷、每一個數字都能回溯到原文段落。這類場景的價值在「省掉初篩的時間」，不在「自動下結論」——一旦模型自信地標錯一條關係或算錯一個數字，投研與風控會被帶著走。</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">四個可以自己追蹤的訊號</div>
+      <div class="rd">
+        <div data-n="01"><b>Anthropic 的 IPO 定價。</b>它一旦掛牌，Google 與 Amazon 的持股就從「幾年跳一次」變成「每季跟著股價跳」。而定價本身，會第一次讓市場公開驗證：這個估值有多少是真需求、多少是循環撐出來的。</div>
+        <div data-n="02"><b>下一季的資本支出指引是往上還是往下。</b>往上，代表需求還在；往下，代表這幾家自己認為回收期出了問題。<b>這是整台機器最靈敏的溫度計。</b></div>
+        <div data-n="03"><b>在手訂單的客戶集中度有沒有被要求揭露。</b>目前這些比例多半來自媒體整理而非正式揭露。若監管或投資人開始要求拆開來看，這個訊號的意義會遠大於單季營收成長。</div>
+        <div data-n="04"><b>2027 年那批機櫃有沒有真的上去。</b>太空算力短期不影響任何採購決策，但它是「地面天花板」這個論點的唯一實證。驗證成功，資本支出的敘事會再延長好幾年；驗證失敗，所有人都得回頭面對電、水、地的限制。</div>
+      </div>
+    </div>
+
+    <div class="nx">
+      <b>這是中美對照三篇的第一篇。</b>本篇把美國這邊的位置擺好了：誰出錢、誰收租、誰賣鏟子、誰在自研晶片、誰打算把機房送上天。<b>下一篇看中國那邊的同一批位置由誰佔著</b>——那邊的雲端業者同樣在投資模型公司，但錢的來源、晶片的來源、以及「為什麼要走開放權重」的理由都不一樣。第三篇再把兩張圖疊起來比。
+    </div>
+  </section>
+
+  <!-- 口徑 -->
+  <section id="s11" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">口徑</span><h2 class="text-xl sm:text-2xl font-extrabold">資料與限制</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">哪些是確定的、哪些是推的</p>
+
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-5">
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">確定的（有一手來源）</div>
+        <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-5">
+          <li><b>Alphabet 2026 Q2 的財務數字</b>：營業利益、權益證券利得、淨利、每股盈餘，取自該公司 2026 年第二季財報。</li>
+          <li><b>三家的雲端成長率與資本支出指引</b>：取自各公司 2026 年第二季財報與法說會揭露。</li>
+          <li><b>第 3 節的產品內容</b>：各家官方產品說明。產品線更新頻繁，本文以 2026 年 8 月的狀態為準。</li>
+          <li><b>第 9 節的金融案例</b>：皆為三家公司官方新聞稿公布的合作案，日期區間為 2023 年 1 月至 2026 年 6 月。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">來自媒體報導或第三方整理（可信度次一級）</div>
+        <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-5">
+          <li><b>第 2 節的投資與採購金額</b>：部分為公司公告，部分為媒體報導；未公開揭露者在表中已註明。Microsoft 自 OpenAI 認列的雲端營收金額，來自媒體報導而非財報揭露。</li>
+          <li><b>在手訂單的客戶集中度（49%、逾五成、兩兆美元）</b>：來自第三方分析整理，<b>非公司正式揭露</b>，請視為量級參考而非精確數字。</li>
+          <li><b>Google 持有 Anthropic 約 14%、帳面約 1,350 億美元</b>：持股比例源自反壟斷訴訟文件外流後的媒體報導；帳面價值為依最新一輪私募估值的推算。</li>
+          <li><b>市占率、舉債占資本支出比例</b>：採第三方研究機構的估計，各家統計口徑不同，僅供比較用。</li>
+          <li><b>第 7、8 節的配角資訊</b>：SpaceX 與 xAI 的合併估值、SpaceX 的算力目標（2GW、10GW）皆為公司宣稱或媒體報導，<b>未經財報驗證</b>。太空計畫的時程一律為目標而非進度。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">本篇的推測，以及它的限度</div>
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">第 4 節把「那筆 990 億利得」與「持股 Anthropic」連起來，<b>是依據會計處理方式與部位規模所做的推論——財報本身沒有點名任何公司</b>。合理的說法是「主要來源之一」，不是唯一來源。第 2 節「投資是為了鎖住算力去向」、第 6 節三家商業模式的歸納、第 9 節那張熱力圖的強中弱評等，<b>都是本篇的判讀，不是任何一方的官方說法或第三方評分</b>。</p>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">三個會讓本篇過時的事件</div>
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">一是 <b>Anthropic 掛牌</b>——屆時第 4 節的帳面價值與重估方式都要改寫。二是<b>下一季財報</b>——資本支出指引若轉向，第 5 節的判斷需要重讀。三是 <b>2027 年那批機櫃</b>——成或不成，第 8 節的結論會完全不同。</p>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">換算假設</div>
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">文中新台幣約當值以 1 美元 ≈ 31 元換算，僅供感受規模用，非精確金額。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!--FOOT:START-->
+<div class="max-w-6xl mx-auto px-5 pb-10 text-center">
+  <a href="../news.html" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-700 transition-colors">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>回 AI 新聞深度解讀
+  </a>
+</div>
+<!--FOOT:END-->
+<!--TOC:START-->
+<style>
+  #pgTocBtn { position:fixed; right:18px; bottom:22px; z-index:60; display:none;
+              align-items:center; gap:6px; padding:10px 14px; border:0; border-radius:999px;
+              background:#1e3a8a; color:#fff; font-size:13px; font-weight:800; cursor:pointer;
+              box-shadow:0 6px 24px rgba(15,36,96,.35); }
+  #pgTocBtn.ready { display:inline-flex; }
+  #pgTocPanel { position:fixed; right:18px; bottom:76px; z-index:60; display:none;
+                width:min(300px, calc(100vw - 36px)); max-height:60vh; overflow-y:auto;
+                background:#fff; border-radius:16px; padding:8px;
+                box-shadow:0 16px 48px rgba(15,23,42,.25); }
+  #pgTocPanel.open { display:block; }
+  #pgTocPanel a { display:flex; gap:9px; padding:9px 11px; border-radius:10px;
+                  font-size:13.5px; line-height:1.5; color:#334155; text-decoration:none; }
+  #pgTocPanel a:hover { background:#f1f5f9; color:var(--brand-700, #1e3a8a); }
+  #pgTocPanel a .n { flex:none; font-size:10px; font-weight:800; letter-spacing:.1em;
+                     color:#94a3b8; padding-top:3px; }
+  main section[id] { scroll-margin-top:5rem; }
+  body:has(#toc) #pgTocBtn.ready { display:none; }
+  @media (max-width:1023px) { body:has(#toc) #pgTocBtn.ready { display:inline-flex; } }
+</style>
+<button id="pgTocBtn" aria-expanded="false">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>本篇目錄
+</button>
+<nav id="pgTocPanel" aria-label="本篇目錄"></nav>
+<script>
+(function () {
+  const btn = document.getElementById('pgTocBtn');
+  const panel = document.getElementById('pgTocPanel');
+  const secs = [...document.querySelectorAll('main section[id]')]
+    .map(s => [s.id, s.querySelector('h2'), s.querySelector('.sec-no')])
+    .filter(([, h2]) => h2);
+  if (secs.length < 2) return;
+  panel.innerHTML = secs.map(([id, h2, no], i) =>
+    `<a href="#${id}"><span class="n">${no ? no.textContent.trim() : String(i + 1).padStart(2, '0')}</span>`
+    + `<span>${h2.textContent.trim()}</span></a>`).join('');
+  btn.classList.add('ready');
+  const close = () => { panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  panel.addEventListener('click', e => { if (e.target.closest('a')) close(); });
+  document.addEventListener('click', e => { if (!panel.contains(e.target)) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+<!--TOC:END-->
+</body>
+</html>

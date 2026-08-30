@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 專欄 2026-W35｜賣鏟子的人要把礦場入口買下來</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .sec-no{background:var(--brand-700);color:#fff;width:26px;height:26px;border-radius:8px;
+          display:inline-flex;align-items:center;justify-content:center;
+          font-size:13px;font-weight:800;flex:none}
+  .prose p{font-size:15.5px;line-height:2.05;color:var(--ink-2);margin-bottom:16px}
+  .prose p:last-child{margin-bottom:0}
+  .prose b{color:var(--ink);font-weight:800}
+  svg.cv{width:100%;height:auto;display:block;overflow:visible;font-family:inherit}
+  .fig{border:1px solid var(--rule);border-radius:14px;background:var(--surface);padding:18px 16px}
+  .fig figcaption{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px;
+                  border-top:1px dashed var(--rule);padding-top:10px}
+  table.d{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.d th{background:var(--brand-700);color:#fff;padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap}
+  table.d td{padding:10px 11px;border-bottom:1px solid var(--rule);color:#475569;vertical-align:top;line-height:1.85}
+  table.d td b{color:var(--ink)}
+  table.d tr.hl td{background:#fff7ed}
+  table.d tr:hover td{background:#f8fafc}
+  table.d tr.hl:hover td{background:#ffedd5}
+  table.d td.nw{white-space:nowrap}
+  table.d td.why{font-weight:800;color:var(--ink);white-space:nowrap}
+  .tw{overflow-x:auto;border:1px solid var(--rule);border-radius:12px}
+  .num{font-variant-numeric:tabular-nums}
+  .kpi{border-left:4px solid var(--accent);padding-left:16px}
+  .kpi .v{font-size:32px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-.02em}
+  .plain{background:#f8fafc;border:1px solid var(--rule);border-radius:14px;padding:18px 20px}
+  .plain .lb{font-size:11px;font-weight:800;letter-spacing:.18em;color:#64748b;margin-bottom:10px}
+  .plain p{font-size:14.5px;line-height:2;color:#475569;margin-bottom:12px}
+  .plain p:last-child{margin-bottom:0}
+  .plain b{color:var(--ink);font-weight:800}
+  .bub{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;line-height:1.9;
+       color:#475569;margin:14px 0 4px}
+  .bub dt{font-weight:800;color:var(--ink);white-space:nowrap}
+  .bub dd{margin:0}
+  #toc a{display:block;padding:7px 0 7px 13px;margin-left:-1px;border-left:2px solid transparent;
+          color:var(--muted);line-height:1.45;transition:color .15s,border-color .15s}
+  #toc a:hover{color:var(--brand-700)}
+  #toc a.on{color:var(--brand-700);font-weight:800;border-left-color:var(--accent)}
+  #toc a .n{display:block;font-size:10px;letter-spacing:.1em;color:#94a3b8;font-weight:800}
+  #toc a.on .n{color:var(--accent)}
+  .nx{margin-top:22px;border-left:2px solid var(--accent);padding-left:12px;
+      font-size:12.5px;line-height:1.9;color:var(--muted)}
+  .nx b{color:var(--ink)}
+  .rd{display:grid;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule)}
+  .rd div{font-size:13.5px;line-height:1.9;color:#475569;padding-left:20px;position:relative}
+  .rd div::before{content:attr(data-n);position:absolute;left:0;top:0;font-size:10.5px;font-weight:800;
+                  color:var(--accent);line-height:2.2}
+  .rd b{color:var(--ink)}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/terms.js" defer></script>
+</head>
+<body class="bg-slate-50 text-gray-800">
+<!--NAV:START-->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+<!--NAV:END-->
+
+
+<header class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-5 py-8">
+    <a href="../news.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-4 transition-colors"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>AI 深度解讀</a>
+    <h1 class="page-title font-extrabold tracking-wide">AI 專欄 2026-W35</h1>
+    <p class="text-white/70 text-sm mt-1 tracking-wider">賣鏟子的人，要把礦場入口買下來 · 資料截至 2026-08-28</p>
+    <div class="mt-5 border-l-4 border-orange-400 pl-4">
+      <p class="text-lg sm:text-xl font-bold leading-relaxed">
+        全世界的人要下載 AI 模型，幾乎都從<span class="text-orange-300">同一個網站</span>。
+        8 月 27 日傳出，做晶片的 NVIDIA 要用 <span class="text-orange-300">129 億美元</span>把它買下來。
+      </p>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-[12px] text-white/70">
+      <div><span class="block text-white font-bold tracking-widest">主角</span>NVIDIA · Hugging Face</div>
+      <div><span class="block text-white font-bold tracking-widest">狀態</span>尚未簽約，雙方均未證實</div>
+      <div><span class="block text-white font-bold tracking-widest">篇幅</span>5 節 · 1 圖 · 3 表</div>
+      <div><span class="block text-white font-bold tracking-widest">性質</span>新聞解讀，非投資建議</div>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-5 py-8 lg:grid lg:grid-cols-[208px_minmax(0,1fr)] lg:gap-10">
+
+  <aside class="hidden lg:block">
+    <nav id="toc" class="sticky top-[4.75rem] text-[13px] border-l border-slate-200">
+      <div class="text-[10px] font-extrabold tracking-[.18em] text-slate-400 pl-[13px] pb-2">本篇主線</div>
+      <a href="#s0" data-t="s0"><span class="n">導讀</span>這篇在回答什麼</a>
+      <a href="#s1" data-t="s1"><span class="n">01</span>發生了什麼事</a>
+      <a href="#s2" data-t="s2"><span class="n">02</span>Hugging Face 是什麼</a>
+      <a href="#s3" data-t="s3"><span class="n">03</span>為什麼是它，為什麼是現在</a>
+      <a href="#s4" data-t="s4"><span class="n">04</span>爭議在哪：中立性</a>
+      <a href="#s5" data-t="s5"><span class="n">05</span>對我們的意義</a>
+      <a href="#s6" data-t="s6"><span class="n">口徑</span>資料與限制</a>
+      <p class="pl-[13px] pt-4 mt-3 border-t border-slate-200 text-[11.5px] leading-relaxed text-slate-400">
+        買了什麼 → 那是什麼 → 為什麼買 → 有什麼問題 → 干我們什麼事
+      </p>
+    </nav>
+  </aside>
+
+<main class="space-y-12 min-w-0" data-auto-terms>
+
+  <!-- 導讀 -->
+  <section id="s0" class="scroll-mt-24">
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-3">
+        <span class="font-extrabold text-sm">這篇在回答什麼</span>
+      </div>
+      <div class="p-5 sm:p-6 space-y-5">
+        <div class="prose max-w-none">
+          <p>先用一個比喻把整件事講完。</p>
+          <p>過去三年的 AI 熱潮，常被形容成一場淘金潮。大家搶著挖金礦，而 <b>NVIDIA 是那個賣鏟子的人</b>——不管誰挖到金子，鏟子都跟它買。這個位置很好，它也很堅持只待在這裡：它有能力自己下去挖，甚至試過，但今年主動收手了，因為不想跟買鏟子的客戶搶生意。</p>
+          <p><b>8 月 27 日傳出的消息是：這個賣鏟子的人，要把礦場的入口買下來。</b></p>
+          <p>那個「入口」叫 Hugging Face。它是一個網站，全世界的人把訓練好的 AI 模型放上去，其他人上去挑、下載、拿回自己的電腦跑。你要用免費的 AI 模型，幾乎一定會經過它。</p>
+          <p><b>整篇只有一條線：</b>買了什麼（第 1 節）→ 那到底是什麼東西（第 2 節）→ 為什麼是它、為什麼挑現在（第 3 節）→ 大家在吵什麼（第 4 節）→ 干我們什麼事（第 5 節）。</p>
+          <p class="!text-[12.5px] !leading-[1.9] !text-slate-400 !mb-0">這件事目前<b class="!text-slate-500">還沒有簽約</b>，兩家公司都沒有證實。第 1 節會說明消息的可信度到哪裡。第 5 節是推估與建議，不是既成事實。</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">問題一</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">這是多大的事</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">129 億美元，約新台幣 4,000 億。而且這是 NVIDIA 第一次往「賣鏟子」以外的地方走。見第 1、3 節。</p>
+          </div>
+          <div class="rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">問題二</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">為什麼挑這個時間</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">前一天，它才公布了一份「賺很多、但毛利率要往下掉」的財報。第 3 節會把這兩件事接起來。</p>
+          </div>
+          <div class="rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4">
+            <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">問題三</div>
+            <div class="text-[15px] font-extrabold leading-snug mb-2">大家在擔心什麼</div>
+            <p class="text-[13px] text-slate-700 leading-relaxed">這個網站現在對所有晶片廠一視同仁。被其中一家買走之後，還會嗎？見第 4 節。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 -->
+  <section id="s1" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">01</span><h2 class="text-xl sm:text-2xl font-extrabold">發生了什麼事</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">先講消息本身，以及這個消息可以相信到什麼程度</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white border border-slate-200 rounded-2xl p-6 mb-5">
+      <div class="kpi">
+        <div class="v num">129<span class="text-lg"> 億美元</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">傳出的收購金額</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">約新台幣 4,000 億元。對照：這個數字大約是 NVIDIA 上一季淨利的兩成。</p>
+      </div>
+      <div class="kpi">
+        <div class="v num">2.9<span class="text-lg"> 倍</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">三年來的身價漲幅</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">Hugging Face 上一次募資是 2023 年，當時估值 45 億美元。三年不到，變成 129 億。</p>
+      </div>
+      <div class="kpi">
+        <div class="v num">86<span class="text-lg"> 倍</span></div>
+        <div class="text-[13px] font-extrabold text-slate-900 mt-2 mb-1">收購價相對於年營收</div>
+        <p class="text-[12.5px] text-slate-600 leading-relaxed">它一年營收約 1.5 億美元。<b>買價是年營收的 86 倍——NVIDIA 買的顯然不是它現在的生意。</b></p>
+      </div>
+    </div>
+
+    <div class="rounded-xl border-2 border-amber-500 bg-amber-50/60 p-5 mb-6">
+      <div class="text-[11px] font-extrabold tracking-widest text-amber-700 mb-2">先講清楚：這個消息還沒定案</div>
+      <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-2 list-disc pl-5">
+        <li>消息最早由 The Information 報導，用的字是「已同意收購」。</li>
+        <li><b>但 Business Insider 的說法不一樣</b>：談判「尚未產生簽署的協議，仍有破局可能」。<b>兩個版本互相矛盾。</b></li>
+        <li><b>NVIDIA 與 Hugging Face 都沒有回應。</b></li>
+      </ul>
+      <p class="text-[13.5px] text-slate-700 leading-relaxed mt-3 pt-3 border-t border-amber-300"><b>一個現成的對照組：</b>NVIDIA 原本說要投資 OpenAI 1,000 億美元，最後 2026 年 2 月實際入股的金額是 <b>300 億</b>。<b>這類「即將」的消息，要當成方向看，不要當成事實看。</b></p>
+    </div>
+
+    <div class="prose max-w-none">
+      <p>不過，就算最後金額變了、甚至破局，<b>這個消息本身已經透露了一件事：NVIDIA 在考慮往上走。</b>而這跟它過去兩年一直對外強調的定位是相反的。第 3 節會說明為什麼這件事值得注意。</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s2" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">02</span><h2 class="text-xl sm:text-2xl font-extrabold">Hugging Face 是什麼</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">沒聽過也沒關係，這一節從零開始</p>
+
+    <div class="plain mb-6">
+      <div class="lb">一句話版本</div>
+      <p><b>它是「AI 模型的 App Store」，只是東西大多免費，而且下載回來是自己跑，不是連到別人的伺服器。</b></p>
+      <p>2016 年成立。全世界的研究團隊和公司，訓練好一個 AI 模型之後，會把它放上去。想用的人上去挑一個、按下載，就能拿回自己的電腦或公司機房裡跑。</p>
+      <p>我們上一篇專欄（8 月 19 日）談的那些「開放權重」模型——就是那種可以整包下載回來的模型——<b>全部都掛在這個網站上</b>。要下載它們，實務上就是要經過 Hugging Face。</p>
+    </div>
+
+    <div class="prose max-w-none mb-4">
+      <p>光講定義不容易有感覺。下面是這個網站<b>今天</b>的熱門榜前幾名，直接抓的：</p>
+    </div>
+
+    <div class="tw mb-3">
+      <table class="d">
+        <thead><tr><th>名次</th><th>模型</th><th>誰做的</th><th class="nw">累計下載</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="why nw">1</td><td>Qwen3.8-Flash-Next</td><td>阿里巴巴（中國）</td><td class="nw num">—（8/27 剛上架）</td></tr>
+          <tr class="hl"><td class="why nw">2</td><td>GLM-5.3-Flash</td><td>智譜（中國）</td><td class="nw num">—（8/27 剛上架）</td></tr>
+          <tr class="hl"><td class="why nw">3</td><td><b>Qwen3.8-27B</b></td><td>阿里巴巴（中國）</td><td class="nw num"><b>345 萬次</b></td></tr>
+          <tr class="hl"><td class="why nw">4</td><td>Qwen3.8-27B-GGUF<span class="text-slate-400">（社群轉檔版）</span></td><td>社群（unsloth）</td><td class="nw num"><b>776 萬次</b></td></tr>
+          <tr class="hl"><td class="why nw">5–8</td><td colspan="2">全部是 Qwen3.8 的各種變體</td><td class="nw num">8 萬～51 萬次</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 leading-relaxed mb-6">資料：Hugging Face 熱門榜，擷取 2026-08-28。「GGUF」是一種轉檔格式，讓模型可以在一般的電腦上跑得動——<b>由社群自願做的，不是原廠</b>，而它的下載量比原廠版還高一倍多。這件事本身就說明了這個平台的性質：<b>它不只是倉庫，它有一個會自己動手的社群。</b></p>
+
+    <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5 mb-6">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">這張表最值得注意的一件事</div>
+      <p class="text-[14.5px] leading-relaxed text-slate-700"><b class="text-blue-900">今天熱門榜的前八名，全部是中國團隊做的模型。</b>一家美國晶片公司，要買下的是這樣一個平台——上面下載量最高的東西，來自它的國家正在管制的那一邊。這件事後面一定會有人談，包括監理機關。</p>
+    </div>
+
+    <div class="plain">
+      <div class="lb">它靠什麼賺錢</div>
+      <p>一年營收<b>約 1.5 億美元</b>（兩個月前約 1 億，成長很快），執行長說「接近損益兩平」。錢主要來自兩塊：<b>租算力給人跑模型</b>，以及<b>賣企業版</b>給需要私有環境的公司。</p>
+      <p>換句話說，<b>它不靠賣模型賺錢——模型是免費的。它靠的是「大家來這裡」這件事本身。</b>這正是 NVIDIA 想要的東西。</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="s3" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">03</span><h2 class="text-xl sm:text-2xl font-extrabold">為什麼是它，為什麼是現在</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">三個理由，第三個要先看懂前一天的財報</p>
+
+    <div class="prose max-w-none mb-5">
+      <p><b class="text-slate-900">理由一：NVIDIA 一直很堅持只賣鏟子，這是它第一次往上走。</b></p>
+      <p>這件事要對照它今年做過的另一個決定才看得出份量。NVIDIA 其實有做過雲端服務（叫 DGX Cloud），也就是自己蓋機房、租算力給客戶。但<b>它在 2026 年主動把這門生意收回去，只給自家工程師用</b>，不再跟 AWS、Azure、Google Cloud 競爭。</p>
+      <p>原因不難理解：那三家是它最大的客戶。跟客戶搶生意，客戶就會更想自己做晶片。</p>
+    </div>
+
+    <figure class="fig mb-6">
+      <div class="text-[13px] font-extrabold text-slate-900 mb-3">圖 1　NVIDIA 的位置，前後對照</div>
+<svg class="cv" viewBox="0 0 760 260" role="img" aria-label="NVIDIA 過去只做晶片層，收購 Hugging Face 後跨進模型分發層">
+<defs><style>.f-t{font-size:13px;font-weight:800;fill:#1e293b}.f-s{font-size:11.5px;fill:#64748b}.f-l{font-size:11px;font-weight:800;fill:#fff}.f-h{font-size:11.5px;font-weight:800;fill:#94a3b8;letter-spacing:.1em}</style></defs>
+
+<text class="f-h" x="30" y="24">過去（到 2026 年 8 月為止）</text>
+<rect x="30" y="36" width="320" height="40" rx="8" fill="#e2e8f0"/><text class="f-s" x="190" y="61" text-anchor="middle">模型分發平台　Hugging Face（獨立）</text>
+<rect x="30" y="84" width="320" height="40" rx="8" fill="#e2e8f0"/><text class="f-s" x="190" y="109" text-anchor="middle">雲端　AWS · Azure · Google Cloud</text>
+<rect x="30" y="132" width="320" height="44" rx="8" fill="#1e3a5f"/><text class="f-l" x="190" y="159" text-anchor="middle">晶片　NVIDIA</text>
+<text class="f-s" x="190" y="197" text-anchor="middle">只站一層，而且刻意的</text>
+<text class="f-s" x="190" y="215" text-anchor="middle">（今年主動收掉自家雲端服務）</text>
+
+<text x="380" y="112" text-anchor="middle" font-size="26" fill="#cbd5e1">→</text>
+
+<text class="f-h" x="410" y="24">如果這筆交易成立</text>
+<rect x="410" y="36" width="320" height="40" rx="8" fill="#b93a2f"/><text class="f-l" x="570" y="61" text-anchor="middle">模型分發平台　Hugging Face</text>
+<rect x="410" y="84" width="320" height="40" rx="8" fill="#e2e8f0"/><text class="f-s" x="570" y="109" text-anchor="middle">雲端　AWS · Azure · Google Cloud</text>
+<rect x="410" y="132" width="320" height="44" rx="8" fill="#1e3a5f"/><text class="f-l" x="570" y="159" text-anchor="middle">晶片　NVIDIA</text>
+<text class="f-s" x="570" y="197" text-anchor="middle">跳過雲端那一層，直接站上最上面</text>
+<text class="f-s" x="570" y="215" text-anchor="middle">（不跟三大雲搶生意，但拿到入口）</text>
+
+<line x1="410" y1="228" x2="730" y2="228" stroke="#fecaca" stroke-width="2"/>
+<text x="570" y="248" text-anchor="middle" font-size="11.5" font-weight="800" fill="#b93a2f">這是它兩年來第一次改變位置</text>
+</svg>
+      <figcaption>這張圖是本篇的核心。<b>重點不是 NVIDIA 變大了，是它換了位置</b>——而且換得很巧：買平台不會跟三大雲端業者正面衝突，卻拿到了所有人取得模型的那個入口。</figcaption>
+    </figure>
+
+    <div class="prose max-w-none mb-5">
+      <p><b class="text-slate-900">理由二：它買的是「路口」，不是「產品」。</b></p>
+      <p>回到第 2 節那張熱門榜。全世界要下載免費 AI 模型的人，都會經過這個網站。<b>擁有這個路口的人，可以影響很多事</b>：哪些模型比較容易被找到、哪種檔案格式跑起來最順、模型預設先為哪一家的硬體最佳化。</p>
+      <p>這些都不是「禁止你用別家」那種明顯的動作，但長期下來會決定大家的預設選擇。</p>
+      <p><b class="text-slate-900">理由三：它自己的毛利率正在被吃掉。</b>這一點要看前一天的財報，所以先花一分鐘把幾個財務名詞講清楚。</p>
+    </div>
+
+    <div class="plain mb-5">
+      <div class="lb">一分鐘看懂財報上那幾個詞</div>
+      <p>用一杯珍奶來說。假設一杯賣 <b>60 元</b>：</p>
+      <dl class="bub">
+        <dt>營收</dt><dd>客人付的全部，<b>60 元</b>。這是「賣了多少」。</dd>
+        <dt>毛利</dt><dd>扣掉做這杯的直接材料（茶葉、牛奶、珍珠、杯子）15 元，剩 <b>45 元</b>。</dd>
+        <dt>毛利率</dt><dd>45 ÷ 60 ＝ <b>75%</b>。意思是<b>每收 100 元，做東西的成本吃掉 25 元</b>。</dd>
+        <dt>淨利</dt><dd>再扣掉店租、店員薪水、水電、稅之後，<b>真正落袋的</b>。</dd>
+        <dt>EPS</dt><dd>淨利分給每一股的金額。股東最在意這個。</dd>
+      </dl>
+      <p class="!mt-4">為什麼毛利率特別重要？因為<b>它反映的是「本業的體質」</b>。店租可以搬家、人力可以調整，但材料變貴是躲不掉的——毛利率一掉，通常代表上游在漲價。</p>
+    </div>
+
+    <div class="tw mb-3">
+      <table class="d">
+        <thead><tr><th>NVIDIA 這一季（2026-08-26 公布）</th><th class="nw">數字</th><th>白話</th></tr></thead>
+        <tbody>
+          <tr><td class="why">營收</td><td class="nw num"><b>962 億美元</b></td><td>比去年同期多一倍（年增 106%）。約新台幣 3 兆。</td></tr>
+          <tr><td class="why">其中：資料中心</td><td class="nw num">890 億美元</td><td>佔了 <b>92.5%</b>。就是賣給 AI 機房的那些晶片。</td></tr>
+          <tr><td class="why">毛利率</td><td class="nw num"><b>75.0%</b></td><td>每收 100 元，材料等直接成本吃掉 25 元。<b>非常高。</b></td></tr>
+          <tr><td class="why">淨利</td><td class="nw num"><b>597 億美元</b></td><td>全部扣完真正賺到的。約新台幣 1.8 兆，<b>一季</b>。</td></tr>
+          <tr><td class="why">EPS</td><td class="nw num">2.46 美元</td><td>每一股分到的獲利。</td></tr>
+          <tr class="hl"><td class="why">下一季毛利率預告</td><td class="nw num"><b>74.0%</b></td><td rowspan="2"><b>這兩列是重點。</b>公司自己預告毛利率要往下掉，理由是<b>記憶體出現「極端的價格條件」</b>，漲幅超出原本的預期。</td></tr>
+          <tr class="hl"><td class="why">再下一季（谷底）</td><td class="nw num"><b>71–72%</b></td></tr>
+          <tr class="hl"><td class="why">明年度</td><td class="nw num">72–73%</td><td>會回升一點，但公司說明是<b>「靠漲價」</b>回來的，不是成本降下來。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-[12px] text-slate-500 leading-relaxed mb-6">資料：NVIDIA FY2027 第二季財報與同日法說（2026-08-26）。<b>75% 掉到 71.5% 聽起來只有 3.5 個百分點，但以這一季 962 億的營收規模算，大約是 34 億美元——一季。</b>另外，公司同時表示明年的成長預估是「供給受限」下的數字：客戶想要的量大約是它能供給的兩倍。</p>
+
+    <div class="rounded-xl border-2 border-blue-800 bg-blue-50/50 p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-blue-800 mb-2">把兩天接起來</div>
+      <p class="text-[14.5px] leading-relaxed text-slate-700 mb-3"><b class="text-blue-900">8 月 26 日：賣硬體的毛利率要往下掉，而且要靠漲價才補得回來。<br>8 月 27 日：傳出要花 129 億買一個軟體平台。</b></p>
+      <p class="text-[14px] leading-relaxed text-slate-700">硬體生意的成本會被上游的料件價格牽動，平台生意不會。<b>一家毛利率正在被壓縮的硬體公司，去買一個平台——這個時間點很難說是巧合。</b></p>
+      <p class="text-[12.5px] leading-relaxed text-slate-500 mt-3 pt-3 border-t border-blue-200"><b>這一段是推測。</b>NVIDIA 並沒有把這兩件事連在一起說過，兩家公司對收購案都還沒有任何正式說法。</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="s4" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">04</span><h2 class="text-xl sm:text-2xl font-extrabold">爭議在哪：中立性</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">這是開發者社群最在意的一點</p>
+
+    <div class="prose max-w-none mb-5">
+      <p>Hugging Face 現在有一個重要的性質：<b>它對所有晶片廠一視同仁。</b></p>
+      <p>它有一套工具（叫 Optimum），幫你把模型調整成在特定硬體上跑得順。<b>這套工具同時支援 NVIDIA、AMD、Intel、亞馬遜自研的晶片</b>——你用哪一家的硬體，它都有對應的版本。</p>
+      <p>問題就在這裡：<b>如果這個平台被其中一家晶片廠買走，它還會繼續認真維護競爭對手的那幾套嗎？</b></p>
+    </div>
+
+    <div class="tw mb-6">
+      <table class="d">
+        <thead><tr><th>面向</th><th>目前的看法</th></tr></thead>
+        <tbody>
+          <tr><td class="why">正面</td><td>分析師普遍認為，這對<b>開放模型的資金與普及是好事</b>——Hugging Face 會拿到遠比現在多的資源。</td></tr>
+          <tr class="hl"><td class="why">負面</td><td>「一個重要的<b>中立市集</b>，可能會慢慢變成<b>以 NVIDIA 為中心的通路</b>。」這是社群最主要的擔憂。</td></tr>
+          <tr class="hl"><td class="why">最刺眼的一條</td><td><b>2025 年底，Hugging Face 拒絕過 NVIDIA 5 億美元的投資</b>，理由是不想要一個有主導權的投資人影響公司決策。<b>一年後，它接受了 129 億的整家收購。</b></td></tr>
+          <tr><td class="why">監理</td><td>NVIDIA 在 AI 晶片已有壓倒性市佔，再買下這個生態的基礎設施層，<b>幾乎確定會引來反壟斷審查</b>。這會是這筆交易最大的變數。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">一條可以連起來看的線</div>
+      <p class="text-[14px] text-slate-700 leading-relaxed">NVIDIA 今年 7 月 24 日發起過一封公開信，主張「開放權重模型對美國的 AI 領導地位很重要」，找了幾十家公司連署。<b>當時看起來像是立場宣示；現在回頭看，它可能是一連串動作的第一步。</b>先替開放模型講話，再把開放模型的集散地買下來——這兩件事放在一起，就不只是兩則新聞。</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s5" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">05</span><h2 class="text-xl sm:text-2xl font-extrabold">對我們的意義</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">本節為推估與建議，非既成事實</p>
+
+    <div class="rounded-xl border-2 border-emerald-700 bg-emerald-50/40 p-5 mb-6">
+      <div class="text-[11px] font-extrabold tracking-widest text-emerald-800 mb-2">短結論</div>
+      <p class="text-[15px] leading-relaxed text-slate-700"><b>現在什麼都不用做。</b>這件事還沒簽約、可能破局、而且就算成交也要過反壟斷這一關。<b>但它值得放進觀察清單，因為它動到的是「地端部署」那條路的下游。</b></p>
+    </div>
+
+    <div class="prose max-w-none mb-5">
+      <p>金融業評估 AI 方案時，除了「用雲端的 API」，另一條路是<b>把模型下載回自家機房跑</b>——資料不出去，法遵上比較好處理。這條路目前的實際做法，幾乎都是從 Hugging Face 下載。</p>
+      <p>也就是說：<b>這條路的下游，可能要換一個所有權人。</b>現在那個平台是中立的，之後不一定。</p>
+    </div>
+
+    <div class="tw mb-6">
+      <table class="d">
+        <thead><tr><th>時間</th><th>該做什麼</th></tr></thead>
+        <tbody>
+          <tr><td class="why nw">現在</td><td><b>不用調整任何決策。</b>消息未定案，過度反應的成本比觀望高。</td></tr>
+          <tr class="hl"><td class="why nw">如果成交</td><td>重新檢視一件事：<b>我們評估過的地端方案，是不是全部綁在同一個平台上？</b>模型從哪裡下載、用什麼工具轉檔、依賴哪些函式庫——這些現在多半都在 Hugging Face 上，值得先盤點一次，知道自己有多少依賴。</td></tr>
+          <tr><td class="why nw">長期</td><td>如果這個平台真的變成「以 NVIDIA 為中心」，那<b>非 NVIDIA 硬體的地端方案，取得難度會升高</b>。這對成本評估是一個變數，但不是明年的事。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">三個可以自己追蹤的訊號</div>
+      <div class="rd">
+        <div data-n="01"><b>有沒有正式公告。</b>目前雙方都沒有說話。等到有一方發正式聲明，這件事才從傳聞變成事實。</div>
+        <div data-n="02"><b>反壟斷機關的動作。</b>這是最大的變數。若有主管機關立案審查，時程會拉長很多。</div>
+        <div data-n="03"><b>Optimum 對 AMD、Intel 那幾套的更新頻率。</b>這是最實際的觀察點——中立性不會用公告的方式消失，會用「更新變慢」的方式消失。</div>
+      </div>
+    </div>
+
+    <div class="nx">
+      <b>下一篇起，連三篇做一組中美對照</b>：先看美國這邊的雲端業者與 AI 巨頭各自站在哪個位置，再看中國那邊的同一批位置由誰佔著，最後把兩張圖疊起來比。<b>本篇的第 3 節那張位置圖，就是那一組的第一塊拼圖</b>——而 NVIDIA 這一步，剛好把原本很清楚的分工線弄模糊了。
+    </div>
+  </section>
+
+  <!-- 口徑 -->
+  <section id="s6" class="scroll-mt-24">
+    <div class="flex items-center gap-3 mb-1"><span class="sec-no">口徑</span><h2 class="text-xl sm:text-2xl font-extrabold">資料與限制</h2></div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">哪些是確定的、哪些是推的</p>
+
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-5">
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">確定的（有一手來源）</div>
+        <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-5">
+          <li><b>NVIDIA 的財務數字</b>：營收、毛利率、淨利、EPS、下兩季毛利率財測，皆取自 2026-08-26 公司財報公告原文。</li>
+          <li><b>Hugging Face 熱門榜與下載量</b>：直接向該平台查詢，擷取 2026-08-28。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">尚未確定的（媒體報導）</div>
+        <ul class="text-[13.5px] text-slate-700 leading-relaxed space-y-1.5 list-disc pl-5">
+          <li><b>收購案本身</b>：金額、進度、是否已達成協議，全部來自媒體報導，<b>兩家公司均未證實，且不同媒體對「是否已同意」的說法互相矛盾</b>。</li>
+          <li>Hugging Face 的營收與獲利狀態、2025 年底拒絕 5 億美元投資一事，均為媒體報導引述。</li>
+          <li>「重新進入雲端」這個動機，是媒體的分析，<b>不是 NVIDIA 的說法</b>。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">本篇的推測，以及它的限度</div>
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">第 3 節把「毛利率下滑」與「收購平台」連起來，<b>這是本篇的推論，沒有任何一方證實過</b>。兩件事在時間上相鄰，不代表有因果。讀者可以把它當成一個待驗證的假設，而不是結論。</p>
+      </div>
+      <div>
+        <div class="text-[11px] font-extrabold tracking-widest text-slate-500 mb-2">換算假設</div>
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">文中新台幣約當值以 1 美元 ≈ 31 元換算，僅供感受規模用，非精確金額。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!--TOC:START-->
+<style>
+  #pgTocBtn { position:fixed; right:18px; bottom:22px; z-index:60; display:none;
+              align-items:center; gap:6px; padding:10px 14px; border:0; border-radius:999px;
+              background:#1e3a8a; color:#fff; font-size:13px; font-weight:800; cursor:pointer;
+              box-shadow:0 6px 24px rgba(15,36,96,.35); }
+  #pgTocBtn.ready { display:inline-flex; }
+  #pgTocPanel { position:fixed; right:18px; bottom:76px; z-index:60; display:none;
+                width:min(300px, calc(100vw - 36px)); max-height:60vh; overflow-y:auto;
+                background:#fff; border-radius:16px; padding:8px;
+                box-shadow:0 16px 48px rgba(15,23,42,.25); }
+  #pgTocPanel.open { display:block; }
+  #pgTocPanel a { display:flex; gap:9px; padding:9px 11px; border-radius:10px;
+                  font-size:13.5px; line-height:1.5; color:#334155; text-decoration:none; }
+  #pgTocPanel a:hover { background:#f1f5f9; color:var(--brand-700, #1e3a8a); }
+  #pgTocPanel a .n { flex:none; font-size:10px; font-weight:800; letter-spacing:.1em;
+                     color:#94a3b8; padding-top:3px; }
+  main section[id] { scroll-margin-top:5rem; }
+  body:has(#toc) #pgTocBtn.ready { display:none; }
+  @media (max-width:1023px) { body:has(#toc) #pgTocBtn.ready { display:inline-flex; } }
+</style>
+<button id="pgTocBtn" aria-expanded="false">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>本篇目錄
+</button>
+<nav id="pgTocPanel" aria-label="本篇目錄"></nav>
+<script>
+(function () {
+  const btn = document.getElementById('pgTocBtn');
+  const panel = document.getElementById('pgTocPanel');
+  const secs = [...document.querySelectorAll('main section[id]')]
+    .map(s => [s.id, s.querySelector('h2'), s.querySelector('.sec-no')])
+    .filter(([, h2]) => h2);
+  if (secs.length < 2) return;
+  panel.innerHTML = secs.map(([id, h2, no], i) =>
+    `<a href="#${id}"><span class="n">${no ? no.textContent.trim() : String(i + 1).padStart(2, '0')}</span>`
+    + `<span>${h2.textContent.trim()}</span></a>`).join('');
+  btn.classList.add('ready');
+  const close = () => { panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  panel.addEventListener('click', e => { if (e.target.closest('a')) close(); });
+  document.addEventListener('click', e => { if (!panel.contains(e.target)) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+<!--TOC:END-->
+<!--FOOT:START-->
+<div class="max-w-6xl mx-auto px-5 pb-10 text-center">
+  <a href="../news.html" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-700 transition-colors">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>回 AI 新聞深度解讀
+  </a>
+</div>
+<!--FOOT:END-->
+</body>
+</html>

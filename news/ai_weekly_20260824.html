@@ -230,7 +230,7 @@
             <p class="font-bold text-orange-900 mb-2">一句話：先把「呼叫哪一家模型」這件事，從業務系統裡抽出來。</p>
             <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
 <li>選模型不再是採購一次就定案，而是每天都要重新判斷的事</li>
-<li>在 AOAI 上面加一層自己的介面，讓系統不要直接接死某一家的 API</li>
+<li>在雲端模型服務上面加一層自己的介面，讓系統不要直接接死某一家的 API</li>
 <li>路由規則須內建合規白名單，不能只以成本排序</li>
 <li>此服務目前僅美國提供，短期是方法可借鏡、尚不可直接採用</li>
             </ul>
@@ -238,9 +238,9 @@
             <div class="mt-3 pt-3 border-t border-orange-200">
               <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">子公司可套用的場景</div>
               <ul class="space-y-1.5 text-[12.5px] leading-relaxed">
-              <li>· <b class="text-orange-900">元大證券 · 投資先生</b>：行情問答、個股基本資料查詢問的次數多、內容不難，可以交給地端小模型；法人研究摘要與複雜試算才呼叫 AOAI。先統計兩類各占多少，再決定分界。</li>
+              <li>· <b class="text-orange-900">元大證券 · 投資先生</b>：行情問答、個股基本資料查詢問的次數多、內容不難，可以交給地端小模型；法人研究摘要與複雜試算才呼叫雲端模型服務。先統計兩類各占多少，再決定分界。</li>
               <li>· <b class="text-orange-900">元大投信 · FundTech</b>：基金月報初稿、公開資訊觀測站公告摘要量大又固定，適合長期交給地端的開放權重模型，不必按次付費，人工改成抽查就好。</li>
-              <li>· <b class="text-orange-900">元大期貨 · 期貨精靈</b>：保證金試算、商品規格問答的答案本來就在資料庫裡，用規則加地端小模型就能處理，不必每次呼叫 AOAI。</li>
+              <li>· <b class="text-orange-900">元大期貨 · 期貨精靈</b>：保證金試算、商品規格問答的答案本來就在資料庫裡，用規則加地端小模型就能處理，不必每次呼叫雲端模型服務。</li>
               <li>· <b class="text-orange-900">元大金控</b>：路由紀錄同時是用量紀錄，可作為各子公司 AI 成本分攤與年度預算編列的依據，這是目前缺少的數字。</li>
               </ul>
             </div>
@@ -274,7 +274,7 @@
             <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
             <p class="font-bold text-orange-900 mb-2">一句話：這是重新談合約的時機，但要求要寫進合約與 SLA，不能只收下政策文件。</p>
             <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
-<li>集團雲端已在 AOAI 上，重點是既有條款夠不夠硬，而非要不要用雲端</li>
+<li>在已經用雲端的前提下，重點是既有條款夠不夠硬，而非要不要用雲端</li>
 <li>零資料保留、資料落地、稽核紀錄留存、第三方驗證報告列為採購必要條件，寫入合約與 SLA</li>
 <li>要求供應商說明變更政策的通知義務與退出機制</li>
 <li>條款談不下來的任務，就是地端的第一批名單</li>
@@ -321,7 +321,7 @@
             <p class="font-bold text-orange-900 mb-2">一句話：地端路線已有成熟的模型供給，可以走雲端與地端雙軌。</p>
             <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
 <li>開放權重的模型已經夠多夠好，地端不再只能在「封閉 API」和「能力不足的小模型」之間二選一</li>
-<li>分工：公開資訊分析走 AOAI；客戶個資與交易明細改開放權重模型地端微調</li>
+<li>分工：公開資訊分析走雲端模型服務；客戶個資與交易明細改開放權重模型地端微調</li>
 <li>雙軌須同步建立地端模型清單：來源、授權、微調資料、負責單位，避免稽核找不到人</li>
             </ul>
           
@@ -855,7 +855,7 @@
 <li>可用的一面：告警分類與情報關聯屬高頻重複工作，AI 代理可緩解資安人力缺口</li>
 <li>要留意的一面：初階職務是人才養成階段，全部自動化會讓中階人力出現斷層</li>
 <li>提前把「監督與驗證 AI 代理」定義為新的初階職務內容</li>
-            </ul><p class="mt-2">對集團更貼身的是另一層：AOAI 這種雲端服務的資安責任大半在供應商身上，一旦往地端走，模型權重的來源與完整性、模型檔案與微調資料的存放權限、地端推論主機的網路分區，全部回到自家資安團隊手上。這些是現行資安職能地圖上還沒有的項目，應該與地端規劃同時排入訓練與人力盤點，不要等第一台地端推論主機上線才發現沒人負責。</p>
+            </ul><p class="mt-2">更貼身的是另一層：雲端模型服務的資安責任大半在供應商身上，一旦往地端走，模型權重的來源與完整性、模型檔案與微調資料的存放權限、地端推論主機的網路分區，全部回到自家資安團隊手上。這些是現行資安職能地圖上還沒有的項目，應該與地端規劃同時排入訓練與人力盤點，不要等第一台地端推論主機上線才發現沒人負責。</p>
           
             <div class="mt-3 pt-3 border-t border-orange-200">
               <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">子公司可套用的場景</div>
@@ -898,7 +898,7 @@
             <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
 <li>多數 AI 專案的卡點不在模型選型，而在資安審查、合規檢核與 UAT 的排隊</li>
 <li>設常設的 AI 驗證小組和固定的測試環境，把模型評測、幻覺率量測、資安攻防演練都做成可重複的固定流程</li>
-<li>題庫要能同時測 AOAI 與候選的地端開放權重模型，作為未來下放地端的比較基準</li>
+<li>題庫要能同時測雲端模型服務與候選的地端開放權重模型，作為未來下放地端的比較基準</li>
 <li>效益隨用例數量累積，愈多用例愈能省下專案前置期</li>
             </ul>
           
@@ -940,13 +940,13 @@
           <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
         </div>
         <div class="p-4">
-          <p class="text-[13.5px] font-bold text-slate-900">AOAI 底座已在，這週的三則新聞都指向下一步：任務怎麼分流、合約怎麼談、地端怎麼接上來。</p>
+          <p class="text-[13.5px] font-bold text-slate-900">這週的三則新聞指向同一組問題：任務怎麼分流、合約怎麼談、地端怎麼接上來。</p>
 
           <div class="sub-h">因為　所以</div>
 
           <div class="why">
             <div class="why-c"><span class="why-t">因為</span><p>Ramp 把模型路由做成對外服務，選模型從一次性採購變成每天都在做的營運決策；而集團多數場景是委外或平台內建，換模型的介面並不在自己手上。</p></div>
-            <div class="why-a"><span class="why-t">所以建議</span><p>在 AOAI 上面加一層自己的介面，所有系統只呼叫這一層；後面要接 AOAI 還是地端模型可以隨時換，續約時介面就握在集團手上。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>在雲端模型服務上面加一層自己的介面，所有系統只呼叫這一層；後面要接雲端服務還是地端模型可以隨時換，續約時介面就握在集團手上。</p></div>
           </div>
 
           <div class="why">
@@ -1034,7 +1034,7 @@
 
           <div class="why">
             <div class="why-c"><span class="why-t">因為</span><p>Ramp 的數字顯示，把請求依複雜度分流到不同等級的模型，比換一家供應商省得多；投資先生的請求本來就分成兩種量級完全不同的類型。</p></div>
-            <div class="why-a"><span class="why-t">所以建議</span><p>投資先生採分級路由：行情問答與個股基本資料查詢走地端小模型，法人研究摘要與複雜試算才呼叫 AOAI；先統計兩類請求的實際占比再訂門檻。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>投資先生採分級路由：行情問答與個股基本資料查詢走地端小模型，法人研究摘要與複雜試算才呼叫雲端模型服務；先統計兩類請求的實際占比再訂門檻。</p></div>
           </div>
 
           <div class="why">

@@ -49,6 +49,11 @@
   "zh": "上下文視窗",
   "oneline": "它一次能看多少字。像工作桌的大小，不等於理解品質。"
  },
+ "determinism": {
+  "term": "Determinism",
+  "zh": "每次一樣",
+  "oneline": "同樣輸入給同樣輸出。這是我們對系統幾十年的預設期待，而它在這裡不成立。"
+ },
  "egress": {
   "term": "Egress",
   "zh": "出向流量管控",
@@ -114,6 +119,11 @@
   "zh": "預訓練",
   "oneline": "拿海量文字猜下一個字，把語言能力和知識一起學進去。"
  },
+ "rag": {
+  "term": "RAG / Retrieval-Augmented Generation",
+  "zh": "先撈再答",
+  "oneline": "回答之前先去把相關文件撈出來，跟問題一起交給模型。"
+ },
  "react": {
   "term": "ReAct",
   "zh": "想一步做一步",
@@ -144,6 +154,11 @@
   "zh": "可驗證獎勵強化學習",
   "oneline": "用「答案對不對」當獎勵，而不是用「人喜不喜歡」。"
  },
+ "sampling": {
+  "term": "Sampling",
+  "zh": "抽樣",
+  "oneline": "每產生一個字，都是在一張機率表上抽一次，不是去查一格答案。"
+ },
  "sandbox-escape": {
   "term": "Sandbox Escape",
   "zh": "沙盒逃逸",
@@ -153,6 +168,11 @@
   "term": "Sandbox",
   "zh": "沙盒",
   "oneline": "新人的模擬帳戶：可以練習，但下的單不會真的成交。"
+ },
+ "temperature": {
+  "term": "Temperature",
+  "zh": "溫度",
+  "oneline": "把機率表拉平或拉尖的旋鈕，管的是用字多發散，不是答得多嚴謹。"
  },
  "test-time-compute": {
   "term": "Test-time Compute",

@@ -42,11 +42,11 @@
    "zh": "評測基準",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#2563eb",
+   "color": "#1d4ed8",
    "pending": false,
    "url": "terms/benchmark.html",
    "oneline": "一份標準考卷。它只證明模型擅長那份考卷。",
-   "deg": 3
+   "deg": 4
   },
   {
    "id": "chain-of-thought",
@@ -58,6 +58,18 @@
    "pending": false,
    "url": "terms/chain-of-thought.html",
    "oneline": "先在草稿紙上寫過程再回答，正確率會上升。",
+   "deg": 1
+  },
+  {
+   "id": "determinism",
+   "label": "Determinism",
+   "zh": "每次一樣",
+   "kind": "term",
+   "cat": "2026-W36",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/determinism.html",
+   "oneline": "同樣輸入給同樣輸出。這是我們對系統幾十年的預設期待，而它在這裡不成立。",
    "deg": 1
   },
   {
@@ -102,11 +114,11 @@
    "zh": "猜下一個字",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#60a5fa",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/next-token-prediction.html",
    "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。",
-   "deg": 2
+   "deg": 3
   },
   {
    "id": "pretraining",
@@ -119,6 +131,18 @@
    "url": "terms/pretraining.html",
    "oneline": "拿海量文字猜下一個字，把語言能力和知識一起學進去。",
    "deg": 2
+  },
+  {
+   "id": "rag",
+   "label": "RAG / Retrieval-Augmented Generation",
+   "zh": "先撈再答",
+   "kind": "term",
+   "cat": "2026-W36",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/rag.html",
+   "oneline": "回答之前先去把相關文件撈出來，跟問題一起交給模型。",
+   "deg": 1
   },
   {
    "id": "reasoning-model",
@@ -142,6 +166,30 @@
    "pending": false,
    "url": "terms/rlvr.html",
    "oneline": "用「答案對不對」當獎勵，而不是用「人喜不喜歡」。",
+   "deg": 1
+  },
+  {
+   "id": "sampling",
+   "label": "Sampling",
+   "zh": "抽樣",
+   "kind": "term",
+   "cat": "2026-W36",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/sampling.html",
+   "oneline": "每產生一個字，都是在一張機率表上抽一次，不是去查一格答案。",
+   "deg": 1
+  },
+  {
+   "id": "temperature",
+   "label": "Temperature",
+   "zh": "溫度",
+   "kind": "term",
+   "cat": "2026-W36",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/temperature.html",
+   "oneline": "把機率表拉平或拉尖的旋鈕，管的是用字多發散，不是答得多嚴謹。",
    "deg": 1
   },
   {
@@ -179,6 +227,17 @@
    "url": "terms/weights.html",
    "oneline": "模型訓練完的那一大包參數檔，模型的全部能力都在裡面。",
    "deg": 1
+  },
+  {
+   "id": "ep:2026-W36-sampling",
+   "label": "2026-W36",
+   "zh": "同一題問兩次，為什麼答案不一樣",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W36-sampling.html",
+   "oneline": "把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。",
+   "deg": 0
   },
   {
    "id": "ep:2026-W35-pretraining-finetuning",
@@ -271,6 +330,11 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W36-sampling",
+   "target": "benchmark",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W35-pretraining-finetuning",
    "target": "benchmark",
    "layer": 1
@@ -301,6 +365,31 @@
    "layer": 1
   },
   {
+   "source": "determinism",
+   "target": "sampling",
+   "layer": 2
+  },
+  {
+   "source": "determinism",
+   "target": "rag",
+   "layer": 2
+  },
+  {
+   "source": "determinism",
+   "target": "temperature",
+   "layer": 2
+  },
+  {
+   "source": "benchmark",
+   "target": "determinism",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W36-sampling",
+   "target": "determinism",
+   "layer": 1
+  },
+  {
    "source": "fine-tuning",
    "target": "weights",
    "layer": 2
@@ -308,6 +397,11 @@
   {
    "source": "fine-tuning",
    "target": "pretraining",
+   "layer": 2
+  },
+  {
+   "source": "fine-tuning",
+   "target": "rag",
    "layer": 2
   },
   {
@@ -361,6 +455,11 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W36-sampling",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W35-pretraining-finetuning",
    "target": "next-token-prediction",
    "layer": 1
@@ -371,6 +470,11 @@
    "layer": 1
   },
   {
+   "source": "pretraining",
+   "target": "rag",
+   "layer": 2
+  },
+  {
    "source": "ep:2026-W35-pretraining-finetuning",
    "target": "pretraining",
    "layer": 1
@@ -378,6 +482,21 @@
   {
    "source": "ep:2026-W34-benchmark",
    "target": "pretraining",
+   "layer": 1
+  },
+  {
+   "source": "rag",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "rag",
+   "target": "sampling",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W36-sampling",
+   "target": "rag",
    "layer": 1
   },
   {
@@ -403,6 +522,36 @@
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "rlvr",
+   "layer": 1
+  },
+  {
+   "source": "next-token-prediction",
+   "target": "sampling",
+   "layer": 2
+  },
+  {
+   "source": "sampling",
+   "target": "temperature",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W36-sampling",
+   "target": "sampling",
+   "layer": 1
+  },
+  {
+   "source": "reasoning-model",
+   "target": "temperature",
+   "layer": 2
+  },
+  {
+   "source": "rag",
+   "target": "temperature",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W36-sampling",
+   "target": "temperature",
    "layer": 1
   },
   {

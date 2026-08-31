@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next Token Prediction｜AI 小學堂 名詞</title>
-    <meta name="description" content="模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。">
-    <meta property="og:title" content="Next Token Prediction 猜下一個字">
-    <meta property="og:description" content="模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。">
+    <title>RAG / Retrieval-Augmented Generation｜AI 小學堂 名詞</title>
+    <meta name="description" content="回答之前先去把相關文件撈出來，跟問題一起交給模型。">
+    <meta property="og:title" content="RAG / Retrieval-Augmented Generation 先撈再答">
+    <meta property="og:description" content="回答之前先去把相關文件撈出來，跟問題一起交給模型。">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
@@ -18,7 +18,7 @@
         .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 
         /* 每頁的重點色來自「第幾集首次出現」，整頁只用這一個變數 */
-        :root { --accent: #2563eb; }
+        :root { --accent: #7c3aed; }
         .hero-term {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, color-mix(in srgb, var(--accent) 30%, #1e293b) 100%);
         }
@@ -271,10 +271,10 @@
             </a>
             <div class="flex items-center gap-2 flex-wrap mb-3 text-[11px]">
                 <span class="font-semibold tracking-wider rounded-full px-2.5 py-1"
-                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W33</span>
+                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W36</span>
             </div>
-            <h1 class="page-title">Next Token Prediction</h1>
-            <p class="text-white/50 text-sm mt-1.5">猜下一個字</p>
+            <h1 class="page-title">RAG / Retrieval-Augmented Generation</h1>
+            <p class="text-white/50 text-sm mt-1.5">先撈再答</p>
         </div>
     </header>
 
@@ -282,39 +282,61 @@
 
         <div class="cols">
             <main class="space-y-9 min-w-0">
-                <p class="pull">模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。</p>
+                <p class="pull">回答之前先去把相關文件撈出來，跟問題一起交給模型。</p>
                 <article class="term-body">
 <section class="tb tb1"><h2 id="_1">定義</h2>
-<p>模型不是去某個地方「查」答案。它做的事只有一件：<strong>看著目前已經有的所有字，算出下一個字最可能是什麼，吐出來；然後把剛吐出來的那個字也算進上文，再猜下一個。</strong> 一個字一個字，猜到句子結束為止。</p>
-<p>有兩個推論直接從這裡長出來：</p>
-<p><strong>它很會「講得像」，但不保證「講得對」。</strong> 它被訓練去最佳化的是「這個字接在這裡順不順」，不是「這句話真不真」。所以它掰起來會非常流暢——這就是<a href="alignment.html" class="term-link" data-term="alignment">幻覺</a>的根，不是一個可以靠修 bug 修掉的瑕疵。</p>
-<p><strong>字一旦吐出去就收不回來。</strong> 沒有回頭修改這回事。第 3 個字猜偏了，後面每個字都是建在那個偏掉的字上面繼續猜的。</p>
-<div class="callout callout-提醒"><div class="callout-title">「猜」不代表隨便</div><p>這裡的「猜」是算出一個機率分布，不是擲骰子。它讀過的資料量夠大，所以在絕大多數情況下猜得又快又準。問題不在準確率，在<strong>它沒有辦法知道自己什麼時候不準</strong>。</p></div>
+<p>模型本身不知道你們的內規、商品條款、上週剛發的函令——那些東西不在它的<a href="weights.html" class="term-link" data-term="weights">權重</a>裡。</p>
+<p>所以內部問答系統做的是另一件事：<strong>先去撈，再讓它答。</strong></p>
+<div class="fl"><div class="fl-step"><div class="fl-who">你問一句</div><div class="fl-what">「這個案子可以簽嗎」</div></div><div class="fl-step"><div class="fl-who">系統去撈</div><div class="fl-what">依意思相近程度，找出最像的幾段內部文件</div></div><div class="fl-step"><div class="fl-who">一起送進去</div><div class="fl-what">你的問題 ＋ 撈到的那幾段，交給模型</div></div><div class="fl-step"><div class="fl-who">模型作答</div><div class="fl-what">只根據眼前這幾段，一個字一個字答出來</div></div></div>
+<p>關鍵在最後一步：<mark class="hl">模型看到的不是整座知識庫，只是這次撈到的那幾段。</mark> 撈錯了，它就答錯了，而且會答得很有自信。</p>
 </section><section class="tb tb2"><h2 id="_2">為何會出現</h2>
-<p>這是這整個領域的根節點，你聽過的名詞幾乎都建在它上面。</p>
-<p>它之所以成為主流，是因為它解決了「訓練資料從哪來」這個瓶頸。要教模型分類貓狗，你得先請人標好幾百萬張圖；但要教模型猜下一個字，<strong>任何一段現成的文字都自帶答案</strong>——把後半遮起來，前半當題目、後半當標準答案。網路上所有的文字，一夜之間全部變成免費的考卷。</p>
-<p>後來每一次的能力躍進，都可以理解成「在這個框架上多加一層」，而不是換掉它：</p>
+<p>因為<a href="fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>處理不了「知識」這一類問題。微調改的是回答的傾向——語氣、格式、流程；它不是把資料存進模型裡。</p>
+<p>而內部文件有兩個性質，讓「訓練進去」這條路一開始就走不通：</p>
 <ul>
-<li><a href="chain-of-thought.html" class="term-link" data-term="chain-of-thought">思考鏈</a>：讓它把推導過程也當成字先吐出來，後面猜答案時上文裡就有算式了</li>
-<li><a href="reasoning-model.html" class="term-link" data-term="reasoning-model">推理模型</a>：把上面那件事訓練成模型的預設行為</li>
-<li><a href="tool-use.html" class="term-link" data-term="tool-use">工具呼叫</a>：讓它吐出一段固定格式的字，由外部程式接手去真的執行</li>
-<li><a href="ai-agent.html" class="term-link" data-term="ai-agent">AI 代理</a>：把「吐字 → 執行 → 把結果餵回去當上文」接成一個迴圈</li>
+<li><strong>會變。</strong> 條款改一次就要重訓一次，成本和時效都不成立。</li>
+<li><strong>要有出處。</strong> 金融業要的不只是答案，是「這句話出自哪一條」。訓練進去的東西講不出處，撈出來的講得出。</li>
 </ul>
-<p><mark class="hl">看清楚：沒有任何一項跳出「猜下一個字」這個框架。變的是上文裡有什麼、以及誰來讀它吐出來的字。</mark></p>
+<p>先撈再答同時解決這兩件事：文件更新就重新建索引，而且每一次回答都能附上它讀了哪幾段。</p>
 </section><section class="tb tb3"><h2 id="_3">金融背景怎麼理解</h2>
-<p>把它想成一個<strong>被規定不准打草稿、而且開口就不能改的資深行員</strong>。</p>
-<p>他看過幾千張攤還表，所以脫口而出的數字通常不會離譜。但條件一多，他就會講出一個聽起來非常合理、位數也對、但就是錯的數字——而且因為不能改，他只好順著那個錯數字把後面的話講得頭頭是道。</p>
-<div class="callout callout-比喻"><div class="callout-title">這個比喻能帶你走多遠</div><p>「準確率不夠」跟「講錯了還講得很有條理」是兩件不同的風險。前者可以靠換更好的模型改善，後者不行——<strong>它是這個機制本身的特性</strong>。</p>
-<p>所以放進客戶接觸點或法遵流程之前，該問的不是「它多準」，而是<strong>「它講錯的時候，我們用什麼看得出來」</strong>。這是<a href="guardrail.html" class="term-link" data-term="guardrail">護欄</a>和<a href="human-in-the-loop.html" class="term-link" data-term="human-in-the-loop">人類介入審核</a>存在的理由。</p></div></section>
+<p>它撈文件的方式<strong>不是關鍵字比對，是意思上的相近程度</strong>。這一個差別，就是很多困惑的來源。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>內部關鍵字搜尋</th>
+<th>先撈再答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>怎麼找</td>
+<td>這串字在不在</td>
+<td>意思有多接近</td>
+</tr>
+<tr>
+<td>結果</td>
+<td>每次一樣</td>
+<td>排名會變</td>
+</tr>
+<tr>
+<td>給你什麼</td>
+<td>原文，一字不改</td>
+<td>用自己的話重講</td>
+</tr>
+</tbody>
+</table>
+<p>所以你把「這個可以嗎」改成「這樣行不行」，字面全變、意思沒變——撈回來的段落順序會變，有時候連撈到哪幾段都變了。</p>
+<div class="callout callout-提醒"><div class="callout-title">兩層要分開查</div><p>「同一題兩種答案」有兩個病因，要求它<strong>標出處</strong>就能拆開：</p>
+<p>出處每次都不一樣，是撈的那一層在飄，要修的是文件怎麼切、索引怎麼建；出處一樣但講法不同，那是<a href="sampling.html" class="term-link" data-term="sampling">抽樣</a>，正常；<mark class="hl">出處對得上、但內容跟出處講的不是同一件事——這一種才是真的在編</mark>，而且最危險，因為它看起來有憑有據。</p></div></section>
                 </article>
             </main>
             <aside class="rail space-y-7 min-w-0">
-                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="alignment.html">Alignment<span>對齊</span></a><a href="chain-of-thought.html">Chain-of-Thought<span>思考鏈</span></a><a href="reasoning-model.html">Reasoning Model<span>推理模型</span></a><a href="tool-use.html">Tool Use / Function Calling<span>工具呼叫</span></a><a href="ai-agent.html">AI Agent<span>AI 代理</span></a><a href="guardrail.html">Guardrail<span>護欄</span></a><a href="human-in-the-loop.html">Human-in-the-Loop<span>人類介入審核</span></a></div></section>
-                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W36-sampling.html" class="ep"><div class="ep-w">2026-W36</div><div class="ep-t">同一題問兩次，為什麼答案不一樣</div></a><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="../lessons/2026-W33-next-token-prediction.html" class="ep"><div class="ep-w">2026-W33</div><div class="ep-t">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a></div></section>
+                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="weights.html">Weights<span>權重</span></a><a href="fine-tuning.html">Fine-tuning<span>微調</span></a><a href="sampling.html">Sampling<span>抽樣</span></a></div></section>
+                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W36-sampling.html" class="ep"><div class="ep-w">2026-W36</div><div class="ep-t">同一題問兩次，為什麼答案不一樣</div></a></div></section>
             </aside>
         </div>
 
-        
+        <section><div class="sec-h">容易跟它搞混</div><div class="cmp"><div class="cmp-title">RAG vs SAG vs GraphRAG</div><p class="cmp-sum">三種讓 AI「查資料再回答」的技術，差在資料組織方式與搜尋精準度</p><div class="cmp-grid" style="--n:3"><div class="cmp-card"><div class="cmp-head" style="background:#1d4ed8">RAG（檢索增強生成）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">把文件切成小段存起來，AI 回答前用語意向量找出最相似的段落作為依據</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">建置簡單、成本低、適合大多數問答場景</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">只做語意模糊比對，精確名稱或數值查詢易失準；無法理解跨文件因果關係</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">FAQ 問答、內部文件查詢、產品說明書搜尋</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1e293b">SAG（結構化檢索增強生成）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">把資料拆解成有結構的「事件」（時間、人物、動作），查詢時同時用向量模糊比對＋SQL 精確比對雙軌並行</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">精確度更高、速度更快；向量找「語意接近」、SQL 找「完全符合」，兩者互補不遺漏</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">資料需要前置結構化處理，建置門檻高於傳統 RAG</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">需要精確對應特定條文、帳號或數值的查詢場景</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#ea580c">GraphRAG</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">在 RAG 基礎上額外建立「知識圖譜」，記錄資料之間的關聯與層級，能推導跨文件的因果鏈</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">能理解「A 影響 B、B 關聯 C」的複雜因果鏈，回答更有邏輯深度</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">建置成本最高、需要專業技術，適合大規模複雜知識庫</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">法規合規分析、跨部門風險評估、複雜產品關係查詢</div></div></div></div><div class="cmp-note cmp-key"><div class="cmp-note-k">核心差異</div><p>RAG 找「語意相近段落」；SAG 用「向量＋SQL 雙軌」確保精準；GraphRAG 理解「關係網絡」推導因果。成本由低到高：RAG &lt; SAG &lt; GraphRAG。大多數場景先用 RAG，需要精確數值或條文比對升級 SAG，需要跨文件推導因果才考慮 GraphRAG。</p></div><div class="cmp-note cmp-biz"><div class="cmp-note-k">金融業應用情境</div><p>查詢法規條文語意 → RAG；精確比對特定條款編號或客戶帳號 → SAG；分析「修法如何連鎖影響多個業務流程」→ GraphRAG</p></div></div><div class="cmp"><div class="cmp-title">預訓練 vs 後訓練 vs 微調 vs 提示工程 vs RAG</div><p class="cmp-sum">五種讓模型「照你要的方式回答」的做法，差別先看一件事——動不動到權重</p><div class="cmp-grid" style="--n:5"><div class="cmp-card"><div class="cmp-head" style="background:#1d4ed8">預訓練（Pre-training）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">從零開始拿海量文字訓練，產出的就是那包權重</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">決定模型的能力底子與世界知識，一切的起點</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">成本以億美元計，需要數萬張運算卡跑上數月</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">模型公司。企業幾乎不會自己做（彭博的 BloombergGPT 是罕見特例）</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1e293b">後訓練（Post-training）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">預訓練之後所有調整階段的統稱，塑造的是行為不是知識</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">把只會續寫文字的模型，變成會回答人的助理</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">是統稱不是單一手段，談成本要先問指的是哪一種</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">模型公司；其中的微調那一種，企業也做得起</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#ea580c">微調（Fine-tuning）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">拿別人訓練好的權重，用少量自己的資料再調一輪</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">能改語氣、格式、流程遵循，成本比預訓練低好幾個數量級</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">改不動「它本來不知道的事」；換底層模型時可能要重做</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">輸出格式與風格要求嚴格、且內容不常變的任務</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1d4ed8">提示工程（Prompt Engineering）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">用指令引導這一次的輸出，完全不動模型參數</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">成本幾乎為零、改了馬上生效、非技術人員也能做</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">只能引導模型既有的能力，拉不出它沒有的東西</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">初期驗證、快速試做，以及所有還沒確定需求的場景</div></div></div><div class="cmp-card"><div class="cmp-head" style="background:#1e293b">RAG（檢索增強生成）</div><div class="cmp-row"><div class="cmp-k">是什麼</div><div class="cmp-v">不動參數，每次回答前先去查你的資料，把查到的內容給它讀</div></div><div class="cmp-row"><div class="cmp-k">優勢</div><div class="cmp-v">資料即時更新、答案可回溯到來源文件</div></div><div class="cmp-row"><div class="cmp-k">劣勢</div><div class="cmp-v">答得好不好取決於查得準不準，要另外建一套檢索管道</div></div><div class="cmp-row"><div class="cmp-k">適合</div><div class="cmp-v">內容會變動、且要求依據正確的場景（法規、商品條款、內部知識庫）</div></div></div></div><div class="cmp-note cmp-key"><div class="cmp-note-k">核心差異</div><p>先看一件事：動不動到權重。預訓練生出權重，後訓練與微調改權重，提示工程與 RAG 完全不動權重。第二件事是它改得動什麼——微調改的是「講法」（語氣、格式、流程），RAG 改的是「它答題時看得到什麼資料」。所以「把內部規章拿去微調，它就會記住規章」是錯的因果，那是 RAG 的工作。成本量級由高到低：預訓練（億美元）&gt;&gt; 微調（千元至百萬元）&gt; RAG（建檢索管道的工）&gt; 提示工程（幾乎為零）。多數企業的正確順序是先提示工程、再 RAG，確認需求後才評估微調。</p></div><div class="cmp-note cmp-biz"><div class="cmp-note-k">金融業應用情境</div><p>照我們的格式標出合約差異條款 → 微調（要改的是講法）；依最新版內規判斷這條能不能簽 → RAG（要改的是知識，且內容會變）；快速試做一個會議記錄摘要 → 提示工程；自建金融專屬基礎模型 → 預訓練（成本過高，幾乎不適用）</p></div></div></section>
 
         <div class="text-center pt-3 border-t border-slate-200">
             <a href="../classroom.html#terms" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">回名詞圖 →</a>

@@ -491,9 +491,14 @@
                     return;
                 }
 
-                const fetches = [fetchCSV(URL_FINANCE)];
-                if (URL_FINTECH) fetches.push(fetchCSV(URL_FINTECH));
-                const results = await Promise.all(fetches);
+                // Google 發布 CSV 偶爾會 hang 住，逾時就當這支沒資料，不要整頁卡在 pending
+                const withTimeout = p => Promise.race([p,
+                    new Promise((_, rj) => setTimeout(() => rj(new Error('CSV timeout')), 15000))]);
+                const fetches = [withTimeout(fetchCSV(URL_FINANCE))];
+                if (URL_FINTECH) fetches.push(withTimeout(fetchCSV(URL_FINTECH)));
+                const settled = await Promise.allSettled(fetches);
+                if (settled.every(s => s.status === 'rejected')) throw new Error('CSV load failed');
+                const results = settled.map(s => s.status === 'fulfilled' ? s.value : []);
 
                 const aiNews = results[0].map(row => ({ ...row, domain_category: row['domain_category'] || 'AI' }));
                 const fintechNews = results[1] ? results[1] : [];

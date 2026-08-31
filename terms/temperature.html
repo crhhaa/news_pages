@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next Token Prediction｜AI 小學堂 名詞</title>
-    <meta name="description" content="模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。">
-    <meta property="og:title" content="Next Token Prediction 猜下一個字">
-    <meta property="og:description" content="模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。">
+    <title>Temperature｜AI 小學堂 名詞</title>
+    <meta name="description" content="把機率表拉平或拉尖的旋鈕，管的是用字多發散，不是答得多嚴謹。">
+    <meta property="og:title" content="Temperature 溫度">
+    <meta property="og:description" content="把機率表拉平或拉尖的旋鈕，管的是用字多發散，不是答得多嚴謹。">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
@@ -18,7 +18,7 @@
         .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
 
         /* 每頁的重點色來自「第幾集首次出現」，整頁只用這一個變數 */
-        :root { --accent: #2563eb; }
+        :root { --accent: #7c3aed; }
         .hero-term {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, color-mix(in srgb, var(--accent) 30%, #1e293b) 100%);
         }
@@ -271,10 +271,10 @@
             </a>
             <div class="flex items-center gap-2 flex-wrap mb-3 text-[11px]">
                 <span class="font-semibold tracking-wider rounded-full px-2.5 py-1"
-                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W33</span>
+                      style="background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff;">2026-W36</span>
             </div>
-            <h1 class="page-title">Next Token Prediction</h1>
-            <p class="text-white/50 text-sm mt-1.5">猜下一個字</p>
+            <h1 class="page-title">Temperature</h1>
+            <p class="text-white/50 text-sm mt-1.5">溫度</p>
         </div>
     </header>
 
@@ -282,35 +282,73 @@
 
         <div class="cols">
             <main class="space-y-9 min-w-0">
-                <p class="pull">模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。</p>
+                <p class="pull">把機率表拉平或拉尖的旋鈕，管的是用字多發散，不是答得多嚴謹。</p>
                 <article class="term-body">
 <section class="tb tb1"><h2 id="_1">定義</h2>
-<p>模型不是去某個地方「查」答案。它做的事只有一件：<strong>看著目前已經有的所有字，算出下一個字最可能是什麼，吐出來；然後把剛吐出來的那個字也算進上文，再猜下一個。</strong> 一個字一個字，猜到句子結束為止。</p>
-<p>有兩個推論直接從這裡長出來：</p>
-<p><strong>它很會「講得像」，但不保證「講得對」。</strong> 它被訓練去最佳化的是「這個字接在這裡順不順」，不是「這句話真不真」。所以它掰起來會非常流暢——這就是<a href="alignment.html" class="term-link" data-term="alignment">幻覺</a>的根，不是一個可以靠修 bug 修掉的瑕疵。</p>
-<p><strong>字一旦吐出去就收不回來。</strong> 沒有回頭修改這回事。第 3 個字猜偏了，後面每個字都是建在那個偏掉的字上面繼續猜的。</p>
-<div class="callout callout-提醒"><div class="callout-title">「猜」不代表隨便</div><p>這裡的「猜」是算出一個機率分布，不是擲骰子。它讀過的資料量夠大，所以在絕大多數情況下猜得又快又準。問題不在準確率，在<strong>它沒有辦法知道自己什麼時候不準</strong>。</p></div>
+<p>溫度是控制<a href="sampling.html" class="term-link" data-term="sampling">抽樣</a>的參數。它的作用很具體：<strong>把那張機率表拉平，或者拉尖。</strong></p>
+<table>
+<thead>
+<tr>
+<th>調法</th>
+<th>那張表變成</th>
+<th>看起來的效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>調高</td>
+<td>拉平，低機率的字也有機會</td>
+<td>用字發散、句型多變</td>
+</tr>
+<tr>
+<td>調低</td>
+<td>拉尖，高機率的字幾乎壟斷</td>
+<td>愈來愈常抽到同一個</td>
+</tr>
+<tr>
+<td>調到最低</td>
+<td>只剩最高的那一個</td>
+<td>等於不抽了，永遠挑第一名</td>
+</tr>
+</tbody>
+</table>
+<p>它<strong>不是</strong>「創意程度」，也<strong>不是</strong>「嚴謹程度」。這兩個說法在產品文案上很常見，但都不是它在做的事。</p>
 </section><section class="tb tb2"><h2 id="_2">為何會出現</h2>
-<p>這是這整個領域的根節點，你聽過的名詞幾乎都建在它上面。</p>
-<p>它之所以成為主流，是因為它解決了「訓練資料從哪來」這個瓶頸。要教模型分類貓狗，你得先請人標好幾百萬張圖；但要教模型猜下一個字，<strong>任何一段現成的文字都自帶答案</strong>——把後半遮起來，前半當題目、後半當標準答案。網路上所有的文字，一夜之間全部變成免費的考卷。</p>
-<p>後來每一次的能力躍進，都可以理解成「在這個框架上多加一層」，而不是換掉它：</p>
-<ul>
-<li><a href="chain-of-thought.html" class="term-link" data-term="chain-of-thought">思考鏈</a>：讓它把推導過程也當成字先吐出來，後面猜答案時上文裡就有算式了</li>
-<li><a href="reasoning-model.html" class="term-link" data-term="reasoning-model">推理模型</a>：把上面那件事訓練成模型的預設行為</li>
-<li><a href="tool-use.html" class="term-link" data-term="tool-use">工具呼叫</a>：讓它吐出一段固定格式的字，由外部程式接手去真的執行</li>
-<li><a href="ai-agent.html" class="term-link" data-term="ai-agent">AI 代理</a>：把「吐字 → 執行 → 把結果餵回去當上文」接成一個迴圈</li>
-</ul>
-<p><mark class="hl">看清楚：沒有任何一項跳出「猜下一個字」這個框架。變的是上文裡有什麼、以及誰來讀它吐出來的字。</mark></p>
+<p>因為<a href="sampling.html" class="term-link" data-term="sampling">抽樣</a>需要一個力道可以調。同一個機制，寫廣告文案希望它發散，做文件摘要希望它收斂——與其做兩套模型，不如留一個旋鈕。</p>
+<p>但這個旋鈕的位置很容易被誤會成整個系統的總開關，它不是。<strong>它只作用在「從機率表挑字」那一步</strong>，前面撈了什麼資料給它、指令怎麼寫，它都碰不到。</p>
+<p>還有一個變化值得知道：現在有一整類會先想一下再回答的<a href="reasoning-model.html" class="term-link" data-term="reasoning-model">推理模型</a>，在它們的介面上，溫度會被直接忽略或報錯，改成用「要想多深」和「要答多長」兩種控制取代。<mark class="hl">所以「把溫度調低」這個指令，在某些模型上根本下不下去。</mark></p>
 </section><section class="tb tb3"><h2 id="_3">金融背景怎麼理解</h2>
-<p>把它想成一個<strong>被規定不准打草稿、而且開口就不能改的資深行員</strong>。</p>
-<p>他看過幾千張攤還表，所以脫口而出的數字通常不會離譜。但條件一多，他就會講出一個聽起來非常合理、位數也對、但就是錯的數字——而且因為不能改，他只好順著那個錯數字把後面的話講得頭頭是道。</p>
-<div class="callout callout-比喻"><div class="callout-title">這個比喻能帶你走多遠</div><p>「準確率不夠」跟「講錯了還講得很有條理」是兩件不同的風險。前者可以靠換更好的模型改善，後者不行——<strong>它是這個機制本身的特性</strong>。</p>
-<p>所以放進客戶接觸點或法遵流程之前，該問的不是「它多準」，而是<strong>「它講錯的時候，我們用什麼看得出來」</strong>。這是<a href="guardrail.html" class="term-link" data-term="guardrail">護欄</a>和<a href="human-in-the-loop.html" class="term-link" data-term="human-in-the-loop">人類介入審核</a>存在的理由。</p></div></section>
+<p>它常常是會議上第一個被提出來的解法：「答案不穩定，那把溫度調低不就好了。」</p>
+<p>這個解法會失效，而且失效的方式有三種：</p>
+<table>
+<thead>
+<tr>
+<th>你以為</th>
+<th>實際上</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>調低就會答對</td>
+<td>只會<strong>一致地</strong>答，本來錯的還是錯</td>
+</tr>
+<tr>
+<td>調低就鎖住了</td>
+<td>只鎖住生成端，<a href="rag.html" class="term-link" data-term="rag">撈文件</a>那一層完全沒被鎖到</td>
+</tr>
+<tr>
+<td>調到最低就一字不差</td>
+<td>運算那端的計算順序、批次大小仍可能讓機率接近的兩個字翻盤</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-提醒"><div class="callout-title">參數會過期，機制不會</div><p>哪一顆模型吃哪些參數、參數叫什麼名字，每隔幾個月就變一次。要用的時候一律翻<strong>當時的</strong>官方文件，不要靠記憶。</p>
+<p>不會變的是這句：<strong>貼著文件回答的嚴謹度，是靠指令講清楚「只准根據給你的資料回答，找不到就說找不到」，不是靠把溫度調低。</strong> <mark class="hl">溫度調低只會讓它更堅定，不會讓它更老實。</mark></p></div></section>
                 </article>
             </main>
             <aside class="rail space-y-7 min-w-0">
-                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="alignment.html">Alignment<span>對齊</span></a><a href="chain-of-thought.html">Chain-of-Thought<span>思考鏈</span></a><a href="reasoning-model.html">Reasoning Model<span>推理模型</span></a><a href="tool-use.html">Tool Use / Function Calling<span>工具呼叫</span></a><a href="ai-agent.html">AI Agent<span>AI 代理</span></a><a href="guardrail.html">Guardrail<span>護欄</span></a><a href="human-in-the-loop.html">Human-in-the-Loop<span>人類介入審核</span></a></div></section>
-                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W36-sampling.html" class="ep"><div class="ep-w">2026-W36</div><div class="ep-t">同一題問兩次，為什麼答案不一樣</div></a><a href="../lessons/2026-W35-pretraining-finetuning.html" class="ep"><div class="ep-w">2026-W35</div><div class="ep-t">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="../lessons/2026-W33-next-token-prediction.html" class="ep"><div class="ep-w">2026-W33</div><div class="ep-t">那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字</div></a></div></section>
+                <section><div class="sec-h">相關名詞</div><div class="rel"><a href="sampling.html">Sampling<span>抽樣</span></a><a href="reasoning-model.html">Reasoning Model<span>推理模型</span></a><a href="rag.html">RAG / Retrieval-Augmented Generation<span>先撈再答</span></a></div></section>
+                <section><div class="sec-h">哪幾集提到它</div><div class="eps"><a href="../lessons/2026-W36-sampling.html" class="ep"><div class="ep-w">2026-W36</div><div class="ep-t">同一題問兩次，為什麼答案不一樣</div></a></div></section>
             </aside>
         </div>
 

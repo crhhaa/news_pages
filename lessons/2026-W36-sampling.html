@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同一題問兩次，為什麼答案不一樣｜AI 小學堂</title>
+    <meta name="description" content="把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。">
+    <meta property="og:title" content="同一題問兩次，為什麼答案不一樣">
+    <meta property="og:description" content="把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。">
+    <meta property="og:type" content="article">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+        .hero-lesson  { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+        .hero-howto   { background: linear-gradient(135deg, #0f2460 0%, #115e59 55%, #0d9488 100%); }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+
+        /* ===== 內文排版：Typography 打底，以下是本站客製 ===== */
+        .lesson-body { line-height: 1.9; }
+        .lesson-body :where(p, li) { letter-spacing: 0.01em; }
+
+        /* 大節標題：左側色條 */
+        .lesson-body h2 {
+            position: relative;
+            padding-left: 0.85rem;
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            scroll-margin-top: 4.5rem;
+        }
+        .lesson-body h2::before {
+            content: "";
+            position: absolute; left: 0; top: 0.15em; bottom: 0.15em;
+            width: 4px; border-radius: 999px;
+            background: var(--accent, #2563eb);
+        }
+        .lesson-body h3 { margin-top: 2rem; font-size: 1.1rem; color: #334155; scroll-margin-top: 4.5rem; }
+
+        /* 一般引言 */
+        .lesson-body blockquote {
+            font-style: normal;
+            border-left: 3px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 0.85rem 1.1rem;
+            color: #475569;
+        }
+        .lesson-body blockquote p:first-child { margin-top: 0; }
+        .lesson-body blockquote p:last-child  { margin-bottom: 0; }
+
+        /* ===== Callout：來自 .md 的 > [!類型] 標題 ===== */
+        .callout {
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem;
+            margin: 1.75rem 0;
+            border: 1px solid transparent;
+        }
+        .callout-title {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .callout-title svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
+        .callout > p:last-child { margin-bottom: 0; }
+        .callout > p { margin: 0.4rem 0; font-size: 0.97rem; }
+
+        .callout-先備  { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-先備 .callout-title { color: #1d4ed8; }
+        .callout-比喻  { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+        .callout-比喻 .callout-title { color: #ea580c; }
+        .callout-重點  { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
+        .callout-重點 .callout-title { color: #4f46e5; }
+        .callout-提醒  { background: #fef2f2; border-color: #fecaca; color: #7f1d1d; }
+        .callout-提醒 .callout-title { color: #dc2626; }
+        .callout-總結  { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
+        .callout-總結 .callout-title { color: #16a34a; }
+        .callout-金融業  { background: linear-gradient(to right, #eff6ff, #f8faff); border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-金融業 .callout-title { color: #1d4ed8; }
+
+        /* ===== 段落分級：口白＝現場唸的，延伸＝只在網頁 ===== */
+        .seg-extra > h2::after {
+            content: "延伸";
+            margin-left: 0.6rem;
+            padding: 0.15rem 0.45rem;
+            border: 1px solid #e2e8f0; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 600; color: #94a3b8;
+            vertical-align: middle;
+        }
+
+        /* ===== 表格：卡片化 ===== */
+        .lesson-body table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin: 1.75rem 0;
+        }
+        .lesson-body thead { background: #f1f5f9; }
+        .lesson-body th {
+            text-align: left; font-weight: 600; color: #334155;
+            padding: 0.7rem 0.9rem; border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        .lesson-body td { padding: 0.7rem 0.9rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        .lesson-body tbody tr:last-child td { border-bottom: none; }
+        .lesson-body tbody tr:hover { background: #f8fafc; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* ===== 程式碼／示意框 ===== */
+        .lesson-body pre {
+            background: #0f172a; color: #e2e8f0;
+            border-radius: 0.9rem; padding: 1rem 1.15rem;
+            font-size: 0.87rem; line-height: 1.7;
+            overflow-x: auto;
+        }
+        .lesson-body :not(pre) > code {
+            background: #f1f5f9; color: #be123c;
+            padding: 0.12em 0.4em; border-radius: 0.35rem;
+            font-size: 0.88em; font-weight: 500;
+        }
+        .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
+
+        /* ===== 實作課：有序清單變步驟卡 ===== */
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
+            counter-increment: step;
+            position: relative;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem 1.1rem 3.4rem;
+            margin: 0.85rem 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
+            content: counter(step);
+            position: absolute; left: 1rem; top: 1.05rem;
+            width: 1.75rem; height: 1.75rem;
+            border-radius: 999px;
+            background: #0d9488; color: #fff;
+            font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
+
+        /* 截圖 */
+        .lesson-body img {
+            border-radius: 0.9rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 1.5rem auto;
+        }
+
+        /* 目錄 */
+        .toc-link {
+            display: block; padding: 0.4rem 0.7rem;
+            font-size: 0.83rem; color: #64748b;
+            border-radius: 0.6rem; border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .toc-link:hover { background: #f8fafc; color: #1d4ed8; }
+        .toc-link.active { color: #1d4ed8; border-left-color: #2563eb; background: #eff6ff; font-weight: 500; }
+        /* ==螢光筆==：只染下半截，像真的用螢光筆畫過 */
+        mark.hl {
+            background: linear-gradient(transparent 52%, #fde68a 52%);
+            color: inherit; padding: 0 .12em; border-radius: .1em;
+        }
+
+        /* ===== ```flow 流程：誰做了什麼，靠 CSS 對齊不靠空格 ===== */
+        .fl { margin: 1.2rem 0; }
+        .fl-step { position: relative; display: grid; gap: .1rem 1rem; padding: 0 0 1.15rem 1.6rem; }
+        @media (min-width: 640px) { .fl-step { grid-template-columns: 8rem 1fr; align-items: baseline; } }
+        .fl-step:last-child { padding-bottom: 0; }
+        .fl-step::before {
+            content: ""; position: absolute; left: .28rem; top: .5rem;
+            width: .55rem; height: .55rem; border-radius: 999px;
+            background: #fff; border: 2px solid var(--accent);
+        }
+        .fl-step:not(:last-child)::after {
+            content: ""; position: absolute; left: .5rem; top: 1.2rem; bottom: .1rem;
+            width: 2px; background: #e2e8f0;
+        }
+        .fl-who {
+            font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+            color: var(--accent);
+        }
+        .fl-what {
+            font-size: .9rem; color: #334155; line-height: 1.75;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* 內文裡的 [[ ]] */
+        .term-link {
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        }
+        .term-link:hover { border-bottom-color: var(--accent); }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800 lesson">
+
+    <!-- NAVBAR -->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-white/70 hover:text-white py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-orange-300 font-semibold py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+
+    <!-- HERO -->
+    <header class="hero-lesson text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <a href="../classroom.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-5 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                AI 小學堂
+            </a>
+            <div class="flex items-center gap-2.5 mb-3 text-xs">
+                <span class="px-2.5 py-1 rounded-full bg-white/15 font-semibold tracking-wider">2026-W36</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
+                <span class="text-white/50">2026-09-01</span>
+            </div>
+            <h1 class="page-title mb-3">同一題問兩次，為什麼答案不一樣</h1>
+            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。</p>
+            <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">模型的輸出是機率抽樣，不是查表</span></div></div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex gap-8 items-start">
+            <!-- 目錄 -->
+            <aside class="hidden lg:block w-52 flex-shrink-0 sticky" style="top:4.5rem;">
+                <div class="bg-white rounded-2xl card p-3">
+                    <div class="px-2.5 py-1.5 text-xs font-semibold text-gray-400 tracking-wider">本集內容</div>
+                    <nav id="toc" class="space-y-0.5"><a href="#_1" class="toc-link seg-spoken">技術詞鉤子：它是不是壞了</a><a href="#_2" class="toc-link seg-extra">那個你看不懂的詞：抽樣</a><a href="#_3" class="toc-link seg-spoken">一個金融業的比喻：客服的錄音檔</a><a href="#_4" class="toc-link seg-spoken">為什麼會這樣：兩個地方都在變</a><a href="#_5" class="toc-link seg-spoken">以前為什麼不會這樣：因為以前是比對</a><a href="#_6" class="toc-link seg-extra">拆一層：那個叫溫度的旋鈕</a><a href="#_7" class="toc-link seg-spoken">所以對我們的意義：驗收方式要換</a><a href="#_8" class="toc-link seg-spoken">一句話總結</a></nav>
+                </div>
+            </aside>
+
+            <!-- 內文 -->
+            <main class="flex-1 min-w-0">
+                <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
+                    <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
+<section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：它是不是壞了</h2>
+<p>只要單位裡導入過內部問答系統，這一題遲早會被問出來。</p>
+<p>有人把同一句話貼進去兩次，回來的答案不一樣。不是差一點點，是段落結構不同、舉的例子不同、有時候連結論的語氣都不太一樣。於是問題就來了：<strong>它是不是壞了？是不是有人偷改了什麼？我上禮拜看到的那個答案，還算不算數？</strong></p>
+<p>先把背景補清楚，因為這個反應本身就很值得看。</p>
+<p>我們手上的系統，幾十年來全部建立在同一個假設上：<strong>同樣的輸入，就會得到同樣的輸出。</strong> 查同一個帳號，餘額一樣；跑同一份報表，數字一樣；用同一個關鍵字搜內部文件，回來的清單一樣。這件事太理所當然，理所當然到它從來不需要被寫進規格書裡。</p>
+<p>所以當一個系統第一次違反它，直覺就是「壞了」。</p>
+<p>但它沒有壞。<mark class="hl">它從來就沒有承諾過會一樣。</mark> 而且更麻煩的是，不一樣的來源<strong>有兩層，不是一層</strong>——這兩層要分開處理，混在一起看，你會永遠找不到該修的地方。</p>
+<p>這一集就講這兩層各是什麼，以及知道之後，驗收這種系統的方式該怎麼換。</p>
+</section><section class="seg seg-extra"><h2 id="_2">那個你看不懂的詞：抽樣</h2>
+<p>要講清楚第一層，得先修正一個很自然、但錯得很徹底的想像。</p>
+<p>大部分人以為模型回答問題的動作是<strong>查表</strong>：你問一句，它到某個地方找到對應的答案，拿回來給你。既然是查表，同一個問題當然該查到同一格。</p>
+<p>它不是這樣運作的。</p>
+<p>回到第一集講過的事：模型是<strong>一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a></strong>的。而它每猜一步，算出來的東西不是「下一個字是什麼」——</p>
+<p><mark class="hl">它算出來的是一張表：接下來每一個可能的字，各自有多少機率。</mark></p>
+<div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
+<p>拿到那張表以後，還得從裡面挑一個字出來。挑法有兩種：</p>
+<ul>
+<li><strong>永遠挑機率最高的那一個。</strong> 這樣同一題就會固定得到同一句話。</li>
+<li><strong>按照機率去抽一個。</strong> 機率高的比較常被抽到，機率低的偶爾也會中。</li>
+</ul>
+<p>實際上跑的是第二種，它叫<a href="../terms/sampling.html" class="term-link" data-term="sampling">抽樣</a>。</p>
+<p>為什麼不用第一種？因為永遠挑最高的，文字會變得很僵——句型單調、用詞重複，而且容易卡在原地打轉，同一句話翻來覆去講好幾遍。這不是為了讓它「有創意」才這樣設計的，<mark class="hl">是為了讓它講出來的話像人話</mark>。</p>
+<p>所以每一句回答，都是幾百次抽樣的結果。<strong>第一個字抽到不一樣的，後面整段就分岔了。</strong></p>
+</section><section class="seg seg-spoken"><h2 id="_3">一個金融業的比喻：客服的錄音檔</h2>
+<p>想像你們的電話客服。</p>
+<p>同一個客戶問同一個問題，同一位客服，早上接跟下午接，講出來的句子不會一模一樣。開頭的招呼不同、舉的例子不同、有沒有多補一句提醒也不一定。</p>
+<p>但沒有人會說這位客服「壞了」。</p>
+<p>而且更關鍵的是：<strong>你驗收客服的方式，從來就不是比對逐字稿。</strong> 沒有人會把兩通錄音的文字檔並排，看有沒有一個字對不上。品管做的事情是抽聽錄音，然後問三件事——<strong>有沒有講錯？該講的有沒有講？有沒有講到不該講的？</strong></p>
+<p>意思對，就過。用字不同，不叫瑕疵。</p>
+<p>現在把比喻接回機制，因為這裡有一個真正的差別必須講明白。</p>
+<p>客服每次講得不一樣，我們可以接受，因為那是人。<strong>但模型不是人，它是一支程式——那它憑什麼也不一樣？</strong></p>
+<p>憑的就是上一段那件事：<mark class="hl">它每產生一個字，都在一張機率表上抽一次籤。</mark> 這不是隨便，機率高的字還是最常被抽到，所以意思會穩定；但也不是固定，所以句子每次都是新的。</p>
+<p><strong>它的行為之所以像人，正是因為那個抽籤動作被刻意留在裡面。</strong> 你要它每次一字不差，就等於要它變回一個查表的程式——而那樣的東西，一開始就答不出這種問題。</p>
+</section><section class="seg seg-spoken"><h2 id="_4">為什麼會這樣：兩個地方都在變</h2>
+<p>抽樣是第一層。但如果只講到這裡，你回去驗收還是會抓錯地方——因為內部問答系統這種東西，<strong>真正常常在變的是第二層。</strong></p>
+<p>這類系統在回答之前，會先做一件事：<strong>去把相關的文件撈出來，跟你的問題一起餵給模型。</strong> 這個做法叫<a href="../terms/rag.html" class="term-link" data-term="rag">先撈再答</a>。模型本身並不知道你們的內規、你們的商品條款，那些知識全部是這一步臨時塞進去的。</p>
+<p>而問題就在於：<strong>那個「撈」的動作，本身也不是固定的。</strong></p>
+<p>它撈文件的方式不是關鍵字比對，是<strong>意思上的相近程度</strong>。所以你把「這個可以嗎」改成「這樣行不行」，字面完全不同、意思完全一樣——撈回來的段落順序會變，有時候連撈到的是哪幾段都變了。</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">你問一句</div><div class="fl-what">「這個案子可以簽嗎」</div></div><div class="fl-step"><div class="fl-who">系統去撈</div><div class="fl-what">依意思相近程度，找出最像的幾段內部文件</div></div><div class="fl-step"><div class="fl-who">把文件塞進去</div><div class="fl-what">你的問題 ＋ 撈到的那幾段，一起交給模型</div></div><div class="fl-step"><div class="fl-who">模型作答</div><div class="fl-what">只根據眼前這幾段，一個字一個字抽出答案</div></div></div>
+<p>看懂這張圖，就會看懂一件很重要的事：</p>
+<div class="callout callout-重點"><div class="callout-title">你以為你問了同一題，其實它讀的資料不一樣</div><p>第二次問的時候，模型面前擺的那幾段文件已經換過了。<strong>它不是同一題答出兩種答案，它根本是在答兩題。</strong></p></div>
+<p>所以「答案不一樣」有兩種完全不同的病因：</p>
+<ul>
+<li><strong>撈到的東西一樣，只是講法不同</strong> —— 那是第一層的抽樣，正常，不用修。</li>
+<li><strong>撈到的東西根本不一樣</strong> —— 那是第二層的檢索在飄，<strong>這一層才是要修的</strong>，而且修的地方不在模型，在文件怎麼切、怎麼建索引。</li>
+</ul>
+<p>這兩層混在一起看，你會一直在調錯的旋鈕。而把它們分開的方法，等一下第七段就講。</p>
+</section><section class="seg seg-spoken"><h2 id="_5">以前為什麼不會這樣：因為以前是比對</h2>
+<p>這件事值得跟他們手上真的在跑的東西對照一次，因為對照完，你會發現變的不只一個地方。</p>
+<p>拿<strong>內部關鍵字搜尋</strong>來比。那個東西用了很多年，從來沒有人問過它為什麼每次結果不一樣——因為它每次結果都一樣。原因有兩層，而且<strong>兩層都變了，才會變成現在這樣</strong>。</p>
+<p><strong>第一層：它做的是比對，不是估計。</strong></p>
+<p>關鍵字搜尋問的問題是「這串字在不在這份文件裡」。在，或不在，沒有中間值。同一個關鍵字丟一百次，命中的就是同一批文件，順序也一樣。</p>
+<p>現在的檢索問的是另一個問題：「這段文字的<strong>意思</strong>，跟你的問題有多接近」。那是一個程度，不是一個是非。<mark class="hl">程度就有排名，排名就會因為問法微調而換位。</mark></p>
+<p><strong>第二層：它不產生任何新句子。</strong></p>
+<p>關鍵字搜尋找到文件之後，就把文件原樣列給你，一個字都不會改。<strong>沒有生成，就沒有抽樣的餘地。</strong></p>
+<p>現在的系統會用自己的話重講一遍。而只要是「用自己的話講」，就一定要一個字一個字抽出來——這一步天生就不固定。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>內部關鍵字搜尋</th>
+<th>內部問答系統</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>怎麼找</td>
+<td>字串在不在</td>
+<td>意思有多接近</td>
+</tr>
+<tr>
+<td>找的結果</td>
+<td>每次一樣</td>
+<td>排名會變</td>
+</tr>
+<tr>
+<td>給你什麼</td>
+<td>原文，一字不改</td>
+<td>用自己的話重講</td>
+</tr>
+<tr>
+<td>同樣輸入同樣輸出</td>
+<td>是</td>
+<td><strong>否，而且兩層都不保證</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-提醒"><div class="callout-title">這不是退步，是換了一種東西</div><p>關鍵字搜尋做不到「幫我把這三份文件的差異講出來」，因為它根本不產生句子。<mark class="hl">我們是為了那個能力，才放棄了<a href="../terms/determinism.html" class="term-link" data-term="determinism">每次一樣</a>這個保證的。</mark> 這是一筆交換，不是一個瑕疵——但既然是交換，就要知道自己換掉了什麼。</p></div>
+</section><section class="seg seg-extra"><h2 id="_6">拆一層：那個叫溫度的旋鈕</h2>
+<p>講到這裡，一定會有人問：<strong>「那把它調成每次都一樣，不就好了？」</strong></p>
+<p>確實有一個參數在管這件事，它叫<a href="../terms/temperature.html" class="term-link" data-term="temperature">溫度</a>。而它幾乎是整個領域裡被誤解得最嚴重的一個字。</p>
+<p>它的作用不是「創意程度」，也不是「嚴謹程度」。它做的事情很具體：<strong>把那張機率表拉平，或者拉尖。</strong></p>
+<ul>
+<li>調高：原本機率很低的字也開始有機會被抽中，用字更發散。</li>
+<li>調低：機率高的字幾乎壟斷，愈來愈常抽到同一個。</li>
+<li>調到最低：等於永遠挑最高的那一個。</li>
+</ul>
+<p>聽起來調低就解決了。但這裡有四個坑，每一個都有人踩過。</p>
+<p><strong>一、一致不等於正確。</strong> 溫度調低，只是讓它更常給你同一個答案。<mark class="hl">如果那個答案本來就是錯的，你得到的是一個穩定地講錯話的系統</mark>，而且因為它每次都這樣講，你還會更相信它。</p>
+<p><strong>二、它管不到第二層。</strong> 溫度只作用在生成那一端。前面撈文件那一層，溫度一點都碰不到。所以就算調到最低，只要你的問法變一下，撈回來的東西還是會換，答案照樣不同。<strong>這是最常見的誤判</strong>：以為調了溫度就鎖住了，其實只鎖住了下半場。</p>
+<p><strong>三、調到最低也不保證一字不差。</strong> 實際跑在運算卡上的時候，浮點數的計算順序、這一批同時處理了幾個請求，都可能讓那張機率表的尾數有一點點差別，剛好在兩個機率很接近的字之間翻盤。機率不高，但它會發生——<mark class="hl">所以不要對外承諾「每次都會一模一樣」</mark>。</p>
+<p><strong>四、新一代的模型可能根本不吃這個參數。</strong> 現在有一整類會先「想一下」再回答的模型，在它們的介面上，溫度這個設定會被直接忽略、甚至報錯，改成用「要想多深」和「要答多長」這兩種控制來取代。</p>
+<p>所以「把溫度調低」這句話，在某些模型上是一個<strong>下不下去的指令</strong>。</p>
+<div class="callout callout-提醒"><div class="callout-title">這一段的參數會過期，機制不會</div><p>哪一顆模型吃哪些參數、參數叫什麼名字，每隔幾個月就會變一次。<mark class="hl">要用的時候一律去翻當時的官方文件，不要靠記憶，也不要靠這一頁。</mark></p>
+<p>但底下這件事不會變：<strong>貼著文件回答的嚴謹度，是靠指令講清楚「只准根據給你的資料回答，找不到就說找不到」，不是靠把溫度調低。</strong> 溫度調低只會讓它更堅定，不會讓它更老實。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_7">所以對我們的意義：驗收方式要換</h2>
+<p>前面那些如果只記得一句，記這句：<strong>「問一次，看對不對」不是驗收。</strong></p>
+<p>那是一次抽樣數為一的抽查。你抽中的可能剛好是它答得最好的那一次，也可能剛好是最差的那一次，而你沒有辦法從一次結果分辨這兩種情況。<strong>在一個本來就會變的系統上，單次結果不構成證據。</strong></p>
+<p>換成三個動作，這三個都不需要工程背景，開會當場就做得出來。</p>
+<p><strong>一、同一題問五次。</strong></p>
+<p>不是看哪一次寫得漂亮，是看<strong>這五次是不是同一個意思</strong>。用字不同沒關係，那是抽樣；但如果第一次說可以、第三次說要再確認、第五次說不行，那就抓到東西了。</p>
+<p><mark class="hl">會互相矛盾的那些題目，就是這個系統目前答不好的題目清單。</mark> 這份清單比任何一份廠商簡報都有用，因為它是你自己的題目、自己的資料、自己的判準。</p>
+<p><strong>二、要求它標出處，然後真的去對。</strong></p>
+<p>這一招的價值在於，它<strong>把兩層拆開了</strong>——而這是前面第五段留下來的那個問題的答案：</p>
+<ul>
+<li>五次的<strong>出處都不一樣</strong> → 第二層在飄。要修的是文件怎麼切、索引怎麼建，跟模型無關，也跟溫度無關。</li>
+<li>五次的<strong>出處一樣、講法不同</strong> → 第一層的抽樣，正常，不用管。</li>
+<li><strong>出處對得上，但內容跟出處講的不是同一件事</strong> → 這一種才是真的在編，而且是最危險的一種，因為它看起來有憑有據。</li>
+</ul>
+<p><strong>三、把驗收條件寫成條件，不要寫成標準答案。</strong></p>
+<p>之前講<a href="../terms/benchmark.html" class="term-link" data-term="benchmark">評測</a>那一集說過，要自己出一份考卷。現在多一條規則：<strong>這份考卷的答案欄不能填一句話，要填條件。</strong></p>
+<p>不是寫「應回答：本案需經授信審查會核准」，而是寫「答案必須提到這三個要件、必須引到這個條號、不得出現這個結論」。<mark class="hl">因為它每次的講法本來就不一樣，用字串比對來改考卷，改出來的分數沒有意義。</mark></p>
+<div class="callout callout-金融業"><div class="callout-title">這件事在稽核面前會被問，先想好怎麼回答</div><p>「同一個問題出現不同答案」，在稽核和法遵眼裡是一個<strong>必須有解釋</strong>的現象，而且這個解釋不能是「AI 就是這樣」。</p>
+<p>站得住腳的說法是：不一樣來自兩層，第一層是用字、第二層是引用的來源；我們每一次問答都留下<strong>問題、撈到的出處、給出的答案</strong>三件事，所以任何一次回答都可以事後被還原和查核。</p>
+<p><mark class="hl">不要承諾「它每次都會一樣」，那個承諾守不住。</mark> 要承諾的是另一件事：<strong>它每一次都講得出憑據，而那個憑據查得到。</strong></p></div>
+</section><section class="seg seg-spoken"><h2 id="_8">一句話總結</h2>
+<div class="callout callout-總結"><div class="callout-title">這一集</div><p>它不是查表，是<strong>每一步都在一張機率表上抽一個字</strong>；而且在它開口之前，撈給它看的資料本來就不見得一樣。所以「同一題兩個答案」不是壞掉，是這類系統的常態。<strong>要管的不是讓它每次一樣，是讓它每次都講得出憑據。</strong></p></div>
+<p>留一個問題給下一集。</p>
+<p>這一集有一層我一直帶過，沒有真的展開——<strong>撈</strong>。</p>
+<p>它每一次開口之前，都去撈了幾段文件回來擺在面前。而你剛剛學會的那整套除錯方法，<mark class="hl">從頭到尾都是建立在那個出處上的</mark>：出處會不會變、對不對得上、內容跟出處是不是同一件事。</p>
+<p>但那幾段文件，到底是怎麼被挑出來的？</p>
+<p>我只說了「依意思相近程度」。這句話聽起來很合理，可是它同時也是整個系統裡<mark class="hl">最沒有人看得懂、最常被跳過、卻最決定答案品質</mark>的一段。而且它出問題的時候，看起來會像模型在胡說。</p>
+<p>下一集講這個。</p></section>
+                    </div>
+                </article>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W35-pretraining-finetuning.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 小學堂 · 每週一集
+    </footer>
+
+    <script>
+
+        // 表格加水平捲動外框，手機才不會撐破版面
+        document.querySelectorAll('.lesson-body table').forEach(t => {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            t.parentNode.insertBefore(wrap, t);
+            wrap.appendChild(t);
+        });
+
+        // 目錄高亮
+        const links = [...document.querySelectorAll('.toc-link')];
+        const heads = links.map(a => document.getElementById(a.hash.slice(1))).filter(Boolean);
+        if (heads.length) {
+            const onScroll = () => {
+                let idx = 0;
+                heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 120) idx = i; });
+                links.forEach((a, i) => a.classList.toggle('active', i === idx));
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+    </script>
+    <script src="../assets/terms.js" defer></script>
+</body>
+</html>

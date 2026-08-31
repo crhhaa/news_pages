@@ -310,7 +310,10 @@
 <p>模型不是這樣。<strong>模型的程式邏輯短得不值錢，值錢的全部在數字裡。</strong></p>
 <div class="fl"><div class="fl-step"><div class="fl-who">公開的程式碼</div><div class="fl-what">幾百行，任何人都拿得到，本身什麼也不會</div></div><div class="fl-step"><div class="fl-who">權重檔案</div><div class="fl-what">幾千億個數字，模型的全部能力都在這裡</div></div><div class="fl-step"><div class="fl-who">下載並載入</div><div class="fl-what">同一包數字，在誰的機器上跑，行為都一樣</div></div></div>
 <p>所以「下載一個模型」這件事，在別的產業裡沒有對應物。它比較接近<strong>拿到一份完整的配方</strong>，而不是買到一瓶做好的飲料——而且這份配方，抄一次的成本是零。</p>
-<p>這也順帶解釋了一件常被誤解的事：<mark class="hl">免費的是那包權重，不是服務。</mark> 你要是不自己跑，直接呼叫對方的線上服務，照樣按用量付錢。<strong>下載回來自己跑，跟付錢請對方跑，是兩件不同的事</strong>——那是下一集的題目。</p>
+<p>這也順帶解釋了一件常被誤解的事：<mark class="hl">免費的是那包權重，不是服務。</mark></p>
+<p>權重是一個檔案，而檔案不會自己動——要讓它回答問題，得有機器把那幾千億個數字整包載進去算一遍，而且<strong>每回答一次就得算一次</strong>。所以「免費下載」之後還有一題沒解決：<strong>那台機器是誰的？</strong></p>
+<p>呼叫對方的線上服務，錢是<strong>用多少算多少</strong>，用量是零、帳單就是零。搬回自己的機房，錢是<strong>先付的</strong>——機器、電、機房，還有養它的那群人，跑多跑少都一樣。畫成圖，一條是從原點往上爬的斜線，另一條是一開始就架在高處、不隨用量動的水平線。</p>
+<p>兩條線一定會交叉，而<mark class="hl">交叉點在哪，完全由用量決定</mark>。這就是為什麼兩份簡報都能算出「自己這邊比較便宜」而且兩邊都沒說謊——<strong>他們算的是不同的用量</strong>。所以這件事不該問成「哪個比較便宜」，要問「用量到多少之後哪個比較便宜」；而那個數字，在真的開始用之前沒有人知道。</p>
 </section><section class="seg seg-spoken"><h2 id="_5">以前為什麼做不到：以前沒有一包值得下載的東西</h2>
 <p>這裡要問一個容易被跳過的問題：<strong>「下載別人做好的模型回來改」這件事，為什麼是這幾年才出現的？</strong></p>
 <p>金融業用模型用了幾十年。以前沒有人在下載別人的模型，也沒有人想下載。原因有兩層，而且兩層都要成立，這件事才會發生。</p>
@@ -351,13 +354,15 @@
 </section><section class="seg seg-spoken"><h2 id="_8">一句話總結</h2>
 <div class="callout callout-總結"><div class="callout-title">這一集</div><p>那包能下載的東西叫<strong>權重</strong>，它是<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>燒掉的幾億美元唯一的產物，也是「開源模型」四個字真正指的東西。<strong>燒一次的錢很貴，而複製它幾乎不要錢</strong>——所以送得出去。至於<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>，它改的是<strong>講法</strong>，不是<strong>知識</strong>。下次有人問「我們要不要微調一個自己的模型」，先問他想改哪一個。</p></div>
 <p>留一個問題給下一集。</p>
-<p>你現在知道那包東西是什麼、也知道改它比生它便宜太多了。但真正要決定的那一題還沒問：<strong>這包東西要放在誰的機器上跑？</strong></p>
-<p>放在別人的機器上，你付的是每一次呼叫的錢，用多少算多少，不用管機房。搬回自己的機房，你付的是機器、電、和養它的那群人——<mark class="hl">而且那筆錢是先付的，不管你用不用得到</mark>。</p>
-<p>一邊是隨用隨付、另一邊是先砸下去。這兩種帳的算法完全不同，而且答案會隨著用量翻轉。下一集就講這筆帳怎麼算：<strong>權重下載回來，然後呢？</strong></p></section>
+<p>這一集講的那包權重，有一個性質前面順口帶過去了：<mark class="hl">它是固定的</mark>。幾千億個數字，下載回來之後一個都不會變，載進誰的機器裡跑，行為都一樣。</p>
+<p>那照理說，同一句話問它兩次，應該要拿到同一個答案。</p>
+<p><strong>但不會。</strong></p>
+<p>不是差一點點，是段落結構不同、舉的例子不同，有時候連結論的語氣都不太一樣。這件事在內部知識庫這類系統上最容易被撞見，而第一個反應通常是「它是不是壞了」，或者「是不是有人動過什麼」。</p>
+<p>數字明明是固定的，答案卻每次都不一樣。下一集講這是為什麼。</p></section>
                     </div>
                 </article>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W34-benchmark.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W34-benchmark.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">同一題問兩次，為什麼答案不一樣</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
             </main>
         </div>
     </div>

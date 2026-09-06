@@ -78,10 +78,22 @@
    "zh": "微調",
    "kind": "term",
    "cat": "2026-W35",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/fine-tuning.html",
    "oneline": "拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。",
+   "deg": 2
+  },
+  {
+   "id": "guardrail",
+   "label": "Guardrail",
+   "zh": "護欄",
+   "kind": "term",
+   "cat": "2026-W37",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/guardrail.html",
+   "oneline": "擋得住的邊界不是它讀到的字，是它做得到的事。",
    "deg": 1
   },
   {
@@ -138,11 +150,11 @@
    "zh": "先撈再答",
    "kind": "term",
    "cat": "2026-W36",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/rag.html",
    "oneline": "回答之前先去把相關文件撈出來，跟問題一起交給模型。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "reasoning-model",
@@ -229,6 +241,17 @@
    "deg": 1
   },
   {
+   "id": "ep:2026-W37-rag",
+   "label": "2026-W37",
+   "zh": "那幾段文件，是怎麼被挑出來的",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W37-rag.html",
+   "oneline": "上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。",
+   "deg": 0
+  },
+  {
    "id": "ep:2026-W36-sampling",
    "label": "2026-W36",
    "zh": "同一題問兩次，為什麼答案不一樣",
@@ -292,6 +315,11 @@
   {
    "source": "ai-agent",
    "target": "alignment",
+   "layer": 2
+  },
+  {
+   "source": "alignment",
+   "target": "guardrail",
    "layer": 2
   },
   {
@@ -420,8 +448,23 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W37-rag",
+   "target": "fine-tuning",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W35-pretraining-finetuning",
    "target": "fine-tuning",
+   "layer": 1
+  },
+  {
+   "source": "ai-agent",
+   "target": "guardrail",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W37-rag",
+   "target": "guardrail",
    "layer": 1
   },
   {
@@ -451,6 +494,11 @@
   },
   {
    "source": "ai-agent",
+   "target": "next-token-prediction",
+   "layer": 2
+  },
+  {
+   "source": "guardrail",
    "target": "next-token-prediction",
    "layer": 2
   },
@@ -493,6 +541,11 @@
    "source": "rag",
    "target": "sampling",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W37-rag",
+   "target": "rag",
+   "layer": 1
   },
   {
    "source": "ep:2026-W36-sampling",

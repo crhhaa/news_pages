@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>那幾段文件，是怎麼被挑出來的｜AI 小學堂</title>
+    <meta name="description" content="上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
+    <meta property="og:title" content="那幾段文件，是怎麼被挑出來的">
+    <meta property="og:description" content="上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
+    <meta property="og:type" content="article">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+        .hero-lesson  { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+        .hero-howto   { background: linear-gradient(135deg, #0f2460 0%, #115e59 55%, #0d9488 100%); }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+
+        /* ===== 內文排版：Typography 打底，以下是本站客製 ===== */
+        .lesson-body { line-height: 1.9; }
+        .lesson-body :where(p, li) { letter-spacing: 0.01em; }
+
+        /* 大節標題：左側色條 */
+        .lesson-body h2 {
+            position: relative;
+            padding-left: 0.85rem;
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            scroll-margin-top: 4.5rem;
+        }
+        .lesson-body h2::before {
+            content: "";
+            position: absolute; left: 0; top: 0.15em; bottom: 0.15em;
+            width: 4px; border-radius: 999px;
+            background: var(--accent, #2563eb);
+        }
+        .lesson-body h3 { margin-top: 2rem; font-size: 1.1rem; color: #334155; scroll-margin-top: 4.5rem; }
+
+        /* 一般引言 */
+        .lesson-body blockquote {
+            font-style: normal;
+            border-left: 3px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 0.85rem 1.1rem;
+            color: #475569;
+        }
+        .lesson-body blockquote p:first-child { margin-top: 0; }
+        .lesson-body blockquote p:last-child  { margin-bottom: 0; }
+
+        /* ===== Callout：來自 .md 的 > [!類型] 標題 ===== */
+        .callout {
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem;
+            margin: 1.75rem 0;
+            border: 1px solid transparent;
+        }
+        .callout-title {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .callout-title svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
+        .callout > p:last-child { margin-bottom: 0; }
+        .callout > p { margin: 0.4rem 0; font-size: 0.97rem; }
+
+        .callout-先備  { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-先備 .callout-title { color: #1d4ed8; }
+        .callout-比喻  { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+        .callout-比喻 .callout-title { color: #ea580c; }
+        .callout-重點  { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
+        .callout-重點 .callout-title { color: #4f46e5; }
+        .callout-提醒  { background: #fef2f2; border-color: #fecaca; color: #7f1d1d; }
+        .callout-提醒 .callout-title { color: #dc2626; }
+        .callout-總結  { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
+        .callout-總結 .callout-title { color: #16a34a; }
+        .callout-金融業  { background: linear-gradient(to right, #eff6ff, #f8faff); border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-金融業 .callout-title { color: #1d4ed8; }
+
+        /* ===== 段落分級：口白＝現場唸的，延伸＝只在網頁 ===== */
+        .seg-extra > h2::after {
+            content: "延伸";
+            margin-left: 0.6rem;
+            padding: 0.15rem 0.45rem;
+            border: 1px solid #e2e8f0; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 600; color: #94a3b8;
+            vertical-align: middle;
+        }
+
+        /* ===== 表格：卡片化 ===== */
+        .lesson-body table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin: 1.75rem 0;
+        }
+        .lesson-body thead { background: #f1f5f9; }
+        .lesson-body th {
+            text-align: left; font-weight: 600; color: #334155;
+            padding: 0.7rem 0.9rem; border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        .lesson-body td { padding: 0.7rem 0.9rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        .lesson-body tbody tr:last-child td { border-bottom: none; }
+        .lesson-body tbody tr:hover { background: #f8fafc; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* ===== 程式碼／示意框 ===== */
+        .lesson-body pre {
+            background: #0f172a; color: #e2e8f0;
+            border-radius: 0.9rem; padding: 1rem 1.15rem;
+            font-size: 0.87rem; line-height: 1.7;
+            overflow-x: auto;
+        }
+        .lesson-body :not(pre) > code {
+            background: #f1f5f9; color: #be123c;
+            padding: 0.12em 0.4em; border-radius: 0.35rem;
+            font-size: 0.88em; font-weight: 500;
+        }
+        .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
+
+        /* ===== 實作課：有序清單變步驟卡 ===== */
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
+            counter-increment: step;
+            position: relative;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem 1.1rem 3.4rem;
+            margin: 0.85rem 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
+            content: counter(step);
+            position: absolute; left: 1rem; top: 1.05rem;
+            width: 1.75rem; height: 1.75rem;
+            border-radius: 999px;
+            background: #0d9488; color: #fff;
+            font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
+
+        /* 截圖 */
+        .lesson-body img {
+            border-radius: 0.9rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 1.5rem auto;
+        }
+
+        /* 目錄 */
+        .toc-link {
+            display: block; padding: 0.4rem 0.7rem;
+            font-size: 0.83rem; color: #64748b;
+            border-radius: 0.6rem; border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .toc-link:hover { background: #f8fafc; color: #1d4ed8; }
+        .toc-link.active { color: #1d4ed8; border-left-color: #2563eb; background: #eff6ff; font-weight: 500; }
+        /* ==螢光筆==：只染下半截，像真的用螢光筆畫過 */
+        mark.hl {
+            background: linear-gradient(transparent 52%, #fde68a 52%);
+            color: inherit; padding: 0 .12em; border-radius: .1em;
+        }
+
+        /* ===== ```flow 流程：誰做了什麼，靠 CSS 對齊不靠空格 ===== */
+        .fl { margin: 1.2rem 0; }
+        .fl-step { position: relative; display: grid; gap: .1rem 1rem; padding: 0 0 1.15rem 1.6rem; }
+        @media (min-width: 640px) { .fl-step { grid-template-columns: 8rem 1fr; align-items: baseline; } }
+        .fl-step:last-child { padding-bottom: 0; }
+        .fl-step::before {
+            content: ""; position: absolute; left: .28rem; top: .5rem;
+            width: .55rem; height: .55rem; border-radius: 999px;
+            background: #fff; border: 2px solid var(--accent);
+        }
+        .fl-step:not(:last-child)::after {
+            content: ""; position: absolute; left: .5rem; top: 1.2rem; bottom: .1rem;
+            width: 2px; background: #e2e8f0;
+        }
+        .fl-who {
+            font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+            color: var(--accent);
+        }
+        .fl-what {
+            font-size: .9rem; color: #334155; line-height: 1.75;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* 內文裡的 [[ ]] */
+        .term-link {
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        }
+        .term-link:hover { border-bottom-color: var(--accent); }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800 lesson">
+
+    <!-- NAVBAR -->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-white/70 hover:text-white py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-orange-300 font-semibold py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+
+    <!-- HERO -->
+    <header class="hero-lesson text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <a href="../classroom.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-5 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                AI 小學堂
+            </a>
+            <div class="flex items-center gap-2.5 mb-3 text-xs">
+                <span class="px-2.5 py-1 rounded-full bg-white/15 font-semibold tracking-wider">2026-W37</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
+                <span class="text-white/50">2026-09-08</span>
+            </div>
+            <h1 class="page-title mb-3">那幾段文件，是怎麼被挑出來的</h1>
+            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。</p>
+            <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">模型不知道你們的內規，那些知識是每一次回答前臨時塞進去的</span></div></div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex gap-8 items-start">
+            <!-- 目錄 -->
+            <aside class="hidden lg:block w-52 flex-shrink-0 sticky" style="top:4.5rem;">
+                <div class="bg-white rounded-2xl card p-3">
+                    <div class="px-2.5 py-1.5 text-xs font-semibold text-gray-400 tracking-wider">本集內容</div>
+                    <nav id="toc" class="space-y-0.5"><a href="#_1" class="toc-link seg-spoken">技術詞鉤子：出處是從哪裡來的</a><a href="#_2" class="toc-link seg-extra">那個你看不懂的詞：先撈再答</a><a href="#_3" class="toc-link seg-spoken">一個金融業的比喻：交辦給一個很會寫的新人</a><a href="#_4" class="toc-link seg-spoken">為什麼可以做到：撈的那一步在比什麼</a><a href="#_5" class="toc-link seg-spoken">以前為什麼做不到：關鍵字搜尋比的是字串</a><a href="#_6" class="toc-link seg-extra">拆一層：文件是怎麼進去的</a><a href="#_7" class="toc-link seg-spoken">所以對我們的意義：要修的幾乎都不是模型</a><a href="#_8" class="toc-link seg-spoken">一句話總結</a></nav>
+                </div>
+            </aside>
+
+            <!-- 內文 -->
+            <main class="flex-1 min-w-0">
+                <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
+                    <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
+<section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：出處是從哪裡來的</h2>
+<p>上一集留了一整套除錯方法給你：同一題問五次，要求它標出處，然後看出處會不會變、對不對得上、內容跟出處是不是同一件事。</p>
+<p>那套方法很好用。但它從頭到尾都靠同一個東西撐著——<strong>出處</strong>。</p>
+<p>所以這一集要先問一句：<mark class="hl">那個出處，到底是從哪裡來的？</mark></p>
+<p>先把背景補清楚。模型本身<strong>不知道你們的內規</strong>。它沒看過你們的商品條款、沒看過上週剛發的函令、沒看過那份只在共用資料夾裡的作業要點。這些東西不在它學來的那包東西裡面，一個字都沒有。</p>
+<p>但你問它「這個案子可以簽嗎」，它答得出來，而且答得有模有樣，還附了條號。</p>
+<p>它是怎麼知道的？</p>
+<p>答案是：<strong>它不知道，是有人在它開口之前，臨時把資料塞到它面前。</strong> 這一步叫<a href="../terms/rag.html" class="term-link" data-term="rag">先撈再答</a>，而它就是那個出處的來源。</p>
+<p>這一步是整個系統裡<mark class="hl">最沒有人看得懂、最常被跳過、卻最決定答案品質</mark>的一段。它出問題的時候，看起來會像模型在胡說——所以修的人幾乎都修錯地方。</p>
+</section><section class="seg seg-extra"><h2 id="_2">那個你看不懂的詞：先撈再答</h2>
+<p>英文叫 RAG，中文有人翻檢索增強生成。名字很嚇人，動作其實只有四步。</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">你問一句</div><div class="fl-what">「這個案子可以簽嗎」</div></div><div class="fl-step"><div class="fl-who">系統去撈</div><div class="fl-what">從幾萬份內部文件裡，找出最像的那幾段</div></div><div class="fl-step"><div class="fl-who">把文件塞進去</div><div class="fl-what">你的問題 ＋ 撈到的那幾段，一起交給模型</div></div><div class="fl-step"><div class="fl-who">模型作答</div><div class="fl-what">只根據眼前這幾段，一個字一個字答出來</div></div></div>
+<div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
+<p>看第三步和第四步之間那個字：<strong>只</strong>。</p>
+<p><mark class="hl">模型看到的不是整座知識庫，只是這次撈到的那幾段。</mark> 它沒有辦法知道自己少看了什麼，也沒有辦法知道撈進來的這幾段是不是最相關的——它只能拿眼前這幾段，盡力寫出一個看起來完整的答案。</p>
+<div class="callout callout-重點"><div class="callout-title">這一句是整集的軸</div><p><strong>撈錯了，它就答錯了，而且會答得很有自信。</strong> 它不是在說謊，它是在忠實地根據一份錯的資料作答。</p>
+<p>所以你看到一個離譜的答案，第一個該查的不是模型，是<mark class="hl">那次撈到的是哪幾段</mark>。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_3">一個金融業的比喻：交辦給一個很會寫的新人</h2>
+<p>想像你手上有一個新人。</p>
+<p>他文筆極好，邏輯清楚，任何東西給他他都能整理成一份漂亮的簽呈。但他上禮拜才報到，你們的內規他一條都不知道。</p>
+<p>你要他處理一個案子，你會怎麼做？</p>
+<p>你不會叫他先去把整本作業手冊背起來——那要好幾個月，而且下個月改版又白背了。你會做的是另一件事：<strong>把你認為相關的那幾份文件抽出來，夾在案卷裡一起給他。</strong></p>
+<p>這就是先撈再答。差別只在於，抽文件的那個動作，現在是機器在做。</p>
+<p>現在把比喻接回機制，因為關鍵在下一句。</p>
+<p><strong>如果你夾錯了文件，會發生什麼事？</strong></p>
+<p>他不會跑來跟你說「這幾份好像不對」。他會照樣寫，而且照樣寫得很順、很有條理、還會引用你夾給他的那幾份。<mark class="hl">因為他沒有別的東西可以對照，他不知道自己手上這疊是錯的。</mark></p>
+<p>你拿到那份簽呈，會覺得他很行。你要一直到自己去翻了正確的那條規定，才會發現整份都建立在錯的前提上。</p>
+<p><strong>這就是這類系統最常見的失敗方式</strong>，而且它長得完全不像失敗——它長得像一份寫得很好的答案。</p>
+</section><section class="seg seg-spoken"><h2 id="_4">為什麼可以做到：撈的那一步在比什麼</h2>
+<p>那機器是怎麼「認為相關」的？</p>
+<p>它比的<strong>不是字，是意思</strong>。</p>
+<p>「這個案子可以簽嗎」跟「本件得否核准」，這兩句話沒有一個字重疊，但意思幾乎一樣。系統要能把它們認成同一件事，才撈得到對的文件。</p>
+<p>實際的做法是：先把每一段文件換算成一個位置——<mark class="hl">意思相近的東西，位置就靠近</mark>。你問一句話，這句話也換算成一個位置，然後看哪幾段文件離它最近，就撈哪幾段。</p>
+<p>所以它給你的不是「有」或「沒有」，是一份<strong>排名</strong>：最像的排第一，第二像的排第二，通常取前面幾段就送進去了。</p>
+<p>這裡順帶回答一個很多人卡住的問題：<strong>為什麼不乾脆把內部文件拿去訓練，讓模型自己記起來？</strong></p>
+<p>第三集講過那條線：訓練分成很貴的那次和很便宜的那次，而<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>改的是<mark class="hl">回答的傾向</mark>——語氣、格式、流程，它不是把資料存進模型裡。</p>
+<p>而內部文件有兩個性質，讓「訓練進去」這條路一開始就走不通：</p>
+<ul>
+<li><strong>會變。</strong> 條款改一次就要重訓一次，成本和時效都不成立。</li>
+<li><strong>要有出處。</strong> 金融業要的不只是答案，是「這句話出自哪一條」。<mark class="hl">訓練進去的東西講不出處，撈出來的講得出。</mark></li>
+</ul>
+<p>所以那條線的下半是這樣的：<strong>要改它的講法，用微調；要給它知識，用先撈再答。</strong> 這兩件事被混在同一個需求單裡的次數，比你想像的多。</p>
+</section><section class="seg seg-spoken"><h2 id="_5">以前為什麼做不到：關鍵字搜尋比的是字串</h2>
+<p>還是拿<strong>內部關鍵字搜尋</strong>來比，但這次比的角度跟上一集不一樣。</p>
+<p>上一集比的是「結果穩不穩定」；這一集比的是「<strong>怎麼找</strong>」。</p>
+<p>關鍵字搜尋問的問題只有一個：<strong>這串字在不在這份文件裡。</strong> 在，就撈出來；不在，就當它不存在。</p>
+<p>於是它有一整類東西天生找不到——同義詞、簡稱、口語說法、換句話說。你搜「核准」，那份寫「同意辦理」的文件不會出現；你搜「線上開戶」，寫「數位帳戶申請」的那份也不會出現。</p>
+<p><strong>這不是它做得不好，是它根本沒有在比意思。</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>內部關鍵字搜尋</th>
+<th>先撈再答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在比什麼</td>
+<td>這串字在不在</td>
+<td>意思有多接近</td>
+</tr>
+<tr>
+<td>給你什麼</td>
+<td>一份清單，原文照列</td>
+<td>幾段文件，交給模型重講</td>
+</tr>
+<tr>
+<td>誰在讀</td>
+<td>人自己讀、自己判斷</td>
+<td>模型讀，人只看結論</td>
+</tr>
+<tr>
+<td>會漏什麼</td>
+<td>換句話說的那些</td>
+<td>排名擠不進前幾名的那些</td>
+</tr>
+</tbody>
+</table>
+<p>最後一列是這張表真正的重點，因為它常被講成「語意檢索是關鍵字搜尋的升級版」。</p>
+<p><strong>不是升級版，是換了一種漏法。</strong></p>
+<div class="callout callout-提醒"><div class="callout-title">兩邊漏的東西不一樣，而且關鍵字在有些事情上比較強</div><p>精確的東西——<strong>條號、代號、商品編號、身分證字號、特定的法規名稱</strong>——關鍵字比對是完勝的，因為那種東西就是要一字不差。</p>
+<p>而語意檢索在這種查詢上反而會出事：<mark class="hl">它會撈回「意思很接近」的<strong>另一條</strong>條文</mark>，因為在它眼裡那兩條長得很像。</p>
+<p>所以實務上兩種常常一起用，不是二選一。<strong>如果你們的問題有一半是在查條號，那語意檢索不見得是對的工具。</strong></p></div>
+<p>還有一個差別更容易被忽略：關鍵字搜尋是<strong>人自己讀</strong>那份清單，撈錯了人一眼就看出來。現在是模型讀，人只看到最後那段話——<mark class="hl">撈錯的證據，在中間那一步就被吃掉了。</mark> 這就是為什麼上一集要教你把出處要出來。</p>
+</section><section class="seg seg-extra"><h2 id="_6">拆一層：文件是怎麼進去的</h2>
+<p>上面講的都是「查」那一半。真正決定品質的是另一半，而且它發生在你問任何問題之前。</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">原始文件</div><div class="fl-what">規章、函令、作業要點、簡報、掃描的紙本</div></div><div class="fl-step"><div class="fl-who">切成段</div><div class="fl-what">一份三十頁的規章要切成幾十段，因為一次只能塞幾段進去</div></div><div class="fl-step"><div class="fl-who">建索引</div><div class="fl-what">每一段換算成一個位置，存起來</div></div><div class="fl-step"><div class="fl-who">你問問題</div><div class="fl-what">問題也換算成一個位置</div></div><div class="fl-step"><div class="fl-who">取前幾段</div><div class="fl-what">找出最近的那幾段，送進模型</div></div></div>
+<p>第二步「切成段」是最多坑的地方，而且每一個坑都跟 AI 無關，全部是文書問題：</p>
+<ul>
+<li><strong>切在哪裡。</strong> 一條規定被攔腰切成兩段，撈到前半段的人看不到但書；撈到後半段的人不知道這條在講誰。</li>
+<li><strong>標題留不留。</strong> 切下來那段如果只剩內文，模型就不知道這段出自哪一章、適用哪一類客戶。<mark class="hl">同一句「得予核准」，放在不同章底下意思完全不同。</mark></li>
+<li><strong>表格怎麼處理。</strong> 表格被拉成一行行純文字之後，欄位和數字的對應關係就散了。費率表是重災區。</li>
+<li><strong>掃描檔有沒有文字層。</strong> 一份用掃描器掃進來的 PDF，如果沒有做過文字辨識，它在系統眼裡是一張圖——<strong>內容再重要都撈不到，而且不會報錯</strong>，它只是安靜地不出現。</li>
+</ul>
+<div class="callout callout-比喻"><div class="callout-title">這一步比較像整理檔案室，不像寫程式</div><p>決定品質的是「文件怎麼分類、怎麼歸檔、標籤怎麼下」。這件事在檔案室做了幾十年，只是以前的使用者是人，現在多了一個不會抱怨、也不會問「這份是不是缺了一頁」的使用者。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_7">所以對我們的意義：要修的幾乎都不是模型</h2>
+<p>前面那些如果只記得一句，記這句：</p>
+<p><strong>內部知識庫答不好的時候，要修的幾乎都不是模型。</strong></p>
+<p>它答錯，八成不是因為模型不夠聰明，是因為撈給它的東西不對。而撈得對不對，取決於文件怎麼切、標題留不留、表格散了沒有、掃描檔有沒有文字層——<mark class="hl">這些全部是資料工程，不是選哪一顆模型。</mark></p>
+<p>這句話會直接改變一件事：<strong>預算放哪裡。</strong></p>
+<p>換一顆更貴的模型，改善的是「拿到對的資料之後講得好不好」；但你的問題如果出在撈，那一段錢是白花的。反過來，把文件重新整理一次，通常比換模型有效得多，而且那份成果<strong>換模型也還在</strong>。</p>
+<p>驗收的時候，多問一個層次。這一題其實是兩題：</p>
+<ul>
+<li><strong>撈得到嗎？</strong> 這份文件有沒有進到系統裡、有沒有文字層、切完之後還看得懂嗎。</li>
+<li><strong>撈得對嗎？</strong> 撈回來的前幾段，是不是真的跟這個問題有關。</li>
+</ul>
+<p>做法很土，但有效：<strong>挑二十題你們自己真的會問的問題，只看它撈回哪幾段，先不管答案。</strong> 撈對了答錯，那是模型的事；撈都撈錯了，換誰來答都一樣。</p>
+<div class="callout callout-金融業"><div class="callout-title">撈的時候有沒有分權限，這一題會被問</div><p>這件事在資安和法遵那邊一定會被問到，而且它問的不是模型，是撈的那一層。</p>
+<p>系統撈文件的時候，撈的是<mark class="hl">整座知識庫</mark>，還是<mark class="hl">這個使用者有權限看的那一部分</mark>？如果是前者，那薪資、人事、董事會資料只要進了同一個索引，任何人問對問題都可能被摘要出來——而且它會用自己的話重講，<strong>連原始文件的浮水印和分類標記都不會跟著出現</strong>。</p>
+<p>所以<a href="../terms/guardrail.html" class="term-link" data-term="guardrail">護欄</a>要裝在<strong>撈</strong>的那一步，不是裝在答完之後再過濾。答完再擋，內容已經被生成出來了；而且從答案要反推它讀過什麼，比事前限制它能撈什麼難得多。</p>
+<p>採購的時候，這一題的問法是：<mark class="hl">權限是在檢索階段生效，還是在輸出階段才過濾？</mark></p></div>
+</section><section class="seg seg-spoken"><h2 id="_8">一句話總結</h2>
+<div class="callout callout-總結"><div class="callout-title">這一集</div><p>模型不知道你們的內規，那些知識是<strong>每一次回答前臨時塞進去的</strong>。它只看得到這次撈到的那幾段，撈錯了它照樣答得很有自信。所以品質的上限不在模型，在<strong>文件怎麼整理、撈的那一步比什麼、以及權限在哪一層生效</strong>。</p></div>
+<p>留一個問題給下一集。</p>
+<p>到目前為止，這個系統的動作是<strong>寫死的</strong>：你問一句，它撈一次，撈完就答。永遠是這三步，順序不會變，次數也不會變。</p>
+<p>但真實的工作不長這樣。</p>
+<p>你交辦一件事給人，他不會只查一次資料就交件。他會先查一份，發現不夠，<mark class="hl">再去查第二份</mark>；發現這條規定引到另一條，就去把那一條也調出來；查到一半發現自己方向抓錯了，退回去重來。<strong>查幾次、查什麼、什麼時候停，是他一邊做一邊決定的。</strong></p>
+<p>那如果讓它自己決定呢？</p>
+<p>不是我們規定它撈一次，而是它自己判斷要不要撈、撈幾次、撈完了要不要再撈——甚至不只是撈，還可以去跑一份查詢、寄一封信、送一張單。</p>
+<p>一旦讓它自己決定下一步，它就不再是一個問答系統了。</p>
+<p>下一集講這個。</p></section>
+                    </div>
+                </article>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">同一題問兩次，為什麼答案不一樣</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 小學堂 · 每週一集
+    </footer>
+
+    <script>
+
+        // 表格加水平捲動外框，手機才不會撐破版面
+        document.querySelectorAll('.lesson-body table').forEach(t => {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            t.parentNode.insertBefore(wrap, t);
+            wrap.appendChild(t);
+        });
+
+        // 目錄高亮
+        const links = [...document.querySelectorAll('.toc-link')];
+        const heads = links.map(a => document.getElementById(a.hash.slice(1))).filter(Boolean);
+        if (heads.length) {
+            const onScroll = () => {
+                let idx = 0;
+                heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 120) idx = i; });
+                links.forEach((a, i) => a.classList.toggle('active', i === idx));
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+    </script>
+    <script src="../assets/terms.js" defer></script>
+</body>
+</html>

@@ -109,6 +109,11 @@
   "zh": "猜下一個字",
   "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。"
  },
+ "plugin": {
+  "term": "Plugin / Plugins / Extension",
+  "zh": "擴充套件",
+  "oneline": "把好幾份技能與設定打包成一包，一次裝、一次更新。它是包裝，不是新技術。"
+ },
  "posttraining": {
   "term": "Post-training",
   "zh": "後訓練",
@@ -168,6 +173,16 @@
   "term": "Sandbox",
   "zh": "沙盒",
   "oneline": "新人的模擬帳戶：可以練習，但下的單不會真的成交。"
+ },
+ "skill": {
+  "term": "Skill / Skills / Slash Command",
+  "zh": "技能",
+  "oneline": "把一套做事的規矩存成一份檔案，用得到的時候整份塞進去。存的不是提示詞，是流程。"
+ },
+ "system-prompt": {
+  "term": "System Prompt",
+  "zh": "系統提示詞",
+  "oneline": "每一次對話開始之前就已經在裡面的那段字。你看不到它，但它一直在。"
  },
  "temperature": {
   "term": "Temperature",

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>那幾段文件，是怎麼被挑出來的｜AI 小學堂</title>
-    <meta name="description" content="上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
-    <meta property="og:title" content="那幾段文件，是怎麼被挑出來的">
-    <meta property="og:description" content="上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
+    <title>RAG：那幾段文件，是怎麼被挑出來的｜AI 小學堂</title>
+    <meta name="description" content="要求它標出處、再照出處除錯，是驗這種系統最實用的一招。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
+    <meta property="og:title" content="RAG：那幾段文件，是怎麼被挑出來的">
+    <meta property="og:description" content="要求它標出處、再照出處除錯，是驗這種系統最實用的一招。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。">
     <meta property="og:type" content="article">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <style>
@@ -257,8 +257,8 @@
                 <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
                 <span class="text-white/50">2026-09-08</span>
             </div>
-            <h1 class="page-title mb-3">那幾段文件，是怎麼被挑出來的</h1>
-            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。</p>
+            <h1 class="page-title mb-3">RAG：那幾段文件，是怎麼被挑出來的</h1>
+            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">要求它標出處、再照出處除錯，是驗這種系統最實用的一招。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。</p>
             <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">模型不知道你們的內規，那些知識是每一次回答前臨時塞進去的</span></div></div>
         </div>
     </header>
@@ -279,7 +279,7 @@
                 <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
                     <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
 <section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：出處是從哪裡來的</h2>
-<p>上一集留了一整套除錯方法給你：同一題問五次，要求它標出處，然後看出處會不會變、對不對得上、內容跟出處是不是同一件事。</p>
+<p>驗一套內部問答系統，有一整套現成的除錯方法：同一題問五次，要求它標出處，然後看出處會不會變、對不對得上、內容跟出處是不是同一件事。</p>
 <p>那套方法很好用。但它從頭到尾都靠同一個東西撐著——<strong>出處</strong>。</p>
 <p>所以這一集要先問一句：<mark class="hl">那個出處，到底是從哪裡來的？</mark></p>
 <p>先把背景補清楚。模型本身<strong>不知道你們的內規</strong>。它沒看過你們的商品條款、沒看過上週剛發的函令、沒看過那份只在共用資料夾裡的作業要點。這些東西不在它學來的那包東西裡面，一個字都沒有。</p>
@@ -313,7 +313,7 @@
 <p>實際的做法是：先把每一段文件換算成一個位置——<mark class="hl">意思相近的東西，位置就靠近</mark>。你問一句話，這句話也換算成一個位置，然後看哪幾段文件離它最近，就撈哪幾段。</p>
 <p>所以它給你的不是「有」或「沒有」，是一份<strong>排名</strong>：最像的排第一，第二像的排第二，通常取前面幾段就送進去了。</p>
 <p>這裡順帶回答一個很多人卡住的問題：<strong>為什麼不乾脆把內部文件拿去訓練，讓模型自己記起來？</strong></p>
-<p>第三集講過那條線：訓練分成很貴的那次和很便宜的那次，而<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>改的是<mark class="hl">回答的傾向</mark>——語氣、格式、流程，它不是把資料存進模型裡。</p>
+<p>訓練分成兩次：很貴的那次把模型燒出來，很便宜的那次叫<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>。而微調改的是<mark class="hl">回答的傾向</mark>——語氣、格式、流程，它不是把資料存進模型裡。</p>
 <p>而內部文件有兩個性質，讓「訓練進去」這條路一開始就走不通：</p>
 <ul>
 <li><strong>會變。</strong> 條款改一次就要重訓一次，成本和時效都不成立。</li>
@@ -321,8 +321,8 @@
 </ul>
 <p>所以那條線的下半是這樣的：<strong>要改它的講法，用微調；要給它知識，用先撈再答。</strong> 這兩件事被混在同一個需求單裡的次數，比你想像的多。</p>
 </section><section class="seg seg-spoken"><h2 id="_5">以前為什麼做不到：關鍵字搜尋比的是字串</h2>
-<p>還是拿<strong>內部關鍵字搜尋</strong>來比，但這次比的角度跟上一集不一樣。</p>
-<p>上一集比的是「結果穩不穩定」；這一集比的是「<strong>怎麼找</strong>」。</p>
+<p>還是拿<strong>內部關鍵字搜尋</strong>來比，但這次比的角度換一個。</p>
+<p>關鍵字搜尋每次結果都一樣，這種系統不會——那是穩定度的差別。這一段要比的是另一件事：「<strong>怎麼找</strong>」。</p>
 <p>關鍵字搜尋問的問題只有一個：<strong>這串字在不在這份文件裡。</strong> 在，就撈出來；不在，就當它不存在。</p>
 <p>於是它有一整類東西天生找不到——同義詞、簡稱、口語說法、換句話說。你搜「核准」，那份寫「同意辦理」的文件不會出現；你搜「線上開戶」，寫「數位帳戶申請」的那份也不會出現。</p>
 <p><strong>這不是它做得不好，是它根本沒有在比意思。</strong></p>
@@ -362,7 +362,7 @@
 <div class="callout callout-提醒"><div class="callout-title">兩邊漏的東西不一樣，而且關鍵字在有些事情上比較強</div><p>精確的東西——<strong>條號、代號、商品編號、身分證字號、特定的法規名稱</strong>——關鍵字比對是完勝的，因為那種東西就是要一字不差。</p>
 <p>而語意檢索在這種查詢上反而會出事：<mark class="hl">它會撈回「意思很接近」的<strong>另一條</strong>條文</mark>，因為在它眼裡那兩條長得很像。</p>
 <p>所以實務上兩種常常一起用，不是二選一。<strong>如果你們的問題有一半是在查條號，那語意檢索不見得是對的工具。</strong></p></div>
-<p>還有一個差別更容易被忽略：關鍵字搜尋是<strong>人自己讀</strong>那份清單，撈錯了人一眼就看出來。現在是模型讀，人只看到最後那段話——<mark class="hl">撈錯的證據，在中間那一步就被吃掉了。</mark> 這就是為什麼上一集要教你把出處要出來。</p>
+<p>還有一個差別更容易被忽略：關鍵字搜尋是<strong>人自己讀</strong>那份清單，撈錯了人一眼就看出來。現在是模型讀，人只看到最後那段話——<mark class="hl">撈錯的證據，在中間那一步就被吃掉了。</mark> 這就是為什麼一定要把出處要出來。</p>
 </section><section class="seg seg-extra"><h2 id="_6">拆一層：文件是怎麼進去的</h2>
 <p>上面講的都是「查」那一半。真正決定品質的是另一半，而且它發生在你問任何問題之前。</p>
 <div class="fl"><div class="fl-step"><div class="fl-who">原始文件</div><div class="fl-what">規章、函令、作業要點、簡報、掃描的紙本</div></div><div class="fl-step"><div class="fl-who">切成段</div><div class="fl-what">一份三十頁的規章要切成幾十段，因為一次只能塞幾段進去</div></div><div class="fl-step"><div class="fl-who">建索引</div><div class="fl-what">每一段換算成一個位置，存起來</div></div><div class="fl-step"><div class="fl-who">你問問題</div><div class="fl-what">問題也換算成一個位置</div></div><div class="fl-step"><div class="fl-who">取前幾段</div><div class="fl-what">找出最近的那幾段，送進模型</div></div></div>
@@ -403,7 +403,7 @@
                     </div>
                 </article>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">同一題問兩次，為什麼答案不一樣</div></a><div></div></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">Sampling：同一題問兩次，為什麼答案不一樣</div></a><a href="2026-W38-skills.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">Skills：把做事的規矩存成一份檔案</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
             </main>
         </div>
     </div>

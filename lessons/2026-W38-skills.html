@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills：把做事的規矩存成一份檔案｜AI 小學堂</title>
+    <meta name="description" content="同一題問五次、比對答案，可以驗出它答得穩不穩。那如果不是問題，是一條規矩，你要它五次都遵守呢？交代一次是沒有用的——關掉視窗那套規矩就不存在了。這一堂講規矩該放在哪裡、為什麼寫給它的版本不能出現「盡量」，以及為什麼一份規矩檔會決定這套做法交不交接得出去。">
+    <meta property="og:title" content="Skills：把做事的規矩存成一份檔案">
+    <meta property="og:description" content="同一題問五次、比對答案，可以驗出它答得穩不穩。那如果不是問題，是一條規矩，你要它五次都遵守呢？交代一次是沒有用的——關掉視窗那套規矩就不存在了。這一堂講規矩該放在哪裡、為什麼寫給它的版本不能出現「盡量」，以及為什麼一份規矩檔會決定這套做法交不交接得出去。">
+    <meta property="og:type" content="article">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 20px; }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Noto Sans TC', sans-serif; }
+
+        .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+        .hero-lesson  { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 55%, #2563eb 100%); }
+        .hero-howto   { background: linear-gradient(135deg, #0f2460 0%, #115e59 55%, #0d9488 100%); }
+
+        .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); }
+
+        /* ===== 內文排版：Typography 打底，以下是本站客製 ===== */
+        .lesson-body { line-height: 1.9; }
+        .lesson-body :where(p, li) { letter-spacing: 0.01em; }
+
+        /* 大節標題：左側色條 */
+        .lesson-body h2 {
+            position: relative;
+            padding-left: 0.85rem;
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            scroll-margin-top: 4.5rem;
+        }
+        .lesson-body h2::before {
+            content: "";
+            position: absolute; left: 0; top: 0.15em; bottom: 0.15em;
+            width: 4px; border-radius: 999px;
+            background: var(--accent, #2563eb);
+        }
+        .lesson-body h3 { margin-top: 2rem; font-size: 1.1rem; color: #334155; scroll-margin-top: 4.5rem; }
+
+        /* 一般引言 */
+        .lesson-body blockquote {
+            font-style: normal;
+            border-left: 3px solid #cbd5e1;
+            background: #f8fafc;
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 0.85rem 1.1rem;
+            color: #475569;
+        }
+        .lesson-body blockquote p:first-child { margin-top: 0; }
+        .lesson-body blockquote p:last-child  { margin-bottom: 0; }
+
+        /* ===== Callout：來自 .md 的 > [!類型] 標題 ===== */
+        .callout {
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem;
+            margin: 1.75rem 0;
+            border: 1px solid transparent;
+        }
+        .callout-title {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 0.9rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .callout-title svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
+        .callout > p:last-child { margin-bottom: 0; }
+        .callout > p { margin: 0.4rem 0; font-size: 0.97rem; }
+
+        .callout-先備  { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-先備 .callout-title { color: #1d4ed8; }
+        .callout-比喻  { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+        .callout-比喻 .callout-title { color: #ea580c; }
+        .callout-重點  { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
+        .callout-重點 .callout-title { color: #4f46e5; }
+        .callout-提醒  { background: #fef2f2; border-color: #fecaca; color: #7f1d1d; }
+        .callout-提醒 .callout-title { color: #dc2626; }
+        .callout-總結  { background: #f0fdf4; border-color: #bbf7d0; color: #14532d; }
+        .callout-總結 .callout-title { color: #16a34a; }
+        .callout-金融業  { background: linear-gradient(to right, #eff6ff, #f8faff); border-color: #bfdbfe; color: #1e3a8a; }
+        .callout-金融業 .callout-title { color: #1d4ed8; }
+
+        /* ===== 段落分級：口白＝現場唸的，延伸＝只在網頁 ===== */
+        .seg-extra > h2::after {
+            content: "延伸";
+            margin-left: 0.6rem;
+            padding: 0.15rem 0.45rem;
+            border: 1px solid #e2e8f0; border-radius: 999px;
+            font-size: 0.6rem; font-weight: 600; color: #94a3b8;
+            vertical-align: middle;
+        }
+
+        /* ===== 表格：卡片化 ===== */
+        .lesson-body table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin: 1.75rem 0;
+        }
+        .lesson-body thead { background: #f1f5f9; }
+        .lesson-body th {
+            text-align: left; font-weight: 600; color: #334155;
+            padding: 0.7rem 0.9rem; border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        .lesson-body td { padding: 0.7rem 0.9rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        .lesson-body tbody tr:last-child td { border-bottom: none; }
+        .lesson-body tbody tr:hover { background: #f8fafc; }
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* ===== 程式碼／示意框 ===== */
+        .lesson-body pre {
+            background: #0f172a; color: #e2e8f0;
+            border-radius: 0.9rem; padding: 1rem 1.15rem;
+            font-size: 0.87rem; line-height: 1.7;
+            overflow-x: auto;
+        }
+        .lesson-body :not(pre) > code {
+            background: #f1f5f9; color: #be123c;
+            padding: 0.12em 0.4em; border-radius: 0.35rem;
+            font-size: 0.88em; font-weight: 500;
+        }
+        .lesson-body pre code { background: none; color: inherit; padding: 0; font-weight: 400; }
+
+        /* ===== 實作課：有序清單變步驟卡 ===== */
+        .howto .lesson-body > ol,
+        .howto .lesson-body > section > ol { list-style: none; padding-left: 0; counter-reset: step; }
+        .howto .lesson-body > ol > li,
+        .howto .lesson-body > section > ol > li {
+            counter-increment: step;
+            position: relative;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.1rem 1.25rem 1.1rem 3.4rem;
+            margin: 0.85rem 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .howto .lesson-body > ol > li::before,
+        .howto .lesson-body > section > ol > li::before {
+            content: counter(step);
+            position: absolute; left: 1rem; top: 1.05rem;
+            width: 1.75rem; height: 1.75rem;
+            border-radius: 999px;
+            background: #0d9488; color: #fff;
+            font-size: 0.85rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .howto .lesson-body > ol > li > p:first-child,
+        .howto .lesson-body > section > ol > li > p:first-child { margin-top: 0; }
+        .howto .lesson-body > ol > li > p:last-child,
+        .howto .lesson-body > section > ol > li > p:last-child  { margin-bottom: 0; }
+
+        /* 截圖 */
+        .lesson-body img {
+            border-radius: 0.9rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 1.5rem auto;
+        }
+
+        /* 目錄 */
+        .toc-link {
+            display: block; padding: 0.4rem 0.7rem;
+            font-size: 0.83rem; color: #64748b;
+            border-radius: 0.6rem; border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .toc-link:hover { background: #f8fafc; color: #1d4ed8; }
+        .toc-link.active { color: #1d4ed8; border-left-color: #2563eb; background: #eff6ff; font-weight: 500; }
+        /* ==螢光筆==：只染下半截，像真的用螢光筆畫過 */
+        mark.hl {
+            background: linear-gradient(transparent 52%, #fde68a 52%);
+            color: inherit; padding: 0 .12em; border-radius: .1em;
+        }
+
+        /* ===== ```flow 流程：誰做了什麼，靠 CSS 對齊不靠空格 ===== */
+        .fl { margin: 1.2rem 0; }
+        .fl-step { position: relative; display: grid; gap: .1rem 1rem; padding: 0 0 1.15rem 1.6rem; }
+        @media (min-width: 640px) { .fl-step { grid-template-columns: 8rem 1fr; align-items: baseline; } }
+        .fl-step:last-child { padding-bottom: 0; }
+        .fl-step::before {
+            content: ""; position: absolute; left: .28rem; top: .5rem;
+            width: .55rem; height: .55rem; border-radius: 999px;
+            background: #fff; border: 2px solid var(--accent);
+        }
+        .fl-step:not(:last-child)::after {
+            content: ""; position: absolute; left: .5rem; top: 1.2rem; bottom: .1rem;
+            width: 2px; background: #e2e8f0;
+        }
+        .fl-who {
+            font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+            color: var(--accent);
+        }
+        .fl-what {
+            font-size: .9rem; color: #334155; line-height: 1.75;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* 內文裡的 [[ ]] */
+        .term-link {
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        }
+        .term-link:hover { border-bottom-color: var(--accent); }
+    </style>
+    <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body class="bg-slate-50 text-gray-800 lesson">
+
+    <!-- NAVBAR -->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-white/70 hover:text-white py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-orange-300 font-semibold py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+
+    <!-- HERO -->
+    <header class="hero-lesson text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            <a href="../classroom.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-5 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                AI 小學堂
+            </a>
+            <div class="flex items-center gap-2.5 mb-3 text-xs">
+                <span class="px-2.5 py-1 rounded-full bg-white/15 font-semibold tracking-wider">2026-W38</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
+                <span class="text-white/50">2026-09-15</span>
+            </div>
+            <h1 class="page-title mb-3">Skills：把做事的規矩存成一份檔案</h1>
+            <p class="text-white/70 text-sm leading-relaxed max-w-2xl">同一題問五次、比對答案，可以驗出它答得穩不穩。那如果不是問題，是一條規矩，你要它五次都遵守呢？交代一次是沒有用的——關掉視窗那套規矩就不存在了。這一堂講規矩該放在哪裡、為什麼寫給它的版本不能出現「盡量」，以及為什麼一份規矩檔會決定這套做法交不交接得出去。</p>
+            <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">規矩也是每次塞進去的，而且那份塞什麼由你決定</span></div></div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex gap-8 items-start">
+            <!-- 目錄 -->
+            <aside class="hidden lg:block w-52 flex-shrink-0 sticky" style="top:4.5rem;">
+                <div class="bg-white rounded-2xl card p-3">
+                    <div class="px-2.5 py-1.5 text-xs font-semibold text-gray-400 tracking-wider">本集內容</div>
+                    <nav id="toc" class="space-y-0.5"><a href="#_1" class="toc-link seg-spoken">技術詞鉤子：交代一次，是沒有用的</a><a href="#_2" class="toc-link seg-extra">那個你看不懂的詞：技能，與那四個層級</a><a href="#_4" class="toc-link seg-spoken">一個金融業的比喻：夾在案卷最前面的那張作業單</a><a href="#_5" class="toc-link seg-spoken">為什麼可以做到：規矩跟知識走的是同一條路</a><a href="#_6" class="toc-link seg-spoken">為什麼是現在才有：三道閘門剛好都開了</a><a href="#_7" class="toc-link seg-spoken">以前的做法：作業辦法是寫給會權衡的人看的</a><a href="#_8" class="toc-link seg-extra">拆一層：一份規矩檔實際長什麼樣</a><a href="#_9" class="toc-link seg-spoken">所以對我們的意義：可交接性不在模型，在這份檔案</a><a href="#_10" class="toc-link seg-spoken">一句話總結</a></nav>
+                </div>
+            </aside>
+
+            <!-- 內文 -->
+            <main class="flex-1 min-w-0">
+                <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
+                    <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
+<section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：交代一次，是沒有用的</h2>
+<p>驗一個 AI 靠不靠得住，有個現成做法：<strong>同一題問五次，看答案會不會互相矛盾。</strong></p>
+<p>那是問問題。現在換一件事：<strong>你要交代它一條規矩。</strong></p>
+<p>比方說「引用任何一則新聞之前，先確認發布日期落在這個月，不在的就整筆不要用」。你打了這句話進去，它照做了，做得很好。你很滿意。</p>
+<p>然後你關掉視窗。</p>
+<p>隔天你再開一個新的，問一樣的事。它沒有查日期。<mark class="hl">它不是忘記了，是它從來沒有記住過。</mark> 昨天那句話跟昨天那個視窗一起結束了。</p>
+<p>這還是你一個人用的情況。真正麻煩的是第二種：<strong>旁邊那位同事也在用同一套工具，而他交代的版本跟你不一樣。</strong> 他寫「盡量確認一下日期」。於是同一件事，你們兩個人跑出來的東西不一樣，而且沒有人說得出正確的做法到底是哪一版——因為那兩版都只存在於各自的對話紀錄裡。</p>
+<p>這一堂只回答一個問題：<strong>那套規矩，應該放在哪裡。</strong></p>
+<p>答案很土：放進一份檔案。土歸土，它會連帶決定一件不小的事——<mark class="hl">這套做法能不能交接給下一個人</mark>。</p>
+</section><section class="seg seg-extra"><h2 id="_2">那個你看不懂的詞：技能，與那四個層級</h2>
+<p>先把地圖攤開，因為這是這條線的第一堂。</p>
+<p>同一個工具，用的深度差很多。多數人一輩子停在第一層，而真正省時間的在第三、第四層——那需要設定，但只需要設定一次。</p>
+<table>
+<thead>
+<tr>
+<th>層級</th>
+<th>在做什麼</th>
+<th>人要在場嗎</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Level 1</strong>　我問它答</td>
+<td>問一題答一題，關掉視窗就結束，下次得重新交代背景</td>
+<td>全程</td>
+</tr>
+<tr>
+<td><strong>Level 2</strong>　把做法封裝起來</td>
+<td>教一次規矩，之後一個指令照做。成果可重複、交接容易</td>
+<td>下指令時</td>
+</tr>
+<tr>
+<td><strong>Level 3</strong>　自己動手操作</td>
+<td>去開網頁、去跑指令、出錯了自己看錯誤訊息再試一次</td>
+<td>被叫的時候</td>
+</tr>
+<tr>
+<td><strong>Level 4</strong>　定時自己上工</td>
+<td>時間到了自己開始跑，跑完主動回報</td>
+<td>只看結論</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-重點"><div class="callout-title">這一堂只走到 Level 2</div><p>後面三格各自需要一塊還沒講過的東西，硬講會變成操作說明書。<mark class="hl">Level 2 是唯一一個「今天就能做、而且不必先懂代理」的格子</mark>，也是投報率最高的一格。</p></div>
+<p>那個把規矩存起來的東西，叫<a href="../terms/skill.html" class="term-link" data-term="skill">技能</a>。一份技能檔分成兩塊：</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">描述</div><div class="fl-what">什麼時候該叫出這一份。平常只有這一行被看到</div></div><div class="fl-step"><div class="fl-who">內容</div><div class="fl-what">完整的工作流程、輸出格式、硬性規則、檢查清單</div></div></div>
+<div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
+<p>這個兩層結構不是版面問題。模型一次看得進去的字是有上限的，所以平常只讓它看見每一份技能的那<strong>一行描述</strong>；<mark class="hl">等它判斷這次用得到，才把整份載進來</mark>。你的規矩檔可以寫得很長，因為它平常不佔位置。</p>
+<h3 id="_3">那它跟我直接貼一段字，到底差在哪</h3>
+<p>這裡要先把四個很容易混在一起的詞分開，因為它們<strong>送進模型的東西其實是同一種：文字</strong>。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>誰寫的</th>
+<th>什麼時候進去</th>
+<th>有沒有一個存放的地方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>提示詞</strong></td>
+<td>你，當下打的</td>
+<td>這一次</td>
+<td>沒有。關掉就沒了</td>
+</tr>
+<tr>
+<td><strong><a href="../terms/system-prompt.html" class="term-link" data-term="system-prompt">系統提示詞</a></strong></td>
+<td>系統方，事先寫死</td>
+<td>每一次，自動，你看不到</td>
+<td>有，但通常不在你手上</td>
+</tr>
+<tr>
+<td><strong><a href="../terms/skill.html" class="term-link" data-term="skill">技能</a></strong></td>
+<td>你，事先寫好</td>
+<td><mark class="hl">需要的那幾次</mark>，它自己判斷</td>
+<td>有，一份檔案</td>
+</tr>
+</tbody>
+</table>
+<p>所以答案是：<strong>技能當然是一種提示詞</strong>，本質上就是一段被塞進去的字，沒有任何魔法。分野不在它是什麼，在<strong>這三件事</strong>：</p>
+<ol>
+<li><strong>這一次，還是每一次。</strong> 貼進對話框的是這一次；技能是每一次用到都一樣。</li>
+<li><strong>有沒有實體。</strong> 這是最實際的一條——<mark class="hl">有檔案才改得動、看得到誰改的、交接得出去</mark>。貼在對話框裡的那段字沒有家。</li>
+<li><strong>誰決定要不要用。</strong> 貼一段字是你決定；技能是它讀完那一行描述之後<strong>自己判斷</strong>這次用不用得到。</li>
+</ol>
+<div class="callout callout-提醒"><div class="callout-title">那為什麼不叫「提示詞範本」，要叫「技能」</div><p>因為這個名字是<strong>從模型那一邊看過去</strong>取的。從它的角度，眼前是一份清單，每一項寫著「這是什麼、什麼時候用」，它挑一項出來用——那個動作長得像<strong>叫出一項能力</strong>，不像收到一段文字。</p>
+<p><mark class="hl">實作上是文字注入，介面上是能力選取。</mark> 名字取的是後者。知道這一點就好，不必為這個名字多想什麼。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_4">一個金融業的比喻：夾在案卷最前面的那張作業單</h2>
+<p>先立一個場景：你手上有一個很會寫、但完全不懂內規的新人。</p>
+<p>你會怎麼做？把相關的那幾份文件抽出來，<strong>夾在案卷裡一起給他</strong>——內部知識庫那套系統做的就是這件事，回答之前先去<a href="../terms/rag.html" class="term-link" data-term="rag">撈</a>幾份相關文件塞給它。</p>
+<p>現在把那個比喻推進一步——<strong>這個新人每天都換一個。</strong></p>
+<p>昨天那位已經摸熟你要的格式了，今天來的那位沒有。你昨天講過的「金額一律寫到元、不要四捨五入」「引用條號要註明版本日期」「查不到就寫查不到，不要推測」，全部要重講一次。而且你每次重講的順序和用字都不太一樣，於是<mark class="hl">產出的東西每天都有點不同</mark>。</p>
+<p>有經驗的主管會怎麼解決？不會靠記性，會做一張東西出來：<strong>一張作業單，夾在案卷最前面，誰接手都先讀那一張。</strong></p>
+<p>技能就是那張作業單。</p>
+<p>所以這兩件事其實是同一個動作的兩半：</p>
+<ul>
+<li>一邊夾進去的是<strong>知識</strong>——他不知道的內規，系統自動幫他<a href="../terms/rag.html" class="term-link" data-term="rag">撈</a>。</li>
+<li>另一邊夾進去的是<strong>規矩</strong>——他不知道的做法，<mark class="hl">你指定他一定要照著做</mark>。那就是這一堂的技能。</li>
+</ul>
+<p>兩邊都是在他開口之前，把東西放到他眼前。差別只在一邊是系統自動撈，一邊是你手動指定。</p>
+</section><section class="seg seg-spoken"><h2 id="_5">為什麼可以做到：規矩跟知識走的是同一條路</h2>
+<p>有一句話是這一切的前提：模型不知道你們的內規，<mark class="hl">那些知識不在它腦子裡</mark>，是<strong>每一次回答前臨時塞進去的</strong>。</p>
+<p>規矩走的是完全一樣的路。</p>
+<p>它沒有被寫進那包<a href="../terms/weights.html" class="term-link" data-term="weights">權重</a>裡（權重是幾個月前燒好的，一個字都不會變），它也不是模型「記得」你講過什麼。它就是<strong>每一次要動手之前，被貼在最前面的一段字</strong>。</p>
+<p>這件事其實一直都在發生，只是你看不到。你打開任何一個 AI 服務，看起來只有你打的那一句話送進去，實際上前面早就接了一整段你看不到的字——你是誰、照什麼流程、什麼格式、什麼不准做。那段字叫<a href="../terms/system-prompt.html" class="term-link" data-term="system-prompt">系統提示詞</a>，是系統方寫死的。</p>
+<p>技能做的事，是把這段「每次都塞」的一整包，拆成<strong>一份份按情境才塞</strong>的檔案：</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">你打一個指令</div><div class="fl-what">或者它從描述判斷出這次用得到</div></div><div class="fl-step"><div class="fl-who">系統載入那一份</div><div class="fl-what">整份規矩檔被貼到最前面</div></div><div class="fl-step"><div class="fl-who">它照著跑</div><div class="fl-what">第幾步做什麼、輸出長什麼樣，都在那份裡</div></div><div class="fl-step"><div class="fl-who">下一次</div><div class="fl-what">同一份檔案，同一套流程，跟誰在打字無關</div></div></div>
+<p>最後那一行是全部的重點。<strong>跟誰在打字無關</strong>——這就是為什麼它可以交接。</p>
+<p>而這也解釋了一件事：為什麼規矩要寫成檔案，而不是寫成一段很長很完整的話存在便條紙上下次重貼。<mark class="hl">會被重複使用的是那套判準，不是那段措辭。</mark> 存措辭，那只是罐頭訊息，改一次要全部重貼；存判準，改一行，所有人下次跑就是新的。</p>
+</section><section class="seg seg-spoken"><h2 id="_6">為什麼是現在才有：三道閘門剛好都開了</h2>
+<p>把規矩寫成檔案，這個想法有什麼難的？聽起來像三十年前就該有的東西。</p>
+<p>確實不難。<strong>難的是它以前不划算。</strong> 三道閘門，缺一道這招就不成立，而三道都是最近幾年才開的。</p>
+<p><strong>第一道：塞不下。</strong></p>
+<p>模型一次讀得進去的字有上限，那個上限幾年前小得驚人——大概就是<strong>兩三千個中文字</strong>。你把一份完整的流程規矩檔塞進去，額度就用完了：你要處理的那份合約放不進去，撈回來的參考文件也放不進去。</p>
+<p>所以以前的取捨是被迫的：規矩只能寫成一兩句，因為每多寫一句，能給它看的實際資料就少一句。<mark class="hl">你不是不想寫清楚，是寫清楚就沒空間辦事了。</mark> 現在那個上限大了幾百倍，一份兩千字的規矩檔從「吃掉全部」變成「吃掉零頭」。</p>
+<p><strong>第二道：塞了不照做。</strong></p>
+<p>更早期的模型做的事其實是<strong>接話</strong>，不是照做。你給它一份十步流程，它會把那份文件當成一段文章讀完，然後<mark class="hl">模仿那個文風繼續往下寫</mark>——生出第十一步、第十二步，寫得有模有樣，但一步都沒有執行。</p>
+<p>「看到指示就照著做」這件事是後來被特地訓練進去的，這是<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>那條線上的事——在燒好的模型上再花一筆小錢改一次，改的是它回答的傾向。<strong>它不是模型天生就會的能力，是有人花錢教出來的。</strong> 這一關沒過，前面那一關開再大也沒用：塞得下，但它不當一回事。</p>
+<p><strong>第三道：不會自己挑。</strong></p>
+<p>就算前兩關都過了，如果每次都要你指名「這次用第七號規矩檔」，那跟自己貼一段字省不了多少事。</p>
+<p>要划算，得是它自己讀完一整排描述，判斷「這次這一份用得到」。而它怎麼挑，分兩種情況：</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">清單很短</div><div class="fl-what">十來份，描述全部攤在它眼前，它直接挑一份說「我要用這個」</div></div><div class="fl-step"><div class="fl-who">清單很長</div><div class="fl-what">幾百份攤不開，先照你的問題去「撈」出幾份候選，再讓它挑</div></div></div>
+<p>看第二行——<mark class="hl">那就是知識庫那個<a href="../terms/rag.html" class="term-link" data-term="rag">「撈」</a>，只是撈的對象換了</mark>。那邊撈的是內部文件，這裡撈的是那一排技能描述。同一個動作、同一套比對意思的做法，換一個資料夾而已。</p>
+<p>這一句推下去，會得到一個很實際的結論：<strong>那一行描述，就是這份技能的「文件切法」。</strong></p>
+<p>知識庫那邊的結論是：答不好的時候，要修的幾乎都不是模型，是文件怎麼切、標題留不留。這裡一模一樣——技能沒被叫出來的時候，<mark class="hl">要修的幾乎都不是流程那一大段，是最上面那一行描述</mark>。描述寫「處理新聞」，它不知道什麼時候該用；寫「使用者說『幫我產週報』『搜集本週 AI 新聞』」，它就知道了。</p>
+<p><strong>同一條規律，換個場景又出現一次。</strong> 你以後每看到一個「它怎麼知道要用哪一份」的問題，都可以先問「被拿去比對的那段字寫得夠不夠具體」。</p>
+<p>不過這裡有一件事要另外講，<mark class="hl">它是模型最底層那條線上的事</mark>：<strong>「挑哪一份」本身不是查表，是猜出來的。</strong></p>
+<p>那一排描述攤在它眼前之後，它做的還是同一件事——<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜下一個字</a>。所以「這次用第七份」這個結論，跟它寫出來的任何一句話一樣，是<a href="../terms/sampling.html" class="term-link" data-term="sampling">抽樣</a>的結果，<mark class="hl">不是一個每次都會成立的判斷</mark>。同一句話，你今天打它叫得出來，明天打它可能就沒叫。</p>
+<p>這件事的實務結論很直接：<strong>技能沒被叫出來的時候，先分清楚那是「常常沒叫」還是「這次沒叫」。</strong> 常常沒叫，去修描述那一行；偶爾沒叫，那是<a href="../terms/determinism.html" class="term-link" data-term="determinism">每次不一樣</a>那筆帳的一部分，<mark class="hl">描述寫得再好也修不掉</mark>——真的不能漏的規矩，就不要指望它自己挑，直接打指令指名那一份。</p>
+<p>至於第一行那種——它直接開口說「我要用這一份」，然後外面那支程式真的去把檔案載進來——那個動作是另一塊還沒講的東西，<mark class="hl">而且它是整條代理線的地基</mark>。下一集就講它。</p>
+<div class="fl"><div class="fl-step"><div class="fl-who">以前</div><div class="fl-what">塞不下 → 規矩只能寫一兩句</div></div><div class="fl-step"><div class="fl-who">中間</div><div class="fl-what">塞得下了，但它把規矩當文章讀</div></div><div class="fl-step"><div class="fl-who">現在</div><div class="fl-what">塞得下、會照做、而且自己挑該用哪一份</div></div></div>
+<div class="callout callout-重點"><div class="callout-title">所以這不是一項新技術</div><p>技能的技術含量幾乎是零——<mark class="hl">它就是一個文字檔</mark>，沒有演算法、沒有模型、沒有專利。</p>
+<p>值錢的不是這個檔案，是那三道閘門開了之後，<strong>「把規矩寫下來」這件事第一次划算</strong>。這也是為什麼它會在這一兩年突然到處都是，而不是十年前。</p></div>
+<p>這件事還有一個副作用值得記住：<strong>因為它幾乎沒有技術含量，所以它也幾乎沒有廠商鎖定。</strong> 那份檔案是純文字，換一家工具、換一顆模型，裡面那套流程和硬規則搬過去就能用。這一點在後面講驗收的時候還會再出現一次。</p>
+</section><section class="seg seg-spoken"><h2 id="_7">以前的做法：作業辦法是寫給會權衡的人看的</h2>
+<p>這件事你們早就在做了，只是對象是人。它叫<strong>作業辦法</strong>，或者 SOP。</p>
+<p>所以真正該問的不是「要不要寫」，是<strong>寫法一不一樣</strong>。</p>
+<p>答案是：完全不一樣，而且這個差別很致命。</p>
+<p>作業辦法裡面充滿這些字——「原則上」「必要時」「得視情況」「儘量」。那不是寫得不精確，<mark class="hl">那是刻意留的裁量空間</mark>。因為讀的人是會權衡的：他知道這條規定的目的是什麼，遇到規定沒寫到的情況，他會照目的去判斷，判斷不了就上簽。</p>
+<p>規矩檔的讀者不會權衡。</p>
+<p>它會做的事是：把「儘量」當成一個可以被其他考量蓋過去的建議，然後在某一次——通常是最不希望的那一次——自己權衡完，放行。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>作業辦法（寫給人）</th>
+<th>規矩檔（寫給它）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>讀的人會不會權衡</td>
+<td>會，而且我們希望他會</td>
+<td>不會，但它會假裝在權衡</td>
+</tr>
+<tr>
+<td>模糊字眼</td>
+<td>刻意留的裁量空間</td>
+<td><mark class="hl">直接變成漏洞</mark></td>
+</tr>
+<tr>
+<td>例外怎麼處理</td>
+<td>上簽，由人決定</td>
+<td>要嘛事先寫進條件，要嘛它自己決定</td>
+</tr>
+<tr>
+<td>沒寫到的情況</td>
+<td>照目的推</td>
+<td>照它猜的目的推</td>
+</tr>
+</tbody>
+</table>
+<p>舉一個真的踩過的坑當證據。有一份產製新聞週報的規矩檔，裡面有一條規則是這樣寫的：</p>
+<blockquote>
+<p><strong>所有 url 的發佈時間必須落在區間內，違者整則刪除。</strong></p>
+</blockquote>
+<p>為什麼不寫「盡量落在區間內」？因為前面那個版本就是這樣寫的，而搜尋出來的東西日期本來就不可靠——查「這個月之後」照樣會回你一篇兩年前的文章。寫「盡量」的那個版本，會在湊不滿則數的時候，<mark class="hl">自己判斷「這則雖然舊了一點但很重要」，然後放進來一則過期新聞</mark>。</p>
+<p>它沒有違反規矩。它是照著「盡量」這兩個字，做了一次權衡。</p>
+<p>改成「違者整則刪除」之後就沒有這個空間了。同一份檔案裡還補了一句配套：<strong>不足時寧可減少數量，不得引用區間外的東西填補</strong>——因為堵掉一條路，要順手告訴它另一條路往哪走，否則它會自己找。</p>
+<div class="callout callout-提醒"><div class="callout-title">這層擋得住的東西比你想的少</div><p>把規矩寫成硬條件，是<a href="../terms/guardrail.html" class="term-link" data-term="guardrail">護欄</a>的一層——但它是<strong>最外面、最弱的那一層</strong>。它擋得住的是「它自己判斷歪掉」，擋不住「有人把別的字送到它眼前」。</p>
+<p><mark class="hl">只要有人能對它說話，就有人能跟你搶這一層。</mark> 真正硬的護欄在下面：它能呼叫哪幾支工具、那些工具碰得到哪些資料、哪一步不可逆要停下來等人。這一堂教的是最上面那層，別把它當成資安方案。</p></div>
+</section><section class="seg seg-extra"><h2 id="_8">拆一層：一份規矩檔實際長什麼樣</h2>
+<p>看一份真的。這是上面那個週報例子的檔案，砍掉細節之後的骨架：</p>
+<pre><code>---
+name: ai-news-weekly
+description: 產生台灣金融業視角的 AI 新聞週報。
+  使用時機：用戶說「幫我產週報」「搜集本週 AI 新聞」。
+  輸出含摘要與 9 到 11 篇文章。
+---
+
+## 執行流程
+Step 1  解析日期範圍，算出週次標籤
+Step 2  分五個主題各搜尋一次，都帶上日期區間
+Step 3  兩階段驗證：先用摘要篩日期，判不出來的才抓原文
+Step 4  選文：國內 6 到 8 則，國際 3 則
+Step 5  產出檔案
+
+## 硬規則
+- 只收「單一事件的新聞報導」，一篇只講一件事
+- 所有 url 的發佈時間必須落在區間內，違者整則刪除
+- 不足時寧可減少數量，不得引用區間外新聞填補
+- 所有文字一律繁體中文
+</code></pre>
+<p>三塊，看的順序是這樣：</p>
+<ol>
+<li><strong>最上面那幾行是「什麼時候該用」。</strong> 平常只有這幾行被看到，所以它要寫得夠具體——寫「處理新聞」它不知道什麼時候該叫出來，寫「用戶說幫我產週報」它就知道。</li>
+<li><strong>中間是流程。</strong> 第幾步做什麼，沒有形容詞。</li>
+<li><strong>最下面是硬規則，這一塊才是重點。</strong> 而且它通常<mark class="hl">不是一開始就有的，是踩過坑之後一條一條補上去的</mark>。上面那四條，每一條背後都是一次錯誤的產出。</li>
+</ol>
+<p>至於這份檔案要放到哪裡才會生效、以及為什麼它有兩層（只在這個案子裡生效的，和你到哪都生效的）——<mark class="hl">那是另一堂動手課的事</mark>。這一堂只管一件事：內容該怎麼寫。</p>
+<div class="callout callout-提醒"><div class="callout-title">上面那些欄位名，是證據不是課本</div><p><code>name</code>、<code>description</code>、要不要用三條橫線包起來——這些會隨版本改，各家工具也不一樣。<mark class="hl">會過期的是格式，不會過期的是「規矩要寫成硬條件」。</mark> 不要背欄位，要記的是這一份檔案裡哪三塊。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_9">所以對我們的意義：可交接性不在模型，在這份檔案</h2>
+<p>前面那些如果只留一句，留這句：</p>
+<p><strong>一套 AI 做法交不交接得出去，跟用哪一顆模型完全無關，只跟這份規矩檔存不存在有關。</strong></p>
+<p>有這份檔案：接手的人跑同一個指令，拿到同樣品質的產出，看得懂為什麼有那四條硬規則，也改得動。</p>
+<p>沒有這份檔案：那套做法在原本那個人的對話紀錄裡，而對話紀錄是不能交接的。人一走，接手的人只能從頭再試一次，再踩一次同樣的坑，再花三個月長出自己那一版——而且沒有人知道兩版差在哪。</p>
+<p>這件事會直接改變兩個場合的做法。</p>
+<p><strong>第一個是內部。</strong> 只要有人開始用這類工具做重複性的產出——不管是文件初稿、格式轉換、還是像合約比對這種格式固定的活——就該問一句：<strong>那套做法有沒有存成檔案？</strong> 這不是管制，是資產盤點。<mark class="hl">沒存下來的做法，在帳上等於不存在。</mark></p>
+<p><strong>第二個是委外和 PoC，這個更值錢。</strong></p>
+<div class="callout callout-金融業"><div class="callout-title">驗收的時候，把規矩檔寫進交付項目</div><p>現在的驗收多半只看成果：跑出來的東西對不對、準確率多少、幾秒回一次。這幾題都該問，但它們有一個共同的問題——<mark class="hl">全部都是在驗「這一次」</mark>。</p>
+<p>該補的一題是：<strong>除了成果，請一併交付你們用的那份規矩檔（流程、輸出格式、硬性規則）。</strong></p>
+<p>三個理由，都跟錢有關：</p>
+<ul>
+<li><strong>可重複。</strong> 沒有它，你買到的是一次性的產出，不是一套做法。下一批案子重來一次。</li>
+<li><strong>看得懂為什麼。</strong> 硬規則那一塊是對方踩過的坑，<mark class="hl">那份清單本身就是最有價值的交付物</mark>，比成果更難自己長出來。</li>
+<li><strong>換得掉。</strong> 模型每半年就換一代，但流程和硬規則留得下來。綁在對方系統裡的那套規矩，換廠商就是全部重做。</li>
+</ul>
+<p>這一題成本是零，而且對方答不答得出來，本身就是答案。</p></div>
+</section><section class="seg seg-spoken"><h2 id="_10">一句話總結</h2>
+<div class="callout callout-總結"><div class="callout-title">這一堂</div><p>交代一次是沒有用的，關掉視窗那套規矩就不存在。規矩跟知識走的是同一條路——<strong>都是回答之前被塞到它眼前的字</strong>，差別只在知識是系統自動撈的、規矩是你指定的。而寫給它的版本不能出現「盡量」：<mark class="hl">留了模糊空間，它就會自己權衡，然後在你最不希望的那一次放行。</mark> 這份檔案決定的不是它今天答得好不好，是這套做法能不能交接給下一個人。</p></div>
+<p>留一個問題給下一堂。</p>
+<p>規矩寫好了，存成檔案了，誰接手都跑得出同一份東西。這裡有一件事沒有變：</p>
+<p><strong>還是要你去打那個指令。</strong></p>
+<p>你不打，它就不動。你放假，它就不動。凌晨三點市場出了事，它也不動——因為沒有人在那個時間點打那句話。</p>
+<p>那如果不用打呢？</p>
+<p>不是你去找它，是它自己在該動的時候動起來：某件事一發生就觸發、或者時間到了自己上工，跑完主動回報給你。那就是層級表上的第三格和第四格。</p>
+<p>但在走進那兩格之前，概念線上還缺一塊，而且這一堂中間已經撞到它一次了——<strong>它開口說「我要用這一份」，然後外面真的有東西去把檔案載進來。</strong> 那個動作是什麼？誰在聽它說話？</p>
+<p>同一塊東西，換個問法就是：<mark class="hl">它憑什麼可以「自己決定下一步」？</mark></p>
+<p>一堂課裡撞到兩次的東西，通常就是下一堂的主題。先把那一塊補起來，這條實作線才走得下去。</p></section>
+                    </div>
+                </article>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W37-rag.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">RAG：那幾段文件，是怎麼被挑出來的</div></a><a href="2026-W39-skill-authoring.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">SKILL.md：動手做一份自己的技能</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 pb-10 text-center text-xs text-gray-400">
+        數金情報站 · AI 小學堂 · 每週一集
+    </footer>
+
+    <script>
+
+        // 表格加水平捲動外框，手機才不會撐破版面
+        document.querySelectorAll('.lesson-body table').forEach(t => {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            t.parentNode.insertBefore(wrap, t);
+            wrap.appendChild(t);
+        });
+
+        // 目錄高亮
+        const links = [...document.querySelectorAll('.toc-link')];
+        const heads = links.map(a => document.getElementById(a.hash.slice(1))).filter(Boolean);
+        if (heads.length) {
+            const onScroll = () => {
+                let idx = 0;
+                heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 120) idx = i; });
+                links.forEach((a, i) => a.classList.toggle('active', i === idx));
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        }
+    </script>
+    <script src="../assets/terms.js" defer></script>
+</body>
+</html>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>他們送出去的到底是什麼——燒一次的錢，和改一次的錢｜AI 小學堂</title>
+    <title>Pretraining / Fine-tuning：燒一次的錢，和改一次的錢｜AI 小學堂</title>
     <meta name="description" content="排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。">
-    <meta property="og:title" content="他們送出去的到底是什麼——燒一次的錢，和改一次的錢">
+    <meta property="og:title" content="Pretraining / Fine-tuning：燒一次的錢，和改一次的錢">
     <meta property="og:description" content="排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。">
     <meta property="og:type" content="article">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
@@ -257,7 +257,7 @@
                 <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
                 <span class="text-white/50">2026-08-25</span>
             </div>
-            <h1 class="page-title mb-3">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</h1>
+            <h1 class="page-title mb-3">Pretraining / Fine-tuning：燒一次的錢，和改一次的錢</h1>
             <p class="text-white/70 text-sm leading-relaxed max-w-2xl">排行榜前段班有一批模型可以整包下載回自己的機器上跑。一個燒了幾億美元做出來的東西，為什麼有人願意送？這一集回答那包東西是什麼、它是怎麼做出來的，以及會議室裡那句「我們要不要微調一個自己的模型」該怎麼拆開來問。</p>
             <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">權重是怎麼做出來的：燒一次的預訓練，和改一次的微調</span></div></div>
         </div>
@@ -279,7 +279,6 @@
                 <article class="bg-white rounded-2xl card px-5 sm:px-9 py-8">
                     <div class="lesson-body prose prose-slate max-w-none" style="--accent: #2563eb;">
 <section class="seg seg-spoken"><h2 id="_1">技術詞鉤子：他們送出去的到底是什麼</h2>
-<p>上一集講完那排百分比，結尾留了一個問題。</p>
 <p>打開現在任何一份模型排行榜，前段班有一批模型有個共同點：<strong>它們可以整包下載回自己的機器上跑，不用付授權金。</strong> 能力分數五十分以上、而且開放下載的，目前全世界六顆，全部來自中國團隊；美國最前面那幾家，旗艦一顆都沒放出來。</p>
 <p>先把背景補清楚，因為這件事的怪異之處就藏在數字裡。做出這樣一顆模型，成本是<strong>幾億美元起跳</strong>——那是數萬張運算卡連續跑好幾個月的電費和機器錢，不是一筆可以隨手認賠的預算。</p>
 <p>然後他們把成果放到網路上，任何人都能下載。</p>
@@ -290,7 +289,7 @@
 <p>那包能下載的東西叫做<a href="../terms/weights.html" class="term-link" data-term="weights">權重</a>。</p>
 <p>先講它<strong>不是</strong>什麼。它不是一套程式。模型的程式碼其實很短，公開的、任何人都看得到，短到可以印在幾張紙上——而且光有那幾張紙，你什麼都做不到。</p>
 <p><a href="../terms/weights.html" class="term-link" data-term="weights">權重</a>是一個檔案，裡面裝的是<strong>幾千億個數字</strong>。</p>
-<p>這些數字在幹嘛？回到上上集講過的事：模型回答問題的方式，是一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a>。它每猜一個字，都要算出「接下來每一個可能的字，各有多少機率」——而算那個機率用的，就是這幾千億個數字。</p>
+<p>這些數字在幹嘛？模型回答問題的方式，是一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a>。它每猜一個字，都要算出「接下來每一個可能的字，各有多少機率」——而算那個機率用的，就是這幾千億個數字。</p>
 <p>所以這句話可以講得很硬：<strong>模型的全部能力，就是那堆數字的值。</strong> 它讀過的東西、學會的語感、記住的常識，沒有一樣是以「條文」的形式存在的，全部被壓成了數字。</p>
 <div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
 <p>那這些數字是怎麼來的？答案就是這一集的兩個主角：一個叫<a href="../terms/pretraining.html" class="term-link" data-term="pretraining">預訓練</a>，一個叫<a href="../terms/fine-tuning.html" class="term-link" data-term="fine-tuning">微調</a>。</p>
@@ -347,7 +346,7 @@
 </ul>
 <p>把這道階梯套回我們手上的場景，判斷會變得很快。<mark class="hl">以合約比對這類場景為例</mark>：你要的是「照我們的格式標出差異條款」，那是講法，微調的候選；但你要的是「依照最新版的內規判斷這條可不可以簽」，那是知識，微調解決不了。<mark class="hl">像會議記錄生成這種場景</mark>，要的幾乎都是格式和用語的一致性，落在微調那一階；<mark class="hl">像內部規章問答這種場景</mark>，要的則是內容的正確與即時，一開始就不該往微調的方向想。</p>
 <p>而最後還有一題：<strong>你怎麼知道微調完真的有比較好？</strong></p>
-<p>用上一集那份<strong>你自己出的<a href="../terms/benchmark.html" class="term-link" data-term="benchmark">考卷</a></strong>。微調前跑一次、微調後跑同一份，分數有沒有動一目瞭然。<mark class="hl">沒有那份考卷，你花的錢會沒有辦法驗收</mark>——這也是為什麼上一集要先講它。</p>
+<p>用一份<strong>你自己出的<a href="../terms/benchmark.html" class="term-link" data-term="benchmark">考卷</a></strong>——拿你們真實的案子當考題，答案由你們的人認定。微調前跑一次、微調後跑同一份，分數有沒有動一目瞭然。<mark class="hl">沒有那份考卷，你花的錢會沒有辦法驗收</mark>。</p>
 <div class="callout callout-金融業"><div class="callout-title">廠商提「幫你們微調一個專屬模型」時，追問這三題</div><p><strong>一、你要改的是講法還是知識？</strong> 如果對方的簡報寫著「讓模型學會貴公司的規章」，<mark class="hl">那句話本身就有問題</mark>，先問清楚他實際上打算做什麼。</p>
 <p><strong>二、是全量微調還是 LoRA 這一類？</strong> 這決定成本量級，也決定之後換底層模型時，你的投入能不能跟著搬走。</p>
 <p><strong>三、驗收標準是什麼、誰出題？</strong> 題目由我們出、在動工前就寫好答案，<mark class="hl">否則你會拿到一份「看起來不錯」的驗收報告</mark>。</p></div>
@@ -362,7 +361,7 @@
                     </div>
                 </article>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W34-benchmark.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用</div></a><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">同一題問兩次，為什麼答案不一樣</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W34-benchmark.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">Benchmark：為什麼分數領先不等於你會好用</div></a><a href="2026-W36-sampling.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">Sampling：同一題問兩次，為什麼答案不一樣</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
             </main>
         </div>
     </div>

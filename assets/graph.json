@@ -61,16 +61,28 @@
    "deg": 1
   },
   {
+   "id": "context-window",
+   "label": "Context Window",
+   "zh": "上下文視窗",
+   "kind": "term",
+   "cat": "2026-W39",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/context-window.html",
+   "oneline": "它一次能看多少字。像工作桌的大小，不等於理解品質。",
+   "deg": 1
+  },
+  {
    "id": "determinism",
    "label": "Determinism",
    "zh": "每次一樣",
    "kind": "term",
    "cat": "2026-W36",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/determinism.html",
    "oneline": "同樣輸入給同樣輸出。這是我們對系統幾十年的預設期待，而它在這裡不成立。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "fine-tuning",
@@ -78,11 +90,11 @@
    "zh": "微調",
    "kind": "term",
    "cat": "2026-W35",
-   "color": "#60a5fa",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/fine-tuning.html",
    "oneline": "拿別人訓練好的權重再調一輪，改的是回答的方式，不是它知道的事。",
-   "deg": 2
+   "deg": 3
   },
   {
    "id": "guardrail",
@@ -90,11 +102,11 @@
    "zh": "護欄",
    "kind": "term",
    "cat": "2026-W37",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/guardrail.html",
    "oneline": "擋得住的邊界不是它讀到的字，是它做得到的事。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "leaderboard-tuning",
@@ -126,11 +138,23 @@
    "zh": "猜下一個字",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#2563eb",
+   "color": "#1e3a8a",
    "pending": false,
    "url": "terms/next-token-prediction.html",
    "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。",
-   "deg": 3
+   "deg": 5
+  },
+  {
+   "id": "plugin",
+   "label": "Plugin / Plugins / Extension",
+   "zh": "擴充套件",
+   "kind": "term",
+   "cat": "2026-W39",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/plugin.html",
+   "oneline": "把好幾份技能與設定打包成一包，一次裝、一次更新。它是包裝，不是新技術。",
+   "deg": 1
   },
   {
    "id": "pretraining",
@@ -150,11 +174,11 @@
    "zh": "先撈再答",
    "kind": "term",
    "cat": "2026-W36",
-   "color": "#60a5fa",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/rag.html",
    "oneline": "回答之前先去把相關文件撈出來，跟問題一起交給模型。",
-   "deg": 2
+   "deg": 3
   },
   {
    "id": "reasoning-model",
@@ -186,10 +210,34 @@
    "zh": "抽樣",
    "kind": "term",
    "cat": "2026-W36",
-   "color": "#94a3b8",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/sampling.html",
    "oneline": "每產生一個字，都是在一張機率表上抽一次，不是去查一格答案。",
+   "deg": 3
+  },
+  {
+   "id": "skill",
+   "label": "Skill / Skills / Slash Command",
+   "zh": "技能",
+   "kind": "term",
+   "cat": "2026-W38",
+   "color": "#60a5fa",
+   "pending": false,
+   "url": "terms/skill.html",
+   "oneline": "把一套做事的規矩存成一份檔案，用得到的時候整份塞進去。存的不是提示詞，是流程。",
+   "deg": 2
+  },
+  {
+   "id": "system-prompt",
+   "label": "System Prompt",
+   "zh": "系統提示詞",
+   "kind": "term",
+   "cat": "2026-W38",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/system-prompt.html",
+   "oneline": "每一次對話開始之前就已經在裡面的那段字。你看不到它，但它一直在。",
    "deg": 1
   },
   {
@@ -222,11 +270,11 @@
    "zh": "詞元",
    "kind": "term",
    "cat": "2026-W33",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/token.html",
    "oneline": "文字被切成的最小單位，也是計費單位。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "weights",
@@ -234,27 +282,49 @@
    "zh": "權重",
    "kind": "term",
    "cat": "2026-W35",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/weights.html",
    "oneline": "模型訓練完的那一大包參數檔，模型的全部能力都在裡面。",
-   "deg": 1
+   "deg": 2
+  },
+  {
+   "id": "ep:2026-W39-skill-authoring",
+   "label": "2026-W39",
+   "zh": "SKILL.md：動手做一份自己的技能",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W39-skill-authoring.html",
+   "oneline": "一份寫著「照這個流程跑」的規矩檔，寫得再好，放錯地方就等於不存在。這一堂只回答一件事——那份檔案要放哪、你怎麼知道它生效了。順便給四份可以直接抄走的，以及一句話：你其實不用自己寫，你可以叫它幫你寫。",
+   "deg": 0
+  },
+  {
+   "id": "ep:2026-W38-skills",
+   "label": "2026-W38",
+   "zh": "Skills：把做事的規矩存成一份檔案",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W38-skills.html",
+   "oneline": "同一題問五次、比對答案，可以驗出它答得穩不穩。那如果不是問題，是一條規矩，你要它五次都遵守呢？交代一次是沒有用的——關掉視窗那套規矩就不存在了。這一堂講規矩該放在哪裡、為什麼寫給它的版本不能出現「盡量」，以及為什麼一份規矩檔會決定這套做法交不交接得出去。",
+   "deg": 0
   },
   {
    "id": "ep:2026-W37-rag",
    "label": "2026-W37",
-   "zh": "那幾段文件，是怎麼被挑出來的",
+   "zh": "RAG：那幾段文件，是怎麼被挑出來的",
    "kind": "lesson",
    "cat": "課程",
    "color": "#1e293b",
    "url": "lessons/2026-W37-rag.html",
-   "oneline": "上一集教你要求它標出處，然後照出處除錯。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。",
+   "oneline": "要求它標出處、再照出處除錯，是驗這種系統最實用的一招。但那個出處是從哪裡來的？整套方法建立在一個還沒講過的東西上——回答之前的那一次「撈」。這一集講撈的那一步在比什麼、為什麼它跟關鍵字搜尋漏掉的東西不一樣，以及為什麼答不好的時候，要修的幾乎都不是模型。",
    "deg": 0
   },
   {
    "id": "ep:2026-W36-sampling",
    "label": "2026-W36",
-   "zh": "同一題問兩次，為什麼答案不一樣",
+   "zh": "Sampling：同一題問兩次，為什麼答案不一樣",
    "kind": "lesson",
    "cat": "課程",
    "color": "#1e293b",
@@ -265,7 +335,7 @@
   {
    "id": "ep:2026-W35-pretraining-finetuning",
    "label": "2026-W35",
-   "zh": "他們送出去的到底是什麼——燒一次的錢，和改一次的錢",
+   "zh": "Pretraining / Fine-tuning：燒一次的錢，和改一次的錢",
    "kind": "lesson",
    "cat": "課程",
    "color": "#1e293b",
@@ -276,7 +346,7 @@
   {
    "id": "ep:2026-W34-benchmark",
    "label": "2026-W34",
-   "zh": "那排百分比到底是什麼考卷——為什麼分數領先不等於你會好用",
+   "zh": "Benchmark：為什麼分數領先不等於你會好用",
    "kind": "lesson",
    "cat": "課程",
    "color": "#1e293b",
@@ -287,7 +357,7 @@
   {
    "id": "ep:2026-W33-next-token-prediction",
    "label": "2026-W33",
-   "zh": "那個「思考中…」到底在想什麼——AI 其實一直在猜下一個字",
+   "zh": "Next-token prediction：那個「思考中…」到底在想什麼",
    "kind": "lesson",
    "cat": "課程",
    "color": "#1e293b",
@@ -393,6 +463,21 @@
    "layer": 1
   },
   {
+   "source": "context-window",
+   "target": "token",
+   "layer": 2
+  },
+  {
+   "source": "benchmark",
+   "target": "context-window",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "context-window",
+   "layer": 1
+  },
+  {
    "source": "determinism",
    "target": "sampling",
    "layer": 2
@@ -411,6 +496,11 @@
    "source": "benchmark",
    "target": "determinism",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "determinism",
+   "layer": 1
   },
   {
    "source": "ep:2026-W36-sampling",
@@ -448,6 +538,11 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W38-skills",
+   "target": "fine-tuning",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W37-rag",
    "target": "fine-tuning",
    "layer": 1
@@ -458,9 +553,19 @@
    "layer": 1
   },
   {
+   "source": "guardrail",
+   "target": "skill",
+   "layer": 2
+  },
+  {
    "source": "ai-agent",
    "target": "guardrail",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "guardrail",
+   "layer": 1
   },
   {
    "source": "ep:2026-W37-rag",
@@ -503,6 +608,16 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W36-sampling",
    "target": "next-token-prediction",
    "layer": 1
@@ -515,6 +630,16 @@
   {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
+   "source": "plugin",
+   "target": "skill",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "plugin",
    "layer": 1
   },
   {
@@ -541,6 +666,11 @@
    "source": "rag",
    "target": "sampling",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "rag",
+   "layer": 1
   },
   {
    "source": "ep:2026-W37-rag",
@@ -588,8 +718,63 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "sampling",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "sampling",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W36-sampling",
    "target": "sampling",
+   "layer": 1
+  },
+  {
+   "source": "context-window",
+   "target": "skill",
+   "layer": 2
+  },
+  {
+   "source": "skill",
+   "target": "system-prompt",
+   "layer": 2
+  },
+  {
+   "source": "rag",
+   "target": "skill",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "skill",
+   "layer": 1
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "skill",
+   "layer": 1
+  },
+  {
+   "source": "system-prompt",
+   "target": "weights",
+   "layer": 2
+  },
+  {
+   "source": "rag",
+   "target": "system-prompt",
+   "layer": 2
+  },
+  {
+   "source": "guardrail",
+   "target": "system-prompt",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "system-prompt",
    "layer": 1
   },
   {
@@ -613,6 +798,11 @@
    "layer": 1
   },
   {
+   "source": "ep:2026-W39-skill-authoring",
+   "target": "token",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W33-next-token-prediction",
    "target": "token",
    "layer": 1
@@ -626,6 +816,11 @@
    "source": "next-token-prediction",
    "target": "weights",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W38-skills",
+   "target": "weights",
+   "layer": 1
   },
   {
    "source": "ep:2026-W35-pretraining-finetuning",

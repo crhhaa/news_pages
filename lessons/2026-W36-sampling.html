@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>同一題問兩次，為什麼答案不一樣｜AI 小學堂</title>
+    <title>Sampling：同一題問兩次，為什麼答案不一樣｜AI 小學堂</title>
     <meta name="description" content="把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。">
-    <meta property="og:title" content="同一題問兩次，為什麼答案不一樣">
+    <meta property="og:title" content="Sampling：同一題問兩次，為什麼答案不一樣">
     <meta property="og:description" content="把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。">
     <meta property="og:type" content="article">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
@@ -257,7 +257,7 @@
                 <span class="px-2.5 py-1 rounded-full bg-blue-500/25 text-blue-100 font-semibold">概念</span>
                 <span class="text-white/50">2026-09-01</span>
             </div>
-            <h1 class="page-title mb-3">同一題問兩次，為什麼答案不一樣</h1>
+            <h1 class="page-title mb-3">Sampling：同一題問兩次，為什麼答案不一樣</h1>
             <p class="text-white/70 text-sm leading-relaxed max-w-2xl">把同一句話貼進內部問答系統兩次，回來的答案不一樣。第一個反應通常是「它是不是壞了」。它沒有壞——它從來就沒有承諾過會一樣。這一集講清楚不一樣是從哪裡來的（有兩層，不是一層），以及這件事怎麼改變我們驗收這種系統的方式。</p>
             <div class="mt-5 space-y-1.5"><div class="flex items-center gap-2 text-xs text-white/60"><span class="text-white/40">本集概念</span><span class="text-white/85 font-medium">模型的輸出是機率抽樣，不是查表</span></div></div>
         </div>
@@ -290,7 +290,7 @@
 <p>要講清楚第一層，得先修正一個很自然、但錯得很徹底的想像。</p>
 <p>大部分人以為模型回答問題的動作是<strong>查表</strong>：你問一句，它到某個地方找到對應的答案，拿回來給你。既然是查表，同一個問題當然該查到同一格。</p>
 <p>它不是這樣運作的。</p>
-<p>回到第一集講過的事：模型是<strong>一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a></strong>的。而它每猜一步，算出來的東西不是「下一個字是什麼」——</p>
+<p>先看它實際在做的事：模型是<strong>一個字一個字往下<a href="../terms/next-token-prediction.html" class="term-link" data-term="next-token-prediction">猜</a></strong>的。而它每猜一步，算出來的東西不是「下一個字是什麼」——</p>
 <p><mark class="hl">它算出來的是一張表：接下來每一個可能的字，各自有多少機率。</mark></p>
 <div class="callout callout-先備"><div class="callout-title">開始前，三句話</div><p>AI 模型不是被寫死規則的程式，是從大量資料「學」出來的。它回答問題的方式是一個字一個字往下猜。所以它很會「講得像」，但不保證「講得對」。</p></div>
 <p>拿到那張表以後，還得從裡面挑一個字出來。挑法有兩種：</p>
@@ -414,7 +414,7 @@
                     </div>
                 </article>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W35-pretraining-finetuning.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">他們送出去的到底是什麼——燒一次的錢，和改一次的錢</div></a><a href="2026-W37-rag.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">那幾段文件，是怎麼被挑出來的</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"><a href="2026-W35-pretraining-finetuning.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow "><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 "><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>上一集</div><div class="text-sm font-medium text-gray-800 leading-snug">Pretraining / Fine-tuning：燒一次的錢，和改一次的錢</div></a><a href="2026-W37-rag.html" class="bg-white rounded-2xl card px-5 py-4 hover:shadow-lg transition-shadow text-right"><div class="flex items-center gap-1.5 text-xs text-gray-400 mb-1 justify-end">下一集<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><div class="text-sm font-medium text-gray-800 leading-snug">RAG：那幾段文件，是怎麼被挑出來的</div></a></div><div class="text-center mt-6"><a href="../classroom.html" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">看全部集數 →</a></div>
             </main>
         </div>
     </div>

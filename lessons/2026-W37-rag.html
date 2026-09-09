@@ -365,7 +365,11 @@
 <p>還有一個差別更容易被忽略：關鍵字搜尋是<strong>人自己讀</strong>那份清單，撈錯了人一眼就看出來。現在是模型讀，人只看到最後那段話——<mark class="hl">撈錯的證據，在中間那一步就被吃掉了。</mark> 這就是為什麼一定要把出處要出來。</p>
 </section><section class="seg seg-extra"><h2 id="_6">拆一層：文件是怎麼進去的</h2>
 <p>上面講的都是「查」那一半。真正決定品質的是另一半，而且它發生在你問任何問題之前。</p>
-<div class="fl"><div class="fl-step"><div class="fl-who">原始文件</div><div class="fl-what">規章、函令、作業要點、簡報、掃描的紙本</div></div><div class="fl-step"><div class="fl-who">切成段</div><div class="fl-what">一份三十頁的規章要切成幾十段，因為一次只能塞幾段進去</div></div><div class="fl-step"><div class="fl-who">建索引</div><div class="fl-what">每一段換算成一個位置，存起來</div></div><div class="fl-step"><div class="fl-who">你問問題</div><div class="fl-what">問題也換算成一個位置</div></div><div class="fl-step"><div class="fl-who">取前幾段</div><div class="fl-what">找出最近的那幾段，送進模型</div></div></div>
+<figure class="dia">
+<iframe src="diagrams/rag-dataflow.html" title="先撈再答的資料流：離線進料與線上查詢共用同一份索引" loading="lazy"></iframe>
+<figcaption>虛線那條在你問問題之前就跑完了，實線那條每問一次跑一次；兩條路只在「索引」交會。圖可以縮放、點線條看走向，右上角可以切深色或匯出。<a href="diagrams/rag-dataflow.html" target="_blank" rel="noopener">另開新視窗</a></figcaption>
+</figure>
+
 <p>第二步「切成段」是最多坑的地方，而且每一個坑都跟 AI 無關，全部是文書問題：</p>
 <ul>
 <li><strong>切在哪裡。</strong> 一條規定被攔腰切成兩段，撈到前半段的人看不到但書；撈到後半段的人不知道這條在講誰。</li>

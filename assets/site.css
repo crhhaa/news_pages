@@ -92,5 +92,29 @@ code, kbd, pre, samp { font-family: var(--mono); }
     stroke-width: 2;
 }
 
-/* 課程內文：容器變寬之後仍要維持一行 40 字上下的可讀寬度 */
-.lesson-body { max-width: 46em; }
+/* 課程內文：容器變寬之後仍要維持一行 40 字上下的可讀寬度。
+   限制掛在每一個區塊上而不是容器本身，圖表那類要用滿 article 寬度的東西
+   才有辦法自己解除（見下面的 .dia）。 */
+.lesson-body { max-width: none; }
+.lesson-body > :not(section),
+.lesson-body > section > * { max-width: 46em; }
+
+/* 互動圖（archify 產的獨立頁，用 iframe 掛進來）。
+   正文卡在 46em，圖要寬一點才讀得到節點下面那行小字，所以 .dia 自己解除限制，
+   用滿 article 的內容寬度。高度是量出來的：欄寬 912px 時內容剛好 910px，
+   不會出現內層捲軸；窄一點需要更高，所以下面分三段給高度。 */
+.lesson-body .dia { max-width: none; margin: 2rem 0; }
+.lesson-body .dia iframe {
+    display: block;
+    width: 100%;
+    height: 1240px;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.9rem;
+}
+.lesson-body .dia figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+@media (min-width: 640px) { .lesson-body .dia iframe { height: 1100px; } }
+@media (min-width: 1180px) { .lesson-body .dia iframe { height: 910px; } }

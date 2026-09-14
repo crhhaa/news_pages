@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 週報 2026-W37｜綁在一起的那一包</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+  .hero-bg { background: linear-gradient(135deg, #0f2460 0%, #1e3a8a 50%, #1e40af 100%); }
+
+  /* 區塊編號徽章 */
+  .sec-no { background:#1e3a8a; color:#fff; width:26px; height:26px; border-radius:8px;
+            display:inline-flex; align-items:center; justify-content:center;
+            font-size:13px; font-weight:800; flex:none; }
+
+  /* 流程圖箭頭：窄螢幕轉向下 */
+  .arrow { color:#f97316; font-size:26px; font-weight:800; line-height:1; }
+  @media (max-width: 767px) { .arrow { transform: rotate(90deg); } }
+
+  /* 彈跳框：原生 <dialog>，Esc 與 backdrop 由瀏覽器處理 */
+  dialog { border:0; border-radius:16px; padding:0; width:min(760px, 92vw); max-height:86vh;
+           box-shadow:0 20px 60px rgba(15,23,42,.3); }
+  dialog::backdrop { background:rgba(15,23,42,.55); }
+  dialog .dlg-head { position:sticky; top:0; background:#1e3a8a; color:#fff;
+                     padding:14px 18px; display:flex; align-items:flex-start; gap:12px; }
+  dialog .dlg-head h3 { font-size:15px; font-weight:800; line-height:1.5; flex:1; }
+  dialog .dlg-x { background:rgba(255,255,255,.15); border:0; color:#fff; cursor:pointer;
+                  width:28px; height:28px; border-radius:8px; font-size:17px; line-height:1; flex:none; }
+  dialog .dlg-x:hover { background:rgba(255,255,255,.3); }
+  dialog .dlg-body { padding:18px; overflow-y:auto; max-height:calc(86vh - 56px); }
+
+  .dlg-open { align-self:flex-start; margin-top:12px; border:1.5px solid #1e3a8a; border-radius:8px;
+              cursor:pointer; padding:5px 12px; font-size:12px; font-weight:800; letter-spacing:.5px;
+              background:transparent; color:#1e3a8a; transition:.15s; }
+  .dlg-open:hover { background:#1e3a8a; color:#fff; }
+
+  /* 術語註解：括號內的白話說明 */
+  .gl { color:#64748b; font-size:12px; }
+
+  /* ── 元大洞察卡片 ── */
+  .ins-list { list-style:none; padding:0; margin:0; }
+  .ins-list li { padding:5px 0; font-size:12.5px; color:#334155; line-height:1.6; }
+  .ins-src { font-size:11px; font-weight:400; color:#94a3b8; margin-top:12px; padding-top:8px; border-top:1px dashed #e2e8f0; }
+
+  /* 因為／所以：左邊放觀察，右邊放做法 */
+  .why { display:grid; grid-template-columns:1fr 1.1fr; border:1px solid #e2e8f0;
+         border-radius:10px; overflow:hidden; background:#fff; }
+  .why + .why { margin-top:8px; }
+  .why > div { padding:9px 12px; }
+  .why-c { background:#f8fafc; border-right:1px dashed #cbd5e1; }
+  .why-t { font-size:10px; font-weight:800; letter-spacing:.14em; display:block; margin-bottom:3px; }
+  .why-c .why-t { color:#94a3b8; }
+  .why-a .why-t { color:#c2410c; }
+  .why-c p { font-size:12.5px; color:#475569; line-height:1.7; }
+  .why-a p { font-size:13px; color:#0f172a; line-height:1.7; font-weight:600; }
+  @media (max-width:640px){ .why { grid-template-columns:1fr; }
+                            .why-c { border-right:0; border-bottom:1px dashed #cbd5e1; } }
+
+  /* 同業做了什麼 → 可以套到哪類場景（舉例） */
+  .scn { border-left:3px solid #f97316; background:#fff7ed; border-radius:0 8px 8px 0; padding:9px 12px; }
+  .scn + .scn { margin-top:6px; }
+  .scn .peer { font-size:11.5px; color:#a16207; display:block; margin-bottom:3px; letter-spacing:.02em; }
+  .scn p { font-size:12.5px; color:#7c2d12; line-height:1.7; }
+  .scn b { color:#9a3412; }
+
+  /* 卡片內的小節標題 */
+  .sub-h { font-size:11px; font-weight:800; letter-spacing:.14em; color:#64748b;
+           display:flex; align-items:center; gap:8px; margin:14px 0 8px; }
+  .sub-h::after { content:""; flex:1; height:1px; background:#e2e8f0; }
+
+  /* 段落快捷列 */
+  .jump { display:flex; flex-wrap:wrap; gap:6px; }
+  .jump a { font-size:12px; font-weight:700; color:#1e3a8a; background:#fff;
+            border:1px solid #dbeafe; border-radius:999px; padding:4px 12px; transition:.15s; }
+  .jump a:hover { background:#1e3a8a; color:#fff; border-color:#dbeafe; }
+  section { scroll-margin-top:72px; }
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/terms.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<!--NAV:START-->
+<nav class="text-white sticky top-0 z-50" style="background:linear-gradient(135deg,#0f2460 0%,#1e3a8a 50%,#1e40af 100%);box-shadow:0 2px 20px rgba(0,0,0,.25)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-14">
+      <a href="../index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        </div>
+        <span class="text-sm font-bold tracking-widest group-hover:text-orange-300 transition-colors">數金情報站</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>AI 趨勢</a><a href="../watch.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>全球金融科技觀測</a><a href="../peer.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>同業概觀</a><a href="../news.html" class="text-orange-300 font-semibold transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m0 0h2a2 2 0 012 2v9a2 2 0 01-2 2h-2m0-13v13M9 8h4m-4 4h4m-4 4h2"/></svg>AI 新聞深度解讀</a><a href="../docs.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>前沿模型介紹</a><a href="../classroom.html" class="text-white/75 hover:text-orange-300 transition-colors flex items-center gap-1.5"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>AI 小學堂</a>
+      </div>
+      <button id="navToggle" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navMenu" class="hidden md:hidden border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3 space-y-1 text-sm">
+      <a href="../index.html" class="block text-white/70 hover:text-white py-2">AI 趨勢</a><a href="../watch.html" class="block text-white/70 hover:text-white py-2">全球金融科技觀測</a><a href="../peer.html" class="block text-white/70 hover:text-white py-2">同業概觀</a><a href="../news.html" class="block text-orange-300 font-semibold py-2">AI 新聞深度解讀</a><a href="../docs.html" class="block text-white/70 hover:text-white py-2">前沿模型介紹</a><a href="../classroom.html" class="block text-white/70 hover:text-white py-2">AI 小學堂</a>
+    </div>
+  </div>
+</nav>
+<script>document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navMenu').classList.toggle('hidden'));</script>
+<!--NAV:END-->
+
+
+
+
+
+<!-- ══ 標題列 ══ -->
+<header class="hero-bg text-white">
+  <div class="max-w-6xl mx-auto px-5 py-8">
+    <a href="../news.html" class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-xs mb-4 transition-colors"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>AI 深度解讀</a>
+    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-wide">AI 週報 2026-W37</h1>
+    <p class="text-white/70 text-sm mt-1 tracking-wider">09/07 – 09/13　·　AI 產業 10 則 ＋ 同業與監理 12 則</p>
+    <div class="mt-5 border-l-4 border-orange-400 pl-4">
+      <p class="text-lg sm:text-xl font-bold leading-relaxed">
+        本週三則新聞都在拆同一個包裝——<span class="text-orange-300">廠商把資料和流程綁進產品</span>、<span class="text-orange-300">平台把換模型做成規格</span>、<span class="text-orange-300">模型出身變成選型欄位</span>。
+      </p>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-8 space-y-10" data-auto-terms>
+
+  <nav class="jump" aria-label="本頁段落">
+    <a href="#s1">01 主線</a><a href="#s2">02 資料與產業</a><a href="#s3">03 同業 AI 動態</a><a href="#s4">04 本週待辦</a><a href="#s5">05 元大洞察</a>
+  </nav>
+
+  <!-- ══ 01 主線 ══ -->
+  <section id="s1">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">01</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">主線：模型、資料、流程被綁成一包之後，要問的是拆不拆得開</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-3 tracking-wide">本週報告重心</p>
+    <div class="ml-9 mb-5 border-l-2 border-orange-400 pl-3 text-[13px] text-slate-600 leading-relaxed">
+      <b class="text-slate-800">怎麼看這張表：</b>上週問的是 AI 斷了、被打了、被鎖了怎麼辦。本週三則新聞把「被鎖」這一題拆得更細——
+      鎖可以來自<b>廠商的產品設計</b>（把付費資料與產出格式綁在一起）、來自<b>平台架構</b>（模型換不換得掉），也可以來自<b>模型本身的出身</b>（來源被點名之後還能不能用）。
+      三張卡由左到右就是這三個來源，每張卡點「看完整分析」有原文與細節。
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7">
+      <div class="flex flex-col md:flex-row items-stretch gap-3">
+
+        <div class="flex-1 rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">① 廠商把什麼綁進產品</div>
+          <div class="text-base font-extrabold leading-snug mb-2">OpenAI 推出 ChatGPT for Financial Services，瞄準投行初階分析師工作</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 由 GPT-6 Astra 驅動，摩根士丹利與 Evercore 為設計夥伴</li>
+            <li>· 內建 PitchBook、LSEG News 等付費資料，一路產出試算表、文件與簡報</li>
+            <li>· 賣的不是模型，是<b class="text-blue-900">模型＋資料＋產出格式</b></li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-blue-200 text-[12px] text-blue-900 font-semibold leading-relaxed">
+            公開資料的研究整理正在變成標準品
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg1').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <div class="flex-1 rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">② 模型換不換得掉</div>
+          <div class="text-base font-extrabold leading-snug mb-2">台灣大發表 MyAgent，把模型切換與地端部署做成平台功能</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 可串接前緣與開放權重模型，依資料敏感度選雲端、私有雲或地端</li>
+            <li>· 業務流程只對接平台，<b class="text-emerald-900">換模型不動業務系統</b></li>
+            <li>· 內部驗證：端到端工作流程效率提升約 30%</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-emerald-200 text-[12px] text-emerald-900 font-semibold leading-relaxed">
+            可替換性從口號變成規格書上的一欄
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg2').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <div class="flex-1 rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">③ 模型出身說不說得清楚</div>
+          <div class="text-base font-extrabold leading-snug mb-2">美國 NSA、CISA、FBI 指控五家中國 AI 業者工業規模蒸餾美國模型</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 點名 DeepSeek、月之暗面、阿里巴巴、MiniMax、階躍星辰</li>
+            <li>· 中國商務部駁斥「於事無憑、於法無據」</li>
+            <li>· 被點名者正是<b class="text-rose-800">開放權重模型的主要供應者</b></li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-rose-200 text-[12px] text-rose-900 font-semibold leading-relaxed">
+            模型來源成為地端選型的正式評估項
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('dlg3').showModal()">看完整分析</button>
+        </div>
+      </div>
+
+      <div class="mt-6 pt-5 border-t-2 border-slate-900">
+        <p class="text-center text-base sm:text-xl font-extrabold text-slate-900 leading-relaxed">
+          買進任何一包 AI 能力之前先問三件事：資料與產出格式帶不帶得走、換模型要改設定還是改程式、裡面的模型出身說不說得清楚。
+        </p>
+        <p class="text-center text-[13px] text-slate-500 mt-2 leading-relaxed">
+          三題的答案落在同一個地方——業務流程對接的是自己的平台層，而不是某一家的產品；模型清單上除了版本，也記著來源與授權。有了這兩樣，任何一包都只是可以替換的零件。
+        </p>
+      </div>
+    </div>
+
+    <div>
+
+      <dialog id="dlg1">
+        <div class="dlg-head">
+          <h3>① OpenAI 推出 ChatGPT for Financial Services，以 GPT-6 Astra 瞄準投行初階分析師工作</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg1').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>OpenAI 於 9 月 10 日推出 ChatGPT for Financial Services，為企業版 ChatGPT Work 的金融客製版本，由最新模型 GPT-6 Astra 驅動，並以摩根士丹利、Evercore 為設計夥伴共同打造。產品內建 Daloopa、PitchBook、LSEG News、Crunchbase 等付費資料，可從資料檢索、財務推理一路產出試算表、文件與簡報，涵蓋估值分析、LBO 建模<span class="gl">（以被收購公司的資產與現金流為擔保舉債收購的財務模型）</span>、財報分析與 pitchbook<span class="gl">（投行向客戶提案用的簡報資料）</span>製作，直接切入華爾街初階分析師的傳統工作範圍。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>主要場景為投資銀行與股票研究</li>
+              <li>另整合 S&amp;P Capital IQ、MSCI、Dow Jones Factiva、Moody's 等授權存取</li>
+              <li>可產出 Excel、文件、簡報與互動圖表，並保留資料來源追溯</li>
+              <li>GPT-6 Astra 在 OfficeQA Pro 金融基準得分 69.9%，較前一代高 9.7 個百分點</li>
+              <li>沿用 SAML SSO、SCIM 與角色權限等企業治理；企業資料預設不用於訓練，未公開標準定價</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：模型廠商開始打包資料與工作流程，集團的差異化只剩自有語料與內部規則。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>這次賣的是模型加付費資料加產出格式，公開資料的研究整理會愈來愈像標準品</li>
+<li>前提是資料上雲：未公開重大資訊的處理與資料保留政策仍須機構自行驗證，在台灣還受雲端委外與個資規範約束</li>
+<li>研究流程若直接綁進單一平台的產出格式，日後要搬到地端，動到的是整條流程而不是一個模型</li>
+<li>來源追溯是好設計，但追溯紀錄存在誰的系統裡、合約結束後帶不帶得走，要在簽約時問清楚</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">判準是「資料是公開的，還是含未公開資訊」。公開資料彙整可以交給雲端工具；含客戶資料或未公開資訊的研究與比對，以承銷評估報告這類文件為例，留在地端以自有語料微調的模型處理。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>LSEG、PitchBook（晨星）、Daloopa、Crunchbase — 付費金融資料透過 AI 平台內建分發，取得新通路並強化授權收入</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>AlphaSense、Hebbia、研究整理與簡報製作外包服務商 — 通用模型廠商直接打包資料與財務工作流程，同類工具面臨正面競爭</p>
+          </div>
+          <a href="https://www.cnbc.com/2026/09/10/openai-chatgpt-for-financial-services-targets-work-of-junior-bankers.html" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg2">
+        <div class="dlg-head">
+          <h3>② 台灣大發表企業級 AI 代理平台 MyAgent，支援模型切換與地端、私有雲部署</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg2').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>台灣大哥大 9 月 8 日舉辦第四屆「D.E.E.P. Tech Day 2026 硬科技日」，以代理式 AI 為主軸發表 15 項自研 AI 成果，涵蓋 AI 基礎建設、AI 技術與產、銷、人、發、財等企業場景。核心產品為企業級 AI 代理平台 MyAgent，整合企業知識、模型、工具與工作流程，可彈性串接前緣與開放權重模型<span class="gl">（模型參數公開、可下載到自己機房執行的模型）</span>，並依資料敏感度支援雲端、私有雲與地端部署。台灣大表示方案先在自家場域驗證，再輸出給集團與企業客戶。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>可使用企業資料進行後訓練與優化，依需求切換不同模型，並納入企業治理機制</li>
+              <li>部署模式涵蓋雲端、私有雲與地端，依資料敏感度與治理需求選擇</li>
+              <li>內部驗證：知識查找與行政庶務效率提升約 15%，端到端工作流程效率提升約 30%</li>
+              <li>台灣大逾 8,000 人組織中，98% 員工已部署 AI 代理</li>
+              <li>15 項展示包含 AI 聽寫、AI 面試官、AI Avatar、智能客服與語音質檢</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：「換模型不必動業務系統」要先變成平台規格，地端才走得下去。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>MyAgent 把模型切換、部署位置與治理放在同一層，業務流程只對接平台</li>
+<li>對已有雲端底座的金融集團，往地端走的難點不在找模型，而在各場景各自綁定單一模型的介面</li>
+<li>場景一旦分別串接，改用開放權重模型就得逐一改寫、逐一重新驗證</li>
+<li>值得先把模型路由、權限與留痕抽成共用層，之後每個場景換模型都只是改設定</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先搬哪一批看兩條判準：請求量大而複雜度低、資料含敏感個資。以內部規章問答這類場景為例，兩條同時成立，最適合先接到地端模型驗證。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>台灣大哥大、精誠資訊、廣達、緯創 — 企業要求模型可替換、部署可落地端，具平台整合與地端算力建置能力者承接導入與維運需求</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>單一模型包裝型 AI 助理新創、傳統 RPA 流程自動化供應商 — 缺乏部署彈性與治理機制，在受監理產業的採購評估中競爭力下降</p>
+          </div>
+          <a href="https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000767796_XVN60LLJLA3MBQ5MJ8EQ5" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg3">
+        <div class="dlg-head">
+          <h3>③ 美國 NSA、CISA、FBI 指控中國 AI 業者工業規模蒸餾美國模型，中國商務部駁斥</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg3').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>美國國家安全局（NSA）、網路安全和基礎設施安全局（CISA）與聯邦調查局（FBI）聯合指控中國企業以「工業規模」蒸餾<span class="gl">（拿大模型的回答當教材，訓練另一個模型去模仿它）</span>美國領先 AI 模型，點名 DeepSeek、月之暗面、阿里巴巴、MiniMax 與階躍星辰五家公司。中國商務部 9 月 9 日回應，稱指控「於事無憑、於法無據」，強調蒸餾是業內正常的技術與商業行為，並指美企研發報告也披露大量蒸餾中國模型，批評美方藉打擊蒸餾之名行產業壟斷之實。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>三個美國安全機關聯合具名，層級高於單一企業的指控</li>
+              <li>被點名的五家公司，多數都有對外釋出開放權重模型</li>
+              <li>中方稱蒸餾屬業內正常技術與商業行為，並指美方雙重標準</li>
+              <li>目前停在指控與駁斥，尚未轉為任何出口管制或採購限制</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：開放權重模型的選型，要把模型來源與地緣政治風險列為正式評估項。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>往地端走的主要選項是開放權重模型，其中不少出自這次被點名的業者</li>
+<li>推測若指控後續轉成出口管制或採購限制，選用者可能被迫替換，或被合作方要求揭露模型來源；可追蹤指標是美國商務部是否發布相關管制</li>
+<li>誰對誰錯不是使用者能判斷的，使用者能控制的是被迫換的時候換不換得掉</li>
+<li>業務系統若直接綁定單一模型，換模型就要重新驗證全部場景；這和主線第②則是同一個問題</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">面向客戶、受監理檢查的場景，優先選來源與授權清楚的模型；內部低風險批次任務保留彈性，但每個場景至少預先驗證一個替代模型。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>Google（Gemma）、Meta（Llama）、Mistral AI、NVIDIA（Nemotron）— 企業選型開始重視來源與授權清楚度，美歐體系開放權重模型在受監理產業的採用機會增加</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>DeepSeek、月之暗面、阿里巴巴、MiniMax、階躍星辰 — 海外企業與受監理產業的採用受地緣政治疑慮影響，若轉為管制措施衝擊更大</p>
+          </div>
+          <a href="https://money.udn.com/money/story/5603/9745060" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 02 資料與產業 ══ -->
+  <section id="s2">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">02</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">資料與產業：推不開的原因不在模型</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">本週四則：兩則講 AI 為什麼推不進流程，兩則是 AI 熱潮外溢到資金面與製程面</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+
+      <div class="bg-white border-2 border-rose-600 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-rose-700 px-2 py-0.5 rounded">資料 · 監理</span>
+          <span class="text-[11px] text-slate-400">09/08 · 金融總會報告</span>
+        </div>
+        <div class="text-base font-extrabold leading-snug mb-2">保險業發展 AI 卡在「資料孤島」，有需求無法源成制度缺口</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 金管會 2025 年調查：383 家金融機構中 126 家導入 AI，占 33%</li>
+          <li>· 保險卡資料孤島、銀行卡資料品質與雲端委外、<b class="text-rose-800">證券投信卡在通用模型不熟台灣法規</b></li>
+          <li>· 核保、理賠、防詐依賴跨機構資料，業者缺乏共享誘因</li>
+        </ul>
+        <div class="mt-3 pt-3 border-t border-rose-200 text-[12px] text-rose-900 font-semibold leading-relaxed">
+          法規與內部文件是自有語料，地端微調的理由最充分
+        </div>
+        <button class="dlg-open" onclick="document.getElementById('dlg4').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border-2 border-emerald-700 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-emerald-800 px-2 py-0.5 rounded">流程 · 擴展</span>
+          <span class="text-[11px] text-slate-400">09/08 · 資策會 MIC</span>
+        </div>
+        <div class="text-base font-extrabold leading-snug mb-2">39% 組織已開始使用 AI Agent，只有 23% 擴展到內部環節</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 53% 企業看好生成式 AI 三年內普及</li>
+          <li>· 「開始使用」與「擴展進流程」相差 16 個百分點</li>
+          <li>· 卡點在<b class="text-emerald-900">規則有沒有寫成文件、每一步能不能留痕</b></li>
+        </ul>
+        <div class="mt-3 pt-3 border-t border-emerald-200 text-[12px] text-emerald-900 font-semibold leading-relaxed">
+          代理進流程之前，先把流程規則寫下來
+        </div>
+        <button class="dlg-open" onclick="document.getElementById('dlg5').showModal()">看完整分析</button>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+      <div class="hero-bg text-white px-5 py-3">
+        <span class="font-extrabold text-sm">AI 熱潮的外溢：資金面與製程面</span>
+        <span class="text-white/60 text-[12px] ml-2">國銀放款 48.9 兆元 · 台積電與 ASML 推進 High-NA EUV</span>
+      </div>
+      <div class="p-5 space-y-3">
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">
+          兩則新聞一則在金融面、一則在製造面，講的是同一件事的兩端：<b>AI 投資的規模已經大到改變總體數字與設備週期</b>。
+          金管會 9 月 10 日澄清資金荒傳言，7 月底國銀平均流動性覆蓋比率 115.52%，高於法定 100%；放款餘額 48.9 兆元、年增 5.2 兆元，存放比升至 72.96%，主計總處將今年經濟成長率預測上修至 11.05%。
+          台積電則與 ASML 推進 High-NA EUV<span class="gl">（下一代高數值孔徑極紫外光微影設備）</span>，規劃 2030 年量產導入、2031 年建立 12 吋光罩試產線、2033 年生態系全面支援量產，12 吋光罩預期讓生產力提升約 40%。
+        </p>
+        <ul class="text-[13px] text-slate-600 space-y-1 leading-relaxed">
+          <li>· 放款年增 5.2 兆元，58% 來自民營企業、38% 來自個人；授信文件量與內規比對量同步放大</li>
+          <li>· 存放比上升，部分銀行已調整存放款定價並推出優惠存款方案</li>
+          <li>· 2030 至 2033 年是光罩載具、檢測與探針卡的換機週期，受惠者包括家登、家碩、辛耘、台灣光罩、旺矽、穎崴、精測</li>
+        </ul>
+        <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+          <p class="text-[13px] font-bold text-orange-900 mb-1.5">對集團的意思：放款量先壓到的是授信審查人力，製程時程先影響的是地端設備的採購節奏。</p>
+          <p class="text-[12.5px] text-orange-900 leading-relaxed">
+            推估放款量擴張下，授信審查的人力瓶頸會比資金壓力更早浮現：審查若仍靠人工逐頁核對，排隊時間就會轉成業務流失，可追蹤的指標是授信案件平均審查天數。授信文件含財報與客戶個資、格式相對固定，適合在內部環境處理而非逐案外送。
+            另一端，推測每一代先進製程都會改變單位算力的成本與耗能，地端設備若一次買足三到五年用量，容易在新一代晶片到位時被高耗能的舊設備綁住。
+            判斷標準是：請求量穩定、每日都跑的批次任務先上地端，分批採購，並定期以每百萬 token 推論成本與每瓦處理量重估；需求量仍在變動的新場景，先在雲端跑出用量基線，再決定地端規模。
+          </p>
+        </div>
+        <p class="text-[12px] text-slate-400 pt-2 border-t border-slate-100 leading-relaxed">
+          原文：<a href="https://udn.com/news/story/7239/9747092" target="_blank" rel="noopener" class="text-blue-700 hover:underline">金管會澄清資金荒傳言</a>　·
+          <a href="https://technews.tw/2026/09/09/tsmc-and-asml-advance-high-na-euv/" target="_blank" rel="noopener" class="text-blue-700 hover:underline">台積電攜手 ASML 推進 High-NA EUV</a>
+        </p>
+      </div>
+    </div>
+
+    <div>
+
+      <dialog id="dlg4">
+        <div class="dlg-head">
+          <h3>金融總會報告：保險業發展 AI 卡在「資料孤島」，有需求無法源成制度缺口</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg4').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>2026 年金融總會專題報告指出，台灣保險業發展 AI 面臨「資料孤島」困境：公司內部系統老舊、資料格式不統一而難以串接，跨公司間也缺乏統一資料標準與 API 交換規範。核保、理賠、防詐等應用高度依賴跨機構資料，例如比對重複投保，但業者缺乏共享誘因，個資法規也形成流通障礙。報告並彙整金管會 2025 年調查，383 家金融機構中已有 126 家導入 AI，另點出銀行、證券投信各自面臨的不同卡點。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>導入比率 33%，高於前一年的 29%，另有 179 家表示未來將導入</li>
+              <li>保險業障礙：內部系統老舊、資料格式不一，跨公司缺乏統一資料標準與 API 交換規範</li>
+              <li>核保、理賠與防詐依賴跨機構資料，「有需求、無法源」成為制度缺口</li>
+              <li>銀行業的挑戰在資料品質與雲端委外規範</li>
+              <li>證券、期貨、投信業的挑戰在通用模型不熟台灣法規、自建成本高</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：模型再強，資料接不上就只能做單點，先投資資料標準再談規模化。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>跨機構資料共享短期內不是單一公司能解決的，可控的一步是先把自家資料欄位與 API 標準化</li>
+<li>銀行卡在雲端委外、證券投信卡在通用模型不熟在地法規，這兩件事指向同一解法</li>
+<li>法規與內部文件是自有語料，適合以開放權重模型在地端做領域微調：既不涉雲端委外，也補上在地法規的缺口</li>
+<li>含敏感個資的資料量愈大，留在地端處理的理由愈充分</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">看語料是否自有、格式是否固定。以病歷解析這類含敏感個資、格式相對固定的場景為例，資料留在內部的理由最充分。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>精誠資訊、叡揚資訊、中華電信 — 資料標準化、資料治理與地端模型微調的導入需求上升</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>中小型壽險與產險公司、以舊式核心系統維運為主的保險 IT 委外商 — 資料量不足以單獨訓練模型，又取不到跨機構資料</p>
+          </div>
+          <a href="https://udn.com/news/story/7239/9740176" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg5">
+        <div class="dlg-head">
+          <h3>資策會 MIC：53% 企業看好生成式 AI 三年內普及，39% 組織已開始使用 AI Agent</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg5').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>資策會產業情報研究所（MIC）9 月 8 日發布最新調查，53% 企業看好生成式 AI 將在 3 年內普及，39% 組織已開始使用 AI Agent<span class="gl">（能自己決定下一步、自行呼叫工具完成任務的 AI）</span>，23% 企業已在內部環節擴展 AI Agent 應用。資策會副所長林柏齊同時指出，全球前 10 大市值企業已由 AI 算力業者主導，預測這波熱潮到 2030 年都不會消退，建議台灣整合 AI 資料中心生態系，從硬體代工升級為與國際雲端大廠共創的核心。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>39% 組織已開始使用 AI Agent；23% 已在內部環節擴展</li>
+              <li>預估至 2030 年台灣本地半導體產能占比達 79%，海外以中國約 8%、日本約 5% 居前</li>
+              <li>全球前 10 大市值業者由 AI 算力業者主導</li>
+              <li>建議台灣從硬體代工升級為與國際雲端大廠共創的核心</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：「開始使用」與「擴展進流程」相差 16 個百分點，卡點在擴展而不在試用。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>代理從單點試用走進流程，要先補的是前置條件：流程斷點在哪、規則是否已寫成文件、每一步能否留痕</li>
+<li>金融業受監理，代理若無法舉證做了什麼、依據哪一版規則，就只能停在輔助角色</li>
+<li>規則還在資深人員腦子裡的流程，代理接不進去；這不是模型能力的問題</li>
+<li>先把規則寫下來，本身就是導入代理最便宜的一步</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先擴展規則已成文件、對錯標準明確的流程，以費用憑證審核這類逐項比對內規的場景為例；規則仍靠經驗判斷的流程，先做文件化再談代理。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>精誠資訊、叡揚資訊、凌群電腦 — 代理轉入流程擴展，帶動流程治理、系統整合與代理可觀測性工具需求</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>人力密集型後台作業外包業者、傳統 BPO 服務商 — 規則明確的後台文書作業被代理自動化</p>
+          </div>
+          <a href="https://money.udn.com/money/story/5612/9742404" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 03 同業 AI 動態 ══ -->
+  <section id="s3">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">03</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">同業 AI 動態：代理進流程、深偽上防線、資料先打底</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-3 tracking-wide">本週同業動態十一則（台灣八則、國際三則；金融總會與 OpenAI 兩則已在前兩段）</p>
+    <div class="ml-9 mb-5 border-l-2 border-orange-400 pl-3 text-[13px] text-slate-600 leading-relaxed">
+      <b class="text-slate-800">怎麼看這張表：</b>本週同業動作落在三個位置——<b>流程那一段</b>把代理放進本來就有簽核關卡的作業、<b>防線那一關</b>把深偽偵測接上視訊服務、<b>地基那一層</b>先把資料中台與 API 補齊。
+      三件事的共同點是：AI 能不能進流程，決定因素都在模型以外。<br>下面三張卡各是一個位置的代表；其餘八則列在後面。
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7">
+      <div class="flex flex-col md:flex-row items-stretch gap-3">
+
+        <div class="flex-1 rounded-xl border-2 border-blue-800 bg-blue-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-blue-800 tracking-widest mb-2">① 流程那一段 · 數位同事</div>
+          <div class="text-base font-extrabold leading-snug mb-2">國泰金控技術年會首度公開 AI「數位同事」試驗成果</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 試驗場景：專案管理、科技治理審查與法務作業</li>
+            <li>· 以<b class="text-blue-900">角色化 Agent</b> 導入軟體開發生命週期，協助需求釐清與規格產出</li>
+            <li>· 9 月 15 日登場，OpenAI 與 Google Cloud 受邀分享</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-blue-200 text-[12px] text-blue-900 font-semibold leading-relaxed">
+            代理的價值要在有審查關卡的流程裡證明
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('p1').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <div class="flex-1 rounded-xl border-2 border-rose-600 bg-rose-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-rose-700 tracking-widest mb-2">② 防線那一關 · 深偽</div>
+          <div class="text-base font-extrabold leading-snug mb-2">華南銀行 AI Agent 黑客松號召 26 個部門，視訊服務導入深偽辨識</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 第一波：行銷素材、報表生成、產品說明書、法規及廣宣檢核</li>
+            <li>· 預計年內分階段上線</li>
+            <li>· 視訊服務規劃導入 <b class="text-rose-800">Deepfake 影像辨識</b>，協助客服辨識深偽變造</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-rose-200 text-[12px] text-rose-900 font-semibold leading-relaxed">
+            同一套生成能力，既是工具也是攻擊面
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('p2').showModal()">看完整分析</button>
+        </div>
+
+        <div class="flex items-center justify-center"><span class="arrow">▶</span></div>
+
+        <div class="flex-1 rounded-xl border-2 border-emerald-700 bg-emerald-50/50 p-4 flex flex-col">
+          <div class="text-[11px] font-extrabold text-emerald-800 tracking-widest mb-2">③ 地基那一層 · 資料中台</div>
+          <div class="text-base font-extrabold leading-snug mb-2">富邦人壽系統現代化逾半數專案啟動，預計 2030 年完成</div>
+          <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+            <li>· 單體式系統拆成高模組、低耦合架構，建置企業級數據中台</li>
+            <li>· 新版行動保全地址變更由 <b class="text-emerald-900">4 分鐘縮短至 2 分鐘</b></li>
+            <li>· APP 整合保單查詢與理賠申請，月均登入 70 萬人次</li>
+          </ul>
+          <div class="mt-3 pt-3 border-t border-emerald-200 text-[12px] text-emerald-900 font-semibold leading-relaxed">
+            資料取不到，任何助理都只能做表面問答
+          </div>
+          <button class="dlg-open" onclick="document.getElementById('p3').showModal()">看完整分析</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-blue-900 px-2 py-0.5 rounded">玉山銀行</span>
+          <span class="text-[11px] text-slate-400">09/10 · 財富管理</span>
+        </div>
+        <div class="text-sm font-extrabold leading-snug mb-2">獲今周刊「最佳 AI 應用獎」首名，AI 用於即時市場回應與阻詐</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 第 15 度獲「最佳財富管理銀行」首名，共十項大獎</li>
+          <li>· 一個面向客戶、一個面向風控，共同前提是即時資料管線</li>
+          <li>· 評鑑把 AI 列入得分項，<b>AI 已進到客戶看得見的服務品質</b></li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('p4').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-blue-900 px-2 py-0.5 rounded">第一銀行</span>
+          <span class="text-[11px] text-slate-400">09/08 · 數位帳戶</span>
+        </div>
+        <div class="text-sm font-extrabold leading-snug mb-2">iLEO 數位帳戶突破 230 萬戶，獲「最佳數位創新」</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 持續整合數位帳戶、支付、理財與貸款服務</li>
+          <li>· 以生成式 AI 與黑客松推動跨部門應用落地</li>
+          <li>· 戶數成長會<b>直接放大客服與交易監控工作量</b></li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('p5').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-blue-900 px-2 py-0.5 rounded">永豐金證券</span>
+          <span class="text-[11px] text-slate-400">09/10 · 數位帳戶</span>
+        </div>
+        <div class="text-sm font-extrabold leading-snug mb-2">存美股推「雙幣交割自由切換」，可自選台幣或美元扣款</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 綁定銀行台外幣約定授扣後，每筆申購可選扣款幣別</li>
+          <li>· 近三年美股存戶成長 159%，可投資標的增至 209 檔</li>
+          <li>· 功能不複雜，差異化在<b>銀證帳戶層的即時串接</b></li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('p6').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-orange-700 px-2 py-0.5 rounded">台灣資訊安全協會</span>
+          <span class="text-[11px] text-slate-400">09/08 · 資訊安全</span>
+        </div>
+        <div class="text-sm font-extrabold leading-snug mb-2">穩定幣暨虛擬資產安全聯盟成軍，為保管與監控把關</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 四家業者分工：硬體安全模組、24×7 SOC、機構級資產金庫、區塊鏈監理方案</li>
+          <li>· 以《虛擬資產服務法》上路為背景，鎖定 VASP 與銀行端</li>
+          <li>· 多家拼成的方案，金鑰由誰控管、出事誰舉證要<b>寫進合約</b></li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('p7').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:col-span-2">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-[11px] font-extrabold text-white bg-slate-700 px-2 py-0.5 rounded">台灣鐵路公司</span>
+          <span class="text-[11px] text-slate-400">09/08 · 支付工具</span>
+        </div>
+        <div class="text-sm font-extrabold leading-snug mb-2">列車補票 9 月 10 日起開放 9 種電子支付</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 全線列車補票新增街口支付、悠遊付、全支付、台灣 Pay、LINE Pay Money 等行動條碼支付</li>
+          <li>· 車上補票是移動中、網路不穩、筆數分散、單筆小額的場景，業者要處理弱網下的交易確認與事後對帳</li>
+          <li>· 零碎場景一多，<b>分散小額交易的對帳與異常比對</b>就接不住人工抽查</li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('p8').showModal()">看完整分析</button>
+      </div>
+
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden mt-4">
+      <div class="hero-bg text-white px-5 py-3">
+        <span class="font-extrabold text-sm">國際三則：路由、自發、嵌入</span>
+        <span class="text-white/60 text-[12px] ml-2">Robinhood 事件合約路由 · U.S. Bank 自有穩定幣 · Coinbase 與 Moov</span>
+      </div>
+      <div class="p-5 space-y-3">
+        <p class="text-[13.5px] text-slate-700 leading-relaxed">
+          三則新聞各自獨立，合起來看是同一個方向：<b>金融基礎設施正在被拆成可以接、可以換的零件</b>。
+          Robinhood 9 月 8 日起把部分美式足球事件合約路由至 Crypto.com 旗下受 CFTC 監理的交易所，交易完成後取得 Crypto.com 與 OG.com 股權，第二季單季事件合約成交 136 億口；
+          U.S. Bancorp 以自有美元穩定幣 USBDC 在 Stellar 公鏈完成北美與歐洲關係企業間的跨境付款試點，驗證鑄造、贖回與凍結代幣的能力，並能串接法遵、財務、風控與營運系統；
+          Coinbase 則與 Moov 合作，把 Payments API 與託管錢包嵌入 Moov 平台，讓逾 1,000 家社區銀行與信用合作社不必自建基礎設施就能提供穩定幣支付。
+        </p>
+        <ul class="text-[13px] text-slate-600 space-y-1 leading-relaxed">
+          <li>· 多場所路由意味每筆路由的依據都要記下來，監理檢查時才舉證得出來</li>
+          <li>· 銀行上公鏈的前提是凍結能力與內部系統接得起來，不是交易速度</li>
+          <li>· 嵌入現成 API 上線最快，但錢包託管與交易資料都在外部平台</li>
+        </ul>
+        <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+          <p class="text-[13px] font-bold text-orange-900 mb-1.5">對集團的意思：接得越快的零件，退出條款越要先寫。</p>
+          <p class="text-[12.5px] text-orange-900 leading-relaxed">
+            三件事新增的都是常設的留痕與比對工作：路由依據報表、鏈上交易監控、外部平台的交易資料回傳。它們的形狀是量大、規則可文件化、稽核必查，適合由模型自動彙整、在內部環境常駐運算。
+            要注意的是責任沒有跟著零件外移：託管責任、資料回傳與退出機制要在簽約前寫進合約，不能等到要換供應商時才談。
+            台灣《虛擬資產服務法》規定穩定幣初期限金融機構發行，真正的前置條件是帳務、洗錢防制與凍結流程能先對接；事件合約在台灣並非券商可承作的商品，可借鏡的是路由決策與留痕的架構，而不是商品本身。
+          </p>
+        </div>
+        <p class="text-[12px] text-slate-400 pt-2 border-t border-slate-100 leading-relaxed">
+          原文：<a href="https://robinhood.com/us/en/newsroom/robinhood-cryptocom" target="_blank" rel="noopener" class="text-blue-700 hover:underline">Robinhood 擴大事件合約路由</a>　·
+          <a href="https://www.coindesk.com/business/2026/09/08/u-s-bank-takes-next-step-towards-launching-its-stablecoin-with-cross-border-payment-test" target="_blank" rel="noopener" class="text-blue-700 hover:underline">U.S. Bank USBDC 跨境付款測試</a>　·
+          <a href="https://www.theblock.co/news/business/2026-09-10-coinbase-moov-bring-stablecoin-payment-infrastructure-community-banks-credit-unions-414153" target="_blank" rel="noopener" class="text-blue-700 hover:underline">Coinbase 與 Moov 合作</a>
+        </p>
+      </div>
+    </div>
+
+    <div>
+
+      <dialog id="p1">
+        <div class="dlg-head">
+          <h3>國泰金控技術年會 9/15 登場，首度公開 AI「數位同事」創新試驗成果</h3>
+          <button class="dlg-x" onclick="document.getElementById('p1').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>國泰金控宣布 2026 技術年會 9 月 15 日舉行，聚焦 Agentic AI 與數位同事、AI 驅動 IT 升級、數位資產三大議題。將首度公開以 AI Agent 探索「數位同事」的試驗成果，場景包括專案管理、科技治理審查與法務作業，並分享 AI Agent 導入軟體開發生命週期，以角色化 Agent 協助需求釐清與規格產出；OpenAI 與 Google Cloud 受邀分享。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：AI Agent 的價值要在有明確審查關卡的流程裡證明，不是在聊天介面裡。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>試驗場景選在專案管理、科技治理審查與法務作業，代表問題已從「模型答得好不好」轉成「流程裡誰負責、留痕記不記得下來」</li>
+<li>有簽核關卡的流程，驗收人就是既有的簽核人，不必另建一套評分標準</li>
+<li>Agent 若綁在單一平台的內建功能裡，換模型時就得動到業務系統，出事時版本與來源也難以舉證</li>
+<li>角色化的好處是每個角色的輸入與輸出可以各自驗收，錯在哪一段查得出來</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">判準三條：流程本來就有簽核關卡、輸入是內部文件、對錯可由既有簽核人驗收。以內外規比對這類場景為例，文件不出門，適合地端模型常駐。</p>
+            </div>
+          </div>
+          <a href="https://www.cathayholdings.com/holdings/lastest_news/news_archive/newsarticle?newsID=uYwevRwHrUevaoq4sc48iQ" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p2">
+        <div class="dlg-head">
+          <h3>華南銀行 AI 轉型再創佳績，蟬聯卓越銀行評比雙項大獎</h3>
+          <button class="dlg-x" onclick="document.getElementById('p2').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>華南銀行蟬聯卓越銀行評比「最佳 AI 智能獎」與「最佳數位創新獎」。今年舉辦 AI Agent 黑客松，號召總行 26 個部門歷時近 5 個月提案與實作，第一波聚焦智能行銷素材生成、情資蒐集及報表生成、產品說明書產製、法規及廣宣檢核等，預計年內分階段上線；另規劃在視訊服務導入 Deepfake 影像辨識<span class="gl">（偵測以生成式 AI 偽造或變造的人臉影像）</span>，協助客服辨識深偽變造。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：視訊身分核驗要把深偽偵測當成常設流程元件，而不是事後補強。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>兩件事放在一起看：同一套生成式 AI 能力，既是生產力工具，也是攻擊面</li>
+<li>導入生成工具時若沒有同步規劃偵測與人工複核，便利性提升的同時也放大偽冒風險</li>
+<li>偵測結果要有對應的轉人工動線，否則客服拿到一個「可疑」標籤也不知道下一步</li>
+<li>影像含生物特徵個資，推論以留在內部為宜</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">錯一次的代價遠高於模型成本、且位於身分確認瓶頸者優先。廣宣檢核這類格式固定的文件場景，適合排第二批。</p>
+            </div>
+          </div>
+          <a href="https://www.hncb.com.tw/wps/portal/HNCB/msg/co-management/pb-latest-news/c2/055-1150908-1" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p3">
+        <div class="dlg-head">
+          <h3>富邦人壽「系統現代化」再進階，逾半數專案啟動</h3>
+          <button class="dlg-x" onclick="document.getElementById('p3').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>富邦人壽推進系統現代化藍圖，逾半數專案已啟動、預計 2030 年完成。由單體式系統轉為高模組、低耦合架構，並建置企業級數據中台與標準化 API。6 月上線的新版行動保全系統採雲原生容器化與微服務架構<span class="gl">（把大系統拆成多個可獨立更新的小服務）</span>，地址變更作業由 4 分鐘縮短至 2 分鐘；富邦人壽 APP 透過數據中台整合保單查詢、契約變更與理賠申請，月均登入達 70 萬人次。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：AI 應用卡住的往往不是模型，而是跨系統資料取不到。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>前台體驗改善的來源，是後端 API 與資料治理標準化</li>
+<li>資料若仍分散在舊系統，任何 AI 助理都只能做表面問答</li>
+<li>沒有共用資料層，換一次模型就得重新串接一次所有系統</li>
+<li>作業時間可以直接量測，是證明成效最不需要爭論的指標</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先找已有標準化 API、資料定義一致的業務線再疊 AI。以保全變更這類格式固定、請求量大的作業為例，適合當第一批，成效可以直接用作業時間量測。</p>
+            </div>
+          </div>
+          <a href="https://www.fubon.com/life/about-us/announcement/news/fu-bang-ren-shou--ji-tong-xian-dai-hua--zai-jin-jie--yu-ban-shu-zhuan-an-qi-dong" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p4">
+        <div class="dlg-head">
+          <h3>玉山銀行獲今周刊「最佳 AI 應用獎」首名，AI 用於即時市場回應與阻詐</h3>
+          <button class="dlg-x" onclick="document.getElementById('p4').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>玉山銀行第 15 度獲《今周刊》財富管理銀行評鑑「最佳財富管理銀行」首名，總計奪得十項大獎，其中包括「最佳 AI 應用獎」第一名。玉山表示運用 AI 即時回應市場變化，協助客戶掌握理財契機，並長期以 AI 科技阻攔詐騙、保障客戶資產。另在《The Asian Banker》2026 年評選中，玉山獲八項大獎，涵蓋數位支付、生成式 AI、永續金融、普惠金融與財富管理等領域。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：評鑑把 AI 列為財富管理評分項，AI 已從後台效率進到客戶看得見的服務品質。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>兩個著力點，即時市場回應與阻詐，一個面向客戶、一個面向風控</li>
+<li>共同前提是即時資料管線與可稽核的判斷紀錄</li>
+<li>對客戶的理財內容若由 AI 輔助產生，出事時要能舉證依據哪份資料、哪一版模型</li>
+<li>審查應該做成管線，而不是事後抽查</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先做錯一次代價遠高於模型成本的環節：阻詐誤放一次就是客戶損失與客訴，應優先；面向客戶的理財內容生成，待留痕與審查管線到位再擴大。</p>
+            </div>
+          </div>
+          <a href="https://money.udn.com/money/story/5613/9744949" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p5">
+        <div class="dlg-head">
+          <h3>第一銀行獲卓越銀行評比「最佳數位創新」，iLEO 數位帳戶突破 230 萬戶</h3>
+          <button class="dlg-x" onclick="document.getElementById('p5').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>第一銀行榮獲卓越銀行評比「最佳創新信託」及「最佳數位創新」雙獎。該行以數位優先、AI 驅動、場景融合推動轉型，iLEO 數位帳戶至 7 月底突破 230 萬戶，持續整合數位帳戶、支付、理財與貸款服務，並導入生成式 AI、大數據分析與雲端技術，透過 AI 黑客松與創新實踐機制推動跨部門應用落地。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：數位帳戶到了百萬戶級，下一步的競爭在帳戶內的服務整合與單位營運成本。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>戶數成長會直接放大客服諮詢、身分核驗與異常交易監控的工作量</li>
+<li>若仍靠人工，或逐案外送雲端模型處理，單位成本會跟著戶數一起上升</li>
+<li>帳戶問答與交易分類量大而複雜度低，是小模型最划算的一類工作</li>
+<li>需要跨產品判讀的理財建議，才值得保留給前沿模型並加上人工審核</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">請求量大、複雜度低的帳戶問答與交易分類排第一，地端小模型即可承接；跨產品的理財建議排後面，留在雲端並加人工審核。</p>
+            </div>
+          </div>
+          <a href="https://www.firstholding.com.tw/sites/firstholding/1742537680031" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p6">
+        <div class="dlg-head">
+          <h3>永豐金證券推存美股「雙幣交割自由切換」，可自選台幣或美元扣款</h3>
+          <button class="dlg-x" onclick="document.getElementById('p6').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>永豐金證券於大戶投 APP 定期定額專區推出「雙幣交割自由切換」，客戶完成永豐銀台外幣約定授扣並申請雙幣交割後，每筆美股申購可自由選擇台幣或美元扣款，並可搭配股利再投入。公司揭露近三年美股存戶成長 159%，第二季每戶月均扣款等值新台幣 3.2 萬元，可投資標的增至 209 檔。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：銀證整合的差異化在帳戶層的即時串接，不在單一商品。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>功能本身不複雜，關鍵是銀行外幣帳戶與證券下單系統之間的授權與扣款流程已經打通</li>
+<li>跨子公司帳戶資料能即時串接，後續的換匯成本提醒、扣款異常偵測才有資料可用</li>
+<li>串不起來，模型再好也只能看到半邊交易</li>
+<li>跨子公司的資料授權是法遵題，要在做功能之前先確認</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先做跨子公司資料授權已完備、交易量大且規則明確的流程；扣款失敗原因分類這類規則清楚的判斷，小模型常駐即可。</p>
+            </div>
+          </div>
+          <a href="https://securities.sinopac.com/seNews/20260910151123345000000000000450.html" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p7">
+        <div class="dlg-head">
+          <h3>穩定幣暨虛擬資產安全聯盟成軍，資安業者聯手為數位資產保管與監控把關</h3>
+          <button class="dlg-x" onclick="document.getElementById('p7').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>台灣資訊安全協會號召普鴻資訊、中華資安、凱特納科技與博士旺成立「穩定幣暨虛擬資產安全聯盟」，分工涵蓋硬體安全模組<span class="gl">（專門保管與使用加密金鑰的防竄改硬體）</span>與銀行系統介接、24×7 SOC 監控與事件應變、機構級數位資產金庫，以及區塊鏈監理方案。聯盟以《虛擬資產服務法》上路為背景，整合金鑰治理、資產保管與交易監控，鎖定 VASP 與銀行端提供合規系統。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：要承作虛擬資產保管或穩定幣業務，金鑰治理與事件應變必須先於產品到位。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>法規上路後，保管責任會落在持牌機構身上，而不是提供方案的廠商</li>
+<li>多家廠商拼成的方案，金鑰由誰控管、出事誰舉證，得寫進合約而不是只寫在政策文件裡</li>
+<li>交易監控是每天都要跑的常設作業，資料量大、規則可文件化、誤判代價高</li>
+<li>鏈上交易異常偵測涉客戶資產資料，適合在內部環境常駐運算，不必逐筆外送</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先建立金鑰治理、保管與事件通報的責任矩陣；監控規則裡資料量大、規則可文件化、誤判代價高者先做。</p>
+            </div>
+          </div>
+          <a href="https://finance.technews.tw/2026/09/08/virtual-asset-security-alliance" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="p8">
+        <div class="dlg-head">
+          <h3>台鐵列車補票 9/10 起開放 9 種電子支付</h3>
+          <button class="dlg-x" onclick="document.getElementById('p8').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>台鐵公司宣布自 9 月 10 日起，全線列車上補票除現金外新增行動條碼支付，可使用街口支付、悠遊付、全支付、Pi 拍錢包、全盈 Pay、iPASS MONEY、愛金卡、台灣 Pay、LINE Pay Money 共 9 種，旅客不必擔心現金不足，以手機即可快速完成補票付款。</p>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：行動支付的成長點在補上「只能付現」的零碎場景，而不是回饋戰。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>車上補票屬移動中、網路不穩、筆數分散但單筆金額小的場景</li>
+<li>業者要處理的是弱網環境下的交易確認與事後對帳</li>
+<li>這類分散小額交易的對帳與異常比對工作量會隨場景增加而上升，靠人工抽查接不住</li>
+<li>對帳資料每天都在產生，適合批次處理而非按次計費</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">對錯標準明確、量大且格式固定的帳務比對排第一，地端模型批次處理即可；涉及爭議款判讀的案件，再交給人工搭配雲端模型輔助。</p>
+            </div>
+          </div>
+          <a href="https://udn.com/news/story/7266/9741566" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 04 本週兩項待辦 ══ -->
+  <section id="s4">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">04</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">本週兩項待辦</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-5 tracking-wide">以下兩則不在主線上，但都是「現在不做、之後回頭補會更貴」的類型</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="text-[11px] font-extrabold text-orange-600 tracking-widest mb-2">A · 地端資產與攻擊面</div>
+        <div class="text-sm font-extrabold leading-snug mb-2">Google GTIG：駭客以多代理架構六小時攻擊數千筆憑證，模型、API、開源套件都成目標</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· AI 從協助駭客走向自主執行攻擊，人工介入減少、速度加快</li>
+          <li>· 往地端走之後，<b>模型權重、推論端點與開源套件</b>本身就是要納管的資產</li>
+          <li>· <b>建議做法</b>：建立地端模型與套件清單，記錄版本與來源雜湊，推論用量納入異常監控</li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('dlg6').showModal()">看完整分析</button>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col">
+        <div class="text-[11px] font-extrabold text-orange-600 tracking-widest mb-2">B · 開發流程</div>
+        <div class="text-sm font-extrabold leading-snug mb-2">AI 寫程式速度快、風險也更高，企業不能再單靠人工審查補漏洞</div>
+        <ul class="text-[13px] text-slate-700 space-y-1 leading-relaxed flex-1">
+          <li>· 常見缺陷集中在空值處理、邊界條件與異常流程</li>
+          <li>· 瓶頸從「寫」移到「驗」，產出變快而人工審查量不變</li>
+          <li>· <b>建議做法</b>：靜態掃描、弱點掃描與自動化測試列為合併程式碼的必要條件</li>
+        </ul>
+        <button class="dlg-open" onclick="document.getElementById('dlg7').showModal()">看完整分析</button>
+      </div>
+
+      <dialog id="dlg6">
+        <div class="dlg-head">
+          <h3>A. Google GTIG 報告：駭客將 AI 深度整合至入侵流程，代理式攻擊六小時打數千筆憑證</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg6').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>Google 威脅情報小組（GTIG）9 月 9 日發布 2026 年第 3 季報告，指出惡意人士已將 AI 深度整合至入侵生命週期，從情報蒐集、漏洞發掘到攻擊執行皆涵蓋。報告揭露中國相關網路間諜組織利用多代理架構，在六小時內自主攻擊數千筆憑證；AI 模型、資料、API、開源套件與 GPU 運算資源均成供應鏈攻擊<span class="gl">（不直接打目標，而是從目標所使用的元件或供應商下手）</span>目標，北韓相關組織則大量註冊 LLM API 擴大攻擊規模。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>中國相關間諜組織以多代理架構，在六小時內自主攻擊數千筆憑證</li>
+              <li>AI 模型、資料、API、開源套件與 GPU 運算資源成為供應鏈攻擊目標</li>
+              <li>駭客部署遭駭基礎架構執行未授權 AI 工作負載，造成企業成本損失</li>
+              <li>北韓相關組織大量註冊 LLM API 以擴大攻擊規模</li>
+              <li>首席分析師指出 AI 正從協助駭客走向自主執行攻擊</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：往地端模型走，模型權重、推論端點與開源套件本身就成為要納管的資產。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>報告列出的攻擊目標，與地端部署的組成幾乎完全重疊</li>
+<li>從開源社群下載的模型權重與相依套件若未驗證來源，就是供應鏈入口</li>
+<li>推論端點缺少存取控管，GPU 資源可能被盜用，而帳單是最後才發現的訊號</li>
+<li>治理上需要地端模型清單、版本與來源雜湊紀錄，以及推論用量的異常監控；這份清單和主線第③則要的是同一份</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先納管可跨網段存取的推論端點，其次是處理客戶個資的模型；純內部離線批次任務排在後面。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>Google（Mandiant）、CrowdStrike、Palo Alto Networks、中華資安國際 — AI 驅動的威脅偵測、身分驗證與軟體供應鏈安全需求上升</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>以人工分析為主的傳統 SOC 外包業者 — 人工分析告警的防禦模式跟不上代理式攻擊的速度</p>
+          </div>
+          <a href="https://money.udn.com/money/story/5612/9743508" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+      <dialog id="dlg7">
+        <div class="dlg-head">
+          <h3>B. AI 寫程式速度快風險也更高，專家：企業不能再單靠人工審查補漏洞</h3>
+          <button class="dlg-x" onclick="document.getElementById('dlg7').close()" aria-label="關閉">×</button>
+        </div>
+        <div class="dlg-body text-[13px] leading-relaxed text-slate-700 space-y-3">
+          <p>科技新報資安頻道 9 月 7 日報導，AI 輔助寫程式已普及，AI 產生的程式碼雖然看起來完整流暢，卻常隱含空值處理、邊界條件、異常流程等問題；AI 也缺乏專案歷史脈絡，不理解既有架構決策與過去的設計教訓。專家警告傳統人工審查已跟不上 AI 產出程式的速度，即使測試涵蓋率達 100% 也無法保證軟體可靠，企業應將 AI 程式碼視為需量化驗證的對象，建立多層自動化測試機制。</p>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">關鍵細節</div>
+            <ul class="space-y-1 list-disc pl-5">
+              <li>AI 生成程式常見缺陷集中在空值處理、邊界條件與異常流程</li>
+              <li>AI 缺乏專案歷史脈絡，不理解架構決策與過去的設計教訓</li>
+              <li>人工審查速度跟不上 AI 產出，100% 測試涵蓋率也無法保證可靠性</li>
+              <li>建議多層驗證：單元測試、相依套件測試、靜態安全掃描、合約測試、弱點掃描、模糊測試與混沌工程</li>
+            </ul>
+          </div>
+          <div class="bg-orange-50 border-l-4 border-orange-400 p-3 rounded-r">
+            <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">對金融業的意義｜集團導入 AI 的角度</div>
+            <p class="font-bold text-orange-900 mb-2">一句話：程式助手導入後，審查要從人工關卡改成自動化管線，否則產能會被審查吃掉。</p>
+            <ul class="space-y-1.5 list-disc pl-5 leading-relaxed">
+<li>程式助手仰賴前沿模型能力，適合留在雲端；它改變的不是模型選擇，而是流程瓶頸的位置</li>
+<li>產出變快而人工審查量不變，瓶頸環節只是從「寫」換到了「驗」</li>
+<li>金融系統出錯的代價是交易中斷與監理裁罰，審查必須能留痕與舉證</li>
+<li>靜態掃描、弱點掃描與測試結果應成為合併程式碼的必要條件，而不是參考資訊</li>
+            </ul>
+            <div class="mt-3 pt-3 border-t border-orange-200">
+              <div class="text-[11px] font-bold text-orange-800 tracking-widest mb-1.5">怎麼挑先做哪一個</div>
+              <p class="text-[12.5px] leading-relaxed">先在錯一次代價最高的系統強制自動化驗證，如交易與帳務相關程式；內部工具與行銷頁面可放寬，讓程式助手先在低風險範圍累積效益。</p>
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-slate-400 tracking-widest mb-1.5">產業連動</div>
+            <p><span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受惠</span>GitLab、Snyk、Checkmarx、SonarSource — 企業以自動化工具取代人工審查，靜態分析與測試平台需求上升</p>
+            <p class="mt-1.5"><span class="inline-block bg-rose-100 text-rose-800 text-[11px] font-bold px-2 py-0.5 rounded mr-1.5">受損</span>人力密集型軟體測試外包商 — 以人工審查與手動測試計價的服務跟不上 AI 產出速度</p>
+          </div>
+          <a href="https://infosecu.technews.tw/2026/09/07/%e2%80%8bai-is-writing-more-code-and-testing-standards-must-catch-up/" target="_blank" rel="noopener" class="inline-block text-[12px] font-bold text-blue-700 hover:underline">原文連結 →</a>
+        </div>
+      </dialog>
+
+    </div>
+  </section>
+
+  <!-- ══ 05 元大洞察 ══ -->
+  <section id="s5">
+    <div class="flex items-center gap-3 mb-1">
+      <span class="sec-no">05</span>
+      <h2 class="text-xl sm:text-2xl font-extrabold">元大洞察：本週彙整</h2>
+    </div>
+    <p class="text-xs text-slate-500 ml-9 mb-4 tracking-wide">每則建議都標出它是從哪一則新聞推出來的；下半段是同業做法，以及我們該從中讀出什麼</p>
+
+    <div class="space-y-3">
+
+      <!-- 元大金控 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大金控</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">本週三則主線共用同一個答案：業務流程對接自有平台層，模型清單記下版本、來源與授權。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>台灣大 MyAgent 把模型切換、部署位置與治理放在同一層，業務流程只對接平台，換模型不動業務系統。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>建立集團共用的模型路由、權限與留痕層，讓場景改接地端模型時只改設定，不必逐一改寫業務系統。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>美國三大安全機關點名五家中國 AI 業者蒸餾美國模型，被點名者正是開放權重模型的主要供應者。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>地端模型清單增列來源、授權條款與地緣政治風險欄位；面向客戶的關鍵場景至少預先驗證一個替代模型。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>GTIG 報告把模型、API、開源套件與 GPU 資源都列為攻擊目標，與地端部署的組成幾乎完全重疊。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>地端模型與相依套件記錄版本與來源雜湊，推論端點納入存取控管與用量異常監控，可跨網段存取的端點最先做。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>資策會調查顯示 39% 組織已用 AI Agent、只有 23% 擴展進流程，落差在規則文件化與每一步的留痕。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>各子公司擴展代理前，先盤點流程規則的文件化程度與留痕機制，列為代理進入流程的共同前置條件。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>AI 寫程式把瓶頸從「寫」移到「驗」，人工審查跟不上產出速度。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>靜態掃描、弱點掃描與自動化測試定為 AI 協作程式碼合併前的必要關卡，並記錄 AI 協作比例以利稽核。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">同業：國泰金控把 AI Agent 試驗放在科技治理審查與法務作業</span><b>讀出什麼：</b>代理先進有簽核關卡的流程，驗收人就是既有簽核人，不必另建評分標準；同步記下代理的行為紀錄與模型版本。</p></div>
+          <div class="scn"><p><span class="peer">新聞面：OpenAI 把模型、付費資料與產出格式打包成金融業專用產品</span><b>讀出什麼：</b>採購這類整包工具時，要問產出格式與來源追溯紀錄帶不帶得走。帶不走的部分，就是換平台時要重建的部分。</p></div>
+
+          <p class="ins-src">依據：台灣大 MyAgent、美國指控中國業者蒸餾、Google GTIG 報告、資策會 MIC 調查、AI 寫程式審查／同業國泰金控數位同事、OpenAI 金融專用版</p>
+        </div>
+      </div>
+
+      <!-- 元大銀行 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大銀行</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">本週銀行面的新聞都在放大同一種工作量：數位帳戶的問答、授信文件的比對、視訊服務的身分確認。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>國銀 7 月底放款餘額 48.9 兆元、年增 5.2 兆元，授信文件量與內規比對量同步放大。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>評估以地端模型處理授信文件的內規比對與摘要，並以案件平均審查天數作為追蹤指標。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>華南在視訊服務導入深偽影像辨識，生成式 AI 同時是生產力工具與偽冒工具。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>視訊開戶與視訊客服評估加入深偽偵測提示，偵測結果轉人工複核；影像含生物特徵個資，推論留在內部。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>第一銀行數位帳戶突破 230 萬戶，戶數成長直接放大客服諮詢與交易監控工作量。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>數位帳戶常見問答與交易分類建立地端小模型分流，複雜問題再轉雲端或真人。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>MyAgent 的展示場景包含智能客服與語音質檢，而語音資料含客戶個資。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>語音質檢這類場景可評估地端語音轉文字加地端小模型處理，複雜問題再路由至雲端。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">同業：玉山把 AI 用於阻詐與即時市場回應，拿下最佳 AI 應用獎</span><b>讀出什麼：</b>阻詐誤放一次就是客戶損失，應先於面向客戶的內容生成；理專輔助內容要同步記錄資料來源與模型版本。</p></div>
+          <div class="scn"><p><span class="peer">新聞面：Coinbase 嵌入 Moov，讓社區銀行不必自建穩定幣基礎設施</span><b>讀出什麼：</b>外部 API 上線快，但託管與交易資料在別人手上。先寫明資料回傳、託管責任與退出條款，再簽約。</p></div>
+          <div class="scn"><p><span class="peer">新聞面：台鐵補票一次開放 9 種行動支付</span><b>讀出什麼：</b>分散小額交易的對帳比對量大、格式固定，適合地端模型批次處理，爭議款才交人工。</p></div>
+
+          <p class="ins-src">依據：金管會澄清資金荒、台灣大 MyAgent／同業華南深偽辨識、第一銀行數位帳戶、玉山最佳 AI 應用獎、Coinbase 與 Moov、台鐵行動支付</p>
+        </div>
+      </div>
+
+      <!-- 元大證券 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大證券　<span class="text-white/60 text-[12px] font-bold">（含期貨、證金）</span></span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">研究端和後台本週碰到同一條分界線：公開資料可以交給外面，含未公開資訊的留在裡面。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>OpenAI 金融專用版直接切入估值、財報分析與簡報製作，但前提是資料上雲。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>承銷評估這類含未公開資訊的文件，撰寫留在地端並保留版本紀錄；公開市場資料的彙整可以交給雲端工具。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>金融總會報告指出，證券、期貨業的卡點是通用模型不熟台灣法規、自建成本高。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>以內外規文件在地端微調開放權重模型，提升法規問答與條文比對的準確度。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>資策會調查顯示代理擴展卡在規則文件化；規則明確、對錯可判定的流程最容易跨過去。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>後台比對類作業適合作為代理從輔助走向流程執行的第一批驗證對象。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>GTIG 報告顯示多代理架構能在六小時內攻擊數千筆憑證。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>強化帳號登入異常偵測與多因子驗證，縮短從偵測到阻斷的時間；下單與交割相關系統的 AI 協作程式強制通過多層測試。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">新聞面：Robinhood 把事件合約同時路由到多個交易所</span><b>讀出什麼：</b>複委託與國內下單的路由決策紀錄要完整可查，適合由模型自動彙整路由依據報表以因應監理檢查。</p></div>
+          <div class="scn"><p><span class="peer">同業：永豐金證券打通銀行外幣帳戶與美股定期定額扣款</span><b>讀出什麼：</b>先把跨子公司的扣款串接與資料授權打通；扣款失敗原因分類這類規則清楚的判斷，小模型常駐即可。</p></div>
+          <div class="scn"><p><span class="peer">同業：華南把深偽辨識接上視訊服務</span><b>讀出什麼：</b>線上開戶審件可比照在審件環節先標示可疑影像，再轉人工確認。</p></div>
+
+          <p class="ins-src">依據：OpenAI 金融專用版、金融總會資料孤島報告、資策會 MIC 調查、Google GTIG 報告、AI 寫程式審查／同業 Robinhood 事件合約路由、永豐金證券雙幣交割、華南深偽辨識</p>
+        </div>
+      </div>
+
+      <!-- 元大投信 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大投信</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">商品端本週的題目是文件：法規與廣宣檢核排進同業的第一波，而檢核最需要的是自有語料與留痕。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>華南黑客松第一波聚焦產品說明書產製與法規、廣宣檢核。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>公開說明書與廣宣文案的合規檢查屬格式固定、對錯可依內規判定，適合地端模型批次比對並保留完整審查歷程。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>金融總會報告指出投信業卡在通用模型不熟台灣法規。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>以法規與內部規範文件做地端領域微調，文件不涉雲端委外，也補上在地法規的缺口。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>蒸餾指控讓模型出身變成選型欄位，被迫替換的可能性提高。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>面向投資人的文件產出優先選來源與授權清楚的模型，並記錄每份文件所用的模型版本。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">新聞面：U.S. Bank 自發穩定幣，先驗證凍結能力與內部系統串接</span><b>讀出什麼：</b>若評估代幣化商品，先盤點受益人紀錄與帳務、洗錢防制系統的介接，再談發行通路。</p></div>
+          <div class="scn"><p><span class="peer">同業：玉山把 AI 應用列入財富管理評鑑的得分項</span><b>讀出什麼：</b>面向客戶的理財內容若由 AI 輔助產生，審查要做成管線而非事後抽查，版本與來源一併留存。</p></div>
+
+          <p class="ins-src">依據：金融總會資料孤島報告、美國指控中國業者蒸餾／同業華南 AI Agent 黑客松、玉山最佳 AI 應用獎、U.S. Bank 自有穩定幣</p>
+        </div>
+      </div>
+
+      <!-- 元大投顧 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大投顧</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">公開資料的研究整理正在變成標準品，差異化只剩自有研究語料與來源標註。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>OpenAI 金融專用版內建 PitchBook、LSEG 等付費資料，從檢索一路產出簡報。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>以自有研究報告語料在地端微調模型、建立內部知識庫；公開資料彙整可走雲端，並要求每段結論附來源引用以利合規覆核。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>玉山把即時市場回應列為 AI 著力點，市場資訊的時效成為服務品質的一部分。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>市場即時資訊摘要屬高頻、格式固定的任務，適合以地端模型批次產出初稿，再交由研究人員覆核。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>資策會調查顯示，代理擴展卡在每一步能不能留痕。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>研究輔助工具的輸出直接寫明資料來源、更新時點與模型版本，而不是只存在後台紀錄。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">同業：國泰以角色化 Agent 協助需求釐清與規格產出</span><b>讀出什麼：</b>研究流程也能拆成蒐集、摘要、覆核三個角色，每個角色的輸入輸出格式先定下來，錯在哪一段才查得出來。</p></div>
+          <div class="scn"><p><span class="peer">新聞面：美國指控中國業者蒸餾，模型可能被迫替換</span><b>讀出什麼：</b>研究類任務對錯標準明確、可自動評分，先建內部評測集；真的要換模型時，重跑一次評分即可。</p></div>
+
+          <p class="ins-src">依據：OpenAI 金融專用版、資策會 MIC 調查、美國指控中國業者蒸餾／同業玉山最佳 AI 應用獎、國泰金控數位同事</p>
+        </div>
+      </div>
+
+      <!-- 元大人壽 -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="bg-blue-900 text-white px-4 py-2.5 flex items-center justify-between gap-3">
+          <span class="font-extrabold text-sm">元大人壽</span>
+          <span class="bg-orange-400 text-blue-950 text-[11px] font-extrabold px-2 py-0.5 rounded whitespace-nowrap">近期</span>
+        </div>
+        <div class="p-4">
+          <p class="text-[13.5px] font-bold text-slate-900">保險業的 AI 卡在資料孤島，而可控的第一步在自家：先統一欄位與 API，再疊模型。</p>
+
+          <div class="sub-h">因為　所以</div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>金融總會報告指出保險業受困內部舊系統與資料格式不一，跨公司又缺資料標準。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>先統一核保與理賠文件的資料欄位與 API 規格，讓後續模型能跨系統取用；跨機構共享等產業標準成形再接。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>核保理賠文件含病歷等高度敏感個資，資料量愈大，外送的風險與合規成本愈高。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>病歷與理賠文件解析以地端模型處理，推論與資料都留在內部環境。</p></div>
+          </div>
+
+          <div class="why">
+            <div class="why-c"><span class="why-t">因為</span><p>富邦人壽先建數據中台與標準化 API，才讓保全變更與理賠申請整合進 APP。</p></div>
+            <div class="why-a"><span class="why-t">所以建議</span><p>盤點保全變更與理賠申請的跨系統查詢斷點，先建共用資料 API，再於業務員行動工具疊加 AI 查詢，並以作業時間為成效指標。</p></div>
+          </div>
+
+          <div class="sub-h">同業做了什麼　我們該讀出什麼</div>
+
+          <div class="scn"><p><span class="peer">同業：富邦人壽地址變更由 4 分鐘縮到 2 分鐘</span><b>讀出什麼：</b>成效用作業時間量得出來，是因為先有標準化 API 與流程埋點。導入前先取基線，事後才說得出變好多少。</p></div>
+          <div class="scn"><p><span class="peer">同業：華南在導入生成工具的同時規劃深偽辨識</span><b>讀出什麼：</b>投保與理賠的視訊身分核對若擴大，偵測與人工複核要一起設計，不要等到出事後補。</p></div>
+          <div class="scn"><p><span class="peer">新聞面：台灣大把語音質檢列為代理平台場景</span><b>讀出什麼：</b>以電訪錄音這類場景為例，語音含個資，適合地端語音轉文字加地端摘要。</p></div>
+
+          <p class="ins-src">依據：金融總會資料孤島報告、台灣大 MyAgent／同業富邦人壽系統現代化、華南深偽辨識</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-200 mt-6">
+  <div class="max-w-6xl mx-auto px-5 py-6 text-[12px] text-slate-400">
+    <p>資料來源：ai_weekly_news_20260907.json（2026-W37，AI 產業 10 則）、finance_news_20260907.json（同業與監理 12 則）</p>
+    <p class="mt-1">元大金控 數位金融事業處 · 內部參考用途</p>
+  </div>
+</footer>
+
+<script>
+// 點背景關閉。Esc 與焦點管理由 <dialog> 自行處理。
+document.querySelectorAll('dialog').forEach(d => {
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+});
+</script>
+
+<!--FOOT:START-->
+<div class="max-w-6xl mx-auto px-5 pb-10 text-center">
+  <a href="../news.html" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-blue-700 transition-colors">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>回 AI 新聞深度解讀
+  </a>
+</div>
+<!--FOOT:END-->
+<!--TOC:START-->
+<style>
+  #pgTocBtn { position:fixed; right:18px; bottom:22px; z-index:60; display:none;
+              align-items:center; gap:6px; padding:10px 14px; border:0; border-radius:999px;
+              background:#1e3a8a; color:#fff; font-size:13px; font-weight:800; cursor:pointer;
+              box-shadow:0 6px 24px rgba(15,36,96,.35); }
+  #pgTocBtn.ready { display:inline-flex; }
+  #pgTocPanel { position:fixed; right:18px; bottom:76px; z-index:60; display:none;
+                width:min(300px, calc(100vw - 36px)); max-height:60vh; overflow-y:auto;
+                background:#fff; border-radius:16px; padding:8px;
+                box-shadow:0 16px 48px rgba(15,23,42,.25); }
+  #pgTocPanel.open { display:block; }
+  #pgTocPanel a { display:flex; gap:9px; padding:9px 11px; border-radius:10px;
+                  font-size:13.5px; line-height:1.5; color:#334155; text-decoration:none; }
+  #pgTocPanel a:hover { background:#f1f5f9; color:var(--brand-700, #1e3a8a); }
+  #pgTocPanel a .n { flex:none; font-size:10px; font-weight:800; letter-spacing:.1em;
+                     color:#94a3b8; padding-top:3px; }
+  main section[id] { scroll-margin-top:5rem; }
+  body:has(#toc) #pgTocBtn.ready { display:none; }
+  @media (max-width:1023px) { body:has(#toc) #pgTocBtn.ready { display:inline-flex; } }
+</style>
+<button id="pgTocBtn" aria-expanded="false">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>本篇目錄
+</button>
+<nav id="pgTocPanel" aria-label="本篇目錄"></nav>
+<script>
+(function () {
+  const btn = document.getElementById('pgTocBtn');
+  const panel = document.getElementById('pgTocPanel');
+  const secs = [...document.querySelectorAll('main section[id]')]
+    .map(s => [s.id, s.querySelector('h2'), s.querySelector('.sec-no')])
+    .filter(([, h2]) => h2);
+  if (secs.length < 2) return;
+  panel.innerHTML = secs.map(([id, h2, no], i) =>
+    `<a href="#${id}"><span class="n">${no ? no.textContent.trim() : String(i + 1).padStart(2, '0')}</span>`
+    + `<span>${h2.textContent.trim()}</span></a>`).join('');
+  btn.classList.add('ready');
+  const close = () => { panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  panel.addEventListener('click', e => { if (e.target.closest('a')) close(); });
+  document.addEventListener('click', e => { if (!panel.contains(e.target)) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
+<!--TOC:END-->
+</body>
+</html>

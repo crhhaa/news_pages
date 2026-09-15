@@ -85,6 +85,18 @@
    "deg": 2
   },
   {
+   "id": "egress",
+   "label": "Egress",
+   "zh": "出向流量管控",
+   "kind": "term",
+   "cat": "2026-W40",
+   "color": "#94a3b8",
+   "pending": false,
+   "url": "terms/egress.html",
+   "oneline": "它能主動連出去到哪裡——這條線就是它的能力邊界。",
+   "deg": 1
+  },
+  {
    "id": "fine-tuning",
    "label": "Fine-tuning",
    "zh": "微調",
@@ -142,7 +154,7 @@
    "pending": false,
    "url": "terms/next-token-prediction.html",
    "oneline": "模型唯一在做的事：看著已經有的字，猜下一個最可能是什麼，然後把它也算進去，再猜下一個。",
-   "deg": 5
+   "deg": 6
   },
   {
    "id": "plugin",
@@ -150,11 +162,11 @@
    "zh": "擴充套件",
    "kind": "term",
    "cat": "2026-W39",
-   "color": "#94a3b8",
+   "color": "#60a5fa",
    "pending": false,
    "url": "terms/plugin.html",
    "oneline": "把好幾份技能與設定打包成一包，一次裝、一次更新。它是包裝，不是新技術。",
-   "deg": 1
+   "deg": 2
   },
   {
    "id": "pretraining",
@@ -222,11 +234,11 @@
    "zh": "技能",
    "kind": "term",
    "cat": "2026-W38",
-   "color": "#60a5fa",
+   "color": "#2563eb",
    "pending": false,
    "url": "terms/skill.html",
    "oneline": "把一套做事的規矩存成一份檔案，用得到的時候整份塞進去。存的不是提示詞，是流程。",
-   "deg": 2
+   "deg": 3
   },
   {
    "id": "system-prompt",
@@ -287,6 +299,17 @@
    "url": "terms/weights.html",
    "oneline": "模型訓練完的那一大包參數檔，模型的全部能力都在裡面。",
    "deg": 2
+  },
+  {
+   "id": "ep:2026-W40-plugin",
+   "label": "2026-W40",
+   "zh": "擴充套件：一次裝一整包，以及拿之前先讀一遍",
+   "kind": "lesson",
+   "cat": "課程",
+   "color": "#1e293b",
+   "url": "lessons/2026-W40-plugin.html",
+   "oneline": "自己抄三份技能檔很簡單，第二十份、而且別人還在改的時候就不簡單了。這一堂回答兩件事：別人整理好的一整包，是怎麼一次裝進來、一次更新的；以及那一包是別人寫的字，拿之前你要自己讀什麼。",
+   "deg": 0
   },
   {
    "id": "ep:2026-W39-skill-authoring",
@@ -508,6 +531,16 @@
    "layer": 1
   },
   {
+   "source": "ai-agent",
+   "target": "egress",
+   "layer": 2
+  },
+  {
+   "source": "ep:2026-W40-plugin",
+   "target": "egress",
+   "layer": 1
+  },
+  {
    "source": "fine-tuning",
    "target": "weights",
    "layer": 2
@@ -555,6 +588,11 @@
   {
    "source": "guardrail",
    "target": "skill",
+   "layer": 2
+  },
+  {
+   "source": "egress",
+   "target": "guardrail",
    "layer": 2
   },
   {
@@ -608,6 +646,11 @@
    "layer": 2
   },
   {
+   "source": "ep:2026-W40-plugin",
+   "target": "next-token-prediction",
+   "layer": 1
+  },
+  {
    "source": "ep:2026-W39-skill-authoring",
    "target": "next-token-prediction",
    "layer": 1
@@ -636,6 +679,11 @@
    "source": "plugin",
    "target": "skill",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W40-plugin",
+   "target": "plugin",
+   "layer": 1
   },
   {
    "source": "ep:2026-W39-skill-authoring",
@@ -746,6 +794,11 @@
    "source": "rag",
    "target": "skill",
    "layer": 2
+  },
+  {
+   "source": "ep:2026-W40-plugin",
+   "target": "skill",
+   "layer": 1
   },
   {
    "source": "ep:2026-W39-skill-authoring",

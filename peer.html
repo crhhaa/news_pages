@@ -1037,7 +1037,7 @@ function filtersHTML(g) {
 }
 
 /* 事業別：照組織層級排，不照筆數——讀者是照「金控／銀行／證券…」的心智模型在找 */
-const SECTOR_ORDER = ['金控', '銀行', '證券', '人壽', '產險', '投信', '期貨'];
+const SECTOR_ORDER = ['金控', '銀行', '證券', '人壽', '產險', '投信', '期貨', '投顧'];
 const buildSectors = () => SECTOR_ORDER
   .filter(x => D.rows.some(r => r.sector === x))
   .concat([...new Set(D.rows.map(r => r.sector))].filter(x => !SECTOR_ORDER.includes(x)))
